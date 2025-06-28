@@ -1,6 +1,6 @@
 # Stapplet Shiny Suite
 
-An accessible, R-based suite of statistical applets inspired by Stapplet.com, designed for educational purposes with a strong focus on accessibility and WCAG alignment.
+An accessible, R-based suite of statistical applets inspired by Stapplet.com, designed for educational purposes with a strong focus on accessibility, colorblind-friendliness, and WCAG alignment.
 
 ## About The Project
 
@@ -61,28 +61,48 @@ To get a local copy up and running, follow these simple steps.
 3.  **Install required R packages:**
     Open R or RStudio and run the following command in the console to install all necessary dependencies.
     ```R
-    install.packages(c("shiny", "ggplot2", "dplyr", "gridExtra", "BrailleR"))
+    install.packages(c("shiny", "ggplot2", "dplyr", "gridExtra", "BrailleR", "viridis"))
     ```
 
 ### Usage
 
-You can run the application in two primary ways:
+You can run the application in several ways:
 
 1.  **Using an IDE (Recommended):**
-    *   Open the `StappletSHiny` folder in RStudio or VS Code.
+    *   Open the `RShinyStapplet` folder in RStudio or VS Code.
     *   Open the `app.R` file.
     *   In RStudio, click the **"Run App"** button that appears at the top of the editor.
-    *   In VS Code, click the **"Run App"** CodeLenss  text that appears above the `ui` definition.
+    *   In VS Code, click the **"Run App"** CodeLens text that appears above the `ui` definition.
 
 2.  **From the R Console:**
     *   Open your R console.
-    *   Set your working directory to the `StappletSHiny` folder.
+    *   Set your working directory to the `RShinyStapplet` folder.
       ```R
-      setwd("path/to/your/StappletSHiny")
+      setwd("path/to/your/RShinyStapplet")
       ```
     *   Run the application.
       ```R
       shiny::runApp()
+      ```
+
+3.  **From the Command Line (Quick Entry Scripts):**
+    *   Use one of the scripts in the `launch_Scripts` directory to quickly launch the app from your terminal or command prompt.
+    *   Available scripts:
+        - `launch_shiny_app.sh` (Bash)
+        - `launch_shiny_app.zsh` (Zsh)
+        - `launch_shiny_app.ps1` (PowerShell)
+        - `launch_shiny_app.cmd` (Windows CMD)
+    *   Example usage (from the project root):
+      ```sh
+      bash launch_Scripts/launch_shiny_app.sh
+      ```
+      Or on Windows:
+      ```
+      launch_Scripts\launch_shiny_app.cmd
+      ```
+      Or in PowerShell:
+      ```
+      .\launch_Scripts\launch_shiny_app.ps1
       ```
 
 The application will launch in a new window or your web browser.
@@ -112,9 +132,21 @@ While we have made every effort to ensure accessibility, we acknowledge the foll
 
 1.  **No Formal Audit**: This application has not undergone a formal accessibility audit by a third-party expert. True compliance with standards like Title II of the ADA is a legal determination that can only be affirmed through such an audit.
 2.  **No Widespread Human Testing**: The applets have not yet been tested by a wide range of users with different disabilities and assistive technologies. User feedback is critical to identifying and fixing usability issues that automated tools cannot detect.
-3.  **Color Contrast**: While the color palette was chosen for clarity, some color combinations may not meet the strict WCAG 2.1 AA contrast ratio of 4.5:1. We welcome feedback on any contrast issues.
+3.  **Color Contrast**: The color palette and theme have been updated to maximize foreground-background contrast and use colorblind-friendly palettes (including the viridis palette for all plots). All navigation and interactive elements have been reviewed for sufficient contrast and accessibility.
 
 We are committed to improving the accessibility of this project. If you encounter any accessibility barriers, please [open an issue](https://github.com/your_username/StappletSHiny/issues) on GitHub.
+
+---
+
+## Recent Changes
+
+- **Accessibility Improvements**: All UI elements and tables have been refactored for better screen reader support and keyboard navigation. Unicode mathematical symbols are now rendered as actual characters.
+- **Colorblind-Friendly Theme**: The app uses a high-contrast, colorblind-safe theme for all UI elements and navigation. All plots use the viridis color palette for maximum accessibility.
+- **Navigation Bar Fixes**: Navigation buttons and links now have visible, high-contrast backgrounds and text.
+- **Unicode Rendering**: All Unicode escapes (e.g., `\u03bc`) have been replaced with the actual Unicode characters (e.g., `μ`) throughout the UI and outputs.
+- **Quick Entry Scripts**: Added `launch_Scripts` directory with scripts for Bash, Zsh, PowerShell, and Windows CMD to quickly launch the app from the command line.
+- **Table Accessibility**: Large tables on the welcome page have been split into separate tables under clear headings for better screen reader navigation.
+- **General Bug Fixes**: Various UI and accessibility bugs have been fixed, including missing commas, ARIA attribute handling, and button layout improvements.
 
 ---
 
