@@ -182,7 +182,7 @@ ui <- navbarPage(
   footer = div(
     style = "display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; border-top: 1px solid #e2e8f0; background-color: #f8fafc; position: fixed; bottom: 0; width: 100%; left: 0; z-index: 100;",
     p("Copyright (c) 2025 Michael Ryan Hunsaker, M.Ed., PH.D.", style = "margin: 0; color: #64748b; font-size: 12px;"),
-    a(href = "https://github.com/mrhunsaker/StappletShiny", target = "_blank",
+    a(href = "https://github.com/mrhunsaker/RShinyStapplet", target = "_blank",
       tags$img(src = "https://cdnjs.cloudflare.com/ajax/libs/octicons/8.5.0/svg/mark-github.svg", height = "20px", alt = "GitHub Repository", style="vertical-align: middle;")
     )
   )
