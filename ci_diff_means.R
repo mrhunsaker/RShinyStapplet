@@ -77,6 +77,7 @@ ci_diff_means_ui <- function(id) {
             htmltools::tagQuery(
                 plotOutput(ns("ciPlot"), height = "400px")
             )$find("img")$addAttrs("aria-labelledby" = ns("ciPlot_label"))$all(),
+            p(id = ns("ciPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("ciPlot_desc_text"))),
             h4("Confidence Interval Plot", id = ns("ciPlot_label"), class = "sr-only")
         ),
 
@@ -207,11 +208,32 @@ ci_diff_means_server <- function(id) {
           x = "Difference (Group 1 - Group 2)",
           y = ""
         ) +
-        theme_minimal() +
-        theme(axis.text.y = element_blank(), axis.ticks.y = element_blank(), panel.grid.major.y = element_blank())
+        theme_minimal(base_size = 16) +
+        theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 
-      # Combine plots
-      gridExtra::grid.arrange(p1, p2, ncol = 1, heights = c(2, 1))
+      gridExtra::grid.arrange(p1, p2, nrow = 2, heights = c(2, 1))
+    })
+
+    # Text description for the confidence interval plot
+    output$ciPlot_desc_text <- renderText({
+      res <- results()
+      req(res)
+      if (!is.null(res$error)) {
+        return("No confidence interval plot to describe.")
+      }
+
+      # Manually create the description string
+      conf_level <- input$conf_level * 100
+      ci <- res$result$conf.int
+      diff_mean <- res$result$estimate[1] - res$result$estimate[2]
+
+      desc <- paste(
+        sprintf("This plot displays a %s%% confidence interval for the difference between two population means (Group 1 - Group 2).", conf_level),
+        sprintf("The interval is represented by a horizontal error bar. The point estimate for the difference in means, %.4f, is marked with a prominent red dot.", diff_mean),
+        sprintf("The confidence interval ranges from a lower bound of %.4f to an upper bound of %.4f.", ci[1], ci[2]),
+        "The y-axis is not labeled as it only serves to position the interval. The x-axis is labeled 'Difference (Group 1 - Group 2)'."
+      )
+      paste(desc, collapse = " ")
     })
 
     # Render the results text
@@ -224,17 +246,17 @@ ci_diff_means_server <- function(id) {
       } else {
         test_res <- res$result
         conf_level <- input$conf_level * 100
-        diff_mean <- test_res$estimate[1] - test_res$estimate[2]
-        ci <- test_res$conf.int
+        diff_mean <- as.numeric(test_res$estimate[1]) - as.numeric(test_res$estimate[2])
+        ci <- as.numeric(test_res$conf.int)
         margin_error <- (ci[2] - ci[1]) / 2
 
-        cat(paste0("Method: ", test_res$method, "\n\n"))
+        cat(paste0("Method: ", as.character(test_res$method), "\n\n"))
         cat(paste0(conf_level, "% Confidence Interval for μ₁ - μ₂:\n"))
         cat(sprintf("  [%.4f, %.4f]\n\n", ci[1], ci[2]))
 
         cat("Point Estimate (x̄₁ - x̄₂): ", sprintf("%.4f\n", diff_mean))
         cat("Margin of Error: ", sprintf("%.4f\n", margin_error))
-        cat("Degrees of Freedom: ", sprintf("%.3f\n", test_res$parameter["df"]))
+        cat("Degrees of Freedom: ", sprintf("%.3f\n", as.numeric(test_res$parameter["df"])))
       }
     })
   })

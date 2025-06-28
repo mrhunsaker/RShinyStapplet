@@ -71,7 +71,8 @@ ci_diff_proportions_ui <- function(id) {
             )$find("img")$addAttrs(
                 role = "img",
                 "aria-label" = "Plot visualizing the confidence interval for the difference in proportions. A point shows the sample difference, and a horizontal bar represents the interval."
-            )$all()
+            )$all(),
+            p(id = ns("intervalPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("intervalPlot_desc_text")))
         ),
         div(class = "results-box",
             h3("Calculation Results", id = "resultsHeading"),
@@ -159,6 +160,27 @@ ci_diff_proportions_server <- function(id) {
           panel.grid.major.y = element_blank(),
           panel.grid.minor.y = element_blank()
         )
+    })
+
+    # Text description for the confidence interval plot
+    output$intervalPlot_desc_text <- renderText({
+      res <- results()
+      req(res)
+
+      # Manually create the description string
+      conf_level <- res$conf_level * 100
+      diff_p_hat <- res$diff_p_hat
+      lower_bound <- res$lower_bound
+      upper_bound <- res$upper_bound
+
+      desc <- paste(
+        sprintf("This plot shows a %.1f%% confidence interval for the difference between two population proportions (p₁ - p₂).", conf_level),
+        sprintf("The point estimate for the difference, %.4f, is shown as a blue dot.", diff_p_hat),
+        sprintf("The confidence interval is a horizontal bar from %.4f to %.4f.", lower_bound, upper_bound),
+        "A vertical dashed line at x=0 is included for reference, to easily see if the interval contains zero.",
+        "The y-axis is not labeled as it is used only for positioning."
+      )
+      paste(desc, collapse = " ")
     })
 
     # Render the results text

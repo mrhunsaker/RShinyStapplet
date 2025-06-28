@@ -94,7 +94,8 @@ ci_mean_ui <- function(id) {
               h4("Generated Confidence Intervals", style = "text-align: center;", id = ns("ciPlotHeading")),
               htmltools::tagQuery(
                 plotOutput(ns("ciPlot"), height = "400px")
-              )$find("img")$addAttrs("aria-labelledby" = ns("ciPlotHeading"))$all()
+              )$find("img")$addAttrs("aria-labelledby" = ns("ciPlotHeading"))$all(),
+              p(id = ns("ciPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("ciPlot_desc_text")))
             )
           )
         )
@@ -196,7 +197,7 @@ ci_mean_server <- function(id) {
         p <- p + geom_histogram(data = df_sample, aes(x = x, y = ..density..),
                                 fill = "#84cc16", alpha = 0.7, bins = 15)
       }
-      p
+      return(p)
     })
 
     # Confidence Intervals Plot
@@ -205,9 +206,14 @@ ci_mean_server <- function(id) {
         return(ggplot() + labs(title = "Draw a sample to generate a confidence interval") + theme_void())
       }
 
-      # Display up to the last 100 intervals for clarity
       display_data <- tail(rv$intervals, 100)
-      display_data$captured_factor <- factor(display_data$captured, levels = c("TRUE", "FALSE"))
+      # Ensure data is atomic for ggplot
+      display_data$mean <- as.numeric(unlist(display_data$mean))
+      display_data$id <- as.integer(unlist(display_data$id))
+      display_data$lower <- as.numeric(unlist(display_data$lower))
+      display_data$upper <- as.numeric(unlist(display_data$upper))
+      display_data$captured <- as.logical(unlist(display_data$captured))
+      display_data$captured_factor <- factor(display_data$captured, levels = c(TRUE, FALSE))
 
       ggplot(display_data, aes(x = mean, y = id, xmin = lower, xmax = upper, color = captured_factor)) +
         geom_vline(xintercept = input$pop_mean, color = "#dc2626", linetype = "dashed", size = 1) +
@@ -221,6 +227,33 @@ ci_mean_server <- function(id) {
              title = "Confidence Intervals for μ") +
         theme_minimal() +
         theme(legend.position = "top")
+    })
+
+    # Text description for the confidence intervals plot
+    output$ciPlot_desc_text <- renderText({
+      if (nrow(rv$intervals) == 0) {
+        return("No intervals have been generated yet.")
+      }
+
+      # Manually create descriptive text
+      total_intervals <- nrow(rv$intervals)
+      num_captured <- sum(as.logical(unlist(rv$intervals$captured)))
+      percent_captured <- if (total_intervals > 0) round((num_captured / total_intervals) * 100, 1) else 0
+      last_int <- tail(rv$intervals, 1)
+      last_mean <- round(as.numeric(unlist(last_int$mean)), 2)
+      last_lower <- round(as.numeric(unlist(last_int$lower)), 2)
+      last_upper <- round(as.numeric(unlist(last_int$upper)), 2)
+      last_captured <- ifelse(as.logical(unlist(last_int$captured)), "did capture", "did not capture")
+
+      paste(
+        "A plot of confidence intervals.",
+        sprintf("A dashed vertical line shows the population mean of %.2f.", input$pop_mean),
+        sprintf("So far, %d intervals have been generated.", total_intervals),
+        sprintf("%d of them (%.1f%%) captured the population mean.", num_captured, percent_captured),
+        sprintf("The most recent interval was centered at %.2f, with a range from %.2f to %.2f.", last_mean, last_lower, last_upper),
+        sprintf("This interval %s the population mean.", last_captured),
+        collapse = " "
+      )
     })
 
     # --- Render Summary Statistics ---
@@ -244,9 +277,13 @@ ci_mean_server <- function(id) {
 
       cat("--- Last Interval Details ---\n")
       last_int <- tail(rv$intervals, 1)
-      cat("Sample Mean:", round(last_int$mean, 2), "\n")
-      cat(conf_level_pct, "CI: (", round(last_int$lower, 2), ", ", round(last_int$upper, 2), ")\n")
-      cat("Captured Pop. Mean?", ifelse(last_int$captured, "Yes", "No"), "\n")
+      sample_mean <- as.numeric(unlist(last_int[["mean"]]))
+      lower <- as.numeric(unlist(last_int[["lower"]]))
+      upper <- as.numeric(unlist(last_int[["upper"]]))
+      captured <- as.logical(unlist(last_int[["captured"]]))
+      cat("Sample Mean:", round(sample_mean, 2), "\n")
+      cat(conf_level_pct, "CI: (", round(lower, 2), ", ", round(upper, 2), ")\n")
+      cat("Captured Pop. Mean?", ifelse(captured, "Yes", "No"), "\n")
     })
 
   })

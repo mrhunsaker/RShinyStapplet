@@ -89,7 +89,8 @@ dist_binomial_ui <- function(id) {
           )$find("img")$addAttrs(
             role = "img",
             "aria-labelledby" = ns("probResultHeading")
-          )$all()
+          )$all(),
+          p(id = ns("binomialPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("binomialPlot_desc_text")))
         ),
         div(class = "results-box",
           h3("Calculated Probability:", id = "probResultHeading"),
@@ -166,7 +167,7 @@ dist_binomial_server <- function(id) {
         df$shaded[df$x >= input$k1_val & df$x <= input$k2_val] <- TRUE
       }
 
-      ggplot(df, aes(x = as.factor(x), y = y, fill = shaded)) +
+      p <- ggplot(df, aes(x = as.factor(x), y = y, fill = shaded)) +
         geom_col(color = "#1e40af", width = 0.7) +
         scale_fill_viridis_d(option = "D", begin = 0.1, end = 0.8, direction = 1, guide = "none") +
         labs(
@@ -180,6 +181,48 @@ dist_binomial_server <- function(id) {
           axis.title = element_text(size = 14),
           axis.text = element_text(size = 12)
         )
+      p # Return the plot
+    })
+
+    # Text description for the binomial distribution plot
+    output$binomialPlot_desc_text <- renderText({
+      df <- distribution_data()
+      req(df)
+      n <- input$n_trials
+      p_val <- input$p_success
+      prob_type <- input$prob_type
+      prob <- calculated_probability()
+
+      # Describe the distribution shape
+      mean_dist <- n * p_val
+      shape_desc <- if (p_val < 0.4) {
+        "skewed to the right"
+      } else if (p_val > 0.6) {
+        "skewed to the left"
+      } else {
+        "approximately symmetric"
+      }
+
+      # Describe the shaded area
+      shaded_desc <- ""
+      if (is.numeric(prob)) {
+        shaded_desc <- switch(prob_type,
+          "exact" = sprintf("The bar for exactly %d successes is shaded.", input$k_val),
+          "at_most" = sprintf("The bars for %d or fewer successes are shaded.", input$k_val),
+          "greater_than" = sprintf("The bars for more than %d successes are shaded.", input$k_val),
+          "between" = sprintf("The bars between %d and %d successes (inclusive) are shaded.", input$k1_val, input$k2_val)
+        )
+      }
+
+      desc <- paste(
+        sprintf("This is a bar plot of a binomial distribution with n=%d trials and a success probability p=%.2f.", n, p_val),
+        sprintf("The distribution is centered around %.1f and is %s.", mean_dist, shape_desc),
+        "Each bar represents the probability of achieving a specific number of successes (k).",
+        shaded_desc,
+        sprintf("The total probability of the shaded area is %.5f.", if(is.numeric(prob)) prob else 0),
+        collapse = " "
+      )
+      return(desc)
     })
 
     # Render the calculated probability text

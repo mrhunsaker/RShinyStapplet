@@ -236,14 +236,26 @@ ht_diff_means_server <- function(id) {
       } else {
         p <- p + geom_area(data = subset(plot_data, x <= t_stat), aes(y = y), fill = "#ef4444", alpha = 0.5)
       }
-      p
     })
 
     # --- Render Results ---
     output$testResult <- renderPrint({
       res <- test_results()
-      if (is.null(res)) return(cat("Enter data and parameters to see results."))
-      if (!is.null(res$error)) return(cat(res$error))
+      if (is.null(res)) { cat("Enter data and parameters to see results."); return() }
+      if (!is.null(res$error)) { cat(res$error); return() }
+
+      # Ensure atomic values for cat
+      t_stat <- as.numeric(res$t_stat)
+      df <- as.numeric(res$df)
+      p_value <- as.numeric(res$p_value)
+      ci1 <- as.numeric(res$ci[1])
+      ci2 <- as.numeric(res$ci[2])
+      x_bar1 <- as.numeric(res$x_bar1)
+      s1 <- as.numeric(res$s1)
+      n1 <- as.integer(res$n1)
+      x_bar2 <- as.numeric(res$x_bar2)
+      s2 <- as.numeric(res$s2)
+      n2 <- as.integer(res$n2)
 
       cat("--- Test Summary ---\n")
       cat("Null Hypothesis (H₀): μ₁ - μ₂ =", input$h0_diff, "\n")
@@ -252,17 +264,17 @@ ht_diff_means_server <- function(id) {
       cat("Test Type: Two-sample t-test", ifelse(input$pooled, "(pooled)", "(Welch)"), "\n\n")
 
       cat("--- Results ---\n")
-      cat("t-statistic:", round(res$t_stat, 4), "\n")
-      cat("Degrees of Freedom (df):", round(res$df, 4), "\n")
-      cat("P-value:", format.pval(res$p_value, digits = 4, eps = 0.0001), "\n\n")
+      cat("t-statistic:", round(t_stat, 4), "\n")
+      cat("Degrees of Freedom (df):", round(df, 4), "\n")
+      cat("P-value:", format.pval(p_value, digits = 4, eps = 0.0001), "\n\n")
 
       cat(paste0("--- ", input$conf_level * 100, "% Confidence Interval for μ₁ - μ₂ ---\n"))
-      cat("(", round(res$ci[1], 4), ", ", round(res$ci[2], 4), ")\n\n")
+      cat("(", round(ci1, 4), ", ", round(ci2, 4), ")\n\n")
 
       cat("--- Sample Statistics ---\n")
       cat(sprintf("%-10s %-10s %-10s %-10s\n", "Group", "Mean", "Std Dev", "Size"))
-      cat(sprintf("%-10s %-10.3f %-10.3f %-10d\n", "Group 1", res$x_bar1, res$s1, res$n1))
-      cat(sprintf("%-10s %-10.3f %-10.3f %-10d\n", "Group 2", res$x_bar2, res$s2, res$n2))
+      cat(sprintf("%-10s %-10.3f %-10.3f %-10d\n", "Group 1", x_bar1, s1, n1))
+      cat(sprintf("%-10s %-10.3f %-10.3f %-10d\n", "Group 2", x_bar2, s2, n2))
     })
   })
 }

@@ -2,6 +2,7 @@
 
 library(shiny)
 library(ggplot2)
+library(BrailleR)
 library(dplyr)
 
 # UI for the Discrete Random Variable Applet
@@ -56,7 +57,7 @@ dist_discrete_random_ui <- function(id) {
         div(class = "plot-container",
             plotOutput(ns("dist_plot")),
             tags$script(paste0("document.getElementById('", ns("dist_plot"), "').setAttribute('aria-label', 'A bar chart showing the discrete probability distribution.')")),
-            uiOutput(ns("plot_desc"))
+            p(id = ns("dist_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("dist_plot_desc_text")))
         ),
         div(class = "results-box", role = "status", `aria-live` = "polite",
             h3("Calculated Probability"),
@@ -156,6 +157,33 @@ dist_discrete_random_server <- function(id) {
           plot.title = element_text(hjust = 0.5, face = "bold"),
           axis.text.x = element_text(angle = 45, hjust = 1)
         )
+    })
+
+    # Text description for the probability distribution plot
+    output$dist_plot_desc_text <- renderText({
+      df <- dist_data()
+      req(df)
+      total_prob <- sum(df$p, na.rm = TRUE)
+      if (abs(total_prob - 1.0) > 1e-6 || any(df$p < 0, na.rm = TRUE)) {
+        return("Invalid probability distribution: probabilities must sum to 1 and be non-negative.")
+      }
+
+      # Calculate stats for description
+      mean_val <- sum(df$x * df$p, na.rm = TRUE)
+      variance <- sum((df$x - mean_val)^2 * df$p, na.rm = TRUE)
+      sd_val <- sqrt(variance)
+
+      # Create a list of the value-probability pairs
+      pairs <- paste(sprintf("P(X=%.2f) = %.3f", df$x, df$p), collapse=", ")
+
+      desc <- paste(
+        "This is a bar chart representing a discrete probability distribution.",
+        sprintf("The distribution has a calculated mean of %.4f and a standard deviation of %.4f.", mean_val, sd_val),
+        "The x-axis shows the distinct values (x) the random variable can take, and the y-axis shows the probability of each value.",
+        "The specific probabilities are:", pairs, ".",
+        collapse=" "
+      )
+      return(desc)
     })
 
     # Calculate and display the requested probability

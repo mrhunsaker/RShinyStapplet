@@ -71,9 +71,10 @@ dist_chi_square_ui <- function(id) {
           htmltools::tagQuery(
             plotOutput(ns("distPlot"))
           )$find("img")$addAttrs(
-            role = "img",
-            "aria-labelledby" = ns("df_label")
+              role = "img",
+              "aria-label" = "Plot of the chi-square distribution with the selected degrees of freedom. The shaded area represents the calculated probability."
           )$all(),
+          p(id = ns("distPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("distPlot_desc_text"))),
           p(id = "plotDesc", class = "sr-only", "A plot of the Chi-Square distribution with the specified degrees of freedom and shaded area representing the calculated probability.")
         ),
         div(class = "results-box",

@@ -2,6 +2,7 @@
 
 library(shiny)
 library(ggplot2)
+library(BrailleR)
 library(dplyr)
 
 # UI for the Poisson Distribution Applet
@@ -49,12 +50,13 @@ dist_poisson_ui <- function(id) {
         div(class = "plot-container",
             plotOutput(ns("dist_plot")),
             tags$script(paste0("document.getElementById('", ns("dist_plot"), "').setAttribute('aria-label', 'A bar chart showing the Poisson probability distribution. The area for the calculated probability is highlighted in red.')")),
-            uiOutput(ns("plot_desc"))
-        ),
-        div(class = "results-box", role = "status", `aria-live` = "polite",
-            h3("Calculated Probability"),
-            textOutput(ns("calculated_prob"))
-        )
+            p(id = ns("dist_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("dist_plot_desc_text"))),
+        p(id = ns("dist_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("dist_plot_desc_text")))
+    ),
+    div(class = "results-box", role = "status", `aria-live` = "polite",
+        h3("Calculated Probability"),
+        textOutput(ns("calculated_prob"))
+    )
       )
     )
   )
@@ -109,6 +111,33 @@ dist_poisson_server <- function(id) {
         theme(
           plot.title = element_text(hjust = 0.5, face = "bold")
         )
+    })
+
+    # BrailleR text description for the probability distribution plot
+    output$dist_plot_desc_text <- renderText({
+      df <- dist_data()
+      req(df, input$prob_x_value >= 0)
+      x_val <- floor(input$prob_x_value)
+      df <- df %>%
+        mutate(highlight = dplyr::case_when(
+          input$prob_type == "eq" & x == x_val ~ "yes",
+          input$prob_type == "lt" & x < x_val ~ "yes",
+          input$prob_type == "le" & x <= x_val ~ "yes",
+          input$prob_type == "gt" & x > x_val ~ "yes",
+          input$prob_type == "ge" & x >= x_val ~ "yes",
+          TRUE ~ "no"
+        ))
+      p <- ggplot(df, aes(x = x, y = p, fill = highlight)) +
+        geom_col(alpha = 0.8) +
+        scale_fill_viridis_d(option = "D", begin = 0.2, end = 0.8, direction = 1, guide = "none") +
+        labs(title = paste("Poisson Distribution with λ =", input$lambda),
+             x = "Number of Events (x)",
+             y = "Probability P(x)") +
+        theme_minimal(base_size = 14) +
+        theme(
+          plot.title = element_text(hjust = 0.5, face = "bold")
+        )
+      VI(p)
     })
 
     # Calculate and display the requested probability

@@ -3,6 +3,7 @@
 library(shiny)
 library(ggplot2)
 library(dplyr)
+library(BrailleR)
 
 # UI for the Hiring Discrimination Activity
 activity_hiring_discrimination_ui <- function(id) {
@@ -92,7 +93,7 @@ activity_hiring_discrimination_ui <- function(id) {
         div(class = "plot-container",
             plotOutput(ns("sim_plot")),
             tags$script(paste0("document.getElementById('", ns("sim_plot"), "').setAttribute('aria-label', 'A histogram showing the distribution of simulated differences in proportions. A red line indicates the observed difference from the sample data.')")),
-            uiOutput(ns("plot_desc"))
+            p(id = ns("sim_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("sim_plot_desc_text")))
         )
       )
     )
@@ -190,12 +191,34 @@ activity_hiring_discrimination_server <- function(id) {
         theme(plot.title = element_text(hjust = 0.5, face = "bold"), plot.subtitle = element_text(hjust = 0.5))
 
       # Shade the p-value area
-      p_val_area <- df %>% filter(abs(diff) >= abs(obs_diff))
+      p_val_area <- df %>% filter(diff >= obs_diff)
       if (nrow(p_val_area) > 0) {
         p <- p + geom_histogram(data = p_val_area, aes(x = diff, y = ..density..), bins = 30, fill = "#ef4444", alpha = 0.8)
       }
+      return(p)
+    })
 
-      p
+    # Text description for the simulation plot
+    output$sim_plot_desc_text <- renderText({
+      df <- sim_results()
+      if (is.null(df)) {
+        return("The plot is not yet available. Click 'Run Simulation' to generate it.")
+      }
+      obs_diff <- observed_diff()
+      req(is.numeric(obs_diff))
+
+      p_value <- sum(abs(df$diff) >= abs(obs_diff)) / nrow(df)
+      mean_sim_diff <- mean(df$diff)
+
+      desc <- paste(
+        sprintf("This histogram shows the distribution of %d simulated differences in callback proportions between the 'male' and 'female' resume groups.", input$num_sims),
+        "The distribution is centered near zero, which is what we would expect if there were no real difference.",
+        sprintf("The center of the simulated distribution is around %.3f.", mean_sim_diff),
+        sprintf("A dashed red vertical line marks the observed difference of %.3f from the original sample data.", obs_diff),
+        "The p-value is calculated by finding the proportion of simulated differences that are as or more extreme than the observed difference.",
+        sprintf("The calculated p-value is %.4f.", p_value)
+      )
+      paste(desc, collapse = " ")
     })
 
     # Calculate and display p-value

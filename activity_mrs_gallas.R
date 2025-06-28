@@ -3,6 +3,8 @@
 library(shiny)
 library(ggplot2)
 library(dplyr)
+library(BrailleR)
+library(BrailleR)
 
 # UI for the "Is Mrs. Gallas a Good Free Throw Shooter?" Activity
 activity_mrs_gallas_ui <- function(id) {
@@ -76,7 +78,7 @@ activity_mrs_gallas_ui <- function(id) {
         div(class = "plot-container",
             plotOutput(ns("sim_plot")),
             tags$script(paste0("document.getElementById('", ns("sim_plot"), "').setAttribute('aria-label', 'A histogram showing the distribution of the number of successes from many simulations. A red line indicates the observed number of successes.')")),
-            uiOutput(ns("plot_desc"))
+            p(id = ns("sim_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("sim_plot_desc_text")))
         )
       )
     )
@@ -167,7 +169,39 @@ activity_mrs_gallas_server <- function(id) {
         p <- p + geom_histogram(data = p_val_area, aes(x = successes), binwidth = 1, fill = "#ef4444", alpha = 0.8)
       }
 
-      p
+    })
+
+    # Text description for the simulation plot
+    output$sim_plot_desc_text <- renderText({
+      df <- sim_results()
+      if (is.null(df)) {
+        return("The plot is not yet available. Click 'Run Simulation' to generate it.")
+      }
+      obs_success <- input$n_success
+      req(is.numeric(obs_success))
+
+      # Calculate p-value for description
+      p_val_area <- switch(input$alternative,
+        "less" = df %>% filter(successes <= obs_success),
+        "greater" = df %>% filter(successes >= obs_success),
+        "two.sided" = {
+          expected_mean <- input$n_trials * input$claimed_prop
+          deviation <- abs(obs_success - expected_mean)
+          df %>% filter(abs(successes - expected_mean) >= deviation)
+        }
+      )
+      p_value <- nrow(p_val_area) / nrow(df)
+      mean_sim_successes <- mean(df$successes)
+
+      desc <- paste(
+        sprintf("This histogram shows the distribution of the number of successes from %d simulated experiments.", input$num_sims),
+        sprintf("Each experiment consisted of %d trials with a claimed success rate of %.2f.", input$n_trials, input$claimed_prop),
+        sprintf("The distribution of simulated successes is centered around %.1f.", mean_sim_successes),
+        sprintf("A dashed red vertical line marks the observed number of successes, which was %d.", obs_success),
+        "The area corresponding to the p-value is shaded in red.",
+        sprintf("The calculated p-value is %.4f.", p_value)
+      )
+      paste(desc, collapse = " ")
     })
 
     # Calculate and display p-value

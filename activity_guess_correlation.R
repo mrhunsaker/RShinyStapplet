@@ -3,6 +3,9 @@
 library(shiny)
 library(ggplot2)
 library(MASS) # For mvrnorm to generate correlated data
+library(BrailleR)
+library(BrailleR)
+library(BrailleR)
 
 # UI for the Guess the Correlation Activity
 activity_guess_correlation_ui <- function(id) {
@@ -50,7 +53,7 @@ activity_guess_correlation_ui <- function(id) {
         div(class = "plot-container",
             plotOutput(ns("scatterplot")),
             tags$script(paste0("document.getElementById('", ns("scatterplot"), "').setAttribute('aria-label', 'A scatterplot of two variables. Use the controls to guess the correlation coefficient.')")),
-            uiOutput(ns("plot_desc"))
+            p(id = ns("scatterplot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("scatterplot_desc_text")))
         )
       )
     )
@@ -63,67 +66,92 @@ activity_guess_correlation_server <- function(id) {
     ns <- session$ns
 
     # Reactive values to store game state
-    actual_r <- reactiveVal(NULL)
-    total_score <- reactiveVal(0)
-    rounds_played <- reactiveVal(0)
-    guess_submitted <- reactiveVal(FALSE)
+    rv <- reactiveValues(
+      actual_r = NULL,
+      data = NULL,
+      total_score = 0,
+      rounds_played = 0,
+      guess_submitted = FALSE
+    )
 
     # --- Event: Generate New Plot ---
     observeEvent(input$new_plot, {
       # Generate a new target correlation
       # Avoid values too close to 0, -1, or 1 to make it more challenging
       r <- sample(c(runif(1, -0.95, -0.1), runif(1, 0.1, 0.95)), 1)
-      actual_r(r)
+      rv$actual_r <- r
 
       # Generate correlated data
       n_points <- 100
       cov_matrix <- matrix(c(1, r, r, 1), nrow = 2)
       set.seed(Sys.time()) # Ensure randomness
-      data <- as.data.frame(mvrnorm(n = n_points, mu = c(0, 0), Sigma = cov_matrix))
-      colnames(data) <- c("x", "y")
+      new_data <- as.data.frame(mvrnorm(n = n_points, mu = c(0, 0), Sigma = cov_matrix))
+      colnames(new_data) <- c("x", "y")
+      rv$data <- new_data
 
       # Reset state
-      guess_submitted(FALSE)
+      rv$guess_submitted <- FALSE
       output$round_results <- renderUI({ p("Make your guess!") })
 
-      # Render the plot
-      output$scatterplot <- renderPlot({
-        ggplot(data, aes(x = x, y = y)) +
-          geom_point(alpha = 0.7, size = 3, color = "#1d4ed8") +
-          theme_minimal(base_size = 16) +
-          theme(
-            axis.title = element_blank(),
-            axis.text = element_blank(),
-            axis.ticks = element_blank(),
-            panel.grid = element_blank()
-          ) +
-          labs(title = "Guess the Correlation")
-      })
+    }, ignoreNULL = FALSE, once = TRUE) # ignoreNULL=FALSE allows it to run on startup
 
-      # Screen reader description for the plot
-      output$plot_desc <- renderUI({
-        trend <- if (r > 0.3) "positive" else if (r < -0.3) "negative" else "weak or no"
-        strength <- if (abs(r) > 0.7) "strong" else if (abs(r) > 0.4) "moderate" else "weak"
-        p(class = "sr-only", paste("A new scatterplot has been generated. It shows a", strength, trend, "linear relationship."))
-      })
-    }, ignoreNULL = FALSE) # ignoreNULL=FALSE allows it to run on startup
+    # Render the plot
+    output$scatterplot <- renderPlot({
+      req(rv$data)
+      ggplot(rv$data, aes(x = x, y = y)) +
+        geom_point(alpha = 0.7, size = 3, color = "#1d4ed8") +
+        theme_minimal(base_size = 16) +
+        theme(
+          axis.title = element_blank(),
+          axis.text = element_blank(),
+          axis.ticks = element_blank(),
+          panel.grid = element_blank()
+        ) +
+        labs(title = "Guess the Correlation")
+    })
+
+    # Text description for the scatterplot
+    output$scatterplot_desc_text <- renderText({
+      req(rv$actual_r) # Ensure data is generated
+
+      r_value <- rv$actual_r
+
+      # Determine the direction and strength for the description
+      direction <- if (r_value > 0) "positive" else "negative"
+      strength <- case_when(
+        abs(r_value) >= 0.8 ~ "strong",
+        abs(r_value) >= 0.5 ~ "moderate",
+        abs(r_value) >= 0.2 ~ "weak",
+        TRUE ~ "very weak"
+      )
+      form <- if (abs(r_value) >= 0.5) "a clear linear pattern" else "a scattered, cloud-like pattern"
+
+      desc <- paste(
+        "A new scatterplot has been generated.",
+        sprintf("The plot shows a %s, %s correlation between the two variables.", strength, direction),
+        sprintf("The points form %s.", form),
+        "The axes are not labeled to focus on the correlation pattern.",
+        "Use the slider to guess the correlation coefficient 'r'."
+      )
+      paste(desc, collapse = " ")
+    })
 
     # --- Event: Submit Guess ---
     observeEvent(input$submit_guess, {
-      req(actual_r()) # Require a plot to be generated first
-      guess_submitted(TRUE)
+      req(rv$actual_r) # Require a plot to be generated first
+      rv$guess_submitted <- TRUE
 
       # Update rounds played
-      rounds_played(rounds_played() + 1)
+      rv$rounds_played <- rv$rounds_played + 1
 
       # Calculate score for the round
       user_guess <- input$guess_r
-      actual_value <- actual_r()
+      actual_value <- rv$actual_r
       difference <- abs(user_guess - actual_value)
       round_score <- max(0, floor(100 * (1 - difference)))
 
       # Update total score
-      total_score(total_score() + round_score)
+      rv$total_score <- rv$total_score + round_score
 
       # Display round results
       output$round_results <- renderUI({
@@ -138,10 +166,10 @@ activity_guess_correlation_server <- function(id) {
 
       # Display overall score
       output$overall_score <- renderUI({
-        avg_score <- round(total_score() / rounds_played())
+        avg_score <- round(rv$total_score / rv$rounds_played)
         tagList(
-          p(strong("Total Score: "), total_score()),
-          p(strong("Rounds Played: "), rounds_played()),
+          p(strong("Total Score: "), rv$total_score),
+          p(strong("Rounds Played: "), rv$rounds_played),
           p(strong("Average Score: "), avg_score)
         )
       })

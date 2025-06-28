@@ -225,9 +225,9 @@ ht_chi_gof_server <- function(id) {
       print(summary_df, row.names = FALSE)
 
       cat("\n----------------------------------------\n")
-      cat(sprintf("Chi-Square Statistic (χ²): %.4f\n", results$statistic))
-      cat(sprintf("Degrees of Freedom (df): %d\n", results$df))
-      cat(sprintf("P-value: %.4f\n", results$p.value))
+      cat(sprintf("Chi-Square Statistic (χ²): %.4f\n", as.numeric(results$statistic)))
+      cat(sprintf("Degrees of Freedom (df): %d\n", as.integer(results$df)))
+      cat(sprintf("P-value: %.4f\n", as.numeric(results$p.value)))
       cat("----------------------------------------\n\n")
 
       # Provide a conclusion

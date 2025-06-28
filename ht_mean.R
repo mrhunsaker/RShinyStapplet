@@ -146,9 +146,9 @@ ht_mean_server <- function(id) {
     output$testResults <- renderPrint({
       req(test_output())
       res <- test_output()
-      cat("t-statistic: ", round(res$statistic, 3), "\n")
-      cat("df:          ", round(res$parameter, 2), "\n")
-      cat("p-value:     ", format.pval(res$p.value, digits = 4, eps = 0.0001))
+      cat("t-statistic: ", round(as.numeric(res$statistic), 3), "\n")
+      cat("df:          ", round(as.numeric(res$parameter), 2), "\n")
+      cat("p-value:     ", format.pval(as.numeric(res$p.value), digits = 4, eps = 0.0001))
     })
 
     # Conclusion Text
@@ -208,7 +208,6 @@ ht_mean_server <- function(id) {
                  label = paste("Observed t =", round(t_stat, 2)),
                  color = "#16a34a", vjust = -0.5, fontface = "bold")
 
-      p
     })
 
   })

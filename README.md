@@ -71,8 +71,8 @@ You can run the application in several ways:
 1.  **Using an IDE (Recommended):**
     *   Open the `RShinyStapplet` folder in RStudio or VS Code.
     *   Open the `app.R` file.
-    *   In RStudio, click the **"Run App"** button that appears at the top of the editor.
-    *   In VS Code, click the **"Run App"** CodeLens text that appears above the `ui` definition.
+    *   In **RStudio**, click the **"Run App"** button that appears at the top of the editor.
+    *   In **VS Code** or **Positron**, click the **"Run App"** CodeLens text that appears above the `ui` definition.
 
 2.  **From the R Console:**
     *   Open your R console.

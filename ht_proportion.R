@@ -166,8 +166,8 @@ ht_proportion_server <- function(id) {
         geom_vline(xintercept = res$z_stat, color = "#dc2626", linetype = "dashed", size = 1.2) +
         annotate("text", x = res$z_stat, y = 0, label = paste("z =", round(res$z_stat, 2)), vjust = 1.5, color = "#dc2626", fontface = "bold")
 
-      p
     })
+
 
     # Render the results text
     output$results <- renderUI({

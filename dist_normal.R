@@ -102,6 +102,7 @@ dist_normal_ui <- function(id) {
                 "aria-labelledby" = ns("plotTitle plotDescription"),
                 role = "img"
             )$all(),
+            p(id = ns("normalPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("normalPlot_desc_text"))),
             p(id = ns("plotDescription"), class = "sr-only", role = "status", "aria-live" = "polite",
               htmltools::tagQuery(
                 textOutput(ns("brailleRDescription"))
@@ -198,12 +199,40 @@ dist_normal_server <- function(id) {
                  geom_vline(xintercept = input$x1_val, linetype = "solid", color = "#ef4444") +
                  geom_vline(xintercept = input$x2_val, linetype = "solid", color = "#ef4444")
       }
-      p
+      p # Return the plot object
     })
 
     # Render the plot
     output$normalPlot <- renderPlot({
       plot_object_reactive()
+    })
+
+    # Text description for the normal distribution plot
+    output$normalPlot_desc_text <- renderText({
+      req(input$mean, input$sd)
+      mean_val <- input$mean
+      sd_val <- input$sd
+      prob <- calculated_probability()
+
+      # Describe the shaded area
+      shaded_desc <- ""
+      if (is.numeric(prob)) {
+        shaded_desc <- switch(input$prob_type,
+          "lt" = sprintf("The area to the left of X=%.2f is shaded, representing a cumulative probability of %.4f.", input$x_val, prob),
+          "gt" = sprintf("The area to the right of X=%.2f is shaded, representing a tail probability of %.4f.", input$x_val, prob),
+          "between" = sprintf("The area between X=%.2f and X=%.2f is shaded, representing a probability of %.4f.", input$x1_val, input$x2_val, prob)
+        )
+      }
+
+      desc <- paste(
+        sprintf("This plot shows a normal distribution with a mean (μ) of %.2f and a standard deviation (σ) of %.2f.", mean_val, sd_val),
+        "The curve is bell-shaped and symmetric around the mean.",
+        "A dashed vertical line at the mean indicates the center of the distribution.",
+        "A solid vertical line marks the specified X value(s) for the probability calculation.",
+        shaded_desc,
+        collapse = " "
+      )
+      return(desc)
     })
 
     # Render the probability result text

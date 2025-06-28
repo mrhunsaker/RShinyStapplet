@@ -3,6 +3,7 @@
 library(shiny)
 library(ggplot2)
 library(dplyr)
+library(BrailleR)
 
 # UI for the "M&M's/Skittles/Froot Loops" Chi-Square GOF Activity
 activity_candy_chi_square_ui <- function(id) {
@@ -211,7 +212,30 @@ activity_candy_chi_square_server <- function(id) {
       if (nrow(p_val_area) > 0) {
         p <- p + geom_histogram(data = p_val_area, aes(x = chi_square, y = ..density..), bins = 30, fill = "#ef4444", alpha = 0.8)
       }
-      p
+      return(p)
+    })
+
+    # Text description for the simulation plot
+    output$sim_plot_desc <- renderText({
+      df_sim <- sim_results()
+      if (is.null(df_sim)) {
+        return("The plot is not yet available. Click 'Run Simulation' to generate it.")
+      }
+      obs_chi <- observed_chi_square()
+      req(is.numeric(obs_chi))
+
+      p_value <- sum(df_sim$chi_square >= obs_chi) / nrow(df_sim)
+      mean_sim_chi <- mean(df_sim$chi_square)
+
+      desc <- paste(
+        sprintf("This is a histogram of %d simulated Chi-Square values.", input$num_sims),
+        "The distribution appears skewed to the right, which is typical for Chi-Square distributions.",
+        sprintf("The center of the simulated distribution is around %.2f.", mean_sim_chi),
+        sprintf("A dashed red vertical line marks the observed Chi-Square value of %.3f from your sample data.", obs_chi),
+        sprintf("The area to the right of this line, representing the p-value, is shaded in red."),
+        sprintf("The calculated p-value is %.4f.", p_value)
+      )
+      paste(desc, collapse = " ")
     })
 
     output$p_value_result <- renderUI({

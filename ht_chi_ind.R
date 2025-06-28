@@ -210,9 +210,9 @@ ht_chi_ind_server <- function(id) {
       cat("  Ha: The two categorical variables are not independent (associated).\n\n")
 
       cat("Test Results:\n")
-      cat("  Chi-Square Statistic (X-squared):", round(res$statistic, 4), "\n")
-      cat("  Degrees of Freedom (df):", res$parameter, "\n")
-      cat("  p-value:", format.p.val(res$p.value, digits = 4), "\n\n")
+      cat("  Chi-Square Statistic (X-squared):", round(as.numeric(res$statistic), 4), "\n")
+      cat("  Degrees of Freedom (df):", as.numeric(res$parameter), "\n")
+      cat("  p-value:", format.p.val(as.numeric(res$p.value), digits = 4), "\n\n")
 
       alpha <- 0.05 # Standard significance level
       cat(paste0("Conclusion (at alpha = ", alpha, "):\n"))

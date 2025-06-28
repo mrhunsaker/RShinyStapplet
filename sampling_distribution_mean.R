@@ -252,12 +252,12 @@ sampling_dist_mean_server <- function(id) {
         sd_of_means <- sd(rv$sample_means)
         theoretical_sd <- rv$pop_stats$sd / sqrt(input$sample_size)
 
-        cat("  Mean of sample means: ", round(mean_of_means, 3), "\n")
-        cat("  Std dev of sample means (SE): ", round(sd_of_means, 3), "\n\n")
+        cat("  Mean of sample means: ", round(as.numeric(mean_of_means), 3), "\n")
+        cat("  Std dev of sample means (SE): ", round(as.numeric(sd_of_means), 3), "\n\n")
 
         cat("Theoretical (CLT) Values:\n")
-        cat("  Theoretical Mean: ", round(rv$pop_stats$mean, 3), "\n")
-        cat("  Theoretical Std Dev (SE): ", round(theoretical_sd, 3), "\n")
+        cat("  Theoretical Mean: ", round(as.numeric(rv$pop_stats$mean), 3), "\n")
+        cat("  Theoretical Std Dev (SE): ", round(as.numeric(theoretical_sd), 3), "\n")
       } else {
         cat("  Draw more samples to calculate statistics.\n")
       }

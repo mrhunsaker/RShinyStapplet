@@ -201,7 +201,6 @@ sampling_dist_proportion_server <- function(id) {
           color = "black", size = 1.2, linetype = "dotted"
         )
       }
-      p
     })
 
     # --- Render Summary Statistics ---

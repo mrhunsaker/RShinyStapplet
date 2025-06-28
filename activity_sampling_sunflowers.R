@@ -63,7 +63,7 @@ activity_sampling_sunflowers_ui <- function(id) {
         h5("Distribution of Sample Means", align = "center"),
         plotOutput(ns("sampling_dist_plot"), height = "300px"),
         tags$script(paste0("document.getElementById('", ns("sampling_dist_plot"), "').setAttribute('aria-label', 'A histogram of the means of all samples taken so far. A red dashed line shows the theoretical normal curve.')")),
-        uiOutput(ns("plot_desc"))
+        p(id = ns("sampling_dist_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("sampling_dist_plot_desc_text")))
       )
     )
   )
@@ -167,8 +167,37 @@ activity_sampling_sunflowers_server <- function(id) {
         se <- pop_sd / sqrt(input$sample_size)
         p <- p + stat_function(fun = dnorm, args = list(mean = pop_mean, sd = se), color = "red", linetype = "dashed", size = 1)
       }
-      p
     }, alt = "A histogram of the means of all samples taken so far. A red dashed line shows the theoretical normal curve.")
+
+    # Text description for the sampling distribution plot
+    output$sampling_dist_plot_desc_text <- renderText({
+      df <- sample_means()
+      if (nrow(df) == 0) {
+        return("No samples have been taken yet, so there is no distribution to describe.")
+      }
+
+      mean_of_means <- mean(df$mean)
+      sd_of_means <- sd(df$mean)
+      se_theoretical <- pop_sd / sqrt(input$sample_size)
+
+      shape_desc <- if (nrow(df) < 30) {
+        "The shape of the distribution is still developing."
+      } else if (input$sample_size < 30) {
+        "The shape is becoming more symmetric and bell-shaped, but may still show some of the original population's skew."
+      } else {
+        "The shape is approximately normal and bell-shaped, as predicted by the Central Limit Theorem."
+      }
+
+      desc <- paste(
+        sprintf("This histogram shows the distribution of %d sample means.", nrow(df)),
+        shape_desc,
+        sprintf("The distribution is centered at %.2f, which is close to the true population mean of %.2f.", mean_of_means, pop_mean),
+        sprintf("The standard deviation of these sample means is %.2f.", sd_of_means),
+        sprintf("A red dashed line shows the theoretical normal curve predicted by the Central Limit Theorem, which has a mean of %.2f and a standard error of %.2f.", pop_mean, se_theoretical),
+        collapse = " "
+      )
+      return(desc)
+    })
 
     # Statistics Output
     output$stats_output <- renderUI({

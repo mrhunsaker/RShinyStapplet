@@ -3,6 +3,7 @@
 library(shiny)
 library(ggplot2)
 library(dplyr)
+library(BrailleR)
 
 # UI for the "Can You Smell Parkinson's?" Activity
 activity_smell_parkinsons_ui <- function(id) {
@@ -68,7 +69,7 @@ activity_smell_parkinsons_ui <- function(id) {
         div(class = "plot-container",
             plotOutput(ns("sim_plot")),
             tags$script(paste0("document.getElementById('", ns("sim_plot"), "').setAttribute('aria-label', 'A histogram showing the distribution of the number of correct guesses from many simulations. A red line indicates the observed number correct from the data.')")),
-            uiOutput(ns("plot_desc"))
+            p(id = ns("sim_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("sim_plot_desc_text")))
         )
       )
     )
@@ -149,8 +150,29 @@ activity_smell_parkinsons_server <- function(id) {
       if (nrow(p_val_area) > 0) {
         p <- p + geom_histogram(data = p_val_area, aes(x = correct), binwidth = 1, fill = "#ef4444", alpha = 0.8)
       }
+    })
 
-      p
+    # Text description for the simulation plot
+    output$sim_plot_desc_text <- renderText({
+      df <- sim_results()
+      if (is.null(df)) {
+        return("The plot is not yet available. Click 'Run Simulation' to generate it.")
+      }
+      obs_correct <- input$n_correct
+      req(is.numeric(obs_correct))
+
+      p_value <- sum(df$correct >= obs_correct) / nrow(df)
+      mean_sim_correct <- mean(df$correct)
+
+      desc <- paste(
+        sprintf("This histogram shows the distribution of the number of correct guesses from %d simulations.", input$num_sims),
+        sprintf("Each simulation consisted of %d trials with a %.3f probability of guessing correctly.", input$n_trials, input$prob_chance),
+        sprintf("The distribution of simulated correct guesses is centered around %.1f.", mean_sim_correct),
+        sprintf("A dashed red vertical line marks the observed number of correct guesses, which was %d.", obs_correct),
+        "The area corresponding to the p-value (getting %d or more correct) is shaded in red.",
+        sprintf("The calculated p-value is %.4f.", p_value)
+      )
+      paste(desc, collapse = " ")
     })
 
     # Calculate and display p-value

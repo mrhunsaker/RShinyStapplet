@@ -181,7 +181,6 @@ dist_t_server <- function(id) {
         p <- p + geom_vline(xintercept = input$t1_val, linetype = "solid", color = "#ef4444", linewidth = 0.8) +
                  geom_vline(xintercept = input$t2_val, linetype = "solid", color = "#ef4444", linewidth = 0.8)
       }
-      p
     })
 
     # Render the plot

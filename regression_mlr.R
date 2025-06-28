@@ -1,21 +1,21 @@
-# StappletSHiny/regression_slr.R
+# RShinyStapplet/regression_mlr.R
 
-# UI function for the 'Simple Linear Regression' applet
+# UI function for the 'Multiple Linear Regression' applet
 regression_mlr_ui <- function(id) {
   ns <- NS(id) # Create a namespace
   fluidPage(
     # Application Title
     titlePanel(
-      h2("Simple Linear Regression", id = "appTitle"),
-      windowTitle = "Simple Linear Regression"
+      h2("Multiple Linear Regression", id = ns("appTitle")),
+      windowTitle = "Multiple Linear Regression"
     ),
     sidebarLayout(
       sidebarPanel(
-        id = "sidebarPanel",
+        id = ns("sidebarPanel"),
         role = "form",
-        "aria-labelledby" = "dataHeading",
+        "aria-labelledby" = ns("dataHeading"),
 
-        h3("Data Input", id = "dataHeading"),
+        h3("Data Input", id = ns("dataHeading")),
         # Selector for sample data or custom input
         selectInput(ns("data_source"), "Data Source:",
                     choices = c(
@@ -30,11 +30,9 @@ regression_mlr_ui <- function(id) {
           ns = ns,
           selectInput(ns("sample_data_name"), "Choose a Sample Dataset:",
                       choices = c(
-                        "Strong Positive Correlation" = "strong_pos",
-                        "Weak Positive Correlation" = "weak_pos",
-                        "Strong Negative Correlation" = "strong_neg",
-                        "No Correlation" = "no_corr",
-                        "Non-Linear" = "non_linear"
+                        "Fuel Efficiency (mtcars)" = "mtcars",
+                        "House Prices (Boston)" = "boston",
+                        "Fish Market (Fish)" = "fish"
                       ))
         ),
 
@@ -42,71 +40,60 @@ regression_mlr_ui <- function(id) {
         conditionalPanel(
           condition = "input.data_source == 'custom'",
           ns = ns,
-          textAreaInput(ns("custom_data"), "Paste two columns of data (x, y):",
-                        placeholder = "Example:\n1, 5.2\n2, 7.8\n3, 9.1\n4, 12.5",
+          checkboxInput(ns("has_header"), "Data includes a header row", value = TRUE),
+          textAreaInput(ns("custom_data"), "Paste your data here:",
+                        placeholder = "Example:\nprice,sqft,bedrooms,bathrooms\n250000,1500,3,2\n300000,1800,3,2.5\n...",
                         rows = 10),
-          p("Data can be comma-separated, tab-separated, or space-separated.", class = "text-muted")
+          p("Data should be comma-separated, tab-separated, or space-separated.", class = "text-muted")
         ),
 
         hr(role = "separator"),
+        h3("Variable Selection"),
+        # Dynamic UI for selecting response variable
+        uiOutput(ns("response_var_ui")),
+        # Dynamic UI for selecting explanatory variables
+        uiOutput(ns("explanatory_vars_ui")),
+
+        hr(role = "separator"),
         h3("Analysis Options"),
-        # Checkbox to show/hide the regression line
-        checkboxInput(ns("show_line"), "Show Least-Squares Regression Line", value = TRUE),
-        # Checkbox to show/hide the model summary
-        checkboxInput(ns("show_summary"), "Show Model Summary & Coefficients", value = TRUE),
-        # Checkbox to show/hide the residual plot
-        checkboxInput(ns("show_residuals"), "Show Residual Plot", value = FALSE),
-        # Checkbox to show/hide descriptive statistics
+        checkboxInput(ns("show_summary"), "Show Model Summary", value = TRUE),
+        checkboxInput(ns("show_residuals"), "Show Residuals vs. Fitted Plot", value = TRUE),
+        checkboxInput(ns("show_pairs"), "Show Pairs Plot", value = FALSE),
         checkboxInput(ns("show_stats"), "Show Descriptive Statistics", value = FALSE)
       ),
       mainPanel(
-        id = "mainPanel",
+        id = ns("mainPanel"),
         role = "main",
-        # Scatterplot Output
-        div(class = "plot-container",
-            htmltools::tagQuery(
-                plotOutput(ns("scatterplot"))
-            )$find("img")$addAttrs(
-                "aria-labelledby" = ns("appTitle")
-            )$all()
-        ),
-        # Model Summary Output (conditionally shown)
+        # Model Summary Output
         conditionalPanel(
-          condition = "input.show_summary",
-          ns = ns,
+          condition = "input.show_summary", ns = ns,
           div(class = "results-box",
               h4("Regression Model Summary", id = ns("modelSummaryHeading")),
-              htmltools::tagQuery(
-                  verbatimTextOutput(ns("model_summary"))
-              )$find("pre")$addAttrs(
-                  "aria-labelledby" = ns("modelSummaryHeading")
-              )$all()
+              verbatimTextOutput(ns("model_summary"))
           )
         ),
-        # Residual Plot Output (conditionally shown)
+        # Residual Plot Output
         conditionalPanel(
-          condition = "input.show_residuals",
-          ns = ns,
+          condition = "input.show_residuals", ns = ns,
           div(class = "plot-container",
               h4("Residuals vs. Fitted Values Plot", id = ns("residualPlotHeading")),
-              htmltools::tagQuery(
-                  plotOutput(ns("residual_plot"))
-              )$find("img")$addAttrs(
-                  "aria-labelledby" = ns("residualPlotHeading")
-              )$all()
+              plotOutput(ns("residual_plot"))
           )
         ),
-        # Descriptive Statistics Output (conditionally shown)
+        # Pairs Plot Output
         conditionalPanel(
-          condition = "input.show_stats",
-          ns = ns,
+          condition = "input.show_pairs", ns = ns,
+          div(class = "plot-container",
+              h4("Pairs Plot of Variables", id = ns("pairsPlotHeading")),
+              plotOutput(ns("pairs_plot"))
+          )
+        ),
+        # Descriptive Statistics Output
+        conditionalPanel(
+          condition = "input.show_stats", ns = ns,
           div(class = "results-box",
               h4("Descriptive Statistics", id = ns("descStatsHeading")),
-              htmltools::tagQuery(
-                  verbatimTextOutput(ns("descriptive_stats"))
-              )$find("pre")$addAttrs(
-                  "aria-labelledby" = ns("descStatsHeading")
-              )$all()
+              verbatimTextOutput(ns("descriptive_stats"))
           )
         )
       )
@@ -114,79 +101,97 @@ regression_mlr_ui <- function(id) {
   )
 }
 
-# Server function for the 'Simple Linear Regression' applet
+# Server function for the 'Multiple Linear Regression' applet
 regression_mlr_server <- function(id) {
   moduleServer(id, function(input, output, session) {
+    ns <- session$ns
 
     # --- Pre-defined Sample Datasets ---
     sample_datasets <- list(
-      strong_pos = data.frame(x = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), y = c(2.1, 3.9, 6.2, 8.1, 9.8, 12.3, 14.1, 16.2, 18.0, 20.1)),
-      weak_pos = data.frame(x = c(1:15), y = c(5, 3, 8, 6, 9, 11, 10, 14, 9, 15, 13, 18, 16, 20, 19)),
-      strong_neg = data.frame(x = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), y = c(19.5, 17.8, 16.1, 13.9, 12.2, 10.1, 7.8, 6.1, 3.9, 2.2)),
-      no_corr = data.frame(x = c(1:20), y = sample(1:20, 20, replace = TRUE)),
-      non_linear = data.frame(x = c(1:10), y = c(1, 4, 9, 16, 25, 36, 49, 64, 81, 100) + rnorm(10, 0, 5))
+      mtcars = mtcars[, c("mpg", "wt", "hp", "qsec")],
+      boston = as.data.frame(MASS::Boston[, c("medv", "lstat", "rm", "age")]),
+      fish = read.csv(text =
+        "Weight,Length1,Length2,Length3,Height,Width\n"
+      ) # Placeholder, will be loaded if needed
     )
+    # Lazy load fish data
+    if (!exists("fish_data_loaded")) {
+        try({
+            fish_url <- "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-06-09/fish.csv"
+            fish_df <- read.csv(fish_url)
+            # Select relevant numeric columns
+            sample_datasets$fish <- fish_df[, c("Weight", "Length1", "Height", "Width")]
+            fish_data_loaded <<- TRUE
+        }, silent = TRUE)
+    }
+
 
     # --- Reactive Logic ---
-
-    # Reactive expression to parse user-pasted data
-    parsed_data <- reactive({
-      req(input$custom_data)
-      # Use read.table to flexibly handle delimiters (comma, tab, space)
-      tryCatch({
-        df <- read.table(text = input$custom_data, header = FALSE,
-                         col.names = c("x", "y"), stringsAsFactors = FALSE,
-                         fill = TRUE, blank.lines.skip = TRUE)
-        # Ensure data is numeric and remove rows with NAs
-        df$x <- as.numeric(df$x)
-        df$y <- as.numeric(df$y)
-        na.omit(df)
-      }, error = function(e) {
-        # Return NULL if parsing fails, preventing app from crashing
-        return(NULL)
-      })
-    })
 
     # Main reactive expression for the dataset being used for analysis
     active_data <- reactive({
       if (input$data_source == "custom") {
-        return(parsed_data())
+        req(input$custom_data)
+        tryCatch({
+          df <- read.table(text = input$custom_data, header = input$has_header,
+                           sep = ",", stringsAsFactors = FALSE, fill = TRUE,
+                           blank.lines.skip = TRUE)
+          # A simple heuristic to try other separators if comma fails
+          if (ncol(df) < 2) {
+             df <- read.table(text = input$custom_data, header = input$has_header,
+                           stringsAsFactors = FALSE, fill = TRUE, blank.lines.skip = TRUE)
+          }
+          # Keep only numeric columns
+          df[sapply(df, is.numeric)]
+        }, error = function(e) {
+          return(NULL)
+        })
       } else {
-        return(sample_datasets[[input$sample_data_name]])
+        sample_datasets[[input$sample_data_name]]
       }
     })
+
+    # Get column names from the active data
+    data_colnames <- reactive({
+      df <- active_data()
+      req(df)
+      colnames(df)
+    })
+
+    # --- Dynamic UI Rendering ---
+
+    # Render UI for selecting the response variable (Y)
+    output$response_var_ui <- renderUI({
+      cols <- data_colnames()
+      req(cols)
+      selectInput(ns("response_var"), "Response Variable (Y):",
+                  choices = cols, selected = cols[1])
+    })
+
+    # Render UI for selecting explanatory variables (X)
+    output$explanatory_vars_ui <- renderUI({
+      cols <- data_colnames()
+      req(cols, input$response_var)
+      # Exclude the response variable from the choices
+      explanatory_choices <- setdiff(cols, input$response_var)
+      checkboxGroupInput(ns("explanatory_vars"), "Explanatory Variables (X):",
+                         choices = explanatory_choices,
+                         selected = explanatory_choices[1])
+    })
+
+    # --- Model Fitting ---
 
     # Reactive expression for the linear model
     model <- reactive({
       df <- active_data()
-      # Require at least 2 valid data points to fit a line
-      req(df, nrow(df) >= 2)
-      lm(y ~ x, data = df)
+      req(df, input$response_var, input$explanatory_vars, length(input$explanatory_vars) > 0)
+
+      # Construct the formula string
+      formula_str <- paste(input$response_var, "~", paste(input$explanatory_vars, collapse = " + "))
+      lm(as.formula(formula_str), data = df)
     })
 
     # --- Render Outputs ---
-
-    # Scatterplot
-    output$scatterplot <- renderPlot({
-      df <- active_data()
-      req(df)
-
-      p <- ggplot(df, aes(x = x, y = y)) +
-        geom_point(color = "#1e40af", size = 3, alpha = 0.8) +
-        labs(
-          title = "Scatterplot of Response (Y) vs. Explanatory (X)",
-          x = "Explanatory Variable (X)",
-          y = "Response Variable (Y)"
-        ) +
-        theme_minimal(base_size = 14) +
-        theme(plot.title = element_text(hjust = 0.5, face = "bold"))
-
-      # Conditionally add the regression line
-      if (input$show_line && !is.null(model())) {
-        p <- p + geom_smooth(method = "lm", se = FALSE, color = "#dc2626", formula = y ~ x)
-      }
-      p
-    })
 
     # Model Summary
     output$model_summary <- renderPrint({
@@ -197,40 +202,61 @@ regression_mlr_server <- function(id) {
     # Residual Plot
     output$residual_plot <- renderPlot({
       req(model())
-
       res_df <- data.frame(
         fitted = fitted(model()),
         residuals = residuals(model())
       )
-
-      ggplot(res_df, aes(x = fitted, y = residuals)) +
-        geom_point(color = "#1e40af", size = 3, alpha = 0.8) +
-        geom_hline(yintercept = 0, linetype = "dashed", color = "#dc2626", size = 1) +
+      p <- ggplot(res_df, aes(x = fitted, y = residuals)) +
+        geom_point(color = "#1e40af", size = 3, alpha = 0.7) +
+        geom_hline(yintercept = 0, linetype = "dashed", color = "#dc2626", linewidth = 1) +
         labs(
-          title = "Residuals vs. Fitted Values",
           x = "Fitted Values (Predicted Y)",
           y = "Residuals (Observed - Predicted)"
         ) +
         theme_minimal(base_size = 14) +
         theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+      p
     })
 
     # Descriptive Statistics
     output$descriptive_stats <- renderPrint({
       df <- active_data()
-      req(df, nrow(df) > 1)
+      req(df, input$response_var, input$explanatory_vars)
+      selected_cols <- c(input$response_var, input$explanatory_vars)
+      # Ensure selected columns exist in the dataframe
+      df_subset <- df[, intersect(selected_cols, colnames(df)), drop = FALSE]
+      req(ncol(df_subset) > 0)
 
-      cat("--- Explanatory Variable (X) ---\n")
-      print(summary(df$x))
-      cat("Standard Deviation:", round(sd(df$x, na.rm = TRUE), 3), "\n\n")
+      cat("--- Summary Statistics ---\n")
+      print(summary(df_subset))
 
-      cat("--- Response Variable (Y) ---\n")
-      print(summary(df$y))
-      cat("Standard Deviation:", round(sd(df$y, na.rm = TRUE), 3), "\n\n")
-
-      cat("--- Relationship ---\n")
-      cat("Correlation (r):", round(cor(df$x, df$y, use = "complete.obs"), 3), "\n")
+      if (ncol(df_subset) > 1) {
+        cat("\n--- Correlation Matrix ---\n")
+        print(round(cor(df_subset, use = "complete.obs"), 3))
+      }
     })
 
+    # Pairs Plot
+    output$pairs_plot <- renderPlot({
+        df <- active_data()
+        req(df, input$response_var, input$explanatory_vars)
+        selected_cols <- c(input$response_var, input$explanatory_vars)
+        df_subset <- df[, intersect(selected_cols, colnames(df)), drop = FALSE]
+        req(ncol(df_subset) > 1)
+
+        # Use GGally for a more informative pairs plot if available
+        if (requireNamespace("GGally", quietly = TRUE)) {
+            p <- GGally::ggpairs(df_subset,
+                upper = list(continuous = GGally::wrap("cor", size = 4)),
+                lower = list(continuous = GGally::wrap("points", alpha = 0.5, size=2)),
+                diag = list(continuous = GGally::wrap("densityDiag", alpha = 0.5))
+            ) + theme_minimal()
+            p
+        } else {
+            # Fallback to base R pairs plot
+            pairs(df_subset, pch = 19, col = alpha("#1e40af", 0.7),
+                  main = "Pairs Plot of Selected Variables")
+        }
+    })
   })
 }

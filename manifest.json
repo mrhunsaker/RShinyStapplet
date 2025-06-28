@@ -41,6 +41,39 @@
         "Built": "R 4.5.1; ; 2025-06-27 16:13:27 UTC; unix"
       }
     },
+    "GGally": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "GGally",
+        "Version": "2.2.1",
+        "License": "GPL (>= 2.0)",
+        "Title": "Extension to 'ggplot2'",
+        "Type": "Package",
+        "LazyLoad": "yes",
+        "LazyData": "true",
+        "URL": "https://ggobi.github.io/ggally/, https://github.com/ggobi/ggally",
+        "BugReports": "https://github.com/ggobi/ggally/issues",
+        "Authors@R": "c(\n    person(\"Barret\", \"Schloerke\", role = c(\"aut\", \"cre\"), email = \"schloerke@gmail.com\"),\n    person(\"Di\", \"Cook\", role = c(\"aut\", \"ths\"), email = \"dicook@monash.edu\"),\n    person(\"Joseph\", \"Larmarange\", role = \"aut\", email = \"joseph@larmarange.net\"),\n    person(\"Francois\", \"Briatte\", role = \"aut\", email = \"f.briatte@gmail.com\"),\n    person(\"Moritz\", \"Marbach\", role = \"aut\", email = \"mmarbach@mail.uni-mannheim.de\"),\n    person(\"Edwin\", \"Thoen\", role = \"aut\", email = \"edwinthoen@gmail.com\"),\n    person(\"Amos\", \"Elberg\", role = \"aut\", email = \"amos.elberg@gmail.com\"),\n    person(\"Ott\", \"Toomet\", role = \"ctb\", email = \"otoomet@gmail.com\"),\n    person(\"Jason\", \"Crowley\", role = \"aut\", email = \"crowley.jason.s@gmail.com\"),\n    person(\"Heike\", \"Hofmann\", role = \"ths\", email = \"hofmann@iastate.edu\"),\n    person(\"Hadley\", \"Wickham\", role = \"ths\", email = \"h.wickham@gmail.com\")\n    )",
+        "Description": "\n    The R package 'ggplot2' is a plotting system based on the grammar of graphics.\n    'GGally' extends 'ggplot2' by adding several functions\n    to reduce the complexity of combining geometric objects with transformed data.\n    Some of these functions include a pairwise plot matrix, a two group pairwise plot\n    matrix, a parallel coordinates plot, a survival plot, and several functions to\n    plot networks.",
+        "Depends": "R (>= 3.1), ggplot2 (>= 3.4.4)",
+        "Imports": "dplyr (>= 1.0.0), tidyr (>= 1.3.0), grDevices, grid, ggstats,\ngtable (>= 0.2.0), lifecycle, plyr (>= 1.8.3), progress,\nRColorBrewer, rlang, scales (>= 1.1.0), utils, magrittr",
+        "Suggests": "broom (>= 0.7.0), broom.helpers (>= 1.3.0), chemometrics,\ngeosphere (>= 1.5-1), ggforce, Hmisc, igraph (>= 1.0.1),\nintergraph (>= 2.0-2), labelled, maps (>= 3.1.0), mapproj,\nnnet, network (>= 1.17.1), scagnostics, sna (>= 2.3-2),\nsurvival, rmarkdown, roxygen2, testthat, crosstalk, knitr,\nspelling, emmeans, vdiffr",
+        "RoxygenNote": "7.3.1",
+        "SystemRequirements": "openssl",
+        "Encoding": "UTF-8",
+        "Language": "en-US",
+        "RdMacros": "lifecycle",
+        "Config/testthat/edition": "3",
+        "NeedsCompilation": "no",
+        "Packaged": "2024-02-13 19:02:36 UTC; barret",
+        "Author": "Barret Schloerke [aut, cre],\n  Di Cook [aut, ths],\n  Joseph Larmarange [aut],\n  Francois Briatte [aut],\n  Moritz Marbach [aut],\n  Edwin Thoen [aut],\n  Amos Elberg [aut],\n  Ott Toomet [ctb],\n  Jason Crowley [aut],\n  Heike Hofmann [ths],\n  Hadley Wickham [ths]",
+        "Maintainer": "Barret Schloerke <schloerke@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-02-14 00:53:32 UTC",
+        "Built": "R 4.5.1; ; 2025-06-28 19:26:19 UTC; unix"
+      }
+    },
     "MASS": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -1046,6 +1079,36 @@
         "Built": "R 4.5.1; ; 2025-06-27 13:10:10 UTC; unix"
       }
     },
+    "forcats": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "forcats",
+        "Title": "Tools for Working with Categorical Variables (Factors)",
+        "Version": "1.0.0",
+        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@rstudio.com\", role = c(\"aut\", \"cre\")),\n    person(\"RStudio\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "Helpers for reordering factor levels (including moving\n    specified levels to front, ordering by first appearance, reversing,\n    and randomly shuffling), and tools for modifying factor levels\n    (including collapsing rare levels into other, 'anonymising', and\n    manually 'recoding').",
+        "License": "MIT + file LICENSE",
+        "URL": "https://forcats.tidyverse.org/,\nhttps://github.com/tidyverse/forcats",
+        "BugReports": "https://github.com/tidyverse/forcats/issues",
+        "Depends": "R (>= 3.4)",
+        "Imports": "cli (>= 3.4.0), glue, lifecycle, magrittr, rlang (>= 1.0.0),\ntibble",
+        "Suggests": "covr, dplyr, ggplot2, knitr, readr, rmarkdown, testthat (>=\n3.0.0), withr",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "LazyData": "true",
+        "RoxygenNote": "7.2.3",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-01-27 14:11:11 UTC; hadleywickham",
+        "Author": "Hadley Wickham [aut, cre],\n  RStudio [cph, fnd]",
+        "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-01-29 22:20:02 UTC",
+        "Built": "R 4.5.1; ; 2025-06-28 19:26:04 UTC; unix"
+      }
+    },
     "fs": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -1166,6 +1229,36 @@
         "Repository": "CRAN",
         "Date/Publication": "2025-04-09 09:40:10 UTC",
         "Built": "R 4.5.1; ; 2025-06-27 16:13:19 UTC; unix"
+      }
+    },
+    "ggstats": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "ggstats",
+        "Type": "Package",
+        "Title": "Extension to 'ggplot2' for Plotting Stats",
+        "Version": "0.9.0",
+        "Authors@R": "c(\n    person(\n      \"Joseph\", \"Larmarange\", ,\n      \"joseph@larmarange.net\",\n      role = c(\"aut\", \"cre\"),\n      comment = c(ORCID = \"0000-0001-7097-700X\")\n    )\n  )",
+        "Description": "Provides new statistics, new geometries and new positions for \n    'ggplot2' and a suite of functions to facilitate the creation of \n    statistical plots.",
+        "License": "GPL (>= 3)",
+        "URL": "https://larmarange.github.io/ggstats/,\nhttps://github.com/larmarange/ggstats",
+        "BugReports": "https://github.com/larmarange/ggstats/issues",
+        "Depends": "R (>= 4.2)",
+        "Imports": "cli, dplyr, forcats, ggplot2 (>= 3.4.0), lifecycle, patchwork,\npurrr, rlang, scales, stats, stringr, utils, tidyr",
+        "Suggests": "betareg, broom, broom.helpers (>= 1.20.0), emmeans, glue,\ngtsummary, knitr, labelled (>= 2.11.0), reshape, rmarkdown,\nnnet, parameters, pscl, testthat (>= 3.0.0), spelling, survey,\nsurvival, vdiffr",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.2",
+        "Config/testthat/edition": "3",
+        "Language": "en-US",
+        "VignetteBuilder": "knitr",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-03-10 10:35:16 UTC; josep",
+        "Author": "Joseph Larmarange [aut, cre] (<https://orcid.org/0000-0001-7097-700X>)",
+        "Maintainer": "Joseph Larmarange <joseph@larmarange.net>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-03-10 11:20:02 UTC",
+        "Built": "R 4.5.1; ; 2025-06-28 19:26:15 UTC; unix"
       }
     },
     "gh": {
@@ -1382,6 +1475,36 @@
         "Repository": "CRAN",
         "Date/Publication": "2024-05-26 20:00:03 UTC",
         "Built": "R 4.5.1; ; 2025-06-27 13:08:24 UTC; unix"
+      }
+    },
+    "hms": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "hms",
+        "Title": "Pretty Time of Day",
+        "Date": "2023-03-21",
+        "Version": "1.1.3",
+        "Authors@R": "c(\n    person(\"Kirill\", \"Müller\", role = c(\"aut\", \"cre\"), email = \"kirill@cynkra.com\", comment = c(ORCID = \"0000-0002-1416-3412\")),\n    person(\"R Consortium\", role = \"fnd\"),\n    person(\"RStudio\", role = \"fnd\")\n    )",
+        "Description": "Implements an S3 class for storing and formatting time-of-day\n    values, based on the 'difftime' class.",
+        "Imports": "lifecycle, methods, pkgconfig, rlang (>= 1.0.2), vctrs (>=\n0.3.8)",
+        "Suggests": "crayon, lubridate, pillar (>= 1.1.0), testthat (>= 3.0.0)",
+        "License": "MIT + file LICENSE",
+        "Encoding": "UTF-8",
+        "URL": "https://hms.tidyverse.org/, https://github.com/tidyverse/hms",
+        "BugReports": "https://github.com/tidyverse/hms/issues",
+        "RoxygenNote": "7.2.3",
+        "Config/testthat/edition": "3",
+        "Config/autostyle/scope": "line_breaks",
+        "Config/autostyle/strict": "false",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-03-21 16:52:11 UTC; kirill",
+        "Author": "Kirill Müller [aut, cre] (<https://orcid.org/0000-0002-1416-3412>),\n  R Consortium [fnd],\n  RStudio [fnd]",
+        "Maintainer": "Kirill Müller <kirill@cynkra.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-03-21 18:10:02 UTC",
+        "Built": "R 4.5.1; ; 2025-06-28 19:26:09 UTC; unix"
       }
     },
     "htmltools": {
@@ -2008,6 +2131,34 @@
         "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-06-27 13:09:08 UTC; unix"
       }
     },
+    "patchwork": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "patchwork",
+        "Type": "Package",
+        "Title": "The Composer of Plots",
+        "Version": "1.3.1",
+        "Authors@R": "\n    person(given = \"Thomas Lin\",\n           family = \"Pedersen\",\n           role = c(\"cre\", \"aut\"),\n           email = \"thomasp85@gmail.com\",\n           comment = c(ORCID = \"0000-0002-5147-4711\"))",
+        "Maintainer": "Thomas Lin Pedersen <thomasp85@gmail.com>",
+        "Description": "The 'ggplot2' package provides a strong API for sequentially \n    building up a plot, but does not concern itself with composition of multiple\n    plots. 'patchwork' is a package that expands the API to allow for \n    arbitrarily complex composition of plots by, among others, providing \n    mathematical operators for combining multiple plots. Other packages that try \n    to address this need (but with a different approach) are 'gridExtra' and \n    'cowplot'.",
+        "License": "MIT + file LICENSE",
+        "Encoding": "UTF-8",
+        "Imports": "ggplot2 (>= 3.0.0), gtable (>= 0.3.6), grid, stats, grDevices,\nutils, graphics, rlang (>= 1.0.0), cli, farver",
+        "RoxygenNote": "7.3.2",
+        "URL": "https://patchwork.data-imaginist.com,\nhttps://github.com/thomasp85/patchwork",
+        "BugReports": "https://github.com/thomasp85/patchwork/issues",
+        "Suggests": "knitr, rmarkdown, gridGraphics, gridExtra, ragg, testthat (>=\n2.1.0), vdiffr, covr, png, gt (>= 0.11.0)",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "gifski",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-06-18 09:21:35 UTC; thomas",
+        "Author": "Thomas Lin Pedersen [cre, aut] (ORCID:\n    <https://orcid.org/0000-0002-5147-4711>)",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-06-21 13:20:05 UTC",
+        "Built": "R 4.5.1; ; 2025-06-28 19:26:06 UTC; unix"
+      }
+    },
     "pillar": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -2157,6 +2308,34 @@
         "Built": "R 4.5.1; ; 2025-06-27 13:10:58 UTC; unix"
       }
     },
+    "plyr": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "plyr",
+        "Title": "Tools for Splitting, Applying and Combining Data",
+        "Version": "1.8.9",
+        "Authors@R": "\n    person(\"Hadley\", \"Wickham\", , \"hadley@rstudio.com\", role = c(\"aut\", \"cre\"))",
+        "Description": "A set of tools that solves a common set of problems: you need\n    to break a big problem down into manageable pieces, operate on each\n    piece and then put all the pieces back together.  For example, you\n    might want to fit a model to each spatial location or time point in\n    your study, summarise data by panels or collapse high-dimensional\n    arrays to simpler summary statistics. The development of 'plyr' has\n    been generously supported by 'Becton Dickinson'.",
+        "License": "MIT + file LICENSE",
+        "URL": "http://had.co.nz/plyr, https://github.com/hadley/plyr",
+        "BugReports": "https://github.com/hadley/plyr/issues",
+        "Depends": "R (>= 3.1.0)",
+        "Imports": "Rcpp (>= 0.11.0)",
+        "Suggests": "abind, covr, doParallel, foreach, iterators, itertools,\ntcltk, testthat",
+        "LinkingTo": "Rcpp",
+        "Encoding": "UTF-8",
+        "LazyData": "true",
+        "RoxygenNote": "7.2.3",
+        "NeedsCompilation": "yes",
+        "Packaged": "2023-09-27 13:58:04 UTC; hadleywickham",
+        "Author": "Hadley Wickham [aut, cre]",
+        "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-10-02 06:50:08 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-06-28 19:26:10 UTC; unix"
+      }
+    },
     "praise": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -2260,6 +2439,34 @@
         "Repository": "CRAN",
         "Date/Publication": "2024-09-20 11:50:10 UTC",
         "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-06-27 13:11:41 UTC; unix"
+      }
+    },
+    "progress": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "progress",
+        "Title": "Terminal Progress Bars",
+        "Version": "1.2.3",
+        "Authors@R": "c(\n    person(\"Gábor\", \"Csárdi\", , \"csardi.gabor@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Rich\", \"FitzJohn\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "Configurable Progress bars, they may include percentage,\n    elapsed time, and/or the estimated completion time. They work in\n    terminals, in 'Emacs' 'ESS', 'RStudio', 'Windows' 'Rgui' and the\n    'macOS' 'R.app'. The package also provides a 'C++' 'API', that works\n    with or without 'Rcpp'.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/r-lib/progress#readme,\nhttp://r-lib.github.io/progress/",
+        "BugReports": "https://github.com/r-lib/progress/issues",
+        "Depends": "R (>= 3.6)",
+        "Imports": "crayon, hms, prettyunits, R6",
+        "Suggests": "Rcpp, testthat (>= 3.0.0), withr",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.2.3",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-12-05 09:33:10 UTC; gaborcsardi",
+        "Author": "Gábor Csárdi [aut, cre],\n  Rich FitzJohn [aut],\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-12-06 10:30:02 UTC",
+        "Built": "R 4.5.1; ; 2025-06-28 19:26:17 UTC; unix"
       }
     },
     "promises": {
@@ -3573,71 +3780,119 @@
     }
   },
   "files": {
+    ".RData": {
+      "checksum": "b5e84c40889c6bb4061b319947c957f3"
+    },
+    "activity_candy_chi_square.R": {
+      "checksum": "67d60d456e2d2984959ea9f96eb60300"
+    },
+    "activity_guess_correlation.R": {
+      "checksum": "383a7cd4b71caae2596f63ee9e01cf4c"
+    },
+    "activity_hiring_discrimination.R": {
+      "checksum": "b6a5243f6c57efc837bb22db39d43222"
+    },
+    "activity_mrs_gallas.R": {
+      "checksum": "419695064c9244f68157480025a6d6d4"
+    },
+    "activity_sampling_sunflowers.R": {
+      "checksum": "8474c77df9f63af3dd8ce01ff5fce279"
+    },
+    "activity_smell_parkinsons.R": {
+      "checksum": "76e413c59e28f5fe1477bd271b8d138f"
+    },
     "anova_one_way.R": {
-      "checksum": "0f5cc98d897051d2fd36e1f19981835f"
+      "checksum": "14b341f2e88ec9b2078e73da9729b33a"
     },
     "app.R": {
-      "checksum": "87b9ab1ac1622721de018fe00675ac8e"
+      "checksum": "770d293965d1336afb6da656e46a22f7"
     },
     "ci_diff_means.R": {
-      "checksum": "51664fde287a36f96409cfab2523733d"
+      "checksum": "22c8c7cdbf5dcbba0654efcd4866976b"
     },
     "ci_diff_proportions.R": {
-      "checksum": "afadc8f994a76e639fe1843cb00f8117"
+      "checksum": "65fdaee28be7a9fd931a39907d7ce6fe"
     },
     "ci_mean.R": {
-      "checksum": "b82cb4032df31927fb8d0b586d496fe2"
+      "checksum": "5639f51b16b8f27415046ca6e7d588b6"
     },
     "ci_proportion.R": {
       "checksum": "8ba34f1598af8abc3e04deb906ca8df4"
     },
     "dist_binomial.R": {
-      "checksum": "4d91bc71267d8f642bb32d9d9afd5189"
+      "checksum": "27b6812d0cc8948830de1b49ffba0175"
     },
     "dist_chi_square.R": {
-      "checksum": "2ca846930a48998dc24f5131084cdfa9"
+      "checksum": "518c287c8df67a4e38be50e62a9161c0"
+    },
+    "dist_counting_methods.R": {
+      "checksum": "fea1883779e75222223eb9aefd0a066c"
+    },
+    "dist_discrete_random.R": {
+      "checksum": "74364b8774399267b9c33e1eb9f60a23"
     },
     "dist_f.R": {
-      "checksum": "47d7a950251f4e1a4b293cbe3a03c8c9"
+      "checksum": "31517ceae86a8dfa0c5008e3ef7ffa9f"
     },
     "dist_normal.R": {
-      "checksum": "91420f81e1117f9b6f4b3131a8eb8909"
+      "checksum": "b59f64c6f5e0d5fb02c2253ac4bd2456"
+    },
+    "dist_poisson.R": {
+      "checksum": "093f99921459dfe8360d9199752cda99"
+    },
+    "dist_power.R": {
+      "checksum": "247d2307bb9ba3aabcade04f6c474d5b"
     },
     "dist_t.R": {
-      "checksum": "556cae9e9d21382da54e9369d04bf4d2"
+      "checksum": "07bcbb2c9f7f424fa09237e75c636b45"
     },
     "ht_chi_gof.R": {
-      "checksum": "f48d9ac025a6ce7270951eecdf8fab45"
+      "checksum": "dd6f88b480fccf0171128e82a6d05174"
     },
     "ht_chi_ind.R": {
-      "checksum": "46819ad1e6d1230f13e349021ccdc0a5"
+      "checksum": "17a9f1163e261198dfb77afab0953b8a"
     },
     "ht_diff_means.R": {
-      "checksum": "a96fcda204ea994a367d50422937b304"
+      "checksum": "dc5409f6f14095b8e2770452f2bbe3a2"
     },
     "ht_diff_proportions.R": {
-      "checksum": "cf9f401eef753871bde15c4a39de4e40"
+      "checksum": "2e5458ab0cf1a14346361c6fb8da7a4e"
     },
     "ht_mean.R": {
-      "checksum": "eafa35123173e6f574442d471f12260e"
+      "checksum": "50cf5f7e6a8aac68faa1a00f4227400f"
     },
     "ht_proportion.R": {
-      "checksum": "af95f049fde180037677e4ea85251c6d"
+      "checksum": "60a4be147d2be4305fe98305b8eefa55"
+    },
+    "launch_Scripts/launch_shiny_app.cmd": {
+      "checksum": "aa5dfc3774197d7c6e81de9350abce47"
+    },
+    "launch_Scripts/launch_shiny_app.ps1": {
+      "checksum": "ec9e76a2efc24b0935f5010eff6104c0"
+    },
+    "launch_Scripts/launch_shiny_app.sh": {
+      "checksum": "90f0402a959eaa1252091a9448080cec"
+    },
+    "launch_Scripts/launch_shiny_app.zsh": {
+      "checksum": "075bd72216b0d3ea9ac03a4736bbad54"
     },
     "LICENSE": {
       "checksum": "86d3f3a95c324c9479bd8986968f4327"
     },
     "README.md": {
-      "checksum": "bdaac5727d94694b2e64b19feab5f3e5"
+      "checksum": "6e3d56cc8067763aeb6c24443f78e12d"
+    },
+    "regression_mlr.R": {
+      "checksum": "cafff5c8b0744a592563e6c504ba41ab"
     },
     "regression_slr.R": {
-      "checksum": "b06974c821544e254ed8bb8c6d0df445"
+      "checksum": "b2784e626df6178e0601e5f30d1364d9"
     },
     "sampling_distribution_mean.R": {
-      "checksum": "fa0322193d8c6b4e0ce7a043a006b884"
+      "checksum": "35e84a46bd47d5be176932efcb372d9a"
     },
     "sampling_distribution_proportion.R": {
-      "checksum": "e2949212f04a04976284e78e9d8e710b"
+      "checksum": "14fdcd8c5de6b44e6470e3b667ef3894"
     },
     "stapplet_topics.md": {
       "checksum": "b85c35f758195a71adf35e572c5d3467"
@@ -3646,7 +3901,7 @@
       "checksum": "778d2a6bfdfca21852c7640fbdc072c6"
     },
     "tools_simulations.R": {
-      "checksum": "18784ff7446d1017df66d297c4ff75db"
+      "checksum": "4726f80ac2200d688452f1f55c36ee05"
     },
     "ui.R": {
       "checksum": "b99ee6126958dd0a5bf3d4d87eabe25e"

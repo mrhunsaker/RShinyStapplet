@@ -65,8 +65,9 @@ dist_f_ui <- function(id) {
             plotOutput(ns("fPlot"))
           )$find("img")$addAttrs(
             role = "img",
-            "aria-labelledby" = ns("plotDescription")
+            "aria-labelledby" = ns("fPlot_label")
           )$all(),
+          p(id = ns("fPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("fPlot_desc_text"))),
           p(id = ns("plotDescription"), class = "sr-only", role = "status", "aria-live" = "polite", textOutput(ns("brailleRDescription")))
         ),
         div(class = "results-box",
@@ -143,7 +144,7 @@ dist_f_server <- function(id) {
           x_shade <- seq(x_val, max(df$x), length.out = 100)
           fill_color <- "#fbbf24" # amber
         }
-        y_shade <- df(x_shade, df1 = plot_df1, df2 = plot_df2)
+        y_shade <- stats::df(x_shade, df1 = plot_df1, df2 = plot_df2)
         p <- p + geom_area(data = data.frame(x = x_shade, y = y_shade), aes(x = x, y = y),
                            fill = fill_color, alpha = 0.6)
 
@@ -156,6 +157,41 @@ dist_f_server <- function(id) {
     # Render the plot
     output$fPlot <- renderPlot({
       plot_object_reactive()
+    })
+
+    # Text description for the F distribution plot
+    output$fPlot_desc_text <- renderText({
+      req(input$df1, input$df2, input$x_val)
+      df1 <- input$df1
+      df2 <- input$df2
+      x_val <- input$x_val
+      prob <- calculated_probability()
+
+      # Describe the shape
+      shape_desc <- if (df1 > 2) {
+        "The distribution is right-skewed, with a peak near 1."
+      } else {
+        "The distribution is heavily right-skewed, starting high at the y-axis and decreasing rapidly."
+      }
+
+      # Describe the shaded area
+      shaded_desc <- ""
+      if (is.numeric(prob)) {
+        shaded_desc <- if (input$prob_type == "lt") {
+          sprintf("The area to the left of the F-value %.2f is shaded, representing a cumulative probability of %.4f.", x_val, prob)
+        } else { # "gt"
+          sprintf("The area to the right of the F-value %.2f is shaded, representing a tail probability of %.4f.", x_val, prob)
+        }
+      }
+
+      desc <- paste(
+        sprintf("This plot shows an F-distribution with %d numerator and %d denominator degrees of freedom.", df1, df2),
+        shape_desc,
+        "A vertical red line marks the specified F-value.",
+        shaded_desc,
+        collapse = " "
+      )
+      return(desc)
     })
 
     # Render the probability result text

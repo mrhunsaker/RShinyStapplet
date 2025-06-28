@@ -37,24 +37,21 @@ anova_one_way_ui <- function(id) {
             h4("Group Distributions", style = "text-align: center;"),
             htmltools::tagQuery(
               plotOutput(ns("boxPlot"))
-            )$find("img")$addAttrs("aria-labelledby" = ns("appTitle"))$all()
+            )$find("img")$addAttrs("aria-labelledby" = ns("appTitle"))$all(),
+            p(id = ns("boxPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("boxPlot_desc_text")))
         ),
         # Results boxes
-        fluidRow(
-          column(6,
-            div(class = "results-box",
-                h3("Descriptive Statistics"),
-                tableOutput(ns("descriptiveStats"))
-            )
-          ),
-          column(6,
-            div(class = "results-box",
-                h3("ANOVA Summary Table"),
-                htmltools::tagQuery(
-                  verbatimTextOutput(ns("anovaSummary"))
-                )$find("pre")$addAttrs("aria-labelledby" = ns("appTitle"))$all()
-            )
-          )
+        div(
+          class = "results-box",
+          h3("Descriptive Statistics"),
+          tableOutput(ns("descriptiveStats"))
+        ),
+        div(
+          class = "results-box",
+          h3("ANOVA Summary Table"),
+          htmltools::tagQuery(
+            verbatimTextOutput(ns("anovaSummary"))
+          )$find("pre")$addAttrs("aria-labelledby" = ns("appTitle"))$all()
         ),
         fluidRow(
           column(12,
@@ -154,6 +151,31 @@ anova_one_way_server <- function(id) {
         labs(title = "Comparison of Group Distributions", x = "Group", y = "Value") +
         theme_minimal(base_size = 14) +
         theme(legend.position = "none", plot.title = element_text(hjust = 0.5, face = "bold"))
+    })
+
+    # Text description for the boxplot
+    output$boxPlot_desc_text <- renderText({
+      if (is.null(rv$data) || is.null(rv$descriptive_stats)) {
+        return("No data available to describe the group distributions.")
+      }
+
+      stats <- rv$descriptive_stats
+
+      # Create a summary for each group
+      group_summaries <- apply(stats, 1, function(row) {
+        sprintf("Group '%s' has %d data points. The mean is %.2f and the median is %.2f.",
+                row['Group'], as.integer(row['N']), as.numeric(row['Mean']), as.numeric(row['Median']))
+      })
+
+      desc <- paste(
+        "This plot displays boxplots comparing the distributions of the different groups.",
+        "Each boxplot shows the median, interquartile range, and potential outliers for a group.",
+        "Individual data points are also shown as jittered dots.",
+        paste(group_summaries, collapse = " "),
+        "Visually compare the medians and the spread of the boxes to see if there are apparent differences between the groups."
+      )
+
+      paste(desc, collapse = " ")
     })
 
     # ANOVA Summary Table

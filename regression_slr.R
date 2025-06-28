@@ -203,7 +203,7 @@ regression_slr_server <- function(id) {
         residuals = residuals(model())
       )
 
-      ggplot(res_df, aes(x = fitted, y = residuals)) +
+      p <- ggplot(res_df, aes(x = fitted, y = residuals)) +
         geom_point(color = "#1e40af", size = 3, alpha = 0.8) +
         geom_hline(yintercept = 0, linetype = "dashed", color = "#dc2626", size = 1) +
         labs(
@@ -213,6 +213,7 @@ regression_slr_server <- function(id) {
         ) +
         theme_minimal(base_size = 14) +
         theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+      p
     })
 
     # Descriptive Statistics
@@ -220,16 +221,24 @@ regression_slr_server <- function(id) {
       df <- active_data()
       req(df, nrow(df) > 1)
 
-      cat("--- Explanatory Variable (X) ---\n")
-      print(summary(df$x))
-      cat("Standard Deviation:", round(sd(df$x, na.rm = TRUE), 3), "\n\n")
+      # Capture summary output to format it nicely
+      x_summary <- capture.output(summary(df$x))
+      y_summary <- capture.output(summary(df$y))
 
-      cat("--- Response Variable (Y) ---\n")
-      print(summary(df$y))
-      cat("Standard Deviation:", round(sd(df$y, na.rm = TRUE), 3), "\n\n")
-
-      cat("--- Relationship ---\n")
-      cat("Correlation (r):", round(cor(df$x, df$y, use = "complete.obs"), 3), "\n")
+      # Build the output string
+      paste(
+        "--- Explanatory Variable (X) ---",
+        paste(x_summary, collapse = "\\n"),
+        paste("Standard Deviation:", round(as.numeric(sd(df$x, na.rm = TRUE)), 3)),
+        "",
+        "--- Response Variable (Y) ---",
+        paste(y_summary, collapse = "\\n"),
+        paste("Standard Deviation:", round(as.numeric(sd(df$y, na.rm = TRUE)), 3)),
+        "",
+        "--- Relationship ---",
+        paste("Correlation (r):", round(cor(df$x, df$y, use = "complete.obs"), 3)),
+        sep = "\\n"
+      )
     })
 
   })
