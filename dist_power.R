@@ -183,10 +183,11 @@ dist_power_server <- function(id) {
 
       # Add annotations for Power, Alpha, Beta
       p <- p +
-        annotate("text", x = res$mua, y = max(plot_data$alt_dist) * 0.6, label = paste("Power\n", round(res$power, 3)), color = "#006400", size = 5, fontface = "bold") +
+        annotate("text", x = res$mua, y = max(plot_data$alt_dist) * 0.6, label = paste("Power\\n", round(res$power, 3)), color = "#006400", size = 5, fontface = "bold") +
         annotate("text", x = res$cv1, y = max(plot_data$null_dist) * 0.8, label = paste("α =", res$alpha), color = "red", size = 5, hjust = if(res$alternative == "greater") -0.2 else 1.2) +
         annotate("text", x = res$mu0, y = max(plot_data$alt_dist) * 0.4, label = paste("β =", round(res$beta, 3)), color = "#E69F00", size = 5, fontface = "bold")
 
+      p # Explicitly return the plot object
     })
 
     # Render the power and beta results

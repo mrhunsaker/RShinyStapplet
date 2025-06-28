@@ -96,87 +96,88 @@ dist_chi_square_ui <- function(id) {
 dist_chi_square_server <- function(id) {
   moduleServer(id, function(input, output, session) {
 
-    # Reactive expression for distribution data
-    distribution_data <- reactive({
-      req(input$df)
-      # Define a reasonable x-range, ensuring it's not infinite
-      max_x <- max(qchisq(0.999, df = input$df), 30) # Ensure range is reasonable
-      x <- seq(0, max_x, length.out = 500)
-      y <- dchisq(x, df = input$df)
-      data.frame(x = x, y = y)
-    })
+    # Reactive values to store plot and probability
+    results <- reactiveValues(plot = NULL, probability = NULL, prob_text = NULL)
 
-    # Reactive expression for probability calculation
-    calculated_probability <- reactive({
-      req(input$df, input$prob_type)
+    # Observe inputs and trigger calculations
+    observe({
       df_val <- input$df
       prob_type <- input$prob_type
 
+      # Distribution data
+      max_x <- max(qchisq(0.999, df = df_val), 30)
+      start_x <- if (df_val <= 2) 1e-4 else 0
+      dist_data <- data.frame(x = seq(start_x, max_x, length.out = 500))
+      dist_data$y <- dchisq(dist_data$x, df = df_val)
+
+      # Probability calculation
+      prob <- NULL
+      prob_text_part <- ""
+
       if (prob_type == "lt") {
-        req(input$x_val, input$x_val > 0)
-        pchisq(input$x_val, df = df_val)
-      } else if (prob_type == "gt") {
-        req(input$x_val, input$x_val > 0)
-        1 - pchisq(input$x_val, df = df_val)
-      } else if (prob_type == "between") {
-        req(input$x1_val, input$x2_val, input$x1_val > 0, input$x2_val > 0)
-        if (input$x1_val >= input$x2_val) {
-          return("Error: X1 must be less than X2.")
+        req(input$x_val)
+        if (input$x_val >= 0) {
+          prob <- pchisq(input$x_val, df = df_val)
+          prob_text_part <- paste("X <", input$x_val)
         }
-        pchisq(input$x2_val, df = df_val) - pchisq(input$x1_val, df = df_val)
+      } else if (prob_type == "gt") {
+        req(input$x_val)
+        if (input$x_val >= 0) {
+          prob <- 1 - pchisq(input$x_val, df = df_val)
+          prob_text_part <- paste("X >", input$x_val)
+        }
+      } else if (prob_type == "between") {
+        req(input$x1_val, input$x2_val)
+        if (input$x1_val < input$x2_val && input$x1_val >= 0) {
+          prob <- pchisq(input$x2_val, df = df_val) - pchisq(input$x1_val, df = df_val)
+          prob_text_part <- paste(input$x1_val, "< X <", input$x2_val)
+        } else {
+          prob <- "Error: X1 must be less than X2."
+        }
       }
-    })
 
-    # Render the plot
-    output$distPlot <- renderPlot({
-      df <- distribution_data()
-      plot_df <- input$df
-      prob_type <- input$prob_type
+      if (is.numeric(prob)) {
+        results$probability <- sprintf("P(%s) = %.4f", prob_text_part, prob)
+      } else {
+        results$probability <- prob
+      }
 
-      p <- ggplot(df, aes(x = x, y = y)) +
+      # Plot generation
+      p <- ggplot(dist_data, aes(x = x, y = y)) +
         geom_line(color = "#1e40af", linewidth = 1) +
-        labs(title = paste("Chi-Square Distribution (df =", plot_df, ")"),
+        labs(title = paste("Chi-Square Distribution (df =", df_val, ")"),
              x = "Chi-Square Value", y = "Density") +
         theme_minimal() +
         theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold"))
 
-      # Shaded area
-      if (prob_type == "lt" && !is.null(input$x_val) && input$x_val > 0) {
-        x_shade <- seq(min(df$x), input$x_val, length.out = 100)
-        y_shade <- dchisq(x_shade, df = plot_df)
-        p <- p + geom_area(data = data.frame(x = x_shade, y = y_shade), aes(x = x, y = y), fill = "#60a5fa", alpha = 0.5) +
+      # Shading logic
+      if (prob_type == "lt" && !is.null(input$x_val) && input$x_val >= 0) {
+        shade_data <- subset(dist_data, x <= input$x_val)
+        p <- p + geom_area(data = shade_data, aes(x = x, y = y), fill = "#60a5fa", alpha = 0.5) +
                  geom_vline(xintercept = input$x_val, color = "#ef4444", linetype = "dashed")
-      } else if (prob_type == "gt" && !is.null(input$x_val) && input$x_val > 0) {
-        x_shade <- seq(input$x_val, max(df$x), length.out = 100)
-        y_shade <- dchisq(x_shade, df = plot_df)
-        p <- p + geom_area(data = data.frame(x = x_shade, y = y_shade), aes(x = x, y = y), fill = "#fbbf24", alpha = 0.5) +
+      } else if (prob_type == "gt" && !is.null(input$x_val) && input$x_val >= 0) {
+        shade_data <- subset(dist_data, x >= input$x_val)
+        p <- p + geom_area(data = shade_data, aes(x = x, y = y), fill = "#fbbf24", alpha = 0.5) +
                  geom_vline(xintercept = input$x_val, color = "#ef4444", linetype = "dashed")
       } else if (prob_type == "between" && !is.null(input$x1_val) && !is.null(input$x2_val) && input$x1_val < input$x2_val) {
-        x_shade <- seq(input$x1_val, input$x2_val, length.out = 100)
-        y_shade <- dchisq(x_shade, df = plot_df)
-        p <- p + geom_area(data = data.frame(x = x_shade, y = y_shade), aes(x = x, y = y), fill = "#84cc16", alpha = 0.5) +
+        shade_data <- subset(dist_data, x >= input$x1_val & x <= input$x2_val)
+        p <- p + geom_area(data = shade_data, aes(x = x, y = y), fill = "#84cc16", alpha = 0.5) +
                  geom_vline(xintercept = c(input$x1_val, input$x2_val), color = "#ef4444", linetype = "dashed")
       }
 
-      p # Return plot
+      results$plot <- p
+    })
+
+    # Render the plot
+    output$distPlot <- renderPlot({
+      req(results$plot)
+      results$plot
     })
 
     # Render the probability result
     output$probabilityResult <- renderText({
-      prob <- calculated_probability()
-      if (is.numeric(prob)) {
-        prob_text_part <- ""
-        if (input$prob_type == "lt") {
-          prob_text_part <- paste("X <", input$x_val)
-        } else if (input$prob_type == "gt") {
-          prob_text_part <- paste("X >", input$x_val)
-        } else if (input$prob_type == "between") {
-          prob_text_part <- paste(input$x1_val, "< X <", input$x2_val)
-        }
-        paste("P(", prob_text_part, ") = ", sprintf("%.4f", prob))
-      } else {
-        prob # Display error message
-      }
+      req(results$probability)
+      results$probability
     })
   })
 }
