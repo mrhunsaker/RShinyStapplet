@@ -101,20 +101,18 @@ ui <- fluidPage(
       # Input for Mean with ARIA label
       div(
         class = "form-group",
-        tags$label(for = "mean", "Mean (\u03BC):"),
+        tags$label(`for` = "mean", "Mean (\\u03BC):"),
         sliderInput("mean", NULL, # NULL for label as we use tags$label
                     min = -10, max = 10, value = 0, step = 0.5,
-                    width = "100%",
-                    "aria-label" = "Mean of the normal distribution, mu, slider input")
+                    width = "100%")
       ),
       # Input for Standard Deviation with ARIA label
       div(
         class = "form-group",
-        tags$label(for = "sd", "Standard Deviation (\u03C3):"),
+        tags$label(`for` = "sd", "Standard Deviation (\\u03C3):"),
         sliderInput("sd", NULL, # NULL for label as we use tags$label
                     min = 0.1, max = 5, value = 1, step = 0.1,
-                    width = "100%",
-                    "aria-label" = "Standard deviation of the normal distribution, sigma, slider input")
+                    width = "100%")
       ),
       hr(role = "separator"), # Horizontal rule with ARIA role for separation
 
@@ -122,15 +120,13 @@ ui <- fluidPage(
       # Radio buttons for probability type with ARIA attributes
       div(
         class = "form-group",
-        tags$label(for = "prob_type", "Select Probability Type:", class = "control-label"),
+        tags$label(`for` = "prob_type", "Select Probability Type:", class = "control-label"),
         radioButtons("prob_type", NULL, # NULL for label as we use tags$label
                      choices = c("P(X < x)" = "lt",
                                  "P(X > x)" = "gt",
                                  "P(x1 < X < x2)" = "between"),
                      selected = "lt",
-                     inline = FALSE, # Make them block for better keyboard navigation and screen readers
-                     "aria-labelledby" = "probCalcHeading",
-                     "aria-describedby" = "probTypeHelp" # Provides additional description
+                     inline = FALSE # Make them block for better keyboard navigation and screen readers
         ),
         p(id = "probTypeHelp", class = "sr-only", "Choose to calculate probability for X less than a value, X greater than a value, or X between two values.")
       ),
@@ -140,9 +136,8 @@ ui <- fluidPage(
         condition = "input.prob_type != 'between'",
         div(
           class = "form-group",
-          tags$label(for = "x_val", "X Value:"),
-          numericInput("x_val", NULL, value = 0, step = 0.1, width = "100%",
-                       "aria-label" = "Value of X for probability calculation")
+          tags$label(`for` = "x_val", "X Value:"),
+          numericInput("x_val", NULL, value = 0, step = 0.1, width = "100%")
         )
       ),
       # Inputs for X1 and X2 values (for between) with ARIA labels
@@ -150,15 +145,13 @@ ui <- fluidPage(
         condition = "input.prob_type == 'between'",
         div(
           class = "form-group",
-          tags$label(for = "x1_val", "X1 Value:"),
-          numericInput("x1_val", NULL, value = -1, step = 0.1, width = "100%",
-                       "aria-label" = "First X value for probability between")
+          tags$label(`for` = "x1_val", "X1 Value:"),
+          numericInput("x1_val", NULL, value = -1, step = 0.1, width = "100%")
         ),
         div(
           class = "form-group",
-          tags$label(for = "x2_val", "X2 Value:"),
-          numericInput("x2_val", NULL, value = 1, step = 0.1, width = "100%",
-                       "aria-label" = "Second X value for probability between")
+          tags$label(`for` = "x2_val", "X2 Value:"),
+          numericInput("x2_val", NULL, value = 1, step = 0.1, width = "100%")
         )
       )
     ),
@@ -168,18 +161,17 @@ ui <- fluidPage(
       "aria-labelledby" = "appTitle", # Labelled by the main application title
       div(class = "plot-container",
         # Plot for sighted users
-        plotOutput("normalPlot",
-                   "aria-labelledby" = "plotTitle plotDescription", # Points to visual title and hidden description
-                   role = "img" # ARIA role for an image
-                   ),
+        htmltools::tagQuery(
+          plotOutput("normalPlot")
+        )$find("img")$addAttrs("aria-labelledby" = "plotTitle plotDescription", role = "img")$all(),
         # Screen-reader only description of the plot using BrailleR
         p(id = "plotDescription", class = "sr-only", role = "status", "aria-live" = "polite", textOutput("brailleRDescription"))
       ),
       div(class = "results-box",
         h3("Calculated Probability:", id = "probResultHeading"),
-        textOutput("probabilityResult",
-                   "aria-labelledby" = "probResultHeading",
-                   role = "status", "aria-live" = "polite") # ARIA live region for dynamic announcements
+        htmltools::tagQuery(
+          textOutput("probabilityResult")
+        )$find("output")$addAttrs("aria-labelledby" = "probResultHeading", role = "status", "aria-live" = "polite")$all()
       )
     )
   )

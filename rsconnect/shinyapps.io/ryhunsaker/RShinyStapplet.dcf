@@ -1,0 +1,12 @@
+name: RShinyStapplet
+title: RShinyStapplet
+username: ryhunsaker
+account: ryhunsaker
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 15003837
+bundleId: 10532250
+url: https://ryhunsaker.shinyapps.io/RShinyStapplet/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE
