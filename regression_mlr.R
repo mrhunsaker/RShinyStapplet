@@ -31,8 +31,7 @@ regression_mlr_ui <- function(id) {
           selectInput(ns("sample_data_name"), "Choose a Sample Dataset:",
                       choices = c(
                         "Fuel Efficiency (mtcars)" = "mtcars",
-                        "House Prices (Boston)" = "boston",
-                        "Fish Market (Fish)" = "fish"
+                        "House Prices (Boston)" = "boston"
                       ))
         ),
 
@@ -109,21 +108,8 @@ regression_mlr_server <- function(id) {
     # --- Pre-defined Sample Datasets ---
     sample_datasets <- list(
       mtcars = mtcars[, c("mpg", "wt", "hp", "qsec")],
-      boston = as.data.frame(MASS::Boston[, c("medv", "lstat", "rm", "age")]),
-      fish = read.csv(text =
-        "Weight,Length1,Length2,Length3,Height,Width\n"
-      ) # Placeholder, will be loaded if needed
+      boston = as.data.frame(MASS::Boston[, c("medv", "lstat", "rm", "age")])
     )
-    # Lazy load fish data
-    if (!exists("fish_data_loaded")) {
-        try({
-            fish_url <- "https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-06-09/fish.csv"
-            fish_df <- read.csv(fish_url)
-            # Select relevant numeric columns
-            sample_datasets$fish <- fish_df[, c("Weight", "Length1", "Height", "Width")]
-            fish_data_loaded <<- TRUE
-        }, silent = TRUE)
-    }
 
 
     # --- Reactive Logic ---

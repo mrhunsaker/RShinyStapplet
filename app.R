@@ -303,7 +303,7 @@ ui <- navbarPage(
   navbarMenu("Probability Distributions",
     tabPanel("Normal Distribution", dist_normal_ui("dist_normal")),
     tabPanel("t-Distribution", dist_t_ui("dist_t")),
-    tabPanel("Chi-Square Distribution", dist_chi_square_ui("dist_chi")),
+    tabPanel("Chi-Square Distribution", dist_chi_square_ui("dist_chi_square")),
     tabPanel("F-Distribution", dist_f_ui("dist_f")),
     tabPanel("Binomial Distribution", dist_binomial_ui("dist_binomial")),
     tabPanel("Discrete Random Variables", dist_discrete_random_ui("dist_discrete_random")),

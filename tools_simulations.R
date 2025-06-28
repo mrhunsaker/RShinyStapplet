@@ -140,7 +140,7 @@ tools_simulations_server <- function(id) {
       ggplot(data.frame(flips = rv$coin_flips), aes(x = flips, fill = flips)) +
         geom_bar(show.legend = FALSE) +
         scale_fill_viridis_d(option = "D", end = 0.85) +
-        labs(x = "Outcome", y = "Count", title = paste("Results of", input$num_flips, "Coin Flips"))
+        labs(x = "Outcome", y = "Count", title = paste("Results of", input$num_flips, "Coin Flips")) +
         theme_minimal(base_size = 14)
     })
 

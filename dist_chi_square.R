@@ -101,6 +101,8 @@ dist_chi_square_server <- function(id) {
 
     # Observe inputs and trigger calculations
     observe({
+      # Ensure df is a valid number before proceeding
+      req(is.numeric(input$df))
       df_val <- input$df
       prob_type <- input$prob_type
 
