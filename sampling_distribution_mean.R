@@ -33,7 +33,7 @@ sampling_dist_mean_ui <- function(id) {
           ns = ns,
           div(
             class = "form-group",
-            tags$label(id = ns("pop_mean_label"), "Population Mean (\\u03BC):"),
+            tags$label(id = ns("pop_mean_label"), "Population Mean (μ):"),
             htmltools::tagQuery(
               sliderInput(ns("pop_mean"), NULL, min = 0, max = 100, value = 50)
             )$find("input")$addAttrs("aria-labelledby" = ns("pop_mean_label"))$all()
@@ -65,10 +65,11 @@ sampling_dist_mean_ui <- function(id) {
         # Action buttons for drawing samples
         p("Draw samples to build the sampling distribution:"),
         div(
-          style = "display: flex; justify-content: space-between; margin-bottom: 10px;",
-          actionButton(ns("draw_one"), "Draw 1 Sample", class = "btn-primary"),
-          actionButton(ns("draw_100"), "Draw 100 Samples", class = "btn-primary"),
-          actionButton(ns("draw_1000"), "Draw 1000 Samples", class = "btn-primary")
+          actionButton(ns("draw_one"), "Draw 1 Sample", class = "btn-primary", width = "100%"),
+          br(),
+          actionButton(ns("draw_100"), "Draw 100 Samples", class = "btn-primary", width = "100%"),
+          br(),
+          actionButton(ns("draw_1000"), "Draw 1000 Samples", class = "btn-primary", width = "100%")
         ),
         # Reset button
         actionButton(ns("reset"), "Reset Distribution", class = "btn-danger", style = "width: 100%;")

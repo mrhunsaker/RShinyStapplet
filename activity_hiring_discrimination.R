@@ -34,20 +34,48 @@ activity_hiring_discrimination_ui <- function(id) {
         h4("Enter Sample Data"),
         p("Based on a study where 48 identical resumes were sent out."),
         fluidRow(
-          column(6, numericInput(ns("male_hired"), "Male Name: Hired", value = 35, min = 0, `aria-describedby` = ns("male_hired_desc"))),
-          column(6, numericInput(ns("male_not_hired"), "Male Name: Not Hired", value = 13, min = 0, `aria-describedby` = ns("male_not_hired_desc")))
+          column(6,
+            div(class = "form-group",
+              tags$label("Male Name: Hired", `for` = ns("male_hired")),
+              numericInput(ns("male_hired"), label = NULL, value = 35, min = 0),
+              tags$p(id = ns("male_hired_desc"), class = "sr-only", "Enter the number of resumes with male names that received a callback."),
+              tags$script(paste0("document.getElementById('", ns("male_hired"), "').setAttribute('aria-describedby', '", ns("male_hired_desc"), "')"))
+            )
+          ),
+          column(6,
+            div(class = "form-group",
+              tags$label("Male Name: Not Hired", `for` = ns("male_not_hired")),
+              numericInput(ns("male_not_hired"), label = NULL, value = 13, min = 0),
+              tags$p(id = ns("male_not_hired_desc"), class = "sr-only", "Enter the number of resumes with male names that did not receive a callback."),
+              tags$script(paste0("document.getElementById('", ns("male_not_hired"), "').setAttribute('aria-describedby', '", ns("male_not_hired_desc"), "')"))
+            )
+          )
         ),
-        p(id = ns("male_hired_desc"), class = "sr-only", "Enter the number of resumes with male names that received a callback."),
-        p(id = ns("male_not_hired_desc"), class = "sr-only", "Enter the number of resumes with male names that did not receive a callback."),
         fluidRow(
-          column(6, numericInput(ns("female_hired"), "Female Name: Hired", value = 14, min = 0, `aria-describedby` = ns("female_hired_desc"))),
-          column(6, numericInput(ns("female_not_hired"), "Female Name: Not Hired", value = 34, min = 0, `aria-describedby` = ns("female_not_hired_desc")))
+          column(6,
+            div(class = "form-group",
+              tags$label("Female Name: Hired", `for` = ns("female_hired")),
+              numericInput(ns("female_hired"), label = NULL, value = 14, min = 0),
+              tags$p(id = ns("female_hired_desc"), class = "sr-only", "Enter the number of resumes with female names that received a callback."),
+              tags$script(paste0("document.getElementById('", ns("female_hired"), "').setAttribute('aria-describedby', '", ns("female_hired_desc"), "')"))
+            )
+          ),
+          column(6,
+            div(class = "form-group",
+              tags$label("Female Name: Not Hired", `for` = ns("female_not_hired")),
+              numericInput(ns("female_not_hired"), label = NULL, value = 34, min = 0),
+              tags$p(id = ns("female_not_hired_desc"), class = "sr-only", "Enter the number of resumes with female names that did not receive a callback."),
+              tags$script(paste0("document.getElementById('", ns("female_not_hired"), "').setAttribute('aria-describedby', '", ns("female_not_hired_desc"), "')"))
+            )
+          )
         ),
-        p(id = ns("female_hired_desc"), class = "sr-only", "Enter the number of resumes with female names that received a callback."),
-        p(id = ns("female_not_hired_desc"), class = "sr-only", "Enter the number of resumes with female names that did not receive a callback."),
         hr(),
-        numericInput(ns("num_sims"), "Number of Shuffles (Simulations):", value = 1000, min = 100, max = 10000, step = 100, `aria-describedby` = ns("num_sims_desc")),
-        p(id = ns("num_sims_desc"), class = "sr-only", "Enter the number of times to shuffle the data for the simulation."),
+        div(class = "form-group",
+          tags$label("Number of Shuffles (Simulations):", `for` = ns("num_sims")),
+          numericInput(ns("num_sims"), label = NULL, value = 1000, min = 100, max = 10000, step = 100),
+          tags$p(id = ns("num_sims_desc"), class = "sr-only", "Enter the number of times to shuffle the data for the simulation."),
+          tags$script(paste0("document.getElementById('", ns("num_sims"), "').setAttribute('aria-describedby', '", ns("num_sims_desc"), "')"))
+        ),
         actionButton(ns("run_sim"), "Run Simulation", class = "btn-primary"),
         hr(),
         div(class = "results-box", role = "status", `aria-live` = "polite",
@@ -62,7 +90,8 @@ activity_hiring_discrimination_ui <- function(id) {
       ),
       mainPanel(
         div(class = "plot-container",
-            plotOutput(ns("sim_plot"), "A histogram showing the distribution of simulated differences in proportions. A red line indicates the observed difference from the sample data."),
+            plotOutput(ns("sim_plot")),
+            tags$script(paste0("document.getElementById('", ns("sim_plot"), "').setAttribute('aria-label', 'A histogram showing the distribution of simulated differences in proportions. A red line indicates the observed difference from the sample data.')")),
             uiOutput(ns("plot_desc"))
         )
       )

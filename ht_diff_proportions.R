@@ -51,16 +51,16 @@ ht_diff_proportions_ui <- function(id) {
 
         hr(role = "separator"),
         h3("Hypothesis"),
-        p("Null Hypothesis (H\u2080): p\u2081 - p\u2082 = 0"),
+        p("Null Hypothesis (H₀): p₁ - p₂ = 0"),
         # Alternative Hypothesis
         div(
           class = "form-group",
-          tags$label(id = ns("alternative_label"), "Alternative Hypothesis (H\u2090):"),
+          tags$label(id = ns("alternative_label"), "Alternative Hypothesis (Hₐ):"),
           htmltools::tagQuery(
             radioButtons(ns("alternative"), NULL,
-                         choices = c("p\u2081 - p\u2082 \u2260 0" = "two.sided",
-                                     "p\u2081 - p\u2082 > 0" = "greater",
-                                     "p\u2081 - p\u2082 < 0" = "less"),
+                         choices = c("p₁ - p₂ ≠ 0" = "two.sided",
+                                     "p₁ - p₂ > 0" = "greater",
+                                     "p₁ - p₂ < 0" = "less"),
                          selected = "two.sided")
           )$find("fieldset")$addAttrs("aria-labelledby" = ns("alternative_label"))$all()
         ),
@@ -70,7 +70,7 @@ ht_diff_proportions_ui <- function(id) {
         id = "mainPanel",
         role = "main",
         div(class = "plot-container",
-            h4("Sampling Distribution of p\u0302\u2081 - p\u0302\u2082 under H\u2080", style = "text-align: center;", id = ns("testPlot_label")),
+            h4("Sampling Distribution of p̂₁ - p̂₂ under H₀", style = "text-align: center;", id = ns("testPlot_label")),
             htmltools::tagQuery(
                 plotOutput(ns("testPlot"), height = "300px")
             )$find("img")$addAttrs("aria-labelledby" = ns("testPlot_label"))$all()
@@ -188,9 +188,9 @@ ht_diff_proportions_server <- function(id) {
 
       # Conclusion text
       if (results$p_value < alpha) {
-        conclusion <- paste0("Since the p-value (", format.pval(results$p_value, digits = 4), ") is less than \u03B1 = ", alpha, ", we reject the null hypothesis. There is significant evidence to suggest that the true population proportions are different.")
+        conclusion <- paste0("Since the p-value (", format.pval(results$p_value, digits = 4), ") is less than α = ", alpha, ", we reject the null hypothesis. There is significant evidence to suggest that the true population proportions are different.")
       } else {
-        conclusion <- paste0("Since the p-value (", format.pval(results$p_value, digits = 4), ") is greater than \u03B1 = ", alpha, ", we fail to reject the null hypothesis. There is not enough evidence to suggest that the true population proportions are different.")
+        conclusion <- paste0("Since the p-value (", format.pval(results$p_value, digits = 4), ") is greater than α = ", alpha, ", we fail to reject the null hypothesis. There is not enough evidence to suggest that the true population proportions are different.")
       }
 
       # Conditions warning
@@ -206,15 +206,15 @@ ht_diff_proportions_server <- function(id) {
             tags$th("Value")
           ),
           tags$tr(
-            tags$td("Sample 1 Proportion (p\u0302\u2081)"),
+            tags$td("Sample 1 Proportion (p̂₁)"),
             tags$td(round(results$p_hat1, 4))
           ),
           tags$tr(
-            tags$td("Sample 2 Proportion (p\u0302\u2082)"),
+            tags$td("Sample 2 Proportion (p̂₂)"),
             tags$td(round(results$p_hat2, 4))
           ),
           tags$tr(
-            tags$td("Pooled Proportion (p\u0302)"),
+            tags$td("Pooled Proportion (p̂)"),
             tags$td(round(results$p_hat_pooled, 4))
           ),
           tags$tr(

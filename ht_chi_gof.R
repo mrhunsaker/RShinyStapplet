@@ -225,14 +225,14 @@ ht_chi_gof_server <- function(id) {
       print(summary_df, row.names = FALSE)
 
       cat("\n----------------------------------------\n")
-      cat(sprintf("Chi-Square Statistic (\u03C7\u00B2): %.4f\n", results$statistic))
+      cat(sprintf("Chi-Square Statistic (χ²): %.4f\n", results$statistic))
       cat(sprintf("Degrees of Freedom (df): %d\n", results$df))
       cat(sprintf("P-value: %.4f\n", results$p.value))
       cat("----------------------------------------\n\n")
 
       # Provide a conclusion
       alpha <- 0.05
-      cat(paste0("Conclusion (at \u03B1 = ", alpha, "):\n"))
+      cat(paste0("Conclusion (at α = ", alpha, "):\n"))
       if (results$p.value < alpha) {
         cat(paste0("Since the p-value (", round(results$p.value, 4), ") is less than ", alpha, ", we reject the null hypothesis.\n"))
         cat("There is significant evidence that the true proportions are different from the expected ones.\n")
@@ -259,8 +259,8 @@ ht_chi_gof_server <- function(id) {
 
       ggplot(df_contrib, aes(x = Category, y = Contribution, fill = Category)) +
         geom_bar(stat = "identity", color = "black") +
-        labs(x = "Category", y = "Contribution to \u03C7\u00B2 Statistic",
-             title = "Each Bar Shows (O-E)\u00B2/E") +
+        labs(x = "Category", y = "Contribution to χ² Statistic",
+             title = "Each Bar Shows (O-E)²/E") +
         theme_minimal() +
         theme(legend.position = "none", plot.title = element_text(hjust = 0.5))
     })
@@ -289,7 +289,7 @@ ht_chi_gof_server <- function(id) {
         geom_vline(xintercept = stat, color = "#dc2626", linetype = "dashed", size = 1.2) +
         labs(x = "Chi-Square Value", y = "Density",
              title = sprintf("df = %d, p-value = %.4f", df, results$p.value)) +
-        annotate("text", x = stat, y = 0, label = sprintf("\u03C7\u00B2 = %.2f", stat), vjust = 1.5, hjust = if(stat > x_max/2) 1.1 else -0.1) +
+        annotate("text", x = stat, y = 0, label = sprintf("χ² = %.2f", stat), vjust = 1.5, hjust = if(stat > x_max/2) 1.1 else -0.1) +
         theme_minimal() +
         theme(plot.title = element_text(hjust = 0.5))
     })

@@ -41,9 +41,9 @@ dist_binomial_ui <- function(id) {
           htmltools::tagQuery(
             radioButtons(ns("prob_type"), NULL,
                          choices = c("P(X = k)" = "exact",
-                                     "P(X \u2264 k)" = "at_most",
+                                     "P(X ≤ k)" = "at_most",
                                      "P(X > k)" = "greater_than",
-                                     "P(k1 \u2264 X \u2264 k2)" = "between"),
+                                     "P(k1 ≤ X ≤ k2)" = "between"),
                          selected = "exact")
           )$find("fieldset")$addAttrs("aria-labelledby" = ns("prob_type_label"))$all()
         ),
@@ -168,7 +168,7 @@ dist_binomial_server <- function(id) {
 
       ggplot(df, aes(x = as.factor(x), y = y, fill = shaded)) +
         geom_col(color = "#1e40af", width = 0.7) +
-        scale_fill_manual(values = c("FALSE" = "#60a5fa", "TRUE" = "#fbbf24"), guide = "none") +
+        scale_fill_viridis_d(option = "D", begin = 0.1, end = 0.8, direction = 1, guide = "none") +
         labs(
           title = paste("Binomial Distribution (n =", n, ", p =", p_val, ")"),
           x = "Number of Successes (k)",
@@ -176,8 +176,9 @@ dist_binomial_server <- function(id) {
         ) +
         theme_minimal() +
         theme(
-          plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
-          axis.text.x = element_text(angle = 45, hjust = 1, size = ifelse(n > 40, 8, 10))
+          plot.title = element_text(hjust = 0.5, size = 18, face = "bold"),
+          axis.title = element_text(size = 14),
+          axis.text = element_text(size = 12)
         )
     })
 
@@ -189,11 +190,11 @@ dist_binomial_server <- function(id) {
         if (input$prob_type == "exact") {
           prob_text_part <- paste("X =", input$k_val)
         } else if (input$prob_type == "at_most") {
-          prob_text_part <- paste("X \u2264", input$k_val)
+          prob_text_part <- paste("X ≤", input$k_val)
         } else if (input$prob_type == "greater_than") {
           prob_text_part <- paste("X >", input$k_val)
         } else if (input$prob_type == "between") {
-          prob_text_part <- paste(input$k1_val, "\u2264 X \u2264", input$k2_val)
+          prob_text_part <- paste(input$k1_val, "≤ X ≤", input$k2_val)
         }
         paste("The calculated probability is: P(", prob_text_part, ") = ", sprintf("%.5f", prob))
       } else {

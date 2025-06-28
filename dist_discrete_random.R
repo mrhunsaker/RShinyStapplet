@@ -16,8 +16,12 @@ dist_discrete_random_ui <- function(id) {
     sidebarLayout(
       sidebarPanel(
         # Input for number of values
-        numericInput(ns("num_values"), "Number of distinct values:", 5, min = 2, max = 20, `aria-describedby` = ns("num_values_desc")),
-        p(id = ns("num_values_desc"), class = "sr-only", "Enter the total count of unique values in your distribution, from 2 to 20."),
+        div(class = "form-group",
+            tags$label("Number of distinct values:", `for` = ns("num_values")),
+            numericInput(ns("num_values"), label = NULL, value = 5, min = 2, max = 20),
+            tags$p(id = ns("num_values_desc"), class = "sr-only", "Enter the total count of unique values in your distribution, from 2 to 20."),
+            tags$script(paste0("document.getElementById('", ns("num_values"), "').setAttribute('aria-describedby', '", ns("num_values_desc"), "')"))
+        ),
         hr(),
         # Dynamic UI for values and probabilities
         uiOutput(ns("value_prob_inputs")),
@@ -25,15 +29,23 @@ dist_discrete_random_ui <- function(id) {
         h3("Calculate Probability"),
         p("Find the probability for a given value of X."),
         # Inputs for probability calculation
-        selectInput(ns("prob_type"), "Type of Probability:",
-                    choices = c("P(X = x)" = "eq",
-                                "P(X < x)" = "lt",
-                                "P(X <= x)" = "le",
-                                "P(X > x)" = "gt",
-                                "P(X >= x)" = "ge"), `aria-describedby` = ns("prob_type_desc")),
-        p(id = ns("prob_type_desc"), class = "sr-only", "Select the inequality for the probability calculation."),
-        numericInput(ns("prob_x_value"), "Value of x:", 0, `aria-describedby` = ns("prob_x_desc")),
-        p(id = ns("prob_x_desc"), class = "sr-only", "Enter the specific value of x to use in the probability calculation.")
+        div(class = "form-group",
+            tags$label("Type of Probability:", `for` = ns("prob_type")),
+            selectInput(ns("prob_type"), label = NULL,
+                        choices = c("P(X = x)" = "eq",
+                                    "P(X < x)" = "lt",
+                                    "P(X <= x)" = "le",
+                                    "P(X > x)" = "gt",
+                                    "P(X >= x)" = "ge")),
+            tags$p(id = ns("prob_type_desc"), class = "sr-only", "Select the inequality for the probability calculation."),
+            tags$script(paste0("document.getElementById('", ns("prob_type"), "').setAttribute('aria-describedby', '", ns("prob_type_desc"), "')"))
+        ),
+        div(class = "form-group",
+            tags$label("Value of x:", `for` = ns("prob_x_value")),
+            numericInput(ns("prob_x_value"), label = NULL, value = 0),
+            tags$p(id = ns("prob_x_desc"), class = "sr-only", "Enter the specific value of x to use in the probability calculation."),
+            tags$script(paste0("document.getElementById('", ns("prob_x_value"), "').setAttribute('aria-describedby', '", ns("prob_x_desc"), "')"))
+        ),
       ),
       mainPanel(
         # Outputs
@@ -42,7 +54,8 @@ dist_discrete_random_ui <- function(id) {
             uiOutput(ns("summary_stats"))
         ),
         div(class = "plot-container",
-            plotOutput(ns("dist_plot"), "A bar chart showing the discrete probability distribution."),
+            plotOutput(ns("dist_plot")),
+            tags$script(paste0("document.getElementById('", ns("dist_plot"), "').setAttribute('aria-label', 'A bar chart showing the discrete probability distribution.')")),
             uiOutput(ns("plot_desc"))
         ),
         div(class = "results-box", role = "status", `aria-live` = "polite",

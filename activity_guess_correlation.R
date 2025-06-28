@@ -24,14 +24,16 @@ activity_guess_correlation_ui <- function(id) {
     # Sidebar layout
     sidebarLayout(
       sidebarPanel(
-        actionButton(ns("new_plot"), "Generate New Plot", class = "btn-primary", `aria-describedby` = ns("new_plot_desc")),
+        actionButton(ns("new_plot"), "Generate New Plot", class = "btn-primary"),
         p(id = ns("new_plot_desc"), class = "sr-only", "Click this button to start a new round with a new scatterplot."),
         hr(),
-        sliderInput(ns("guess_r"), "Your Guess for the Correlation (r):",
-                      min = -1, max = 1, value = 0, step = 0.05,
-                      `aria-describedby` = ns("guess_r_desc")),
-        p(id = ns("guess_r_desc"), class = "sr-only", "Drag this slider to set your guess for the correlation coefficient, from -1 to 1."),
-        actionButton(ns("submit_guess"), "Submit Guess", `aria-describedby` = ns("submit_guess_desc")),
+        div(class = "form-group",
+            tags$label("Your Guess for the Correlation (r):", `for` = ns("guess_r")),
+            sliderInput(ns("guess_r"), label = NULL, min = -1, max = 1, value = 0, step = 0.05),
+            tags$p(id = ns("guess_r_desc"), class = "sr-only", "Drag this slider to set your guess for the correlation coefficient, from -1 to 1."),
+            tags$script(paste0("document.getElementById('", ns("guess_r"), "').setAttribute('aria-describedby', '", ns("guess_r_desc"), "')")),
+        ),
+        actionButton(ns("submit_guess"), "Submit Guess"),
         p(id = ns("submit_guess_desc"), class = "sr-only", "Click this button to lock in your guess and see the results."),
         hr(),
         div(class = "results-box", role = "status", `aria-live` = "polite",
@@ -46,7 +48,8 @@ activity_guess_correlation_ui <- function(id) {
       ),
       mainPanel(
         div(class = "plot-container",
-            plotOutput(ns("scatterplot"), "A scatterplot of two variables. Use the controls to guess the correlation coefficient."),
+            plotOutput(ns("scatterplot")),
+            tags$script(paste0("document.getElementById('", ns("scatterplot"), "').setAttribute('aria-label', 'A scatterplot of two variables. Use the controls to guess the correlation coefficient.')")),
             uiOutput(ns("plot_desc"))
         )
       )

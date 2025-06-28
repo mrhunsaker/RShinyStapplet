@@ -38,10 +38,11 @@ sampling_dist_proportion_ui <- function(id) {
         # Action buttons for drawing samples
         p("Draw samples to build the sampling distribution:"),
         div(
-          style = "display: flex; justify-content: space-between; margin-bottom: 10px;",
-          actionButton(ns("draw_one"), "Draw 1 Sample", class = "btn-primary"),
-          actionButton(ns("draw_100"), "Draw 100 Samples", class = "btn-primary"),
-          actionButton(ns("draw_1000"), "Draw 1000 Samples", class = "btn-primary")
+          actionButton(ns("draw_one"), "Draw 1 Sample", class = "btn-primary", width = "100%"),
+          br(),
+          actionButton(ns("draw_100"), "Draw 100 Samples", class = "btn-primary", width = "100%"),
+          br(),
+          actionButton(ns("draw_1000"), "Draw 1000 Samples", class = "btn-primary", width = "100%")
         ),
         # Reset button
         actionButton(ns("reset"), "Reset Distribution", class = "btn-danger", style = "width: 100%;")
@@ -151,9 +152,10 @@ sampling_dist_proportion_server <- function(id) {
       )
       ggplot(df_pop, aes(x = Category, y = Proportion, fill = Category)) +
         geom_bar(stat = "identity") +
-        scale_fill_manual(values = c("Success" = "#60a5fa", "Failure" = "#fca5a5")) +
+        scale_fill_viridis_d(option = "D", end = 0.85) +
         labs(y = "Proportion", x = "", title = paste("p =", input$pop_prop)) +
         theme_minimal() +
+        theme(axis.text = element_text(size = 14), axis.title = element_text(size = 16))
         theme(legend.position = "none")
     })
 
@@ -166,9 +168,10 @@ sampling_dist_proportion_server <- function(id) {
       p_hat <- mean(rv$last_sample)
       ggplot(df_sample, aes(x = Outcome, fill = Outcome)) +
         geom_bar() +
-        scale_fill_manual(values = c("Success" = "#84cc16", "Failure" = "#fca5a5")) +
+        scale_fill_viridis_d(option = "D", end = 0.85) +
         labs(x = "Outcome", y = "Count", title = paste("n =", input$sample_size, " p-hat =", round(p_hat, 3))) +
         theme_minimal() +
+        theme(axis.text = element_text(size = 14), axis.title = element_text(size = 16))
         theme(legend.position = "none")
     })
 

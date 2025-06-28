@@ -183,7 +183,7 @@ ci_diff_means_server <- function(id) {
         ggplot(res$data, aes(x = group, y = value, fill = group)) +
           geom_boxplot(alpha = 0.7) +
           labs(title = "Data Distribution by Group", x = "Group", y = "Value") +
-          scale_fill_manual(values = c("Group 1" = "#60a5fa", "Group 2" = "#84cc16")) +
+          scale_fill_viridis_d(option = "D", end = 0.85) +
           theme_minimal() +
           theme(legend.position = "none")
       } else {

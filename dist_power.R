@@ -17,30 +17,55 @@ dist_power_ui <- function(id) {
       sidebarPanel(
         h3("Test Parameters"),
         # Inputs for hypotheses
-        numericInput(ns("mu0"), "Null Hypothesis Mean (μ₀):", value = 100, `aria-describedby` = ns("mu0_desc")),
-        p(id = ns("mu0_desc"), class = "sr-only", "Enter the mean of the null hypothesis, mu-zero."),
-        numericInput(ns("mua"), "Alternative Hypothesis Mean (μₐ):", value = 105, `aria-describedby` = ns("mua_desc")),
-        p(id = ns("mua_desc"), class = "sr-only", "Enter the mean of the alternative hypothesis, mu-a."),
-        selectInput(ns("alternative"), "Alternative Hypothesis:",
-                    choices = c("μ > μ₀ (Right-tailed)" = "greater",
-                                "μ < μ₀ (Left-tailed)" = "less",
-                                "μ ≠ μ₀ (Two-tailed)" = "two.sided"), `aria-describedby` = ns("alt_desc")),
-        p(id = ns("alt_desc"), class = "sr-only", "Select the direction of the alternative hypothesis."),
+        div(class = "form-group",
+            tags$label("Null Hypothesis Mean (μ₀):", `for` = ns("mu0")),
+            numericInput(ns("mu0"), label = NULL, value = 100),
+            tags$p(id = ns("mu0_desc"), class = "sr-only", "Enter the mean of the null hypothesis, mu-zero."),
+            tags$script(paste0("document.getElementById('", ns("mu0"), "').setAttribute('aria-describedby', '", ns("mu0_desc"), "')"))
+        ),
+        div(class = "form-group",
+            tags$label("Alternative Hypothesis Mean (μₐ):", `for` = ns("mua")),
+            numericInput(ns("mua"), label = NULL, value = 105),
+            tags$p(id = ns("mua_desc"), class = "sr-only", "Enter the mean of the alternative hypothesis, mu-a."),
+            tags$script(paste0("document.getElementById('", ns("mua"), "').setAttribute('aria-describedby', '", ns("mua_desc"), "')"))
+        ),
+        div(class = "form-group",
+            tags$label("Alternative Hypothesis:", `for` = ns("alternative")),
+            selectInput(ns("alternative"), label = NULL,
+                        choices = c("μ > μ₀ (Right-tailed)" = "greater",
+                                    "μ < μ₀ (Left-tailed)" = "less",
+                                    "μ ≠ μ₀ (Two-tailed)" = "two.sided")),
+            tags$p(id = ns("alt_desc"), class = "sr-only", "Select the direction of the alternative hypothesis."),
+            tags$script(paste0("document.getElementById('", ns("alternative"), "').setAttribute('aria-describedby', '", ns("alt_desc"), "')"))
+        ),
         hr(),
         # Inputs for sample and population
-        numericInput(ns("sigma"), "Population SD (σ):", value = 15, min = 0.1, `aria-describedby` = ns("sigma_desc")),
-        p(id = ns("sigma_desc"), class = "sr-only", "Enter the population standard deviation, sigma."),
-        numericInput(ns("n"), "Sample Size (n):", value = 30, min = 2, step = 1, `aria-describedby` = ns("n_desc")),
-        p(id = ns("n_desc"), class = "sr-only", "Enter the sample size, n."),
+        div(class = "form-group",
+            tags$label("Population SD (σ):", `for` = ns("sigma")),
+            numericInput(ns("sigma"), label = NULL, value = 15, min = 0.1),
+            tags$p(id = ns("sigma_desc"), class = "sr-only", "Enter the population standard deviation, sigma."),
+            tags$script(paste0("document.getElementById('", ns("sigma"), "').setAttribute('aria-describedby', '", ns("sigma_desc"), "')"))
+        ),
+        div(class = "form-group",
+            tags$label("Sample Size (n):", `for` = ns("n")),
+            numericInput(ns("n"), label = NULL, value = 30, min = 2, step = 1),
+            tags$p(id = ns("n_desc"), class = "sr-only", "Enter the sample size, n."),
+            tags$script(paste0("document.getElementById('", ns("n"), "').setAttribute('aria-describedby', '", ns("n_desc"), "')"))
+        ),
         hr(),
         # Input for significance level
-        sliderInput(ns("alpha"), "Significance Level (α):", min = 0.01, max = 0.20, value = 0.05, step = 0.01, `aria-describedby` = ns("alpha_desc")),
-        p(id = ns("alpha_desc"), class = "sr-only", "Adjust the significance level, alpha, for the test.")
+        div(class = "form-group",
+            tags$label("Significance Level (α):", `for` = ns("alpha")),
+            sliderInput(ns("alpha"), label = NULL, min = 0.01, max = 0.20, value = 0.05, step = 0.01),
+            tags$p(id = ns("alpha_desc"), class = "sr-only", "Adjust the significance level, alpha, for the test."),
+            tags$script(paste0("document.getElementById('", ns("alpha"), "').setAttribute('aria-describedby', '", ns("alpha_desc"), "')"))
+        )
       ),
       mainPanel(
         # Outputs
         div(class = "plot-container",
-            plotOutput(ns("power_plot"), "A plot showing two distributions. The null hypothesis distribution is on the left, and the alternative is on the right. The rejection region (alpha) and Type II error region (beta) are shaded."),
+            plotOutput(ns("power_plot")),
+            tags$script(paste0("document.getElementById('", ns("power_plot"), "').setAttribute('aria-label', 'A plot showing two distributions. The null hypothesis distribution is on the left, and the alternative is on the right. The rejection region (alpha) and Type II error region (beta) are shaded.')")),
             uiOutput(ns("plot_desc"))
         ),
         fluidRow(

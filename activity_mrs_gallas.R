@@ -30,22 +30,41 @@ activity_mrs_gallas_ui <- function(id) {
     sidebarLayout(
       sidebarPanel(
         h4("Define the Scenario"),
-        numericInput(ns("claimed_prop"), "Claimed Success Rate (p₀):", value = 0.80, min = 0.01, max = 1, step = 0.01, `aria-describedby` = ns("claimed_prop_desc")),
-        p(id = ns("claimed_prop_desc"), class = "sr-only", "Enter the claimed proportion of successes, the null hypothesis value."),
-        numericInput(ns("n_trials"), "Number of Trials (n):", value = 50, min = 1, `aria-describedby` = ns("n_trials_desc")),
-        p(id = ns("n_trials_desc"), class = "sr-only", "Enter the total number of independent trials in the experiment."),
-        numericInput(ns("n_success"), "Observed Number of Successes:", value = 32, min = 0, `aria-describedby` = ns("n_success_desc")),
-        p(id = ns("n_success_desc"), class = "sr-only", "Enter the number of successful trials observed."),
-        selectInput(ns("alternative"), "Alternative Hypothesis:",
-                    choices = c("Different from claim (p ≠ p₀)" = "two.sided",
-                                "Less than claim (p < p₀)" = "less",
-                                "Greater than claim (p > p₀)" = "greater"),
-                    `aria-describedby` = ns("alt_desc")),
-        p(id = ns("alt_desc"), class = "sr-only", "Select the direction of the alternative hypothesis."),
+        div(class = "form-group",
+            tags$label("Claimed Success Rate (p₀):", `for` = ns("claimed_prop")),
+            numericInput(ns("claimed_prop"), label = NULL, value = 0.80, min = 0.01, max = 1, step = 0.01),
+            tags$p(id = ns("claimed_prop_desc"), class = "sr-only", "Enter the claimed proportion of successes, the null hypothesis value."),
+            tags$script(paste0("document.getElementById('", ns("claimed_prop"), "').setAttribute('aria-describedby', '", ns("claimed_prop_desc"), "')"))
+        ),
+        div(class = "form-group",
+            tags$label("Number of Trials (n):", `for` = ns("n_trials")),
+            numericInput(ns("n_trials"), label = NULL, value = 50, min = 1),
+            tags$p(id = ns("n_trials_desc"), class = "sr-only", "Enter the total number of independent trials in the experiment."),
+            tags$script(paste0("document.getElementById('", ns("n_trials"), "').setAttribute('aria-describedby', '", ns("n_trials_desc"), "')"))
+        ),
+        div(class = "form-group",
+            tags$label("Observed Number of Successes:", `for` = ns("n_success")),
+            numericInput(ns("n_success"), label = NULL, value = 32, min = 0),
+            tags$p(id = ns("n_success_desc"), class = "sr-only", "Enter the number of successful trials observed."),
+            tags$script(paste0("document.getElementById('", ns("n_success"), "').setAttribute('aria-describedby', '", ns("n_success_desc"), "')"))
+        ),
+        div(class = "form-group",
+            tags$label("Alternative Hypothesis:", `for` = ns("alternative")),
+            selectInput(ns("alternative"), label = NULL,
+                        choices = c("Different from claim (p ≠ p₀)" = "two.sided",
+                                    "Less than claim (p < p₀)" = "less",
+                                    "Greater than claim (p > p₀)" = "greater")),
+            tags$p(id = ns("alt_desc"), class = "sr-only", "Select the direction of the alternative hypothesis."),
+            tags$script(paste0("document.getElementById('", ns("alternative"), "').setAttribute('aria-describedby', '", ns("alt_desc"), "')"))
+        ),
         hr(),
         h4("Run the Simulation"),
-        numericInput(ns("num_sims"), "Number of Simulations:", value = 1000, min = 100, max = 10000, step = 100, `aria-describedby` = ns("num_sims_desc")),
-        p(id = ns("num_sims_desc"), class = "sr-only", "Enter the number of times to repeat the experiment for the simulation."),
+        div(class = "form-group",
+            tags$label("Number of Simulations:", `for` = ns("num_sims")),
+            numericInput(ns("num_sims"), label = NULL, value = 1000, min = 100, max = 10000, step = 100),
+            tags$p(id = ns("num_sims_desc"), class = "sr-only", "Enter the number of times to repeat the experiment for the simulation."),
+            tags$script(paste0("document.getElementById('", ns("num_sims"), "').setAttribute('aria-describedby', '", ns("num_sims_desc"), "')"))
+        ),
         actionButton(ns("run_sim"), "Run Simulation", class = "btn-primary"),
         hr(),
         div(class = "results-box", role = "status", `aria-live` = "polite",
@@ -55,7 +74,8 @@ activity_mrs_gallas_ui <- function(id) {
       ),
       mainPanel(
         div(class = "plot-container",
-            plotOutput(ns("sim_plot"), "A histogram showing the distribution of the number of successes from many simulations. A red line indicates the observed number of successes."),
+            plotOutput(ns("sim_plot")),
+            tags$script(paste0("document.getElementById('", ns("sim_plot"), "').setAttribute('aria-label', 'A histogram showing the distribution of the number of successes from many simulations. A red line indicates the observed number of successes.')")),
             uiOutput(ns("plot_desc"))
         )
       )

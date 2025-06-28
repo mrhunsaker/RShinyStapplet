@@ -18,7 +18,7 @@ ci_mean_ui <- function(id) {
         # Population Mean
         div(
           class = "form-group",
-          tags$label(id = ns("pop_mean_label"), "Population Mean (\\u03BC):"),
+          tags$label(id = ns("pop_mean_label"), "Population Mean (μ):"),
           htmltools::tagQuery(
             sliderInput(ns("pop_mean"), NULL, min = 0, max = 200, value = 100)
           )$find("input")$addAttrs("aria-labelledby" = ns("pop_mean_label"))$all()
@@ -26,7 +26,7 @@ ci_mean_ui <- function(id) {
         # Population Standard Deviation
         div(
           class = "form-group",
-          tags$label(id = ns("pop_sd_label"), "Population SD (\\u03C3):"),
+          tags$label(id = ns("pop_sd_label"), "Population SD (σ):"),
           htmltools::tagQuery(
             sliderInput(ns("pop_sd"), NULL, min = 1, max = 50, value = 15)
           )$find("input")$addAttrs("aria-labelledby" = ns("pop_sd_label"))$all()
@@ -57,9 +57,9 @@ ci_mean_ui <- function(id) {
         # Action buttons for drawing samples
         p("Generate confidence intervals from new samples:"),
         div(
-          style = "display: flex; justify-content: space-between; margin-bottom: 10px;",
-          actionButton(ns("draw_one"), "Draw 1 Interval", class = "btn-primary"),
-          actionButton(ns("draw_100"), "Draw 100 Intervals", class = "btn-primary")
+          actionButton(ns("draw_one"), "Draw 1 Interval", class = "btn-primary", width = "100%"),
+          br(),
+          actionButton(ns("draw_100"), "Draw 100 Intervals", class = "btn-primary", width = "100%")
         ),
         # Reset button
         actionButton(ns("reset"), "Reset", class = "btn-danger", style = "width: 100%;")
@@ -188,7 +188,7 @@ ci_mean_server <- function(id) {
       p <- ggplot(df_pop, aes(x = x)) +
         geom_density(fill = "#60a5fa", alpha = 0.5) +
         geom_vline(xintercept = input$pop_mean, color = "#dc2626", linetype = "dashed", size = 1.2) +
-        labs(x = "Value", y = "Density", title = paste("Population (\\u03BC = ", input$pop_mean, ")")) +
+        labs(x = "Value", y = "Density", title = paste("Population (μ = ", input$pop_mean, ")")) +
         theme_minimal()
 
       if (length(rv$last_sample) > 0) {
@@ -213,12 +213,12 @@ ci_mean_server <- function(id) {
         geom_vline(xintercept = input$pop_mean, color = "#dc2626", linetype = "dashed", size = 1) +
         geom_errorbarh(height = 0.5, size = 0.8) +
         geom_point(size = 2) +
-        scale_color_manual(values = c("TRUE" = "#1e40af", "FALSE" = "#ef4444"),
-                           name = "Captured Pop. Mean?",
-                           labels = c("Yes", "No"),
-                           drop = FALSE) +
+        scale_color_viridis_d(option = "D", end = 0.85,
+                              name = "Captured Pop. Mean?",
+                              labels = c("Yes", "No"),
+                              drop = FALSE) +
         labs(x = "Value", y = "Sample Number",
-             title = "Confidence Intervals for \\u03BC") +
+             title = "Confidence Intervals for μ") +
         theme_minimal() +
         theme(legend.position = "top")
     })

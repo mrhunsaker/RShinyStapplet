@@ -20,7 +20,7 @@ dist_normal_ui <- function(id) {
         # Input for Mean
         div(
           class = "form-group",
-          tags$label(`for` = ns("mean"), "Mean (\u03bc):"),
+          tags$label(`for` = ns("mean"), "Mean (μ):"),
           htmltools::tagQuery(
             sliderInput(ns("mean"), NULL,
                         min = -100, max = 100, value = 0, step = 1,
@@ -30,7 +30,7 @@ dist_normal_ui <- function(id) {
         # Input for Standard Deviation
         div(
           class = "form-group",
-          tags$label(`for` = ns("sd"), "Standard Deviation (\u03c3):"),
+          tags$label(`for` = ns("sd"), "Standard Deviation (σ):"),
           htmltools::tagQuery(
             sliderInput(ns("sd"), NULL,
                         min = 0.1, max = 50, value = 10, step = 0.1,
@@ -176,7 +176,7 @@ dist_normal_server <- function(id) {
       p <- ggplot(df, aes(x = x, y = y)) +
         geom_line(color = "#1e40af", linewidth = 1) +
         geom_vline(xintercept = plot_mean, linetype = "dashed", color = "#dc2626") +
-        labs(title = paste("Normal Distribution (\u03bc =", plot_mean, ", \u03c3 =", plot_sd, ")"),
+        labs(title = paste("Normal Distribution (μ =", plot_mean, ", σ =", plot_sd, ")"),
              x = "X", y = "Density") +
         theme_minimal() +
         theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold", color = "#0f172a"),

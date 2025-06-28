@@ -30,6 +30,9 @@ source("dist_power.R")
 source("activity_guess_correlation.R")
 source("activity_hiring_discrimination.R")
 source("activity_smell_parkinsons.R")
+source("activity_mrs_gallas.R")
+source("activity_candy_chi_square.R")
+source("activity_sampling_sunflowers.R")
 source("regression_slr.R")
 source("regression_mlr.R")
 source("anova_one_way.R")
@@ -114,8 +117,69 @@ ui <- navbarPage(
       .results-box {
         background-color: #e0f2f2; border: 1px solid #2dd4bf; border-radius: 8px; padding: 15px; margin-top: 20px; color: #0f766e; font-weight: 500;
       }
+      /* High-contrast, colorblind-friendly theme */
+      body {
+        background-color: #ffffff;
+        color: #111111;
+        font-family: 'Inter', Arial, sans-serif;
+        font-size: 16px;
+      }
+      .navbar, .navbar-default {
+        background-color: #222222 !important;
+        border-bottom: 2px solid #000;
+      }
+      .navbar-default .navbar-brand,
+      .navbar-default .navbar-nav > li > a {
+        color: #222222 !important;
+        background-color: #e5e7eb !important; /* Tailwind gray-200 */
+        font-weight: 700;
+      }
+      .navbar-default .navbar-nav > li > a:hover,
+      .navbar-default .navbar-nav > li > a:focus {
+        color: #111 !important;
+        background-color: #d1d5db !important; /* Tailwind gray-300 */
+      }
+      .navbar-default .navbar-nav > .active > a,
+      .navbar-default .navbar-nav > .active > a:hover,
+      .navbar-default .navbar-nav > .active > a:focus {
+        color: #222222 !important;
+        background-color: #ffd700 !important; /* Gold for high contrast */
+      }
+      .container-fluid, .well, .panel, .table {
+        background-color: #fff !important;
+        color: #111 !important;
+        border-radius: 8px;
+        border: 1.5px solid #222;
+      }
+      .btn, .btn-primary, .btn-danger {
+        color: #fff !important;
+        background-color: #0072B2 !important; /* Blue, colorblind safe */
+        border: none;
+        font-weight: 600;
+        margin-bottom: 8px;
+      }
+      .btn-danger {
+        background-color: #D55E00 !important; /* Orange, colorblind safe */
+      }
+      .btn:focus, .btn-primary:focus, .btn-danger:focus {
+        outline: 3px solid #FFD700 !important; /* Gold focus ring */
+        outline-offset: 2px;
+      }
+      /* Table header contrast */
+      .table th {
+        background-color: #222 !important;
+        color: #fff !important;
+      }
       .sr-only {
         position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+      }
+      /* Consistent width for first column of all .table tables on welcome page */
+      .table th:first-child, .table td:first-child {
+        width: 260px;
+        min-width: 200px;
+        max-width: 350px;
+        white-space: normal;
+        word-break: break-word;
       }
     "))
   ),
@@ -128,6 +192,8 @@ ui <- navbarPage(
       hr(),
       h3("Applet Mapping"),
       p("Here is a guide to which stapplet.com pages correspond to the applets in this suite:"),
+
+      h4("Data Analysis"),
       tags$table(class = "table table-bordered",
         tags$thead(
           tags$tr(
@@ -136,15 +202,25 @@ ui <- navbarPage(
           )
         ),
         tags$tbody(
-          tags$tr(tags$td(strong("Data Analysis"))),
           tags$tr(tags$td("1 Categorical Variable, Single Group"), tags$td("Hypothesis Tests -> Test for a Proportion")),
           tags$tr(tags$td("1 Categorical Variable, Multiple Groups"), tags$td("Hypothesis Tests -> Test for a Difference in Proportions")),
           tags$tr(tags$td("2 Categorical Variables"), tags$td("Hypothesis Tests -> Chi-Square for Independence")),
           tags$tr(tags$td("1 Quantitative Variable, Single Group"), tags$td("Hypothesis Tests -> Test for a Mean")),
-          tags$tr(tags$td("1 Quantitative Variable, Multiple Groups"), tags$td("ANOVA")),
+          tags$tr(tags$td("1 Quantitative Variable, Multiple Groups"), tags$td("Hypothesis Tests -> Test for a Difference in Means")),
           tags$tr(tags$td("2 Quantitative Variables"), tags$td("Regression -> Simple Linear Regression")),
-          tags$tr(tags$td("Multiple Regression"), tags$td("Regression -> Multiple Regression")),
-          tags$tr(tags$td(strong("Probability"))),
+          tags$tr(tags$td("Multiple Regression"), tags$td("Regression -> Multiple Regression"))
+        )
+      ),
+
+      h4("Probability"),
+      tags$table(class = "table table-bordered",
+        tags$thead(
+          tags$tr(
+            tags$th("Stapplet.com Page"),
+            tags$th("Shiny Applet Location")
+          )
+        ),
+        tags$tbody(
           tags$tr(tags$td("Normal Distributions"), tags$td("Probability Distributions -> Normal Distribution")),
           tags$tr(tags$td("Discrete Random Variables"), tags$td("Probability Distributions -> Discrete Random Variables")),
           tags$tr(tags$td("Binomial Distributions"), tags$td("Probability Distributions -> Binomial Distribution")),
@@ -152,16 +228,38 @@ ui <- navbarPage(
           tags$tr(tags$td("Counting Methods"), tags$td("Tools -> Counting Methods")),
           tags$tr(tags$td("t Distributions"), tags$td("Probability Distributions -> t-Distribution")),
           tags$tr(tags$td("χ2 Distributions"), tags$td("Probability Distributions -> Chi-Square Distribution")),
-          tags$tr(tags$td("F Distributions"), tags$td("Probability Distributions -> F-Distribution")),
-          tags$tr(tags$td(strong("Concepts"))),
+          tags$tr(tags$td("F Distributions"), tags$td("Probability Distributions -> F-Distribution"))
+        )
+      ),
+
+      h4("Concepts"),
+      tags$table(class = "table table-bordered",
+        tags$thead(
+          tags$tr(
+            tags$th("Stapplet.com Page"),
+            tags$th("Shiny Applet Location")
+          )
+        ),
+        tags$tbody(
           tags$tr(tags$td("The Idea of Probability"), tags$td("Tools -> Simulations")),
           tags$tr(tags$td("Law of Large Numbers"), tags$td("Tools -> Simulations")),
           tags$tr(tags$td("Simulating Sampling Distributions"), tags$td("Sampling Distributions")),
           tags$tr(tags$td("Simulating Confidence Intervals"), tags$td("Confidence Intervals -> CI for a Mean")),
           tags$tr(tags$td("Logic of Significance Testing"), tags$td("Hypothesis Tests -> Test for a Mean")),
           tags$tr(tags$td("Power"), tags$td("Concepts -> Power")),
-          tags$tr(tags$td("Streakiness"), tags$td("Tools -> Simulations")),
-          tags$tr(tags$td(strong("Activities"))),
+          tags$tr(tags$td("Streakiness"), tags$td("Tools -> Simulations"))
+        )
+      ),
+
+      h4("Activities"),
+      tags$table(class = "table table-bordered",
+        tags$thead(
+          tags$tr(
+            tags$th("Stapplet.com Page"),
+            tags$th("Shiny Applet Location")
+          )
+        ),
+        tags$tbody(
           tags$tr(tags$td("Can You Smell Parkinson's?"), tags$td("Activities -> Can You Smell Parkinson's?")),
           tags$tr(tags$td("Hiring Discrimination"), tags$td("Activities -> Hiring Discrimination")),
           tags$tr(tags$td("Guess the Correlation"), tags$td("Activities -> Guess the Correlation")),
@@ -245,6 +343,39 @@ ui <- navbarPage(
     tabPanel("Guess the Correlation", activity_guess_correlation_ui("activity_guess_correlation")),
     tabPanel("Hiring Discrimination", activity_hiring_discrimination_ui("activity_hiring_discrimination")),
     tabPanel("Can You Smell Parkinson's?", activity_smell_parkinsons_ui("activity_smell_parkinsons")),
+    tabPanel("Is Mrs. Gallas a Good Free Throw Shooter?", activity_mrs_gallas_ui("activity_mrs_gallas")),
+    tabPanel("M&M's/Skittles/Froot Loops", activity_candy_chi_square_ui("activity_candy_chi_square")),
+    tabPanel("Sampling Sunflowers", activity_sampling_sunflowers_ui("activity_sampling_sunflowers")),
+    tabPanel("Case Studies Guide",
+      fluidPage(
+        h2("Case Studies Application Guide"),
+        p("The following activities are case studies that can be solved using the general-purpose statistical tools included in this suite. This guide explains which tool to use for each case study."),
+        hr(),
+
+        h3("Does Beyoncé Write Her Own Lyrics?"),
+        p(strong("Concept:"), " One-Proportion Hypothesis Test."),
+        p(strong("Tool to Use:"), " Navigate to ", strong("Activities -> Is Mrs. Gallas a Good Free Throw Shooter?")),
+        p(strong("How to Use:"), "This scenario is a direct applicaztion of testing a single proportion. In the 'Mrs. Gallas' applet, you would set the 'Claimed Success Rate' to the proportion of words you'd expect by chance, the 'Number of Trials' to the total number of words analyzed, and the 'Observed Number of Successes' to the count of words like 'uh' or 'oh' in the lyrics."),
+        hr(),
+
+        h3("How Much Do Fans Like Taylor Swift? Part 1"),
+        p(strong("Concept:"), " One-Sample t-Test for a Mean."),
+        p(strong("Tool to Use:"), " Navigate to ", strong("Hypothesis Tests -> Test for a Mean.")),
+        p(strong("How to Use:"), "This scenario requires testing if the average positivity score of a sample of lyrics is significantly different from a known value. Enter the sample data (mean, standard deviation, and sample size) into the 'Test for a Mean' applet to find the t-statistic and p-value."),
+        hr(),
+
+        h3("How Much Do Fans Like Taylor Swift? Part 2"),
+        p(strong("Concept:"), " Analysis of Variance (ANOVA)."),
+        p(strong("Tool to Use:"), " Navigate to ", strong("ANOVA.")),
+        p(strong("How to Use:"), "This scenario involves comparing the mean positivity scores across several groups (albums). Enter the summary data (means, standard deviations, and sample sizes) for each album into the ANOVA applet to determine if there is a significant difference in fan sentiment across the albums."),
+        hr(),
+
+        h3("Old Faithful"),
+        p(strong("Concept:"), " Descriptive Statistics for a Quantitative Variable."),
+        p(strong("Tool to Use:"), " Navigate to ", strong("Tools -> Descriptive Statistics.")),
+        p(strong("How to Use:"), "This scenario involves analyzing a dataset of eruption times. You can paste the column of eruption data into the 'Descriptive Statistics' tool to generate a histogram, boxplot, and summary statistics (like mean, median, and standard deviation) to understand the distribution.")
+      )
+    ),
     tabPanel("Screenreader-Friendly Activities Guide",
       fluidPage(
         h3("Stapplet.com Activities Guide"),

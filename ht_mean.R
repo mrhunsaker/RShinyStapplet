@@ -30,7 +30,7 @@ ht_mean_ui <- function(id) {
         # Null Hypothesis Mean
         div(
           class = "form-group",
-          tags$label(id = ns("null_mean_label"), "Null Hypothesis Mean (\u03BC\u2080):"),
+          tags$label(id = ns("null_mean_label"), "Null Hypothesis Mean (μ₀):"),
           htmltools::tagQuery(
             numericInput(ns("null_mean"), NULL, value = 25, step = 0.5)
           )$find("input")$addAttrs("aria-labelledby" = ns("null_mean_label"))$all()
@@ -41,16 +41,16 @@ ht_mean_ui <- function(id) {
           tags$label(id = ns("alt_hyp_label"), "Alternative Hypothesis:"),
           htmltools::tagQuery(
             selectInput(ns("alternative"), NULL,
-                        choices = c("Two-sided (\u03BC \u2260 \u03BC\u2080)" = "two.sided",
-                                    "Less than (\u03BC < \u03BC\u2080)" = "less",
-                                    "Greater than (\u03BC > \u03BC\u2080)" = "greater"),
+                        choices = c("Two-sided (μ ≠ μ₀)" = "two.sided",
+                                    "Less than (μ < μ₀)" = "less",
+                                    "Greater than (μ > μ₀)" = "greater"),
                         selected = "two.sided")
           )$find("select")$addAttrs("aria-labelledby" = ns("alt_hyp_label"))$all()
         ),
         # Significance Level (Alpha)
         div(
           class = "form-group",
-          tags$label(id = ns("alpha_label"), "Significance Level (\u03B1):"),
+          tags$label(id = ns("alpha_label"), "Significance Level (α):"),
           htmltools::tagQuery(
             sliderInput(ns("alpha"), NULL, min = 0.01, max = 0.20, value = 0.05, step = 0.01)
           )$find("input")$addAttrs("aria-labelledby" = ns("alpha_label"))$all()
@@ -137,7 +137,7 @@ ht_mean_server <- function(id) {
         cat("Please enter valid numeric data.")
       } else {
         cat("Sample Size (n): ", length(data), "\n")
-        cat("Sample Mean (x\u0304): ", round(mean(data), 3), "\n")
+        cat("Sample Mean (x̄): ", round(mean(data), 3), "\n")
         cat("Sample SD (s):   ", round(sd(data), 3), "\n")
       }
     })
@@ -158,10 +158,10 @@ ht_mean_server <- function(id) {
       alpha <- input$alpha
 
       if (res$p.value < alpha) {
-        HTML(paste0("Since the p-value (", format.pval(res$p.value, digits = 3), ") is less than the significance level \u03B1 = ", alpha,
+        HTML(paste0("Since the p-value (", format.pval(res$p.value, digits = 3), ") is less than the significance level α = ", alpha,
                     ", we <strong>reject the null hypothesis</strong>. There is statistically significant evidence to support the alternative hypothesis."))
       } else {
-        HTML(paste0("Since the p-value (", format.pval(res$p.value, digits = 3), ") is not less than the significance level \u03B1 = ", alpha,
+        HTML(paste0("Since the p-value (", format.pval(res$p.value, digits = 3), ") is not less than the significance level α = ", alpha,
                     ", we <strong>fail to reject the null hypothesis</strong>. There is not enough statistically significant evidence to support the alternative hypothesis."))
       }
     })

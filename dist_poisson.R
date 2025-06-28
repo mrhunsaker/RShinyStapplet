@@ -16,26 +16,39 @@ dist_poisson_ui <- function(id) {
     sidebarLayout(
       sidebarPanel(
         # Input for mean (lambda)
-        numericInput(ns("lambda"), "Mean (λ):", value = 5, min = 0.1, step = 0.1, `aria-describedby` = ns("lambda_desc")),
-        p(id = ns("lambda_desc"), class = "sr-only", "Enter the average number of events (lambda) for the Poisson distribution. Must be greater than 0."),
+        div(class = "form-group",
+            tags$label("Mean (λ):", `for` = ns("lambda")),
+            numericInput(ns("lambda"), label = NULL, value = 5, min = 0.1, step = 0.1),
+            tags$p(id = ns("lambda_desc"), class = "sr-only", "Enter the average number of events (lambda) for the Poisson distribution. Must be greater than 0."),
+            tags$script(paste0("document.getElementById('", ns("lambda"), "').setAttribute('aria-describedby', '", ns("lambda_desc"), "')"))
+        ),
         hr(),
         h3("Calculate Probability"),
         p("Find the probability for a given value of X."),
         # Inputs for probability calculation
-        selectInput(ns("prob_type"), "Type of Probability:",
-                    choices = c("P(X = x)" = "eq",
-                                "P(X < x)" = "lt",
-                                "P(X <= x)" = "le",
-                                "P(X > x)" = "gt",
-                                "P(X >= x)" = "ge"), `aria-describedby` = ns("prob_type_desc")),
-        p(id = ns("prob_type_desc"), class = "sr-only", "Select the inequality for the probability calculation."),
-        numericInput(ns("prob_x_value"), "Value of x:", 0, min = 0, `aria-describedby` = ns("prob_x_desc")),
-        p(id = ns("prob_x_desc"), class = "sr-only", "Enter the specific value of x to use in the probability calculation.")
+        div(class = "form-group",
+            tags$label("Type of Probability:", `for` = ns("prob_type")),
+            selectInput(ns("prob_type"), label = NULL,
+                        choices = c("P(X = x)" = "eq",
+                                    "P(X < x)" = "lt",
+                                    "P(X <= x)" = "le",
+                                    "P(X > x)" = "gt",
+                                    "P(X >= x)" = "ge")),
+            tags$p(id = ns("prob_type_desc"), class = "sr-only", "Select the inequality for the probability calculation."),
+            tags$script(paste0("document.getElementById('", ns("prob_type"), "').setAttribute('aria-describedby', '", ns("prob_type_desc"), "')"))
+        ),
+        div(class = "form-group",
+            tags$label("Value of x:", `for` = ns("prob_x_value")),
+            numericInput(ns("prob_x_value"), label = NULL, value = 0, min = 0),
+            tags$p(id = ns("prob_x_desc"), class = "sr-only", "Enter the specific value of x to use in the probability calculation."),
+            tags$script(paste0("document.getElementById('", ns("prob_x_value"), "').setAttribute('aria-describedby', '", ns("prob_x_desc"), "')"))
+        ),
       ),
       mainPanel(
         # Outputs
         div(class = "plot-container",
-            plotOutput(ns("dist_plot"), "A bar chart showing the Poisson probability distribution. The area for the calculated probability is highlighted in red."),
+            plotOutput(ns("dist_plot")),
+            tags$script(paste0("document.getElementById('", ns("dist_plot"), "').setAttribute('aria-label', 'A bar chart showing the Poisson probability distribution. The area for the calculated probability is highlighted in red.')")),
             uiOutput(ns("plot_desc"))
         ),
         div(class = "results-box", role = "status", `aria-live` = "polite",
@@ -88,7 +101,7 @@ dist_poisson_server <- function(id) {
 
       ggplot(df, aes(x = x, y = p, fill = highlight)) +
         geom_col(alpha = 0.8) +
-        scale_fill_manual(values = c("yes" = "#ef4444", "no" = "#3b82f6"), guide = "none") +
+        scale_fill_viridis_d(option = "D", begin = 0.2, end = 0.8, direction = 1, guide = "none") +
         labs(title = paste("Poisson Distribution with λ =", input$lambda),
              x = "Number of Events (x)",
              y = "Probability P(x)") +

@@ -31,16 +31,32 @@ activity_smell_parkinsons_ui <- function(id) {
     sidebarLayout(
       sidebarPanel(
         h4("Define the Scenario"),
-        numericInput(ns("n_trials"), "Number of Trials (e.g., shirts):", value = 12, min = 1, `aria-describedby` = ns("n_trials_desc")),
-        p(id = ns("n_trials_desc"), class = "sr-only", "Enter the total number of independent trials in the experiment."),
-        numericInput(ns("n_correct"), "Number Correctly Identified:", value = 7, min = 0, `aria-describedby` = ns("n_correct_desc")),
-        p(id = ns("n_correct_desc"), class = "sr-only", "Enter the number of trials that were successful."),
-        numericInput(ns("prob_chance"), "Probability of Guessing Correctly:", value = 0.333, min = 0.01, max = 1, step = 0.01, `aria-describedby` = ns("prob_chance_desc")),
-        p(id = ns("prob_chance_desc"), class = "sr-only", "Enter the probability of a successful outcome in a single trial if the person were just guessing."),
+        div(class = "form-group",
+            tags$label("Number of Trials (e.g., shirts):", `for` = ns("n_trials")),
+            numericInput(ns("n_trials"), label = NULL, value = 12, min = 1),
+            tags$p(id = ns("n_trials_desc"), class = "sr-only", "Enter the total number of independent trials in the experiment."),
+            tags$script(paste0("document.getElementById('", ns("n_trials"), "').setAttribute('aria-describedby', '", ns("n_trials_desc"), "')"))
+        ),
+        div(class = "form-group",
+            tags$label("Number Correctly Identified:", `for` = ns("n_correct")),
+            numericInput(ns("n_correct"), label = NULL, value = 7, min = 0),
+            tags$p(id = ns("n_correct_desc"), class = "sr-only", "Enter the number of trials that were successful."),
+            tags$script(paste0("document.getElementById('", ns("n_correct"), "').setAttribute('aria-describedby', '", ns("n_correct_desc"), "')"))
+        ),
+        div(class = "form-group",
+            tags$label("Probability of Guessing Correctly:", `for` = ns("prob_chance")),
+            numericInput(ns("prob_chance"), label = NULL, value = 0.333, min = 0.01, max = 1, step = 0.01),
+            tags$p(id = ns("prob_chance_desc"), class = "sr-only", "Enter the probability of a successful outcome in a single trial if the person were just guessing."),
+            tags$script(paste0("document.getElementById('", ns("prob_chance"), "').setAttribute('aria-describedby', '", ns("prob_chance_desc"), "')"))
+        ),
         hr(),
         h4("Run the Simulation"),
-        numericInput(ns("num_sims"), "Number of Simulations:", value = 1000, min = 100, max = 10000, step = 100, `aria-describedby` = ns("num_sims_desc")),
-        p(id = ns("num_sims_desc"), class = "sr-only", "Enter the number of times to repeat the experiment for the simulation."),
+        div(class = "form-group",
+            tags$label("Number of Simulations:", `for` = ns("num_sims")),
+            numericInput(ns("num_sims"), label = NULL, value = 1000, min = 100, max = 10000, step = 100),
+            tags$p(id = ns("num_sims_desc"), class = "sr-only", "Enter the number of times to repeat the experiment for the simulation."),
+            tags$script(paste0("document.getElementById('", ns("num_sims"), "').setAttribute('aria-describedby', '", ns("num_sims_desc"), "')"))
+        ),
         actionButton(ns("run_sim"), "Run Simulation", class = "btn-primary"),
         hr(),
         div(class = "results-box", role = "status", `aria-live` = "polite",
@@ -50,7 +66,8 @@ activity_smell_parkinsons_ui <- function(id) {
       ),
       mainPanel(
         div(class = "plot-container",
-            plotOutput(ns("sim_plot"), "A histogram showing the distribution of the number of correct guesses from many simulations. A red line indicates the observed number correct from the data."),
+            plotOutput(ns("sim_plot")),
+            tags$script(paste0("document.getElementById('", ns("sim_plot"), "').setAttribute('aria-label', 'A histogram showing the distribution of the number of correct guesses from many simulations. A red line indicates the observed number correct from the data.')")),
             uiOutput(ns("plot_desc"))
         )
       )

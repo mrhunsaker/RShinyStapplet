@@ -31,14 +31,22 @@ activity_candy_chi_square_ui <- function(id) {
     sidebarLayout(
       sidebarPanel(
         h4("Define Categories & Data"),
-        numericInput(ns("num_cat"), "Number of Categories (Colors):", value = 6, min = 2, max = 10, `aria-describedby` = ns("num_cat_desc")),
-        p(id = ns("num_cat_desc"), class = "sr-only", "Enter the number of distinct categories, like colors of candy, to test."),
+        div(class = "form-group",
+            tags$label("Number of Categories (Colors):", `for` = ns("num_cat")),
+            numericInput(ns("num_cat"), label = NULL, value = 6, min = 2, max = 10),
+            tags$p(id = ns("num_cat_desc"), class = "sr-only", "Enter the number of distinct categories, like colors of candy, to test."),
+            tags$script(paste0("document.getElementById('", ns("num_cat"), "').setAttribute('aria-describedby', '", ns("num_cat_desc"), "')"))
+        ),
         hr(),
         uiOutput(ns("category_inputs")),
         hr(),
         h4("Run the Simulation"),
-        numericInput(ns("num_sims"), "Number of Simulations:", value = 1000, min = 100, max = 10000, step = 100, `aria-describedby` = ns("num_sims_desc")),
-        p(id = ns("num_sims_desc"), class = "sr-only", "Enter the number of times to create a simulated bag of candy."),
+        div(class = "form-group",
+            tags$label("Number of Simulations:", `for` = ns("num_sims")),
+            numericInput(ns("num_sims"), label = NULL, value = 1000, min = 100, max = 10000, step = 100),
+            tags$p(id = ns("num_sims_desc"), class = "sr-only", "Enter the number of times to create a simulated bag of candy."),
+            tags$script(paste0("document.getElementById('", ns("num_sims"), "').setAttribute('aria-describedby', '", ns("num_sims_desc"), "')"))
+        ),
         actionButton(ns("run_sim"), "Run Simulation", class = "btn-primary"),
         hr(),
         div(class = "results-box", role = "status", `aria-live` = "polite",
@@ -53,7 +61,8 @@ activity_candy_chi_square_ui <- function(id) {
       ),
       mainPanel(
         div(class = "plot-container",
-            plotOutput(ns("sim_plot"), "A histogram showing the distribution of simulated Chi-Square values. A red line indicates the observed Chi-Square value from the sample data."),
+            plotOutput(ns("sim_plot")),
+            tags$script(paste0("document.getElementById('", ns("sim_plot"), "').setAttribute('aria-label', 'A histogram showing the distribution of simulated Chi-Square values. A red line indicates the observed Chi-Square value from the sample data.')")),
             uiOutput(ns("plot_desc"))
         )
       )

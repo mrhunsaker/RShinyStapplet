@@ -186,7 +186,7 @@ ht_diff_means_server <- function(id) {
         ggplot(df, aes(x = group, y = value, fill = group)) +
           geom_boxplot(alpha = 0.7) +
           labs(x = "Group", y = "Value", title = "Side-by-Side Boxplots") +
-          scale_fill_manual(values = c("Group 1" = "#60a5fa", "Group 2" = "#fbbf24")) +
+          scale_fill_viridis_d(option = "D", end = 0.85) +
           theme_minimal() + theme(legend.position = "none")
       } else {
         # For summary stats, plot means with CI
@@ -202,7 +202,7 @@ ht_diff_means_server <- function(id) {
           geom_point(size = 4) +
           geom_errorbar(aes(ymin = ci_low, ymax = ci_high), width = 0.2, size = 1) +
           labs(x = "Group", y = "Mean +/- 1.96*SE", title = "Sample Means and Standard Errors") +
-          scale_color_manual(values = c("Group 1" = "#1e40af", "Group 2" = "#d97706")) +
+          scale_color_viridis_d(option = "D", end = 0.85) +
           theme_minimal() + theme(legend.position = "none")
       }
     })

@@ -27,8 +27,9 @@ activity_sampling_sunflowers_ui <- function(id) {
       # Column for controls and statistics
       column(4,
         h4("Controls"),
-        sliderInput(ns("sample_size"), "Sample Size (n):", min = 2, max = 100, value = 10, `aria-describedby` = ns("n_desc")),
+        sliderInput(ns("sample_size"), "Sample Size (n):", min = 2, max = 100, value = 10),
         p(id = ns("n_desc"), class = "sr-only", "Set the number of sunflowers to pick in each random sample."),
+        tags$script(paste0("document.getElementById('", ns("sample_size"), "').setAttribute('aria-describedby', '", ns("n_desc"), "')")),
         fluidRow(
           column(6, actionButton(ns("take_1"), "Take 1 Sample")),
           column(6, actionButton(ns("take_10"), "Take 10 Samples"))
@@ -61,6 +62,7 @@ activity_sampling_sunflowers_ui <- function(id) {
         hr(),
         h5("Distribution of Sample Means", align = "center"),
         plotOutput(ns("sampling_dist_plot"), height = "300px"),
+        tags$script(paste0("document.getElementById('", ns("sampling_dist_plot"), "').setAttribute('aria-label', 'A histogram of the means of all samples taken so far. A red dashed line shows the theoretical normal curve.')")),
         uiOutput(ns("plot_desc"))
       )
     )
