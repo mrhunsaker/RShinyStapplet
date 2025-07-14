@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-MVPXVT3DMR");
+        </script>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="./css/master.css" />
+        <title>One Categorical Variable, Single Group</title>
+        <script src="./js/d3.v3.min.js"></script>
+        <script src="./js/jstat.min.js"></script>
+        <script src="./js/stapplet_latest.js"></script>
+        <script src="./js/cat1v_single.js"></script>
+    </head>
+    <body>
+        <span CLASS="errormsg" id="spnBrowserMsg"></span>
+        <div id="divHeader" ROLE="banner">
+            <table>
+                <tr>
+                    <td class="header">
+                        One Categorical Variable, Single Group
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <form ROLE="form">
+            <label for="txtVariableName">Variable name:</label>
+            <input type="text" id="txtVariableName" size="40" /><br />
+
+            <label for="selInputType1Grp">Input data as:</label>
+            <select
+                id="selInputType1Grp"
+                onChange="return handleInput1GrpChange(this)"
+            >
+                <option value="counts">Counts in categories</option>
+                <option value="raw">Raw data</option></select
+            ><br /><br />
+            <div id="divInputCounts1Grp">
+                <table id="tblInputCounts1Grp">
+                    <tr>
+                        <th></th>
+                        <th>Category Name</th>
+                        <th>Frequency</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td><label for="txtInputCounts1GrpName1">1</label></td>
+                        <td>
+                            <input
+                                type="text"
+                                class="name"
+                                id="txtInputCounts1GrpName1"
+                                size="10"
+                                onChange="return deactivatePage1Grp(this)"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                title="Frequency"
+                                class="data"
+                                id="txtInputCounts1GrpData1"
+                                size="10"
+                                onChange="return deactivatePage1Grp(this)"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="button"
+                                class="ctl"
+                                value="-"
+                                id="txtInputCounts1GrpCtl1"
+                                onClick="removeCountsTableRow1Grp(this)"
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="txtInputCounts1GrpName2">2</label></td>
+                        <td>
+                            <input
+                                type="text"
+                                class="name"
+                                id="txtInputCounts1GrpName2"
+                                size="10"
+                                onChange="return deactivatePage1Grp(this)"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                title="Frequency"
+                                class="data"
+                                id="txtInputCounts1GrpData2"
+                                size="10"
+                                onChange="return deactivatePage1Grp(this)"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="button"
+                                class="ctl"
+                                value="-"
+                                id="txtInputCounts1GrpCtl2"
+                                onClick="removeCountsTableRow1Grp(this)"
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="text-align: right">
+                            <input
+                                type="button"
+                                id="btnAddRow1Grp"
+                                value="+"
+                                onClick="addNewCountsRow1Grp()"
+                            />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="divInputRawData1Grp">
+                <label for="txtInputRawData1Grp"
+                    >Input observations (category names) separated by spaces or
+                    commas. (Category names cannot have spaces in them.)</label
+                ><br />
+                <input
+                    type="text"
+                    id="txtInputRawData1Grp"
+                    size="80"
+                    onChange="deactivatePage1Grp(this)"
+                /><br />
+            </div>
+            <span ID="spnData1GrpMsg" CLASS="errormsg"></span><br />
+            <input
+                type="button"
+                value="Begin analysis"
+                onClick="beginAnalysis1Grp()"
+            />
+            <input
+                type="button"
+                id="btnChangeInputs1Grp"
+                value="Edit inputs"
+                onClick="deactivatePage1Grp()"
+            />
+            <input
+                type="button"
+                value="Reset everything"
+                onClick="resetApplet1Grp()"
+            />
+            <div id="divDisplayGraph1Grp">
+                <h3>Graph Distribution</h3>
+                <label for="selGraphType1Grp">Plot type:</label>
+                <select id="selGraphType1Grp" onChange="updateGraph1Grp()">
+                    <option value="bar">Bar chart</option>
+                    <option value="seg">Segmented bar chart</option>
+                    <option value="pie">Pie chart</option>
+                </select>
+                <span ID="spnBarGraph1GrpOptions">
+                    <label for="selBarGraph1GrpFreq"
+                        >Label bar chart with:</label
+                    >
+                    <select
+                        id="selBarGraph1GrpFreq"
+                        onChange="handleBarGraph1GrpFreq()"
+                    >
+                        <option value="freq">Frequency</option>
+                        <option value="rel">Relative frequency</option>
+                    </select> </span
+                ><br />
+                <div
+                    id="divDataGraph"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Data plot area"
+                ></div>
+            </div>
+            <div id="divSummaryStatistics1Grp">
+                <h3>Summary Statistics</h3>
+                <span
+                    ID="spnSummaryStatistics1Grp"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Summary statistics"
+                ></span
+                ><br />
+                <input
+                    type="button"
+                    value="Export summary statistics"
+                    onClick="exportSummaryStatistics1Grp()"
+                />
+                <textarea
+                    title="Summary Statistics"
+                    id="txtSummaryStatistics1GrpCSV"
+                ></textarea>
+            </div>
+            <br />
+            <div id="divInference1Grp">
+                <h3>Perform Inference</h3>
+                <label for="selInference1GrpType">Inference procedure:</label>
+                <select
+                    id="selInference1GrpType"
+                    onChange="handleInference1GrpChange(this)"
+                >
+                    <option value="simcount">Simulate sample count</option>
+                    <option value="simprop" id="optSimProp">
+                        Simulate sample percent
+                    </option>
+                    <option value="interval">1-sample z interval</option>
+                    <option value="test">1-sample z test</option>
+                    <option value="GOF">Chi-square goodness-of-fit test</option>
+                </select>
+                <span ID="spnCatSuccess1Grp">
+                    <label for="selCatSuccess1Grp"
+                        >Category to indicate as success:</label
+                    >
+                    <select id="selCatSuccess1Grp"></select>
+                </span>
+                <span ID="spnZInterval1GrpOptions">
+                    <label for="numCLevel1Grp">Confidence level:</label>
+                    <input
+                        type="number"
+                        step="0.1"
+                        max="99.9"
+                        min="0.1"
+                        id="numCLevel1Grp"
+                        value="95"
+                        size="5"
+                    />% <br /><br /><input
+                        type="button"
+                        value="Perform inference"
+                        onClick="updateInference1Grp()"
+                    />
+                </span>
+                <span ID="spnZTest1GrpOptions">
+                    <br /><label for="selZTestSides1Grp"
+                        >Alternative hypothesis:</label
+                    >
+                    <select id="selZTestSides1Grp">
+                        <option value="2">p &gt;</option>
+                        <option value="0">p &lt;</option>
+                        <option value="1">p &#8800;</option>
+                    </select>
+                    <label for="txtHypothesizedProp1Grp"
+                        >Hypothesized <span CLASS="fillPropPct"></span>:</label
+                    >
+                    <input type="text" id="txtHypothesizedProp1Grp" size="4" />
+                    <br /><br /><input
+                        type="button"
+                        value="Perform inference"
+                        onClick="updateInference1Grp()"
+                    />
+                </span>
+                <div id="spnChiSquaredTest1GrpOptions">
+                    <br /><br />Enter expected counts for each category.<br />
+                    <table
+                        id="tblChiSquaredExpected1Grp"
+                        tabindex="0"
+                        aria-live="polite"
+                        role="table"
+                        aria-label="Chi-square expected counts table"
+                    >
+                        <tr>
+                            <th>Category</th>
+                            <th>Observed count</th>
+                            <th>Expected count</th>
+                        </tr>
+                    </table>
+                    <br /><input
+                        type="button"
+                        value="Perform inference"
+                        onClick="updateInference1Grp()"
+                    />
+                </div>
+                <span ID="spnSimulation1GrpOptions">
+                    <br /><br /><label for="selSimulation1GrpType"
+                        >Simulate the distribution of the sample
+                        <span ID="spnSimulation1GrpMeasure"></span> for samples
+                        of the original size assuming that the true
+                        <span CLASS="fillPropPct"></span> is equal to</label
+                    >
+                    <select
+                        id="selSimulation1GrpType"
+                        onChange="handleSimulation1GrpTypeChange(this)"
+                    >
+                        <option value="hyp">a hypothesized value</option>
+                        <option value="obs">the observed value</option></select
+                    >.
+                    <span ID="spnSimulation1GrpHypOptions"
+                        ><br /><label for="txtSimulation1GrpHypProportion"
+                            >Hypothesized
+                            <span CLASS="fillPropPct"></span>:</label
+                        >
+                        <input
+                            type="text"
+                            id="txtSimulation1GrpHypProportion"
+                            onChange="handleSimHypPropChange()"
+                            size="4"
+                        /> </span
+                    ><br />
+                    <label for="txtNumSamples1Grp"
+                        >Number of samples to add:</label
+                    >
+                    <input
+                        type="text"
+                        id="txtNumSamples1Grp"
+                        size="4"
+                        onKeyDown="if (event.which == 13 || event.keyCode == 13) updateInference()"
+                    /><br />
+                    The applet will graph all of your results until you hit
+                    "Reset simulation."<br />
+                    <input
+                        type="button"
+                        id="btnPerformSimulation"
+                        value="Add samples"
+                        onClick="updateInference1Grp()"
+                    />
+                    <input
+                        type="button"
+                        id="btnClearSimulation"
+                        value="Reset simulation"
+                        onClick="clearSimulation1GrpResults()"
+                    />
+                    <span
+                        ID="spnSimulation1GrpErrorMsg"
+                        CLASS="errormsg"
+                    ></span>
+                </span>
+                <span ID="spnInference1GrpMsg" CLASS="errormsg"></span>
+                <br /><br /><span
+                    ID="spnInference1GrpResults"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Inference results"
+                ></span>
+                <span
+                    ID="spnSimulation1GrpResults"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Simulation results"
+                >
+                    <table>
+                        <tr>
+                            <td>
+                                <div
+                                    id="divSimGraph"
+                                    tabindex="0"
+                                    aria-live="polite"
+                                    role="region"
+                                    aria-label="Simulation plot area"
+                                ></div>
+                                <span ID="spnSimulationDotplotCountingOptions">
+                                    Count the number and percent of dots
+                                    <select
+                                        id="selSimulation1GrpDotplotCountDir"
+                                        onChange="handleSimulation1GrpDotplotCount()"
+                                    >
+                                        <option value="left">less than</option>
+                                        <option value="right">
+                                            greater than
+                                        </option>
+                                    </select>
+                                    <label
+                                        for="txtSimulation1GrpDotplotCountBound"
+                                        >or equal to</label
+                                    >
+                                    <input
+                                        type="text"
+                                        id="txtSimulation1GrpDotplotCountBound"
+                                        size="5"
+                                        onChange="handleSimulation1GrpDotplotCount()"
+                                        onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSimulationDotplotCount()"
+                                    />
+                                    <input
+                                        type="button"
+                                        id="btnDotplotCount"
+                                        value="Count"
+                                        onClick="handleSimulation1GrpDotplotCount()"
+                                    /><br />
+                                    -OR-<br />
+                                    <label for="txtSimulationDotplotMiddlePct"
+                                        >Find endpoints for the middle</label
+                                    >
+                                    <input
+                                        type="number"
+                                        id="txtSimulationDotplotMiddlePct"
+                                        min="0"
+                                        max="100"
+                                        step="0.1"
+                                        value="95"
+                                        onChange="handleSimulation1GrpDotplotCount(true)"
+                                        onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSimulation1GrpDotplotCount(true)"
+                                    />% of simulated results
+                                    <input
+                                        type="button"
+                                        id="btnDotplotCI"
+                                        value="Find endpoints"
+                                        onClick="handleSimulation1GrpDotplotCount(true)"
+                                    /><br />
+                                    <input
+                                        type="button"
+                                        id="btnClearDotplotCount"
+                                        value="Remove count"
+                                        onClick="clearSimulation1GrpDotplotCount()"
+                                    /><br />
+                                    <span
+                                        ID="spnSimulation1GrpDotplotCountErrorMsg"
+                                        CLASS="errormsg"
+                                    ></span>
+                                </span>
+                            </td>
+                            <td valign="top">
+                                # of samples:<br /><span
+                                    ID="spnNumTrials"
+                                ></span
+                                ><br />
+                                Most recent result:<br /><span
+                                    ID="spnRecentResult"
+                                ></span
+                                ><br />
+                                Mean:<br /><span ID="spnSimMean"></span><br />
+                                SD:<br /><span ID="spnSimSD"></span><br />
+                            </td>
+                        </tr>
+                    </table>
+                </span>
+            </div>
+            <!-- Scroll buffer for screen bottom -->
+            <br />
+            <a href="javascript:STAP.Preferences.launchPreferencePage();"
+                >Adjust color, rounding, and percent/proportion preferences</a
+            >
+            | <a href="./">Back to menu</a>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </form>
+    </body>
+</html>

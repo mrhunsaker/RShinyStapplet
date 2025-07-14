@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MVPXVT3DMR');
+</script>
+    <META CHARSET="UTF-8">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+    <TITLE>Notecard Shuffler/Picker (BETA)</TITLE>
+    <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/d3.v3.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/stapplet_latest.js"></SCRIPT>
+    <SCRIPT SRC="./js/notecard.js"></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Notecard Shuffler and Picker (BETA)</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divNotecards">
+                <FIELDSET>
+                    <LEGEND><B>What notecards would you like?</B></LEGEND>
+                <SELECT ID="selDeck" onChange="handleDeckChange()">
+                <OPTION VALUE="single">A single deck of notecards</OPTION>
+                <OPTION VALUE="paired">A set of paired notecards</OPTION>
+                </SELECT>
+                <DIV ID="divNotecardsSingle">
+                    <BR>How do you want to enter the card labels? 
+                    <SELECT ID="selInput" onChange="handleInputChange()">
+                        <OPTION VALUE="table">In a frequency table</OPTION>
+                        <OPTION VALUE="raw">As a list of labels</OPTION>
+                    </SELECT><BR>
+                    <DIV ID="divTableInput">
+                    (Any duplicate card labels will be collapsed into one group.)
+                    <TABLE ID="tblInputCounts">
+                        <TR>
+                            <TH></TH>
+                            <TH>Notecard label</TH>
+                            <TH>How many?</TH>
+                            <TH></TH>
+                        </TR>
+                        <TR>
+                            <TD><LABEL FOR="txtDiscName1">1</LABEL></TD>
+                            <TD><INPUT TYPE="text" CLASS="name" ID="txtDiscName1" SIZE="10" onChange="return deactivatePage(this)"></TD>
+                            <TD><INPUT TYPE="number" CLASS="data" ID="txtDiscData1" VALUE="1" MIN="1" STEP="1" onChange="return deactivatePage(this)"></TD>
+                            <TD><INPUT TYPE="button" VALUE="-" CLASS="ctl" ID="txtDiscCtl1" onClick="removeCountsTableRow(this)"></TD>
+                        </TR>
+                        <TR>
+                            <TD><LABEL FOR="txtDiscName2">2</LABEL></TD>
+                            <TD><INPUT TYPE="text" CLASS="name" ID="txtDiscName2" SIZE="10" onChange="return deactivatePage(this)"></TD>
+                            <TD><INPUT TYPE="number" CLASS="data" ID="txtDiscData2" VALUE="1" MIN="1" STEP="1" onChange="return deactivatePage(this)"></TD>
+                            <TD><INPUT TYPE="button" VALUE="-" CLASS="ctl" ID="txtDiscCtl2" onClick="removeCountsTableRow(this)"></TD>
+                        </TR>
+                        <TR>
+                            <TD COLSPAN="4" STYLE="text-align: right;">
+                                <INPUT TYPE="button" ID="btnAddRow" VALUE="+" onClick="addNewCountsRow()">
+                            </TD>
+                        </TR>
+                    </TABLE>
+                    </DIV>
+                    <DIV ID="divRawInput">
+                        <BR>Enter labels as a list separated by commas or spaces. If your labels contain spaces, replace them with dashes or underscores, or use the frequency table option.<BR>
+                        <INPUT TYPE="text" ID="txtRawInput" SIZE="60" onChange="return deactivatePage(this)"> 
+                    </DIV>
+                    <SPAN ID="spnDataMsg" CLASS="errormsg"></SPAN><BR>
+
+                    <B>What should I do with the notecards?</B><BR>
+                        <SELECT ID="selOperation" onChange="handleOperationChange()">
+                            <OPTION VALUE="picklist">Pick a certain number of shuffled cards and list them</OPTION>
+                            <OPTION VALUE="pickcount">Pick a certain number of shuffled cards and count the number of each label</OPTION>
+                            <OPTION VALUE="groupcount">Shuffle them into groups and report the number of each label in each group</OPTION>
+                        </SELECT><BR>
+                        <SPAN ID="spnPickOptions">
+                            How many to pick? 
+                            <INPUT TYPE="number" ID="txtPickCount" VALUE="1" MIN="1" STEP="1" onChange="return deactivatePage(this)">
+                        </SPAN>
+                        <SPAN ID="spnGroupOptions">
+                            How many groups?
+                            <INPUT TYPE="number" ID="txtGroupCount" VALUE="2" MIN="2" STEP="1" onChange="return deactivatePage(this)"><BR>
+                            How big should the groups be? List each group size separated by a comma or a space.<BR>
+                            <INPUT TYPE="text" ID="txtGroupSizes" SIZE="30" onChange="return deactivatePage(this)">
+                        </SPAN>
+                        <BR><SPAN ID="spnOptionsMsg" CLASS="errormsg"></SPAN>
+                </DIV>
+                <DIV ID="divNotecardsPaired">
+                    <BR>As comma- or space-separated lists, enter the first card label for each individual in the first blank, and the  the corresponding paired card label for each individual in the second.
+                    <BR><EM>Keep the labels in the same order of individuals.</EM><BR>
+                    <TABLE>
+                        <TR>
+                            <TD class="noborder">First cards:</TD>
+                            <TD class="noborder">
+                    <INPUT TYPE="text" ID="txtPairInput1" SIZE="60" onChange="return deactivatePage(this)">
+                            </TD>
+                        </TR>
+                        <TR>
+                            <TD class="noborder">Second cards:</TD>
+                            <TD class="noborder">
+                    <INPUT TYPE="text" ID="txtPairInput2" SIZE="60" onChange="return deactivatePage(this)">
+                            </TD>
+                        </TR>
+                    </TABLE>
+                    <SPAN ID="spnPairDataMsg" CLASS="errormsg"></SPAN><BR>
+                    Each pair will be shuffled and the results will appear below.
+                </DIV>
+                </FIELDSET>
+            <INPUT TYPE="button" ID="btnBeginAnalysis" VALUE="Draw" onClick="beginAnalysis()">
+            <DIV ID="divRecentResult">
+                <FIELDSET>
+                    <LEGEND><B>Most recent outcome</B></LEGEND>
+                    <SPAN ID="spnRecentOutcome"></SPAN>
+                </FIELDSET>
+            </DIV>
+            <DIV ID="divAllResults">
+                Quickly perform
+                    <INPUT TYPE="number" ID="txtMultipleTrials" VALUE="1" MIN="1" STEP="1"> 
+                trials.
+                <INPUT TYPE="button" VALUE="Add trials" onClick="doMultiple()">
+                <BR>
+                <FIELDSET>
+                    <LEGEND><B>All results</B></LEGEND>
+                    <DIV ID="divResultsTables" CLASS="tstickwrap">
+                    </DIV>
+                    <TEXTAREA ID="txtResultsCSV" HIDDEN></TEXTAREA>
+                    <INPUT TYPE="button" VALUE="Download results" onClick="exportResults()"><BR>
+                </FIELDSET>
+                <INPUT TYPE="button" VALUE="Reset everything" onClick="resetApplet()">
+            </DIV>
+        </DIV>
+            <BR><BR>
+            <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+            <BR>
+            <BR>
+        </FORM>
+    </BODY>
+</HTML>

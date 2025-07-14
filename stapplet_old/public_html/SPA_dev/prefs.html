@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+	<meta name="robots" content="noindex">
+        <META CHARSET="UTF-8">
+        <TITLE>SPA: Preferences</TITLE>
+        <LINK REL="stylesheet" TYPE="text/css" HREF="./master.css">
+        <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+        <SCRIPT SRC="./js/spa_0.1.js"></SCRIPT>
+        <SCRIPT SRC="./js/prefs.js"></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Preferences</TD></TR>
+                <TR><TD CLASS="headertable">
+                All preferences are saved as soon as you change them, but changes will not affect any open windows or tabs.
+                </TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <FIELDSET>
+                <LEGEND><STRONG>Rounding/Display of Proportions</STRONG></LEGEND>
+                Display proportions as: 
+                <INPUT TYPE="radio" ID="rdPropDisplay1" NAME="rdPropDisplay" VALUE="proportion" onClick="writePropDisplayPreferences(this)"><LABEL FOR="rdPropDisplay1">decimals</LABEL>
+                <INPUT TYPE="radio" ID="rdPropDisplay2" NAME="rdPropDisplay" VALUE="percent" onClick="writePropDisplayPreferences(this)"><LABEL FOR="rdPropDisplay2">percentages</LABEL><BR>
+                <LABEL FOR="txtPropPlaces">Keep up to</LABEL> <INPUT TYPE="text" ID="txtPropPlaces" SIZE="3" onChange="writePropDisplayPreferences()"> 
+                    digit(s) of precision <SPAN CLASS="errormsg" ID="spnPropPlacesMsg"></SPAN>
+                <BR><BR>
+                <STRONG>Example:</STRONG> 0.3141592 = <SPAN ID="spnPropEx"></SPAN>
+            </FIELDSET>
+
+            <FIELDSET>
+                <LEGEND><STRONG>Rounding of Numbers</STRONG></LEGEND>
+                <INPUT TYPE="radio" ID="rdNumRounding1" NAME="rdNumRounding" VALUE="auto" onClick="writeNumberRoundingPreferences(this)"><LABEL FOR="rdNumRounding1">Round to as many as</LABEL>
+                    <INPUT TYPE="text" ID="txtNumAutoPlaces" onChange="selectRadio('rdNumRounding1')" SIZE="3"> <LABEL FOR="txtNumAutoPlaces">decimal place(s)</LABEL>
+                <SPAN CLASS="errormsg" ID="spnNumAutoPlacesMsg"></SPAN><BR>
+                <INPUT TYPE="radio" ID="rdNumRounding2" NAME="rdNumRounding" VALUE="fixed" onClick="writeNumberRoundingPreferences(this)"><LABEL FOR="rdNumRounding2">Always round to</LABEL>
+                    <INPUT TYPE="text" ID="txtNumFixedPlaces" onChange="selectRadio('rdNumRounding2')" SIZE="3"> <LABEL FOR="txtNumFixedPlaces">decimal place(s)</LABEL>
+                <SPAN CLASS="errormsg" ID="spnNumFixedPlacesMsg"></SPAN><BR>
+                <INPUT TYPE="radio" ID="rdNumRounding3" NAME="rdNumRounding" VALUE="precision" onClick="writeNumberRoundingPreferences(this)"><LABEL FOR="rdNumRounding3">Always round to</LABEL>
+                    <INPUT TYPE="text" ID="txtNumPrecision" onChange="selectRadio('rdNumRounding3')" SIZE="3"> <LABEL FOR="txtNumPrecision">significant figure(s)</LABEL>
+                <SPAN CLASS="errormsg" ID="spnNumPrecisionMsg"></SPAN>
+                <BR><BR>
+                <STRONG>Examples:</STRONG> 31.4159 = <SPAN ID="spnNumEx1"></SPAN>, 1/7 = <SPAN ID="spnNumEx2"></SPAN>, -21.3 = <SPAN ID="spnNumEx3"></SPAN>
+            </FIELDSET>
+            
+            <FIELDSET>
+                <LEGEND><STRONG>Plots</STRONG></LEGEND>
+                <LABEL FOR="selDotplotBGColor">Background color:</LABEL> <SELECT ID="selDotplotBGColor" onChange="writeDotPlotColorPreferences()">
+                    <OPTION VALUE="#FFFFFF">White</OPTION>
+                    <OPTION VALUE="#CCCCCC">Light Gray</OPTION>
+                    <OPTION VALUE="#FFFFCC">Light Yellow</OPTION>
+                    <OPTION VALUE="#FFCCCC">Peach</OPTION>
+                    <OPTION VALUE="#FF99FF">Pink</OPTION>
+                    <OPTION VALUE="#CCFFCC">Teal</OPTION>
+                </SELECT><BR>
+                <LABEL FOR="selDotplotDotColor">Fill color:</LABEL> <SELECT ID="selDotplotDotColor" onChange="writeDotPlotColorPreferences()">
+                    <OPTION VALUE="#FFFFFF">White</OPTION>
+                    <OPTION VALUE="#993399">Purple</OPTION>   
+                    <OPTION VALUE="#FF3333">Red</OPTION>                
+                    <OPTION VALUE="#33CC33">Green</OPTION>
+                    <OPTION VALUE="#3333FF">Blue</OPTION>
+                    <OPTION VALUE="#666666">Gray</OPTION>                
+                </SELECT><BR><BR>
+                <STRONG>Example:</STRONG><BR>
+                <CANVAS ID="cnvExamplePlot" WIDTH="400" HEIGHT="200">
+                        <SPAN CLASS="errormsg">Your browser does not support canvas graphing.<BR>
+                        Please consider using an updated browser.</SPAN>
+                </CANVAS><BR>
+            </FIELDSET>
+            <P><INPUT TYPE="button" ID="btnReset" VALUE="Reset all preferences to default" onClick="resetPreferences()"></P>
+	    <A HREF="./">Back to menu</A>
+        </FORM>
+    </BODY>
+</HTML>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-MVPXVT3DMR");
+        </script>
+        <meta name="author" content="Robert Amar" />
+        <link rel="stylesheet" type="text/css" href="./css/master.css" />
+        <title>Simulating Sampling Distributions</title>
+        <script src="./js/d3.v3.min.js"></script>
+        <script src="./js/jstat.min.js"></script>
+        <script src="./js/stapplet_latest.js"></script>
+        <script src="./js/sampdist.js"></script>
+    </head>
+    <body>
+        <span CLASS="errormsg" id="spnBrowserMsg"></span>
+        <div id="divHeader" ROLE="banner">
+            <table>
+                <tr>
+                    <td class="header">Simulating Sampling Distributions</td>
+                </tr>
+            </table>
+        </div>
+        <form ROLE="form">
+            <div id="divSampDist">
+                <div id="divStep1">
+                    <fieldset>
+                        <legend><b>Population</b></legend>
+                        <label for="selPop">Population distribution is:</label>
+                        <select id="selPop" ONCHANGE="step1Change()">
+                            <option value="normal">Normal</option>
+                            <option value="uniform">Uniform</option>
+                            <option value="skewed">Skewed</option>
+                            <option value="bimodal">Bimodal</option>
+                            <option value="categorical">
+                                Categorical
+                            </option></select
+                        ><br />
+                        <div id="divStep1CatOptions">
+                            <label for="txtCategoricalP"
+                                >True proportion of successes =</label
+                            >
+                            <input
+                                type="number"
+                                step="0.01"
+                                min="0"
+                                max="1"
+                                value="0.5"
+                                id="txtCategoricalP"
+                                ONCHANGE="step1PropChange()"
+                            />
+                            <span ID="spnStep1ErrorMsg" CLASS="errormsg"></span>
+                        </div>
+                        <div id="divStep1Results">
+                            Distribution of
+                            <span ID="spnPopType"></span> population:<br />
+                            <div
+                                id="divPopPlot"
+                                tabindex="0"
+                                aria-live="polite"
+                                role="region"
+                                aria-label="Population plot"
+                            ></div>
+                            <span ID="spnPopParams"></span><br /><br />
+                        </div>
+                    </fieldset>
+                </div>
+                <div id="divStep2">
+                    <fieldset>
+                        <legend><b>Sample</b></legend>
+                        <label for="txtSampleSize"
+                            >Show distribution of one random sample of size
+                            <em>n</em> =</label
+                        >
+                        <input
+                            type="number"
+                            step="1"
+                            min="1"
+                            value="30"
+                            id="txtSampleSize"
+                            ONCHANGE="clearSamples()"
+                        />
+                        <span ID="spnStep2ErrorMsg" CLASS="errormsg"></span>
+                        <br />
+                        <input
+                            type="button"
+                            value="Select sample"
+                            ONCLICK="step2()"
+                            id="btn2"
+                        /><br />
+                        <div id="divStep2Results">
+                            <div id="divStep2Margin">&nbsp;</div>
+                            <div
+                                id="divOneSamplePlot"
+                                tabindex="0"
+                                aria-live="polite"
+                                role="region"
+                                aria-label="One sample plot"
+                            ></div>
+                            <span
+                                ID="spnOneSampleStats"
+                                tabindex="0"
+                                aria-live="polite"
+                                role="region"
+                                aria-label="One sample statistics"
+                            ></span
+                            ><br /><br />
+                        </div>
+                    </fieldset>
+                </div>
+                <div id="divStep3">
+                    <fieldset>
+                        <legend><b>Sampling Distribution</b></legend>
+                        <label for="selSampDist"
+                            >Approximate sampling distribution of
+                        </label>
+                        <select
+                            id="selSampDist"
+                            ONCHANGE="step3SampDistChange()"
+                        >
+                            <option value="mean">x&#772;</option>
+                            <option value="sd">s</option>
+                            <option value="var">s&sup2;</option></select
+                        ><span ID="spnStep3CatOpt">p&#770;</span><br />
+                        Quickly select
+                        <input
+                            type="number"
+                            step="1"
+                            min="1"
+                            value="1"
+                            id="txtNumSamples"
+                        />
+                        <label for="txtNumSamples">random sample(s):</label>
+                        <input
+                            type="button"
+                            value="Select samples"
+                            ONCLICK="step3()"
+                        /><br />
+                        <div id="divStep3Model">
+                            <input
+                                type="checkbox"
+                                id="chkNormal"
+                                ONCLICK="plotSamplingDist()"
+                            />
+                            <label for="chkNormal"
+                                >Show corresponding normal curve</label
+                            ><br />
+                        </div>
+                        <div
+                            id="divApproxDistPlot"
+                            tabindex="0"
+                            aria-live="polite"
+                            role="region"
+                            aria-label="Sampling distribution plot"
+                        ></div>
+                        <span
+                            ID="spnApproxDistStats"
+                            tabindex="0"
+                            aria-live="polite"
+                            role="region"
+                            aria-label="Sampling distribution statistics"
+                        ></span
+                        ><br />
+                        <input
+                            type="button"
+                            value="Clear samples"
+                            ONCLICK="clearSamples(true)"
+                        />
+                        <input
+                            type="button"
+                            value="Reset everything"
+                            ONCLICK="resetAll()"
+                        />
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Scroll buffer for screen bottom -->
+            <br />
+            <a href="javascript:STAP.Preferences.launchPreferencePage();"
+                >Adjust color, rounding, and percent/proportion preferences</a
+            >
+            | <a href="./">Back to menu</a>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </form>
+    </body>
+</html>

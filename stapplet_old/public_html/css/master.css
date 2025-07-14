@@ -1,0 +1,253 @@
+body
+{
+    font: 12pt "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+.errormsg
+{
+    color: red;
+}
+
+.successmsg
+{
+    color: green;
+}
+
+.datainput
+{
+    white-space: pre-line;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+
+/* https://stackoverflow.com/questions/30980873/what-are-the-default-css-styling-of-heading-tags-h1-h2-h3-h4-h5 */
+.sectionheader
+{ 
+    display: block;
+    font-size: 1.17em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-left: 0;
+    margin-right: 0;
+    font-weight: bold;
+}
+
+.bottombar
+{
+    margin-top: 12px;
+    margin-bottom: 150px;
+}
+
+.swatch
+{
+    width: 50px;
+    height: 8px;
+    border: 1px solid black;
+    padding: 0px;
+}
+
+table
+{
+    border-collapse: collapse;
+    text-align: center;
+    vertical-align: middle;
+}
+
+th, td
+{
+    padding: 3px;
+    border: 1px solid black;
+}
+
+.noborder
+{
+    border: none;
+}
+
+.tableUpperLeft
+{
+    border-top: none;
+    border-left: none;
+}
+
+.rotate90CCW {
+    -ms-transform: rotate(-90deg); /* IE 9 */
+    -moz-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+    -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+    -o-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+    transform: rotate(-90deg);
+}
+
+/* Adapted from http://tympanus.net/codrops/2013/11/07/css-overlay-techniques/ */
+.modal {
+    /* some styles to position the modal at the center of the page */
+    position: fixed;
+    top: 2%;
+    left: 2%;
+    width: 96%;
+    height: 96%;
+    background-color: #ffffff;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    /* needed styles for the overlay */
+    z-index: 10; /* keep on top of other elements on the page */
+    outline: 9999px solid rgba(0,0,0,0.5);
+    
+    overflow-y: scroll;
+}
+
+td.tableleft {
+    text-align: left;
+}
+
+.leftIndent {
+    padding-left: 20px;
+}
+
+.headertable {
+    border: none;
+    vertical-align: top;
+    text-align: left;
+}
+
+.header {
+    font: bold 150% Verdana, Geneva, sans-serif;
+    vertical-align: middle;
+    text-align: left;
+    border: none;
+    color: rgb(65,64,66);
+}
+
+.jumboheader {
+    font: bold 200% Verdana, Geneva, sans-serif;
+    text-align: left;
+    border: none;
+    color: rgb(65,64,66);
+}
+
+.tooltip {
+  position: absolute;
+/*  width: 200px;
+  height: 28px; */
+  pointer-events: none;
+  background-color: white;
+}
+
+.stemplotTable {
+    border: none;
+}
+
+.stemplotHeader {
+    text-align: center;
+    font-weight: bold;
+    border: none;
+}
+
+.stemplotFooter {
+    text-align: center;
+    font-weight: bold;
+    border: none;
+    white-space: nowrap;
+}
+
+.stemplotVar1 {
+    text-align: right;
+    font-weight: bold;
+    border: none;
+}
+
+.stemplotVar2 {
+    text-align: left;
+    font-weight: bold;
+    border: none;
+}
+
+.stemplotCenterStem {
+    text-align: center;
+    font-weight: bold;
+    font-family: "Courier New", Courier, monospace;
+    border-top: none;
+    border-bottom: none;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.stemplotLeftStem {
+    text-align: right;
+    font-weight: bold;
+    font-family: "Courier New", Courier, monospace;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    border-right: 1px solid black;
+    white-space: nowrap;
+}
+
+.stemplotRightAlign {
+    text-align: right;
+    font-family: "Courier New", Courier, monospace;
+    border: none;
+    white-space: nowrap;
+}
+
+.stemplotLeftAlign {
+    text-align: left;
+    font-family: "Courier New", Courier, monospace;
+    border: none;
+    white-space: nowrap;
+}
+
+.stemplotContainer {
+    overflow-x: auto;
+}
+
+.overlayWarning {
+    z-index: 4;
+    background-color: white;
+    padding: 30px;
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: visibility 0s 1s, opacity 1s ease-in;
+}
+
+.noborderrightalign {
+    border: none;
+    text-align: right;
+}
+
+.noborderleftalign {
+    border: none;
+    text-align: left;
+}
+
+.tstickwrap {
+  width: 400px;
+  max-height: 400px;
+  overflow: scroll;
+}
+
+.tstickwrap table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.tstickwrap table td:first-child {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  background-color: white;
+  white-space: nowrap;
+}
+
+.tstickwrap table th:first-child {
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+  background-color: white;
+  white-space: nowrap;
+}

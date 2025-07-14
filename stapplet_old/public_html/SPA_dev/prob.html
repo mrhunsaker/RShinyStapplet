@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+	<meta name="robots" content="noindex">
+    <META CHARSET="UTF-8">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./master.css">
+    <TITLE>SPA: Probability</TITLE>
+    <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/spa_0.1.js"></SCRIPT>
+    <SCRIPT SRC="./js/prob.js"></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Probability</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <LABEL FOR="selCalculatorType">Select type:</LABEL>
+            <SELECT ID="selCalculatorType">
+                <OPTION VALUE="divNormal">Normal distribution</OPTION>
+                <OPTION VALUE="divDiscrete">Discrete probability distribution</OPTION>
+                <OPTION VALUE="divBinomial">Binomial distribution</OPTION>
+                <OPTION VALUE="divCounting">Counting methods</OPTION>
+            </SELECT>
+            <INPUT TYPE="button" VALUE="Begin analysis" ONCLICK="handleCalcChange()">
+            <BR><BR>
+            <DIV ID="divDiscrete">
+            <LABEL FOR="txtVariableName">Variable name:</LABEL> <INPUT TYPE="text" ID="txtVariableName" SIZE="40"><BR><BR>
+                <TABLE ID="tblInputCounts">
+                    <TR>
+                        <TH></TH>
+                        <TH>Value</TH>
+                        <TH>Probability</TH>
+                        <TH></TH>
+                    </TR>
+                    <TR>
+                        <TD><LABEL FOR="txtDiscName1">1</LABEL></TD>
+                        <TD><INPUT TYPE="text" CLASS="name" ID="txtDiscName1" SIZE="10" onChange="return deactivatePage(this)"></TD>
+                        <TD><INPUT TYPE="text" CLASS="data" ID="txtDiscData1" TITLE="Probability" SIZE="10" onChange="return deactivatePage(this)"></TD>
+                        <TD><INPUT TYPE="button" VALUE="-" CLASS="ctl" ID="txtDiscCtl1" onClick="removeCountsTableRow(this)"></TD>
+                    </TR>
+                    <TR>
+                        <TD><LABEL FOR="txtDiscName2">2</LABEL></TD>
+                        <TD><INPUT TYPE="text" CLASS="name" ID="txtDiscName2" SIZE="10" onChange="return deactivatePage(this)"></TD>
+                        <TD><INPUT TYPE="text" CLASS="data" ID="txtDiscData2" TITLE="Probability" SIZE="10" onChange="return deactivatePage(this)"></TD>
+                        <TD><INPUT TYPE="button" VALUE="-" CLASS="ctl" ID="txtDiscCtl2" onClick="removeCountsTableRow(this)"></TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="4" STYLE="text-align: right;">
+                            <INPUT TYPE="button" ID="btnAddRow" VALUE="+" onClick="addNewCountsRow()">
+                        </TD>
+                    </TR>
+                </TABLE>
+                <SPAN ID="spnDataMsg" CLASS="errormsg"></SPAN><BR>
+                <INPUT TYPE="button" VALUE="Begin analysis" onClick="beginAnalysis()">
+                <INPUT TYPE="button" ID="btnChangeInputs" VALUE="Change inputs" onClick="deactivatePage()">
+                <INPUT TYPE="button" VALUE="Reset everything" onClick="resetApplet()">
+                <DIV ID="divDiscreteGraph">
+                    <H3>Graph Distribution</H3>
+                    <CANVAS ID="cnvProbPlot" WIDTH="650" HEIGHT="300">
+                        <SPAN CLASS="errormsg">Your browser does not support canvas graphing.<BR>
+                        Please consider using an updated browser.</SPAN>
+                    </CANVAS><BR>
+                    <INPUT TYPE="button" VALUE="Export this graph" onClick="exportProbabilityPlot()">
+                </DIV>
+                <DIV ID="divDiscreteSummaryStatistics">
+                    <H3>Summary Statistics</H3>
+                    <SPAN ID="spnSummaryStatistics"></SPAN><BR>
+                </DIV><BR>
+            </DIV>
+            <DIV ID="divCounting">
+                <LABEL FOR="txtCountingN">n =</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtCountingN">
+                <LABEL FOR="txtCountingR">r =</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtCountingR"><BR><BR>
+                <INPUT TYPE="button" VALUE="Calculate n!" onClick="calculateFactorial()">
+                <INPUT TYPE="button" VALUE="Calculate nPr" onClick="calculatePermutations()">
+                <INPUT TYPE="button" VALUE="Calculate nCr" onClick="calculateCombinations()"><BR>
+                <SPAN CLASS="errormsg" id="spnCountingMsg"></SPAN>
+                <SPAN ID="spnCountingResult"></SPAN><BR>
+            </DIV>
+            <DIV ID="divNormal">
+                <LABEL FOR="selNormalType">Operation:</LABEL> <SELECT ID="selNormalType" ONCHANGE="handleNormChange()">
+                    <OPTION VALUE="divNormalCdf">Calculate an area under the Normal curve</OPTION>
+                    <OPTION VALUE="divNormalInv">Calculate a value corresponding to a left tail area</OPTION>
+                </SELECT><BR><BR>
+                <LABEL FOR="txtNormalMean">Mean =</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtNormalMean"> 
+                <LABEL FOR="txtNormalStdev">SD =</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtNormalStdev">
+                <INPUT TYPE="button" VALUE="Plot distribution" onClick="plotNormal()"><BR>
+                <SPAN CLASS="errormsg" id="spnNormalMsg"></SPAN><BR>
+                <CANVAS ID="cnvGaussPlot" WIDTH="650" HEIGHT="300">
+                        <SPAN CLASS="errormsg">Your browser does not support canvas graphing.<BR>
+                        Please consider using an updated browser.</SPAN>
+                </CANVAS><BR>
+                <INPUT TYPE="button" VALUE="Export this graph" onClick="exportNormalGraph()"><BR><BR>
+                <DIV ID="divNormalCdf">
+                    <LABEL FOR="selNormalCdfType">Calculate the area</LABEL> <SELECT ID="selNormalCdfType" ONCHANGE="handleNormCdfChange()">
+                        <OPTION VALUE="between">between two values</OPTION>
+                        <OPTION VALUE="left">to the left of a value</OPTION>
+                        <OPTION VALUE="right">to the right of a value</OPTION>
+                        <OPTION VALUE="outside">outside a region</OPTION>
+                    </SELECT><BR><BR>
+                    <SPAN ID="spnNormalCdfLeftInput"><LABEL FOR="txtNormalCdfLeft">Left boundary:</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtNormalCdfLeft"></SPAN>
+                    <SPAN ID="spnNormalCdfRightInput"><LABEL FOR="txtNormalCdfRight">Right boundary:</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtNormalCdfRight"></SPAN>
+                    <SPAN ID="spnNormalCdfSingleInput"><LABEL FOR="txtNormalCdfSingle">Value:</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtNormalCdfSingle"></SPAN>
+                    <INPUT TYPE="button" VALUE="Calculate area" onClick="calculateNormalCdf()">
+                </DIV>
+                <DIV ID="divNormalInv">
+                    <LABEL FOR="txtNormalInvArea">Calculate value for left-tail area of</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtNormalInvArea"><BR>
+                    <INPUT TYPE="button" VALUE="Calculate value" onClick="calculateNormalInv()">
+                </DIV>
+                <SPAN CLASS="errormsg" id="spnNormalBoundMsg"></SPAN>
+                <SPAN ID="spnNormalResult"></SPAN><BR>
+            </DIV>
+            <DIV ID="divBinomial">
+                <LABEL FOR="txtBinomialN">n =</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtBinomialN"> 
+                <LABEL FOR="txtBinomialP">p =</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtBinomialP">
+                <INPUT TYPE="button" VALUE="Plot distribution" onClick="plotBinomial()"><BR>
+                <SPAN CLASS="errormsg" id="spnBinomialMsg"></SPAN><BR>
+                <CANVAS ID="cnvBinomPlot" WIDTH="650" HEIGHT="300">
+                        <SPAN CLASS="errormsg">Your browser does not support canvas graphing.<BR>
+                        Please consider using an updated browser.</SPAN>
+                </CANVAS><BR>
+                <INPUT TYPE="button" VALUE="Export this graph" onClick="exportBinomialGraph()"><BR><BR>
+                <LABEL FOR="selBinomialX">Calculate the probability of</LABEL> <SELECT ID="selBinomialX">
+                    <OPTION VALUE="eq">exactly</OPTION>
+                    <OPTION VALUE="lt">less than</OPTION>
+                    <OPTION VALUE="le">at most</OPTION>
+                    <OPTION VALUE="ge">at least</OPTION>
+                    <OPTION VALUE="gt">more than</SELECT>
+                <INPUT TYPE="text" SIZE="8" ID="txtBinomialX"> <LABEL FOR="txtBinomialX">successes.</LABEL>
+                <INPUT TYPE="button" VALUE="Go!" onClick="calculateBinomialX()"><BR>
+                -OR-<BR>
+                <LABEL FOR="txtBinomialCdfLeft">Calculate the probability of between</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtBinomialCdfLeft">
+                <LABEL FOR="txtBinomialCdfRight">and</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtBinomialCdfRight"> successes (inclusive).
+                <INPUT TYPE="button" VALUE="Go!" onClick="calculateBinomialCdf()"><BR><BR>
+                <SPAN CLASS="errormsg" id="spnBinomialBoundMsg"></SPAN>
+                <SPAN ID="spnBinomialResult"></SPAN><BR>
+            </DIV>
+            <BR>
+            <A HREF="javascript:SPAApplet.Preferences.launchPreferencePage();">Adjust rounding and color preferences</A> | <A HREF="./">Back to menu</A>
+        </FORM>
+    </BODY>
+</HTML>

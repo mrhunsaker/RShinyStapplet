@@ -1,0 +1,106 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+    <META CHARSET="UTF-8">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+    <TITLE>Two Quantitative Variables - Collaborative</TITLE>
+    <script src="./js/d3.v3.min.js"></script>
+    <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/stapplet_1.0.1.js"></SCRIPT>
+    <SCRIPT SRC="./js/collab_common_quant.js"></SCRIPT>
+    <SCRIPT SRC="./js/quant2v_collab_v2.js"></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Two Quantitative Variables - Collaborative</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divCodes">
+                <INPUT TYPE="button" ID="btnNewClassCode" VALUE="Start a new class as a teacher" onClick="newClassCode(2);"><BR>
+                <INPUT TYPE="button" ID="btnEnterClassCode" VALUE="Enter existing class code" onClick="enterClassCode();"><BR>
+            </DIV>
+            <DIV ID="divGraphBasicOptions">
+                <BR>Class code: <SPAN ID="spnClassCode">{none}</SPAN>
+                <BR>Class data will automatically update every 3 - 5 seconds.
+                <BR><SPAN ID="spnLastUpdate"></SPAN>
+                <BR><BR>
+                <LABEL FOR="txtDataAddX">Add an observation to the plot: Explanatory </LABEL>
+                <INPUT TYPE="number" ID="txtDataAddX" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSingleDataAdd(true);">
+                <LABEL FOR="txtDataAddY"> Response </LABEL>
+                <INPUT TYPE="number" ID="txtDataAddY" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSingleDataAdd();">
+                <INPUT TYPE="button" ID="btnDataAdd" VALUE="Add to plot" onClick="handleSingleDataAdd();">
+                <INPUT TYPE="button" ID="btnUndoLastAdd" VALUE="Undo last add" onClick="undoLastAdd();" DISABLED="true">
+                <SPAN ID="spnDataAddMsg"></SPAN><BR>
+            </DIV>
+            <DIV ID="divDisplayScatterplot">
+                <H3>Scatterplot</H3>
+        		<DIV ID="divScatterplot"></DIV><BR>
+        		<DIV ID="divResidualPlot"></DIV><BR>
+        		<DIV ID="divResidualDotplot"></DIV><BR>
+                <INPUT TYPE="button" ID="btnToggleRegression" VALUE="Show regression" onClick="toggleRegression()">
+                <INPUT TYPE="button" ID="btnToggleResidualPlot" VALUE="Show residual plot" onClick="toggleResidualPlot()">
+                <INPUT TYPE="button" ID="btnToggleResidualDotplot" VALUE="Show dotplot of residuals" onClick="toggleResidualDotplot()"><BR>
+                <TEXTAREA ID="txtGraphDataCSV"></TEXTAREA>
+                <INPUT TYPE="button" ID="btnGetData" VALUE="Download current data" onClick="exportGraphData();"><BR>
+            </DIV>
+            <DIV ID="divSummaryStatistics">
+                <H3>Regression Models</H3>
+                <LABEL FOR="selModel">Regression model type:</LABEL>
+                <SELECT ID="selModel" onChange="handleModelChange();">
+                    <OPTION value="linear">Linear</OPTION>
+                    <OPTION value="quadratic">Quadratic</OPTION>
+                    <OPTION value="exponential">Exponential</OPTION>
+                </SELECT><BR>
+                <SPAN ID="spnModelMsg" CLASS="errormsg"></SPAN>
+                <SPAN ID="spnModelResults"></SPAN>
+            </DIV>
+            <DIV ID="divGraphAdmin">
+                <BR><INPUT TYPE="button" ID="btnEnterAdminCode" VALUE="Enter admin code to enable teacher privileges" onClick="enterAdminCode();">              
+                <DIV ID="divGraphAdminOptions">
+                    <FIELDSET STYLE="display:inline;"><LEGEND><STRONG>Teacher Panel</STRONG></LEGEND>
+                    Admin Code: <SPAN ID="spnAdminCode">{none}</SPAN><BR>
+                    <INPUT TYPE="button" ID="btnExtend" VALUE="Reset class expiration" onClick="resetClassExpiration();"><BR>
+                    <INPUT TYPE="button" ID="btnPauseStudent" VALUE="Pause student data collection" onClick="toggleEnabled();">
+                    <BR><BR>
+                    <LABEL FOR="txtExplanatoryName">Explanatory variable name:</LABEL> <INPUT TYPE="text" VALUE="Explanatory" ID="txtExplanatoryName" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleExplanatoryNameChange();" SIZE="50">
+                    <INPUT TYPE="button" ID="btnExplanatoryName" VALUE="Update explanatory name" onClick="handleExplanatoryNameChange();"><BR>
+                    <LABEL FOR="txtResponseName">Response variable name:</LABEL> <INPUT TYPE="text" VALUE="Response" ID="txtResponseName" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleResponseNameChange();" SIZE="50">
+                    <INPUT TYPE="button" ID="btnResponseName" VALUE="Update response name" onClick="handleResponseNameChange();"><BR><BR>
+                    Add multiple points at once; separate observations by spaces or commas.<BR>
+                    <LABEL FOR="txtDataBatchAddX">Explanatory values: </LABEL> <INPUT TYPE="text" ID="txtDataBatchAddX" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleDataBatchAdd(true);" SIZE="50"><BR>
+                    <LABEL FOR="txtDataBatchAddY">Response values: </LABEL> <INPUT TYPE="text" ID="txtDataBatchAddY" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleDataBatchAdd();" SIZE="50">
+                    <INPUT TYPE="button" ID="btnDataBatchAdd" VALUE="Add these data" onClick="handleDataBatchAdd();">
+                    <SPAN ID="spnDataBatchAddMsg"></SPAN><BR><BR>
+                    <LABEL FOR="txtDataDeleteX">Delete observation: Explanatory </LABEL> <INPUT TYPE="number" ID="txtDataDeleteX" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSingleDataDelete(true);">
+                    <LABEL FOR="txtDataDeleteY"> Response </LABEL>
+                    <INPUT TYPE="number" ID="txtDataDeleteY" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSingleDataDelete();"><BR>
+                    <INPUT TYPE="button" ID="btnDataDelete" VALUE="Delete from plot" onClick="handleSingleDataDelete();">
+                    <INPUT TYPE="button" ID="btnDataDeleteAll" VALUE="Delete all plot data" onClick="handleDeleteAllData('spnDataDeleteAllMsg', handleDeleteAll);">    
+                    <SPAN ID="spnDataDeleteMsg"></SPAN>
+                    <SPAN ID="spnDataDeleteAllMsg"></SPAN><BR>
+                    (Mouse over or download data to see exact values.)
+                    </FIELDSET>
+                </DIV>
+            </DIV>
+            <!-- Scroll buffer for screen bottom -->
+            <BR>
+            <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+        </FORM>
+    </BODY>
+</HTML>

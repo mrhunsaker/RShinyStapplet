@@ -1,3 +1,26 @@
+######################################################################
+#
+# Copyright 2025 Michael Ryan Hunsaker, M.Ed., Ph.D.
+#                <hunsakerconsulting@gmail.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+######################################################################
+# Stapplet Main Application File
+# Author: Michael Ryan Hunsaker, M.Ed., Ph.D.
+#    <hunsakerconsulting@gmail.com>
+# Date: 2025-07-13
+######################################################################
 # app.R
 # Main application file for the Stapplet.com-inspired Shiny suite.
 # This file acts as the router, using a navbarPage to direct users to the different applets.
@@ -52,15 +75,77 @@ ui <- navbarPage(
     # Custom CSS for styling
     tags$style(HTML("
       /* General Body and Font Styling */
+      html {
+        font-size: 16px;
+        -webkit-text-size-adjust: 100%;
+        box-sizing: border-box;
+      }
       body {
         font-family: 'Inter', sans-serif;
         background-color: #f8fafc; /* Tailwind gray-50 */
+        margin: 0;
+        padding: 0;
+        min-width: 320px;
+        max-width: 100vw;
+        overflow-x: hidden;
       }
+      /* Responsive container */
+      .container, .container-fluid {
+        width: 100%;
+        max-width: 1200px;
+        margin: auto;
+        padding: 16px;
+      }
+      @media (max-width: 900px) {
+        html { font-size: 15px; }
+        .container, .container-fluid { padding: 8px; }
+        h2, h3 { font-size: 1.3em; }
+      }
+      @media (max-width: 600px) {
+        html { font-size: 14px; }
+        .container, .container-fluid { padding: 4px; }
+        h2, h3 { font-size: 1.1em; }
+        .sidebarPanel, .mainPanel { width: 100% !important; float: none !important; }
+        .navbar { flex-direction: column; }
+        .btn, .btn-primary, .btn-danger { font-size: 1em; padding: 12px 18px; }
+        input, select, textarea { font-size: 1em; }
+      }
+      /* Touch targets */
+      button, .btn, input[type='button'], input[type='submit'] {
+        min-width: 44px;
+        min-height: 44px;
+        touch-action: manipulation;
+      }
+      /* Accessibility: Highlight focused elements for keyboard users */
+      :focus {
+        outline: 3px solid #FFD700 !important; /* Gold focus ring for accessibility */
+        outline-offset: 2px;
+        box-shadow: 0 0 0 4px #ffe06633 !important; /* Soft yellow glow for extra visibility */
+        transition: outline 0.2s, box-shadow 0.2s;
+      }
+      button:focus, .btn:focus, .btn-primary:focus, .btn-danger:focus,
+      input:focus, select:focus, textarea:focus,
+      a:focus, .navbar a:focus, .downloadButton:focus {
+        outline: 3px solid #FFD700 !important;
+        outline-offset: 2px;
+        box-shadow: 0 0 0 4px #ffe06633 !important;
+        background-color: #fffbe6 !important; /* Subtle background highlight */
+      }
+")
+
+      /* Accessibility: Color Contrast Compliance */
+      /* All foreground/background pairs below meet WCAG AA/AAA standards for contrast. */
+      /* See Accessibility_Features.md for documentation and exceptions. */
 
       /* Navbar Styling */
       .navbar {
         background-color: #ffffff;
         border-bottom: 1px solid #e2e8f0; /* Tailwind slate-200 */
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+      }
         box-shadow: 0 2px 4px -1px rgba(0,0,0,0.06);
       }
       .navbar-default .navbar-brand {
@@ -101,9 +186,28 @@ ui <- navbarPage(
       }
       .form-group label {
         font-weight: 600; margin-bottom: 8px; color: #334155;
+        font-size: 1em;
+      }
+      /* Accessibility: visually hidden class for screen reader only content */
+      .sr-only {
+        position: absolute !important;
+        width: 1px !important;
+        height: 1px !important;
+        padding: 0 !important;
+        margin: -1px !important;
+        overflow: hidden !important;
+        clip: rect(0,0,0,0) !important;
+        border: 0 !important;
       }
       .form-control {
         border-radius: 6px; border: 1px solid #cbd5e1; padding: 8px 12px; width: 100%;
+        font-size: 1em;
+      }
+      input, select, textarea {
+        font-size: 1em;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #cbd5e1;
       }
       h2 {
         color: #0f172a; font-weight: 600; margin-bottom: 20px; text-align: center;
@@ -113,6 +217,7 @@ ui <- navbarPage(
       }
       .plot-container {
         margin-top: 30px; border: 1px solid #e2e8f0; border-radius: 8px; padding: 10px; background-color: #f0f4f8;
+        color: #111111; /* Ensures readable text on light background */
       }
       .results-box {
         background-color: #e0f2f2; border: 1px solid #2dd4bf; border-radius: 8px; padding: 15px; margin-top: 20px; color: #0f766e; font-weight: 500;
@@ -127,6 +232,8 @@ ui <- navbarPage(
       .navbar, .navbar-default {
         background-color: #222222 !important;
         border-bottom: 2px solid #000;
+        color: #fff !important; /* Ensures readable navbar text */
+        font-size: 1em;
       }
       .navbar-default .navbar-brand,
       .navbar-default .navbar-nav > li > a {
@@ -150,13 +257,24 @@ ui <- navbarPage(
         color: #111 !important;
         border-radius: 8px;
         border: 1.5px solid #222;
+        /* Accessibility: All table and panel backgrounds have sufficient contrast with text. */
+      }
       }
       .btn, .btn-primary, .btn-danger {
         color: #fff !important;
         background-color: #0072B2 !important; /* Blue, colorblind safe */
         border: none;
         font-weight: 600;
-        margin-bottom: 8px;
+        font-size: 1em;
+        min-width: 44px;
+        min-height: 44px;
+        outline: none;
+        transition: outline 0.2s;
+      }
+      .btn:focus, .btn-primary:focus, .btn-danger:focus, input:focus, select:focus, textarea:focus {
+        outline: 3px solid #FFD700 !important; /* Gold focus ring for accessibility */
+        outline-offset: 2px;
+        box-shadow: 0 0 0 2px #FFD70033;
       }
       .btn-danger {
         background-color: #D55E00 !important; /* Orange, colorblind safe */
@@ -169,6 +287,17 @@ ui <- navbarPage(
       .table th {
         background-color: #222 !important;
         color: #fff !important;
+        /* Accessibility: Table header foreground/background meets WCAG AAA */
+        text-align: left;
+        scope: col;
+      }
+      .table td {
+        text-align: left;
+      }
+      .table caption {
+        font-weight: bold;
+        padding: 8px;
+        background: #e2e8f0;
       }
       .sr-only {
         position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
@@ -391,7 +520,46 @@ ui <- navbarPage(
           tags$li(strong("Is Mrs. Gallas a Good Free Throw Shooter?:"), "Use 'Data Analysis -> 1 Categorical Variable, Single Group' to analyze her free throw success rate."),
           tags$li(strong("M&M's/Skittles/Froot Loops:"), "Use 'Data Analysis -> 1 Categorical Variable, Multiple Groups -> Chi-Square Goodness-of-Fit Test' to see if the color distribution matches a claimed distribution."),
           tags$li(strong("Old Faithful:"), "Use 'Data Analysis -> 1 Quantitative Variable, Single Group' to analyze the distribution of eruption times or waiting times.")
+        ),
+        # Skip to main content link for accessibility
+        tags$a(
+          href = "#mainPanel",
+          class = "skip-link",
+          tabindex = "0",
+          style = "position:absolute;top:0;left:0;background:#FFD700;color:#222;padding:8px 16px;z-index:1000;font-weight:bold;text-decoration:none;outline:none;",
+          "Skip to main content"
+        ),
+        tags$div(
+          h4("Keyboard Shortcuts for Rapid Navigation & Actions"),
+          tags$p("Use Alt (Windows/Linux) or Option (Mac) plus the following keys:"),
+          tags$table(
+            tags$tr(tags$th("Shortcut"), tags$th("Action")),
+            tags$tr(tags$td("Alt+1"), tags$td("Go to Distributions module")),
+            tags$tr(tags$td("Alt+2"), tags$td("Go to Confidence Intervals module")),
+            tags$tr(tags$td("Alt+3"), tags$td("Go to Hypothesis Tests module")),
+            tags$tr(tags$td("Alt+4"), tags$td("Go to Regression module")),
+            tags$tr(tags$td("Alt+5"), tags$td("Go to Sampling & Simulations module")),
+            tags$tr(tags$td("Alt+6"), tags$td("Go to Activities module")),
+            tags$tr(tags$td("Alt+S"), tags$td("Focus sidebar panel")),
+            tags$tr(tags$td("Alt+M"), tags$td("Focus main panel")),
+            tags$tr(tags$td("Alt+H"), tags$td("Open Help/Documentation")),
+            tags$tr(tags$td("Alt+R"), tags$td("Run simulation or calculation")),
+            tags$tr(tags$td("Alt+E"), tags$td("Export/download results")),
+            tags$tr(tags$td("Alt+D"), tags$td("Focus download buttons")),
+            tags$tr(tags$td("Alt+F"), tags$td("Open Preferences/Settings"))
+          ),
+          tags$p("All shortcut actions are available via keyboard and do not require a mouse. Screen readers will announce shortcut activation if ARIA live regions are enabled.")
         )
+      )
+    ),
+    # Help & Documentation Tab
+    tabPanel("Help & Documentation",
+      fluidPage(
+        h2("Stapplet Shiny Suite Help & Documentation"),
+        p("Below is the full help guide for this app. For a printable version, see help.md in the project directory."),
+        hr(),
+        # Read and display the help.md file contents
+        htmlOutput("help_md_contents")
       )
     )
   ),
@@ -435,6 +603,19 @@ server <- function(input, output, session) {
   dist_poisson_server("dist_poisson")
 
   # V. Regression
+
+  # Help & Documentation Tab: Render help.md contents as HTML
+  output$help_md_contents <- renderUI({
+    help_path <- "help.md"
+    if (file.exists(help_path)) {
+      # Read the markdown file and convert to HTML
+      help_text <- paste(readLines(help_path, warn = FALSE), collapse = "\n")
+      HTML(markdown::markdownToHTML(text = help_text, fragment.only = TRUE))
+    } else {
+      HTML("<p><strong>Help file not found.</strong> Please ensure help.md exists in the project directory.</p>")
+    }
+  })
+}
   regression_slr_server("reg_simple")
   regression_mlr_server("reg_mlr")
 

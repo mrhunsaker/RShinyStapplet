@@ -1,0 +1,254 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MVPXVT3DMR');
+</script>
+    <META CHARSET="UTF-8">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./css/timberlake.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <TITLE>Sampling sunflowers</TITLE>
+    <script src="./js/d3.v3.min.js"></script>
+    <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/stapplet_latest.js"></SCRIPT>
+    <SCRIPT SRC="./js/collab_common_quant.js"></SCRIPT>
+    <SCRIPT SRC="./js/sunflowers.js"></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Sampling sunflowers</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divCodes">
+                <INPUT TYPE="button" ID="btnOffline" VALUE="Do this activity independently" onClick="beginOffline();"><BR>
+                <INPUT TYPE="button" ID="btnNewClassCode" VALUE="Start a new class code as a teacher" onClick="newClassCode(1,3);"><BR>
+                <INPUT TYPE="button" ID="btnEnterClassCode" VALUE="Enter an existing class code" onClick="enterClassCode();"><BR>
+            </DIV>
+            <DIV ID="divCodeData">
+                <BR>Class code: <SPAN ID="spnClassCode">{none}</SPAN>
+                <BR>Class data will automatically update roughly every 5 - 10 seconds.
+                <BR><SPAN ID="spnLastUpdate"></SPAN>
+            </DIV>
+            <DIV ID="divIntro">
+                <H3>Let's do the activity!</H3>
+                <P>A British farmer grows sunflowers for making sunflower oil. Her field is arranged in a grid pattern, with 10 rows and 10 columns as shown in the figures below. Irrigation ditches run along the top and bottom of the field.</P>
+                <P>The farmer would like to estimate the number of healthy plants in the field so she can project how much money she'll make from selling them. It would take too much time to count the plants in all 100 squares, so she'll accept an estimate based on a sample of 10 squares. Which sampling method will give her the best estimate?</P>
+        <P><EM>For a more detailed discussion, see the description in</EM> The Practice of Statistics, Statistics and Probability with Applications, <EM>or</EM> Introductory Statistics: A Student-Centered Approach.
+        </P>
+            </DIV>
+            <DIV ID="divSRS">
+                <H3>Method #1: Simple Random Sample</H3>
+                <B>Select a simple random sample of 10 squares.</B><BR>
+                <INPUT TYPE="button" ID="btnSRS" VALUE="Generate sample" onClick="generateSRS();">
+                <DIV ID="divTblSRS">
+                    <TABLE STYLE="border: none;">
+                    <TR STYLE="border: none;"><TD STYLE="border: none;">
+                    <TABLE ID="tblSRS">
+                        <TR><TD COLSPAN="10" STYLE="background-color: blue;"> &nbsp;</TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD COLSPAN="10" STYLE="background-color: blue;"> &nbsp;</TD></TR>
+                    </TABLE>
+                    </TD><TD STYLE="border: none;">
+                    <DIV ID="divPlot" tabindex="0" aria-live="polite" role="region" aria-label="Sunflowers plot area"></DIV>
+                    </TD></TABLE>
+                </DIV>
+                Average number of healthy plants: <SPAN ID="spnMeanSRS">?</SPAN><BR><BR>
+            </DIV>
+            <DIV ID="divStratifyRow">
+                <H3>Method #2: Stratify by Row</H3>
+                <B>Randomly select one square from each row.</B><BR>
+                <INPUT TYPE="button" ID="btnStratifyRow" VALUE="Generate sample" onClick="generateStratifyRow();">
+                <DIV ID="divTblStratifyRow">
+                    <TABLE STYLE="border: none;">
+                    <TR STYLE="border: none;"><TD STYLE="border: none;">
+                    <TABLE ID="tblStratifyRow">
+                        <TR><TD COLSPAN="10" STYLE="background-color: blue;"> &nbsp;</TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD COLSPAN="10" STYLE="background-color: blue;"> &nbsp;</TD></TR>
+                    </TABLE>
+                    </TD><TD STYLE="border: none;">
+                    <DIV ID="divStratifyRowPlot"></DIV>
+                    </TD></TABLE>
+                </DIV>
+                Average number of healthy plants: <SPAN ID="spnMeanStratifyRow">?</SPAN>
+                <BR><BR>
+            </DIV>
+            <DIV ID="divStratifyColumn">
+                <H3>Method #3: Stratify by Column</H3>
+                <B>Randomly select one square from each column.</B><BR>
+                <INPUT TYPE="button" ID="btnStratifyColumn" VALUE="Generate sample" onClick="generateStratifyColumn();">
+                <DIV ID="divTblStratifyColumn">
+                    <TABLE STYLE="border: none;">
+                    <TR STYLE="border: none;"><TD STYLE="border: none;">
+                    <TABLE ID="tblStratifyColumn">
+                        <TR><TD COLSPAN="10" STYLE="background-color: blue;"> &nbsp;</TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD COLSPAN="10" STYLE="background-color: blue;"> &nbsp;</TD></TR>
+                    </TABLE>
+                    </TD><TD STYLE="border: none;">
+                    <DIV ID="divStratifyColumnPlot"></DIV>
+                    </TD></TABLE>
+                </DIV>
+                Average number of healthy plants: <SPAN ID="spnMeanStratifyColumn">?</SPAN>
+                <BR><BR>
+            </DIV>
+            <DIV ID="divShowResults">
+                <H3>If we did a census...</H3>
+                <INPUT TYPE="button" ID="btnRevealRestart" VALUE="Reveal results" onClick="revealRestart()"><BR>
+                <TABLE ID="tblResults">
+                        <TR><TD COLSPAN="10" STYLE="background-color: blue;"> &nbsp;</TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD> </TD><TD> </TD><TD> </TD><TD> </TD><TD> </TD>
+                        <TD> </TD> <TD> </TD><TD> </TD><TD> </TD><TD> </TD></TR>
+                        <TR><TD COLSPAN="10" STYLE="background-color: blue;"> &nbsp;</TD></TR>
+                </TABLE>
+                True mean number of healthy plants: <SPAN ID="spnMeanResults">?</SPAN>
+            </DIV>
+            <DIV ID="divGraphAdmin">
+                <BR><INPUT TYPE="button" ID="btnEnterAdminCode" VALUE="Enter admin code to enable teacher privileges" onClick="enterAdminCode();">
+                <DIV ID="divGraphAdminOptions">
+                    <FIELDSET STYLE="display: inline;"><LEGEND><STRONG>Teacher Panel</STRONG></LEGEND>
+                    Admin code: <SPAN ID="spnAdminCode">{none}</SPAN><BR>
+                    <INPUT TYPE="button" ID="btnPauseStudent" VALUE="Pause data collection" onClick="toggleEnabled();">
+                    <SPAN ID="spnRenewBtn">
+                        <INPUT TYPE="button" VALUE="Extend data collection for 5 minutes" onClick="renewDataCollection();">
+                    </SPAN>
+                        <BR><BR>
+                    Edit which plot:
+                    <SELECT ID="selPlotEdit">
+                        <OPTION VALUE="1">SRS</OPTION>
+                        <OPTION VALUE="2">Stratified by row</OPTION>
+                        <OPTION VALUE="3">Stratified by column</OPTION>
+                    </SELECT>
+                    <SPAN ID="spnLastEditMsg"></SPAN><BR>
+                    <LABEL FOR="txtManySamples">Collect the selected sample type this many times silently (max 2000) and plot the results: </LABEL> <INPUT TYPE="number" MIN="1" MAX="2000" ID="txtManySamples" onKeyDown="if (event.which == 13 || event.keyCode == 13) doManySamples();">
+                    <INPUT TYPE="button" ID="btnManySamples" VALUE="Add these data" onClick="doManySamples();"><BR>
+                    <LABEL FOR="txtDataBatchAdd">Add up to 2000 values separated by spaces or commas: </LABEL> <INPUT TYPE="text" ID="txtDataBatchAdd" onKeyDown="if (event.which == 13 || event.keyCode == 13) addBatchData();" SIZE="50">
+                    <INPUT TYPE="button" ID="btnDataBatchAdd" VALUE="Add these data" onClick="addBatchData();"><BR>
+                    <LABEL FOR="txtDataDelete">Delete observation:</LABEL> <INPUT TYPE="number" ID="txtDataDelete" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSingleDataDelete();">
+                    <INPUT TYPE="button" ID="btnDataDelete" VALUE="Delete from selected plot" onClick="handleSingleDataDelete();">
+                    <INPUT TYPE="button" ID="btnDataDeleteAll" VALUE="Delete all data from selected plot" onClick="handleGroupDataDelete();"><BR>
+                    (Mouse over data to see exact values.)<BR>
+                    <INPUT TYPE="button" ID="btnDataMassDelete" VALUE="Delete all data from all plots" onClick="handleDeleteAllData('spnLastEditMsg');"><BR><BR>
+                    <INPUT TYPE="button" ID="btnExtend" VALUE="Reset class expiration" onClick="resetClassExpiration();"><BR>
+                    </FIELDSET>
+                </DIV>
+            </DIV>
+            <DIV ID="divOfflineAdmin">
+                <BR>
+                <FIELDSET STYLE="display: inline;"><LEGEND><STRONG>Quick Add</STRONG></LEGEND>
+                    To the
+                    <SELECT ID="selOfflinePlotEdit">
+                        <OPTION VALUE="1">SRS</OPTION>
+                        <OPTION VALUE="2">Stratified by row</OPTION>
+                        <OPTION VALUE="3">Stratified by column</OPTION>
+                    </SELECT> plot, quickly add <INPUT TYPE="number" MIN="1" MAX="2000" ID="txtManyOfflineSamples" onKeyDown="if (event.which == 13 || event.keyCode == 13) doManyOfflineSamples();"> samples (max 2000).
+                    <INPUT TYPE="button" VALUE="Go!" onClick="doManyOfflineSamples();"><BR>
+                    <SPAN ID="spnOfflineEditMsg"></SPAN>
+                    </FIELDSET>
+                </DIV>
+            </DIV>
+            <DIV ID="divOverlayWarning"></DIV>
+            <!-- Scroll buffer for screen bottom -->
+            <BR>
+            <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+        </FORM>
+    </BODY>
+</HTML>

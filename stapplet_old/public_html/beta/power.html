@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MVPXVT3DMR');
+</script>
+        <META NAME="author" CONTENT="Robert Amar">
+        <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+        <TITLE>Power</TITLE>
+        <script src="./js/d3.v3.min.js"></script>
+        <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+        <script src="./js/stapplet_latest.js"></script>
+        <script src="./js/power.js"></script>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Power</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divPower">
+                <LABEL FOR="selType">Select type of test: </LABEL><SELECT ID="selType" ONCHANGE="handleTypeChange()">
+                    <OPTION VALUE="Prop">proportions</OPTION>
+                    <OPTION VALUE="Mean">means</OPTION>
+                </SELECT><BR><BR>
+                <DIV ID="divProp">
+                    <LABEL FOR="txtHypProp">Null hypothesis is H&#8320;&#58; p&#8320; =</LABEL> <INPUT TYPE="number" STEP="0.01" MIN="0" MAX="1" ID="txtHypProp" ONCHANGE="handleChange();"><BR>
+                    <LABEL FOR="txtTrueProp">True proportion p =</LABEL> <INPUT TYPE="number" STEP="0.01" MIN="0" MAX="1" ID="txtTrueProp" ONCHANGE="handleChange();"><BR>
+                    <LABEL FOR="selPropAlt">Alternative hypothesis is H<sub>a</sub>&#58;</LABEL> <SELECT ID="selPropAlt" ONCHANGE="handleChange()">
+                        <OPTION VALUE="0">p &lt; p&#8320;</OPTION>
+                        <OPTION VALUE="2">p &gt; p&#8320;</OPTION>
+                        <OPTION VALUE="1">p &ne; p&#8320;</OPTION>
+                    </SELECT>
+                </DIV>             
+                <DIV ID="divMean">
+                    <LABEL FOR="txtHypMean">Null hypothesis is H&#8320;&#58; &mu;&#8320; =</LABEL> <INPUT TYPE="number" STEP="0.1" ID="txtHypMean" ONCHANGE="handleChange();"><BR>
+                    <LABEL FOR="txtTrueMean">True mean &mu; =</LABEL> <INPUT TYPE="number" STEP="0.1" ID="txtTrueMean" ONCHANGE="handleChange();"><BR>
+                    <LABEL FOR="txtStdev">Population SD &sigma; =</LABEL> <INPUT TYPE="number" STEP="0.1" MIN="0" ID="txtStdev" ONCHANGE="handleChange();"><BR>
+                    <LABEL FOR="selMeanAlt">Alternative hypothesis is H<sub>a</sub>&#58;</LABEL> <SELECT ID="selMeanAlt" ONCHANGE="handleChange()">
+                        <OPTION VALUE="0">&mu; &lt; &mu;&#8320;</OPTION>
+                        <OPTION VALUE="2">&mu; &gt; &mu;&#8320;</OPTION>
+                        <OPTION VALUE="1">&mu; &ne; &mu;&#8320;</OPTION>
+                    </SELECT>
+                </DIV>
+                <LABEL FOR="txtN">Sample size =</LABEL> <INPUT TYPE="number" STEP="1" MIN="0" ID="txtN" ONCHANGE="handleChange();"><BR> 
+
+                <LABEL FOR="txtAlpha">&alpha; =</LABEL> <INPUT TYPE="number" STEP="0.01" MIN="0" MAX="1" ID="txtAlpha" ONCHANGE="handleChange();" VALUE="0.05"><BR>
+                <LABEL FOR="selPlot">Calculate and plot: </LABEL> <SELECT ID="selPlot" ONCHANGE="handleChange();">
+                    <OPTION VALUE="3">Power</OPTION>
+                    <OPTION VALUE="1">&alpha;</OPTION>
+                    <OPTION VALUE="2">&beta;</OPTION>
+                </SELECT>
+                <INPUT TYPE="button" VALUE="Calculate" onClick="doAnalysis()">
+                    <BR><BR>
+                <SPAN CLASS="errormsg" id="spnErrorMsg"></SPAN>
+                <SPAN id="spnResult"></SPAN><BR>
+                <DIV ID="divPlot"></DIV><BR>
+                <INPUT TYPE="checkbox" id="chkShowFail" ONCHANGE="handleChange();"><LABEL FOR="chkShowFail">Show rejection region (mouse over for critical values)</LABEL>
+            </DIV>             
+	    <!-- Scroll buffer for screen bottom -->
+	    <BR>
+	    <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+        </FORM>
+    </BODY>
+</HTML>

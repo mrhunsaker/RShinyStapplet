@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-MVPXVT3DMR");
+        </script>
+        <meta name="author" content="Robert Amar" />
+        <link rel="stylesheet" type="text/css" href="./css/master.css" />
+        <title>Power</title>
+        <script src="./js/d3.v3.min.js"></script>
+        <script src="./js/jstat.min.js"></script>
+        <script src="./js/stapplet_latest.js"></script>
+        <script src="./js/power.js"></script>
+    </head>
+    <body>
+        <span CLASS="errormsg" id="spnBrowserMsg"></span>
+        <div id="divHeader" ROLE="banner">
+            <table>
+                <tr>
+                    <td class="header">Power</td>
+                </tr>
+            </table>
+        </div>
+        <form ROLE="form">
+            <div id="divPower">
+                <label for="selType">Select type of test: </label
+                ><select id="selType" ONCHANGE="handleTypeChange()">
+                    <option value="Prop">proportions</option>
+                    <option value="Mean">means</option></select
+                ><br /><br />
+                <div id="divProp">
+                    <label for="txtHypProp"
+                        >Null hypothesis is H&#8320;&#58; p&#8320; =</label
+                    >
+                    <input
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        max="1"
+                        id="txtHypProp"
+                        ONCHANGE="handleChange();"
+                    /><br />
+                    <label for="txtTrueProp">True proportion p =</label>
+                    <input
+                        type="number"
+                        step="0.01"
+                        min="0"
+                        max="1"
+                        id="txtTrueProp"
+                        ONCHANGE="handleChange();"
+                    /><br />
+                    <label for="selPropAlt"
+                        >Alternative hypothesis is H<sub>a</sub>&#58;</label
+                    >
+                    <select id="selPropAlt" ONCHANGE="handleChange()">
+                        <option value="0">p &lt; p&#8320;</option>
+                        <option value="2">p &gt; p&#8320;</option>
+                        <option value="1">p &ne; p&#8320;</option>
+                    </select>
+                </div>
+                <div id="divMean">
+                    <label for="txtHypMean"
+                        >Null hypothesis is H&#8320;&#58; &mu;&#8320; =</label
+                    >
+                    <input
+                        type="number"
+                        step="0.1"
+                        id="txtHypMean"
+                        ONCHANGE="handleChange();"
+                    /><br />
+                    <label for="txtTrueMean">True mean &mu; =</label>
+                    <input
+                        type="number"
+                        step="0.1"
+                        id="txtTrueMean"
+                        ONCHANGE="handleChange();"
+                    /><br />
+                    <label for="txtStdev">Population SD &sigma; =</label>
+                    <input
+                        type="number"
+                        step="0.1"
+                        min="0"
+                        id="txtStdev"
+                        ONCHANGE="handleChange();"
+                    /><br />
+                    <label for="selMeanAlt"
+                        >Alternative hypothesis is H<sub>a</sub>&#58;</label
+                    >
+                    <select id="selMeanAlt" ONCHANGE="handleChange()">
+                        <option value="0">&mu; &lt; &mu;&#8320;</option>
+                        <option value="2">&mu; &gt; &mu;&#8320;</option>
+                        <option value="1">&mu; &ne; &mu;&#8320;</option>
+                    </select>
+                </div>
+                <label for="txtN">Sample size =</label>
+                <input
+                    type="number"
+                    step="1"
+                    min="0"
+                    id="txtN"
+                    ONCHANGE="handleChange();"
+                /><br />
+
+                <label for="txtAlpha">&alpha; =</label>
+                <input
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    max="1"
+                    id="txtAlpha"
+                    ONCHANGE="handleChange();"
+                    value="0.05"
+                /><br />
+                <label for="selPlot">Calculate and plot: </label>
+                <select id="selPlot" ONCHANGE="handleChange();">
+                    <option value="3">Power</option>
+                    <option value="1">&alpha;</option>
+                    <option value="2">&beta;</option>
+                </select>
+                <input type="button" value="Calculate" onClick="doAnalysis()" />
+                <br /><br />
+                <span CLASS="errormsg" id="spnErrorMsg"></span>
+                <span id="spnResult"></span><br />
+                <div
+                    id="divPlot"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Power plot area"
+                ></div>
+                <br />
+                <input
+                    type="checkbox"
+                    id="chkShowFail"
+                    ONCHANGE="handleChange();"
+                /><label for="chkShowFail"
+                    >Show rejection region (mouse over for critical
+                    values)</label
+                >
+            </div>
+            <!-- Scroll buffer for screen bottom -->
+            <br />
+            <a href="javascript:STAP.Preferences.launchPreferencePage();"
+                >Adjust color, rounding, and percent/proportion preferences</a
+            >
+            | <a href="./">Back to menu</a>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </form>
+    </body>
+</html>

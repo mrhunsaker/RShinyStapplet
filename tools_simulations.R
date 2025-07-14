@@ -1,96 +1,106 @@
-# StappletSHiny/tools_simulations.R
+######################################################################
+#
+# Copyright 2025 Michael Ryan Hunsaker, M.Ed., Ph.D.
+#                <hunsakerconsulting@gmail.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+######################################################################
+# Stapplet Applet - Probability Simulations
+# Author: Michael Ryan Hunsaker, M.Ed., Ph.D.
+#    <hunsakerconsulting@gmail.com>
+# Date: 2025-07-13
+######################################################################
 
-# UI function for the 'Simulations' tool
+# Enhanced Probability Simulations Applet
+
 tools_simulations_ui <- function(id) {
   ns <- NS(id)
   fluidPage(
+    shinyjs::useShinyjs(),
+    tags$head(
+      tags$title("Probability Simulations"),
+      tags$link(rel = "stylesheet", type = "text/css", href = "https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css")
+    ),
     titlePanel(
-      h2("Probability Simulations", id = "appTitle"),
+      h2("Probability Simulations", id = ns("mainHeading")),
       windowTitle = "Probability Simulations"
     ),
-    p("Perform simple probability simulations for flipping coins, rolling dice, and drawing cards from a deck."),
-
     tabsetPanel(
       id = ns("simulation_tabs"),
       type = "pills",
-
-      # --- Coin Flip Panel ---
       tabPanel("Coin Flip",
         sidebarLayout(
           sidebarPanel(
             h3("Coin Flip Setup"),
-            div(class = "form-group",
-              tags$label(id = ns("num_flips_label"), "Number of Flips:"),
-              numericInput(ns("num_flips"), NULL, value = 10, min = 1, max = 1000, step = 1)
-            ),
-            actionButton(ns("flip_coins"), "Flip Coins", class = "btn-primary", style = "width: 100%;")
+            sliderInput(ns("heads_prob"), "Probability of Heads:", min = 0, max = 1, value = 0.5, step = 0.01),
+            numericInput(ns("num_flips"), "Number of Flips:", value = 10, min = 1, max = 1000, step = 1),
+            actionButton(ns("flip_coins"), "Flip Coins", class = "btn-primary", style = "width: 100%;"),
+            hr(),
+            downloadButton(ns("download_coin_summary"), "Download Summary"),
+            downloadButton(ns("download_coin_data"), "Download Data"),
+            downloadButton(ns("download_coin_plot"), "Download Plot")
           ),
           mainPanel(
             div(class = "plot-container",
               h4("Flip Results", id = ns("coinPlotHeading")),
-              htmltools::tagQuery(
-                plotOutput(ns("coinPlot"), height = "300px")
-              )$find("img")$addAttrs("aria-labelledby" = ns("coinPlotHeading"))$all()
+              plotOutput(ns("coinPlot"), height = "300px")
             ),
             div(class = "results-box",
               h4("Summary of Flips", id = ns("coinSummaryHeading")),
-              htmltools::tagQuery(
-                verbatimTextOutput(ns("coinSummary"))
-              )$find("pre")$addAttrs("aria-labelledby" = ns("coinSummaryHeading"))$all()
+              verbatimTextOutput(ns("coinSummary"))
             )
           )
         )
       ),
-
-      # --- Dice Roll Panel ---
       tabPanel("Dice Roll",
         sidebarLayout(
           sidebarPanel(
             h3("Dice Roll Setup"),
-            div(class = "form-group",
-              tags$label(id = ns("num_rolls_label"), "Number of Rolls:"),
-              numericInput(ns("num_rolls"), NULL, value = 20, min = 1, max = 1000, step = 1)
-            ),
-            actionButton(ns("roll_dice"), "Roll Dice", class = "btn-primary", style = "width: 100%;")
+            numericInput(ns("num_rolls"), "Number of Rolls:", value = 20, min = 1, max = 1000, step = 1),
+            actionButton(ns("roll_dice"), "Roll Dice", class = "btn-primary", style = "width: 100%;"),
+            hr(),
+            downloadButton(ns("download_dice_summary"), "Download Summary"),
+            downloadButton(ns("download_dice_data"), "Download Data"),
+            downloadButton(ns("download_dice_plot"), "Download Plot")
           ),
           mainPanel(
             div(class = "plot-container",
               h4("Roll Results", id = ns("dicePlotHeading")),
-              htmltools::tagQuery(
-                plotOutput(ns("dicePlot"), height = "300px")
-              )$find("img")$addAttrs("aria-labelledby" = ns("dicePlotHeading"))$all()
+              plotOutput(ns("dicePlot"), height = "300px")
             ),
             div(class = "results-box",
               h4("Summary of Rolls", id = ns("diceSummaryHeading")),
-              htmltools::tagQuery(
-                verbatimTextOutput(ns("diceSummary"))
-              )$find("pre")$addAttrs("aria-labelledby" = ns("diceSummaryHeading"))$all()
+              verbatimTextOutput(ns("diceSummary"))
             )
           )
         )
       ),
-
-      # --- Card Draw Panel ---
       tabPanel("Card Draw",
         sidebarLayout(
           sidebarPanel(
             h3("Card Draw Setup"),
-            p(htmltools::tagQuery(
-                textOutput(ns("deck_status"))
-              )$find("output")$addAttrs("aria-labelledby" = ns("deck_status_label"))$all()
-            ),
+            textOutput(ns("deck_status")),
             hr(),
-            div(class = "form-group",
-              tags$label(id = ns("num_draw_label"), "Number of Cards to Draw:"),
-              numericInput(ns("num_draw"), NULL, value = 5, min = 1, max = 52, step = 1)
-            ),
+            numericInput(ns("num_draw"), "Number of Cards to Draw:", value = 5, min = 1, max = 52, step = 1),
             actionButton(ns("draw_cards"), "Draw Cards", class = "btn-primary", style = "width: 100%; margin-bottom: 10px;"),
-            actionButton(ns("reset_deck"), "Reset Deck", class = "btn-danger", style = "width: 100%;")
+            actionButton(ns("reset_deck"), "Reset Deck", class = "btn-danger", style = "width: 100%;"),
+            hr(),
+            downloadButton(ns("download_card_data"), "Download Drawn Cards")
           ),
           mainPanel(
             div(class = "results-box",
               h4("Drawn Cards"),
-              # Using uiOutput to allow for more flexible rendering of cards
               uiOutput(ns("cardsDrawnOutput"))
             )
           )
@@ -100,23 +110,17 @@ tools_simulations_ui <- function(id) {
   )
 }
 
-# Server function for the 'Simulations' tool
 tools_simulations_server <- function(id) {
   moduleServer(id, function(input, output, session) {
-
-    # --- Reactive Values ---
+    ns <- session$ns
     rv <- reactiveValues(
-      # Coin values
       coin_flips = NULL,
-      # Dice values
       dice_rolls = NULL,
-      # Card values
       full_deck = character(),
       current_deck = character(),
       drawn_cards = NULL
     )
 
-    # Initialize the deck of cards
     observe({
       suits <- c("Hearts", "Diamonds", "Clubs", "Spades")
       ranks <- c("2", "3", "4", "5", "6", "7", "8", "9", "10", "Jack", "Queen", "King", "Ace")
@@ -125,11 +129,9 @@ tools_simulations_server <- function(id) {
       rv$current_deck <- deck
     })
 
-
-    # --- Coin Flip Logic ---
     observeEvent(input$flip_coins, {
       req(input$num_flips > 0)
-      flips <- sample(c("Heads", "Tails"), size = input$num_flips, replace = TRUE)
+      flips <- sample(c("Heads", "Tails"), size = input$num_flips, replace = TRUE, prob = c(input$heads_prob, 1 - input$heads_prob))
       rv$coin_flips <- factor(flips, levels = c("Heads", "Tails"))
     })
 
@@ -149,11 +151,10 @@ tools_simulations_server <- function(id) {
         cat("No coins flipped yet.")
       } else {
         summary(rv$coin_flips)
+        cat(sprintf("\nProportion Heads: %.3f", mean(rv$coin_flips == "Heads")))
       }
     })
 
-
-    # --- Dice Roll Logic ---
     observeEvent(input$roll_dice, {
       req(input$num_rolls > 0)
       rolls <- sample(1:6, size = input$num_rolls, replace = TRUE)
@@ -178,20 +179,17 @@ tools_simulations_server <- function(id) {
       }
     })
 
-
-    # --- Card Draw Logic ---
     output$deck_status <- renderText({
       paste("Cards remaining in deck:", length(rv$current_deck))
     })
 
     observeEvent(input$draw_cards, {
       req(input$num_draw > 0)
-      num_to_draw <- min(input$num_draw, length(rv$current_deck)) # Can't draw more than what's left
-
+      num_to_draw <- min(input$num_draw, length(rv$current_deck))
       if (num_to_draw > 0) {
         drawn <- sample(rv$current_deck, size = num_to_draw, replace = FALSE)
         rv$drawn_cards <- drawn
-        rv$current_deck <- setdiff(rv$current_deck, drawn) # Remove drawn cards from deck
+        rv$current_deck <- setdiff(rv$current_deck, drawn)
       } else {
         rv$drawn_cards <- "No cards left in the deck to draw."
       }
@@ -206,11 +204,9 @@ tools_simulations_server <- function(id) {
       if (is.null(rv$drawn_cards)) {
         return(p("Draw some cards to see the results here."))
       }
-      # Create a simple list of drawn cards
       tags$ul(
         lapply(rv$drawn_cards, tags$li)
       )
     })
-
   })
 }

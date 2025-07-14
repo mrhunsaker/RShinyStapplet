@@ -1,3 +1,64 @@
+######################################################################
+
+# Add CSS for skip link and focus indicators
+tags$head(
+  tags$style(HTML("
+    .skip-link {
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: #ffd700;
+      color: #222;
+      padding: 8px 16px;
+      z-index: 1000;
+      font-weight: bold;
+      border-bottom: 2px solid #222;
+      text-decoration: none;
+      transform: translateY(-100%);
+      transition: transform 0.2s;
+    }
+    .skip-link:focus, .skip-link:active {
+      transform: translateY(0);
+      outline: 3px solid #1d4ed8;
+    }
+    button:focus, .btn:focus, input:focus, select:focus, textarea:focus, a:focus {
+      outline: 3px solid #FFD700 !important;
+      outline-offset: 2px;
+      box-shadow: 0 0 0 2px #FFD700;
+    }
+  "))
+),
+#
+# Copyright 2025 Michael Ryan Hunsaker, M.Ed., Ph.D.
+#                <hunsakerconsulting@gmail.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+######################################################################
+# Stapplet Main UI File
+# Author: Michael Ryan Hunsaker, M.Ed., Ph.D.
+#    <hunsakerconsulting@gmail.com>
+# Accessibility Enhancement: Added skip-to-content links and ARIA landmarks
+# Date: 2025-07-13
+######################################################################
+
+# Add a visible skip link for keyboard users at the top of the UI
+tags$a(
+  href = "#mainPanel",
+  class = "skip-link",
+  "Skip to main content"
+),
+
 # ui.R (User Interface)
 library(shiny)
 library(ggplot2)
@@ -101,7 +162,7 @@ ui <- fluidPage(
       # Input for Mean with ARIA label
       div(
         class = "form-group",
-        tags$label(`for` = "mean", "Mean (\\u03BC):"),
+        tags$label(`for` = "mean", "Mean (\u03BC):"),
         sliderInput("mean", NULL, # NULL for label as we use tags$label
                     min = -10, max = 10, value = 0, step = 0.5,
                     width = "100%")
@@ -109,10 +170,11 @@ ui <- fluidPage(
       # Input for Standard Deviation with ARIA label
       div(
         class = "form-group",
-        tags$label(`for` = "sd", "Standard Deviation (\\u03C3):"),
+        tags$label(`for` = "sd", "Standard Deviation (\u03C3):"),
         sliderInput("sd", NULL, # NULL for label as we use tags$label
                     min = 0.1, max = 5, value = 1, step = 0.1,
-                    width = "100%")
+                    width = "100%",
+                    "aria-label" = "Standard deviation slider") # Added ARIA label
       ),
       hr(role = "separator"), # Horizontal rule with ARIA role for separation
 
@@ -126,7 +188,8 @@ ui <- fluidPage(
                                  "P(X > x)" = "gt",
                                  "P(x1 < X < x2)" = "between"),
                      selected = "lt",
-                     inline = FALSE # Make them block for better keyboard navigation and screen readers
+                     inline = FALSE, # Make them block for better keyboard navigation and screen readers
+                     "aria-label" = "Probability type selection" # Added ARIA label
         ),
         p(id = "probTypeHelp", class = "sr-only", "Choose to calculate probability for X less than a value, X greater than a value, or X between two values.")
       ),
@@ -137,7 +200,8 @@ ui <- fluidPage(
         div(
           class = "form-group",
           tags$label(`for` = "x_val", "X Value:"),
-          numericInput("x_val", NULL, value = 0, step = 0.1, width = "100%")
+          numericInput("x_val", NULL, value = 0, step = 0.1, width = "100%",
+                       "aria-label" = "X value input") # Added ARIA label
         )
       ),
       # Inputs for X1 and X2 values (for between) with ARIA labels
@@ -146,12 +210,14 @@ ui <- fluidPage(
         div(
           class = "form-group",
           tags$label(`for` = "x1_val", "X1 Value:"),
-          numericInput("x1_val", NULL, value = -1, step = 0.1, width = "100%")
+          numericInput("x1_val", NULL, value = -1, step = 0.1, width = "100%",
+                       "aria-label" = "X1 value input") # Added ARIA label
         ),
         div(
           class = "form-group",
           tags$label(`for` = "x2_val", "X2 Value:"),
-          numericInput("x2_val", NULL, value = 1, step = 0.1, width = "100%")
+          numericInput("x2_val", NULL, value = 1, step = 0.1, width = "100%",
+                       "aria-label" = "X2 value input") # Added ARIA label
         )
       )
     ),
@@ -159,11 +225,12 @@ ui <- fluidPage(
       id = "mainPanel",
       role = "main", # ARIA role for the main content area
       "aria-labelledby" = "appTitle", # Labelled by the main application title
+      tabindex = "-1", # Allow skip-link to focus this panel
       div(class = "plot-container",
         # Plot for sighted users
         htmltools::tagQuery(
           plotOutput("normalPlot")
-        )$find("img")$addAttrs("aria-labelledby" = "plotTitle plotDescription", role = "img")$all(),
+        )$find("img")$addAttrs("aria-labelledby" = "plotTitle plotDescription", role = "img", "aria-label" = "Normal distribution plot")$all(), # Added ARIA label to plot
         # Screen-reader only description of the plot using BrailleR
         p(id = "plotDescription", class = "sr-only", role = "status", "aria-live" = "polite", textOutput("brailleRDescription"))
       ),

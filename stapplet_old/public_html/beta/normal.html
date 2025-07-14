@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MVPXVT3DMR');
+</script>
+        <META NAME="author" CONTENT="Robert Amar">
+        <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+        <TITLE>Normal Distributions</TITLE>
+        <script src="./js/d3.v3.min.js"></script>
+        <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+        <script src="./js/stapplet_latest.js"></script>
+        <script src="./js/normal.js"></script>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Normal Distributions</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divNormal">
+                <LABEL FOR="selNormalType">Operation:</LABEL> <SELECT ID="selNormalType" ONCHANGE="handleNormChange()">
+                    <OPTION VALUE="spnNormalCdf">Calculate an area under the normal curve</OPTION>
+                    <OPTION VALUE="spnNormalInv">Calculate a value corresponding to an area</OPTION>
+                </SELECT><BR><BR>
+                <LABEL FOR="txtNormalMean">Mean =</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtNormalMean" onChange="handleParamsChange()">
+                <LABEL FOR="txtNormalStdev">SD =</LABEL> <INPUT TYPE="number" STEP="0.1" SIZE="8" ID="txtNormalStdev" onChange="handleParamsChange()">
+                <INPUT TYPE="button" VALUE="Plot distribution" onClick="plotNormalCurve()"><BR>
+                <SPAN CLASS="errormsg" id="spnNormalMsg"></SPAN><BR>
+                <DIV ID="divPlot"></DIV>
+		<BR>
+		<DIV ID="divAnalysis">
+	                <SPAN ID="spnNormalCdf">
+	                    <LABEL FOR="selNormalCdfType">Calculate the area</LABEL> <SELECT ID="selNormalCdfType" ONCHANGE="handleNormCdfChange()">
+	                        <OPTION VALUE="between">between two values</OPTION>
+	                        <OPTION VALUE="left">to the left of a value</OPTION>
+	                        <OPTION VALUE="right">to the right of a value</OPTION>
+	                        <OPTION VALUE="outside">outside a region</OPTION>
+	                    </SELECT>
+	                    <SPAN ID="spnCDFLabels">
+	                    <INPUT TYPE="checkbox" ID="chkCDFLabels" onChange="handleCDFLabelsChange()"><LABEL FOR="chkCDFLabels">Show labels on plot</LABEL></SPAN>
+	                    <BR><BR>
+	                    <DIV ID="divNormalCdfRegionInput">
+	                        <TABLE>
+	                            <TR>
+	                                <TD CLASS="noborder"><LABEL FOR="txtNormalCdfLeft">Left boundary:</LABEL></TD>
+	                                <TD CLASS="noborder"><INPUT TYPE="text" SIZE="8" ID="txtNormalCdfLeft" onChange="handleCDFLabelsChange()"></TD>
+	                                <TD CLASS="noborder">	                    <LABEL FOR="txtNormalCdfRight">Right boundary:</LABEL></TD>
+	                                <TD CLASS="noborder"><INPUT TYPE="text" SIZE="8" ID="txtNormalCdfRight" onChange="handleCDFLabelsChange()"></TD>
+	                            </TR>
+	                            <TR>
+	                                <TD CLASS="noborder">&nbsp;</TD>
+	                                <TD CLASS="noborder"><SPAN ID="spnLeftZ"></SPAN></TD>
+	                                <TD CLASS="noborder">&nbsp;</TD>
+	                                <TD CLASS="noborder"><SPAN ID="spnRightZ"></SPAN></TD>
+	                             </TR>
+	                         </TABLE>
+                        </DIV>
+	                    <DIV ID="divNormalCdfSingleInput">
+	                        <TABLE>
+	                            <TR>
+	                                <TD CLASS="noborder"><LABEL FOR="txtNormalCdfSingle">Value:</LABEL></TD>
+	                                <TD CLASS="noborder">	                         <INPUT TYPE="text" SIZE="8" onChange="handleCDFLabelsChange()" ID="txtNormalCdfSingle" onKeyDown="if (event.which == 13 || event.keyCode == 13) calculateNormalCdf()"></TD>
+	                            </TR>
+	                            <TR>
+	                                <TD CLASS="noborder">&nbsp;</TD>
+	                                <TD CLASS="noborder"><SPAN ID="spnSingleZ"></SPAN></TD>
+	                             </TR>
+	                         </TABLE>
+	                        </DIV>
+	                    <BR><INPUT TYPE="button" VALUE="Calculate area" onClick="calculateNormalCdf()">
+	                </SPAN>
+	                <SPAN ID="spnNormalInv">
+	                    <LABEL FOR="txtNormalInvArea">Calculate boundary value(s) for a
+				<SELECT ID="selNormalInvType">
+	                           <OPTION VALUE="left">left-tail</OPTION>
+	                           <OPTION VALUE="right">right-tail</OPTION>
+	                           <OPTION VALUE="center">central</OPTION>
+	                        </SELECT>	                    
+	                    area of</LABEL> <INPUT TYPE="number" STEP="0.01" MAX="1" MIN="0" ID="txtNormalInvArea" onChange="handleInvLabelsChange()" onKeyDown="if (event.which == 13 || event.keyCode == 13) calculateNormalInv()">
+	                    <BR><SPAN ID="spnInvLabels"><INPUT TYPE="checkbox" ID="chkInvLabels" onChange="handleInvLabelsChange()"> <LABEL FOR="chkInvLabels">Show labels on plot</LABEL></SPAN>
+	                    <BR><BR><INPUT TYPE="button" VALUE="Calculate value(s)" onClick="calculateNormalInv()">
+	                </SPAN>
+	                <SPAN CLASS="errormsg" id="spnNormalBoundMsg"></SPAN>
+	                <SPAN ID="spnNormalResult"></SPAN><BR>
+		</DIV>
+            </DIV>
+	    <!-- Scroll buffer for screen bottom -->
+	    <BR>
+	    <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+        </FORM>
+    </BODY>
+</HTML>

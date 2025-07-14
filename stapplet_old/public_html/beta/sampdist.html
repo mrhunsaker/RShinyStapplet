@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MVPXVT3DMR');
+</script>
+        <META NAME="author" CONTENT="Robert Amar">
+        <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+        <TITLE>Simulating Sampling Distributions</TITLE>
+        <script src="./js/d3.v3.min.js"></script>
+        <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+        <script src="./js/stapplet_latest.js"></script>
+        <script src="./js/sampdist.js"></script>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Simulating Sampling Distributions</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divSampDist">
+                <DIV ID="divStep1">
+                    <FIELDSET>
+                        <LEGEND><B>Population</B></LEGEND>
+                        <LABEL FOR="selPop">Population distribution is:</LABEL> <SELECT ID="selPop" ONCHANGE="step1Change()">
+                        <OPTION VALUE="normal">Normal</OPTION>
+                        <OPTION VALUE="uniform">Uniform</OPTION>
+                        <OPTION VALUE="skewed">Skewed</OPTION>
+                        <OPTION VALUE="bimodal">Bimodal</OPTION>
+                        <OPTION VALUE="categorical">Categorical</OPTION>
+                        </SELECT><BR>
+                        <DIV ID="divStep1CatOptions">
+                            <LABEL FOR="txtCategoricalP">True proportion of successes =</LABEL> <INPUT TYPE="number" STEP="0.01" MIN="0" MAX="1" VALUE="0.5" ID="txtCategoricalP" ONCHANGE="step1PropChange()">
+                            <SPAN ID="spnStep1ErrorMsg" CLASS="errormsg"></SPAN>
+                        </DIV>
+                        <DIV ID="divStep1Results">
+                            Distribution of <SPAN ID="spnPopType"></SPAN>
+                             population:<BR>
+                            <DIV ID="divPopPlot"></DIV>
+                            <SPAN ID="spnPopParams"></SPAN><BR><BR>
+                        </DIV>
+                    </FIELDSET>
+                </DIV>
+                <DIV ID="divStep2">
+                    <FIELDSET>
+                        <LEGEND><B>Sample</B></LEGEND>
+                        <LABEL FOR="txtSampleSize">Show distribution of one random sample of size <EM>n</EM> =</LABEL> <INPUT TYPE="number" STEP="1" MIN="1" VALUE="30" ID="txtSampleSize" ONCHANGE="clearSamples()"> <SPAN ID="spnStep2ErrorMsg" CLASS="errormsg"></SPAN> <BR>
+                        <INPUT TYPE="button" VALUE="Select sample" ONCLICK="step2()" ID="btn2"><BR>
+                        <DIV ID="divStep2Results">
+                            <DIV ID="divStep2Margin">&nbsp;</DIV>
+                            <DIV ID="divOneSamplePlot"></DIV>
+                            <SPAN ID="spnOneSampleStats"></SPAN><BR><BR>
+                        </DIV>
+                    </FIELDSET>
+                </DIV>
+                <DIV ID="divStep3">
+                    <FIELDSET>
+                        <LEGEND><B>Sampling Distribution</B></LEGEND>
+                        <LABEL FOR="selSampDist">Approximate sampling distribution of </LABEL> <SELECT ID="selSampDist" ONCHANGE="step3SampDistChange()">
+                            <OPTION VALUE="mean">x&#772;</OPTION>
+                            <OPTION VALUE="sd">s</OPTION>
+                            <OPTION VALUE="var">s&sup2;</OPTION>
+                        </SELECT><SPAN ID="spnStep3CatOpt">p&#770;</SPAN><BR>
+                        Quickly select <INPUT TYPE="number" STEP="1" MIN="1" VALUE="1" ID="txtNumSamples"> <LABEL FOR="txtNumSamples">random sample(s):</LABEL> 
+                        <INPUT TYPE="button" VALUE="Select samples" ONCLICK="step3()"><BR>
+                        <DIV ID="divStep3Model"><INPUT TYPE="checkbox" ID="chkNormal" ONCLICK="plotSamplingDist()"> <LABEL FOR="chkNormal">Show corresponding normal curve</LABEL><BR></DIV>
+                        <DIV ID="divApproxDistPlot"></DIV>
+                        <SPAN ID="spnApproxDistStats"></SPAN><BR>
+                        <INPUT TYPE="button" VALUE="Clear samples" ONCLICK="clearSamples(true)"> 
+                        <INPUT TYPE="button" VALUE="Reset everything" ONCLICK="resetAll()">
+                    </FIELDSET>
+                </DIV>
+            </DIV>
+	    <!-- Scroll buffer for screen bottom -->
+	    <BR>
+	    <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+        </FORM>
+    </BODY>
+</HTML>

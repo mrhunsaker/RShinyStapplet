@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+    <META CHARSET="UTF-8">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./css/timberlake_demoV3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <TITLE>Justin Timberlake Activity, part 2</TITLE>
+    <script src="./js/d3.v3.min.js"></script>
+    <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/stapplet_1.0.1.js"></SCRIPT>
+    <SCRIPT SRC="./js/collab_common_quant.js"></SCRIPT>
+    <SCRIPT SRC="./js/timberlake_demoV3_common.js"></SCRIPT>
+    <SCRIPT SRC="./js/timberlake_demoV3_pt2.js"></SCRIPT>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">How much do fans love Justin Timberlake? (Part 2)</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divCodes">
+                NOTE: Please use a new class code for this part of the activity.<BR>
+                <INPUT TYPE="button" ID="btnNewClassCode" VALUE="Start a new class code as a teacher" onClick="newClassCode();"><BR>
+                <INPUT TYPE="button" ID="btnEnterClassCode" VALUE="Enter an existing class code" onClick="enterClassCode();"><BR>
+            </DIV>
+            <DIV ID="divIntro">
+                <BR>Class code: <SPAN ID="spnClassCode">{none}</SPAN> 
+                <BR>Class data will automatically update every 3 - 5 seconds.
+                <BR><SPAN ID="spnLastUpdate"></SPAN>
+                <H3>Let's do the activity!</H3>
+                Justin Timberlake’s concert promoter wants to find out how much fans in the V.I.P. section enjoy the concert. He will estimate the average enjoyment level (1 to 100) for all 50 fans by selecting a sample of 10 fans.
+            </DIV>
+            <DIV ID="divSRS">
+                <H3>Method #1: Simple Random Sample</H3>
+                <B>Assign each fan a number. Randomly select 10 of the numbers.<BR> Interview fans assigned the 10 selected numbers.</B><BR>
+                <INPUT TYPE="button" ID="btnSRS" VALUE="Generate sample" onClick="generateSRS();">
+                <DIV ID="divTblSRS">
+                    <TABLE STYLE="border: none;">
+                    <TR STYLE="border: none;"><TD STYLE="border: none;">
+                    <DIV ID="tblSRS" CLASS="crowdbkg">
+<lottie-player src="json/timberlake_whole_crowd.json" background="transparent"  speed="1" style="width: 400px; height: 400px;" loop autoplay></lottie-player>
+                    </DIV>
+                    </TD><TD STYLE="border: none;">
+                    <DIV ID="divSRSPlot"></DIV>
+                    </TD></TABLE>
+                </DIV>
+                Average enjoyment: <SPAN ID="spnMeanSRS">?</SPAN><BR><BR>
+            </DIV>
+            <DIV ID="divCluster">
+                <H3>Method #2: Cluster Sample</H3>
+                <B>Each row is a cluster. Randomly select one row.<BR> Interview all fans in the selected cluster.</B><BR>
+                <INPUT TYPE="button" ID="btnCluster" VALUE="Generate sample" onClick="generateCluster();">
+                <DIV ID="divTblCluster">
+                    <TABLE STYLE="border: none;">
+                    <TR STYLE="border: none;"><TD STYLE="border: none;">
+                    <DIV ID="tblCluster" CLASS="crowdbkg">
+<lottie-player src="json/timberlake_whole_crowd.json" background="transparent"  speed="1" style="width: 400px; height: 400px;" loop autoplay></lottie-player>
+                    </DIV>
+                    </TD><TD STYLE="border: none;">
+                    <DIV ID="divClusterPlot"></DIV>
+                    </TD></TABLE>
+                </DIV>
+                Average enjoyment: <SPAN ID="spnMeanCluster">?</SPAN>
+                <BR><BR>
+            </DIV>
+            <DIV ID="divSystematic">
+                <H3>Method #3: Systematic Sample (every 8th)</H3>
+                <B>Randomly choose a fan as a starting point.<BR>
+                    Move down rows to interview every 8th fan.<BR>
+                    After last row, wrap back around to the first row.</B><BR>
+                <INPUT TYPE="button" ID="btnSystematic" VALUE="Generate sample" onClick="generateSystematic();">
+                <DIV ID="divTblSystematic">
+                    <TABLE STYLE="border: none;">
+                    <TR STYLE="border: none;"><TD STYLE="border: none;">
+                    <DIV ID="tblSystematic" CLASS="crowdbkg">
+<lottie-player src="json/timberlake_whole_crowd.json" background="transparent"  speed="1" style="width: 400px; height: 400px;" loop autoplay></lottie-player>
+                    </DIV>
+                    </TD><TD STYLE="border: none;">
+                    <DIV ID="divSystematicPlot"></DIV>
+                    </TD></TABLE>
+                </DIV>
+                Average enjoyment: <SPAN ID="spnMeanSystematic">?</SPAN>
+                <BR><BR>
+            </DIV>
+            <DIV ID="divShowResults">
+                <H3>Let's see how we did!</H3>
+                <INPUT TYPE="button" ID="btnRevealRestart" VALUE="Reveal results" onClick="revealRestart()"><BR>
+                    <DIV ID="tblResults" STYLE="position: relative;">
+<lottie-player src="json/timberlake_whole_crowd.json" background="transparent"  speed="1" style="width: 400px; height: 400px;" loop autoplay></lottie-player>
+                    </DIV>
+                True mean enjoyment: <SPAN ID="spnMeanResults">?</SPAN>
+                <BR><BR>
+            </DIV>
+            <DIV ID="divGraphAdmin">
+                <BR><INPUT TYPE="button" ID="btnEnterAdminCode" VALUE="Enter admin code to enable teacher privileges" onClick="enterAdminCode();">
+                <DIV ID="divGraphAdminOptions">
+                    <FIELDSET STYLE="display: inline;"><LEGEND><STRONG>Teacher Panel</STRONG></LEGEND>
+                    Admin code: <SPAN ID="spnAdminCode">{none}</SPAN><BR>
+                    <INPUT TYPE="button" ID="btnExtend" VALUE="Reset class expiration" onClick="resetClassExpiration();"><BR>
+                    <INPUT TYPE="button" ID="btnPauseStudent" VALUE="Pause student data collection" onClick="toggleEnabled();">
+                        <BR><BR>
+                    Edit which plot:
+                    <SELECT ID="selPlotEdit">
+                        <OPTION VALUE="1">SRS</OPTION>
+                        <OPTION VALUE="2">Cluster</OPTION>
+                        <OPTION VALUE="3">Systematic</OPTION>
+                    </SELECT>
+                    <SPAN ID="spnLastEditMsg"></SPAN><BR>
+                    <LABEL FOR="txtManySamples">Collect the selected sample type this many times silently (max 2000) and plot the results: </LABEL> <INPUT TYPE="number" MIN="1" MAX="2000" ID="txtManySamples" onKeyDown="if (event.which == 13 || event.keyCode == 13) doManySamples();">
+                    <INPUT TYPE="button" ID="btnManySamples" VALUE="Add these data" onClick="doManySamples();"><BR>
+                    <LABEL FOR="txtDataBatchAdd">Add up to 2000 values separated by spaces or commas: </LABEL> <INPUT TYPE="text" ID="txtDataBatchAdd" onKeyDown="if (event.which == 13 || event.keyCode == 13) addBatchData();" SIZE="50">
+                    <INPUT TYPE="button" ID="btnDataBatchAdd" VALUE="Add these data" onClick="addBatchData();"><BR>
+                    <LABEL FOR="txtDataDelete">Delete observation:</LABEL> <INPUT TYPE="number" ID="txtDataDelete" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSingleDataDelete();">
+                    <INPUT TYPE="button" ID="btnDataDelete" VALUE="Delete from selected plot" onClick="handleSingleDataDelete();">
+                    <INPUT TYPE="button" ID="btnDataDeleteAll" VALUE="Delete all data from selected plot" onClick="handleGroupDataDelete();"><BR>
+                    (Mouse over data to see exact values.)<BR>
+                    <INPUT TYPE="button" ID="btnDataMassDelete" VALUE="Delete all data from all plots" onClick="handleDeleteAllData('spnLastEditMsg');">
+                    </FIELDSET>
+                </DIV>
+            </DIV>
+            <!-- Scroll buffer for screen bottom -->
+            <BR>
+            <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+        </FORM>
+    </BODY>
+</HTML>

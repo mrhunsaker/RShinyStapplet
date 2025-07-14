@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-MVPXVT3DMR");
+        </script>
+        <meta name="author" content="Robert Amar" />
+        <link rel="stylesheet" type="text/css" href="./css/master.css" />
+        <title>t Distributions</title>
+        <script src="./js/d3.v3.min.js"></script>
+        <script src="./js/jstat.min.js"></script>
+        <script src="./js/stapplet_latest.js"></script>
+        <script src="./js/tdist.js"></script>
+    </head>
+    <body>
+        <span CLASS="errormsg" id="spnBrowserMsg"></span>
+        <div id="divHeader" ROLE="banner">
+            <table>
+                <tr>
+                    <td class="header">t Distributions</td>
+                </tr>
+            </table>
+        </div>
+        <form ROLE="form">
+            <div id="divT">
+                <label for="selTType">Operation:</label>
+                <select id="selTType" ONCHANGE="handleTChange()">
+                    <option value="spnTCdf">
+                        Calculate an area under the t curve
+                    </option>
+                    <option value="spnTInv">
+                        Calculate a value corresponding to an area
+                    </option></select
+                ><br /><br />
+                <label for="txtTDF">Degrees of freedom =</label>
+                <input
+                    type="number"
+                    step="ANY"
+                    min="1"
+                    max="300"
+                    value="1"
+                    id="txtTDF"
+                    onChange="handleDFChange()"
+                />
+                <input
+                    type="button"
+                    value="Plot distribution"
+                    onClick="handleTChange()"
+                /><br />
+                <input
+                    type="checkbox"
+                    id="chkNormal"
+                    onChange="handleDFChange()"
+                /><label for="chkNormal"
+                    >Also plot normal distribution as dashed line</label
+                ><br />
+                <span CLASS="errormsg" id="spnTMsg"></span><br />
+                <div
+                    id="divPlot"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="t distribution plot area"
+                ></div>
+                <br />
+                <div
+                    id="divAnalysis"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="t distribution analysis"
+                >
+                    <span ID="spnTCdf">
+                        <label for="selTCdfType">Calculate the area</label>
+                        <select id="selTCdfType" ONCHANGE="handleTCdfChange()">
+                            <option value="between">between two values</option>
+                            <option value="left">to the left of a value</option>
+                            <option value="right">
+                                to the right of a value
+                            </option>
+                            <option value="outside">outside a region</option>
+                        </select>
+                        <span ID="spnCdfLabels"
+                            ><input
+                                type="checkbox"
+                                id="chkCdfLabels"
+                                onChange="calculateTCdf()"
+                            /><label for="chkCdfLabels"
+                                >Show labels on plot</label
+                            ></span
+                        >
+                        <br /><br />
+                        <span ID="spnTCdfRegionInput"
+                            ><label for="txtTCdfLeft">Left boundary:</label>
+                            <input
+                                type="text"
+                                size="8"
+                                ONCHANGE="calculateTCdf()"
+                                id="txtTCdfLeft" />
+                            <label for="txtTCdfRight">Right boundary:</label>
+                            <input
+                                type="text"
+                                size="8"
+                                ONCHANGE="calculateTCdf()"
+                                id="txtTCdfRight"
+                        /></span>
+                        <span ID="spnTCdfSingleInput"
+                            ><label for="txtTCdfSingle">Value:</label>
+                            <input
+                                type="text"
+                                size="8"
+                                id="txtTCdfSingle"
+                                onChange="calculateTCdf()"
+                                onKeyDown="if (event.which == 13 || event.keyCode == 13) calculateTCdf()"
+                        /></span>
+                        <br /><br /><input
+                            type="button"
+                            value="Calculate area"
+                            onClick="calculateTCdf()"
+                        />
+                    </span>
+                    <span ID="spnTInv">
+                        <label for="txtTInvArea"
+                            >Calculate boundary value(s) for a
+                            <select id="selTInvType">
+                                <option value="left">left-tail</option>
+                                <option value="right">right-tail</option>
+                                <option value="center">central</option>
+                            </select>
+                            area of</label
+                        >
+                        <input
+                            type="number"
+                            step="0.01"
+                            max="1"
+                            min="0"
+                            id="txtTInvArea"
+                            onChange="calculateTInv()"
+                            onKeyDown="if (event.which == 13 || event.keyCode == 13) calculateTInv()"
+                        />
+                        <br /><span ID="spnInvLabels"
+                            ><input
+                                type="checkbox"
+                                id="chkInvLabels"
+                                onChange="calculateTInv()"
+                            />
+                            <label for="chkInvLabels"
+                                >Show labels on plot</label
+                            ></span
+                        >
+                        <br /><br /><input
+                            type="button"
+                            value="Calculate value(s)"
+                            onClick="calculateTInv()"
+                        />
+                    </span>
+                    <span CLASS="errormsg" id="spnTBoundMsg"></span>
+                    <span
+                        ID="spnTResult"
+                        tabindex="0"
+                        aria-live="polite"
+                        role="region"
+                        aria-label="t calculation result"
+                    ></span
+                    ><br />
+                </div>
+            </div>
+            <!-- Scroll buffer for screen bottom -->
+            <br />
+            <a href="javascript:STAP.Preferences.launchPreferencePage();"
+                >Adjust color, rounding, and percent/proportion preferences</a
+            >
+            | <a href="./">Back to menu</a>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </form>
+    </body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MVPXVT3DMR');
+</script>
+        <META NAME="author" CONTENT="Robert Amar">
+        <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+        <TITLE>t Distributions</TITLE>
+        <script src="./js/d3.v3.min.js"></script>
+        <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+        <script src="./js/stapplet_latest.js"></script>
+        <script src="./js/tdist.js"></script>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">t Distributions</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divT">
+                <LABEL FOR="selTType">Operation:</LABEL> <SELECT ID="selTType" ONCHANGE="handleTChange()">
+                    <OPTION VALUE="spnTCdf">Calculate an area under the t curve</OPTION>
+                    <OPTION VALUE="spnTInv">Calculate a value corresponding to an area</OPTION>
+                </SELECT><BR><BR>
+                <LABEL FOR="txtTDF">Degrees of freedom =</LABEL> <INPUT TYPE="number" STEP="ANY" MIN="1" MAX="300" VALUE="1" ID="txtTDF" onChange="handleDFChange()"> 
+                <INPUT TYPE="button" VALUE="Plot distribution" onClick="handleTChange()"><BR>
+                <INPUT TYPE="checkbox" ID="chkNormal" onChange="handleDFChange()"><LABEL FOR="chkNormal">Also plot normal distribution as dashed line</LABEL><BR>
+                <SPAN CLASS="errormsg" id="spnTMsg"></SPAN><BR>
+                <DIV ID="divPlot"></DIV>
+		<BR>
+		<DIV ID="divAnalysis">
+		    <INPUT TYPE="button" VALUE="Export SVG" onClick="exportSVG();">
+		        <BR><BR>
+	                <SPAN ID="spnTCdf">
+	                    <LABEL FOR="selTCdfType">Calculate the area</LABEL> <SELECT ID="selTCdfType" ONCHANGE="handleTCdfChange()">
+	                        <OPTION VALUE="between">between two values</OPTION>
+	                        <OPTION VALUE="left">to the left of a value</OPTION>
+	                        <OPTION VALUE="right">to the right of a value</OPTION>
+	                        <OPTION VALUE="outside">outside a region</OPTION>
+	                    </SELECT>
+	                    <SPAN ID="spnCdfLabels"><INPUT TYPE="checkbox" ID="chkCdfLabels" onChange="calculateTCdf()"><LABEL FOR="chkCdfLabels">Show labels on plot</LABEL></SPAN>
+	                    <BR><BR>
+	                    <SPAN ID="spnTCdfRegionInput"><LABEL FOR="txtTCdfLeft">Left boundary:</LABEL> <INPUT TYPE="text" SIZE="8" ONCHANGE="calculateTCdf()" ID="txtTCdfLeft">
+	                    <LABEL FOR="txtTCdfRight">Right boundary:</LABEL> <INPUT TYPE="text" SIZE="8" ONCHANGE="calculateTCdf()" ID="txtTCdfRight"></SPAN>
+	                    <SPAN ID="spnTCdfSingleInput"><LABEL FOR="txtTCdfSingle">Value:</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtTCdfSingle" onChange="calculateTCdf()" onKeyDown="if (event.which == 13 || event.keyCode == 13) calculateTCdf()"></SPAN>
+	                    <BR><BR><INPUT TYPE="button" VALUE="Calculate area" onClick="calculateTCdf()">
+	                </SPAN>
+	                <SPAN ID="spnTInv">
+	                    <LABEL FOR="txtTInvArea">Calculate boundary value(s) for a
+				<SELECT ID="selTInvType">
+	                           <OPTION VALUE="left">left-tail</OPTION>
+	                           <OPTION VALUE="right">right-tail</OPTION>
+	                           <OPTION VALUE="center">central</OPTION>
+	                        </SELECT>	                    
+	                    area of</LABEL> <INPUT TYPE="number" STEP="0.01" MAX="1" MIN="0" ID="txtTInvArea" onChange="calculateTInv()" onKeyDown="if (event.which == 13 || event.keyCode == 13) calculateTInv()"><BR>
+	                    <SPAN ID="spnInvLabels"><INPUT TYPE="checkbox" ID="chkInvLabels" onChange="calculateTInv()"><LABEL FOR="chkInvLabels">Show labels on plot</LABEL></SPAN>
+	                    <BR><BR><INPUT TYPE="button" VALUE="Calculate value(s)" onClick="calculateTInv()">
+	                </SPAN>
+	                <SPAN CLASS="errormsg" id="spnTBoundMsg"></SPAN>
+	                <SPAN ID="spnTResult"></SPAN><BR>
+		</DIV>
+            </DIV>
+	    <!-- Scroll buffer for screen bottom -->
+	    <BR>
+	    <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+        </FORM>
+    </BODY>
+</HTML>

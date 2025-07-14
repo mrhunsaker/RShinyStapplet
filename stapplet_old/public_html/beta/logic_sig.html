@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MVPXVT3DMR');
+</script>
+    <META CHARSET="UTF-8">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <TITLE>Logic of Significance Testing</TITLE>
+    <script src="./js/d3.v3.min.js"></script>
+    <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/stapplet_latest.js"></SCRIPT>
+    <SCRIPT SRC="./js/logic_sig.js"></SCRIPT>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Logic of Significance Testing</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divIntro">
+<P>A basketball player claims they are an 80% free throw shooter; that is, the player claims that <EM>p</EM> = 0.80, where <EM>p</EM> is the true proportion of free throws the player will make in the long run. We suspect the player is exaggerating and that <EM>p</EM> &lt; 0.80.</P>
+<P> Suppose the player shoots 50 free throws and makes 32 shots, a sample proportion of <EM>p&#770;</EM> = 32/50 = 0.64. This result gives <EM>some</EM> evidence that the player makes less than 80% of free throws in the long run since 0.64 &lt; 0.80. But does it give <EM>convincing</EM> evidence that <EM>p</EM> &lt; 0.80? Or, is it plausible (believable) that an 80% shooter can have a performance this poor by chance alone? You can use a simulation to find out.</P>
+        <P><EM>For a more detailed discussion, see the description in</EM> The Practice of Statistics, Statistics and Probability with Applications, <EM>or</EM> Introductory Statistics: A Student-Centered Approach.
+        </P>
+            <H3>Investigate the possibilities yourself:</H3>
+                <P>This free throw simulator assumes the player is truly an 80% free throw shooter.</P>
+                <DIV ID="divAnimation" STYLE="width: 408px; height: 257px; overflow: hidden;">
+                    <lottie-player id="lpAnim" src="json/generic_basketball_make.json" background="transparent" speed="1" style="width: 408px; height: 307px;"></lottie-player>                
+                </DIV>
+            </DIV>
+            <DIV ID="divActivity">
+                <INPUT TYPE="button" ID="btnSelfAttempt" VALUE="Shoot!" onClick="selfAttempt();"> <SPAN ID="spnSelfResult"></SPAN>
+                <P>Results so far: <SPAN ID="spnSelfStatistics"></SPAN></P>
+            </DIV>
+            <DIV ID="divActivityResults"><H3>Activity complete!</H3>
+                <P>In the simulation, the player made <SPAN ID="spnClassMade"></SPAN> of 50 shots (<EM>p&#770;</EM> = <SPAN ID="spnClassPercent"></SPAN>).<BR><BR>
+                <INPUT TYPE="button" VALUE="Do it again!" onClick="initializeActivity();"></P>
+            </DIV>
+            <DIV ID="divResults">
+                <H3>Simulation Results</H3>
+                <DIV ID="divPlot"></DIV>
+                <DIV ID="divDotplotCountingOptions">
+	                Count the number and percent of dots <SELECT ID="selDotplotCountDir" onChange="handleDotplotCount()">
+	                    <OPTION VALUE="left">less than</OPTION>
+	                    <OPTION VALUE="right">greater than</OPTION>
+	                </SELECT>
+	                <LABEL FOR="txtDotplotCountBound">or equal to</LABEL> <INPUT TYPE="text" ID="txtDotplotCountBound" SIZE="5" onChange="handleDotplotCount()" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleDotplotCount()">
+                        <INPUT TYPE="button" ID="btnDotplotCount" VALUE="Count" onClick="handleDotplotCount()">
+                        <INPUT TYPE="button" ID="btnClearDotplotCount" VALUE="Remove count" onClick="clearDotplotCount()">
+                        <SPAN ID="spnDotplotCountErrorMsg" CLASS="errormsg"></SPAN>
+                </DIV>
+                <TEXTAREA TITLE="Graph Data" ID="txtGraphDataCSV"></TEXTAREA>
+                <INPUT TYPE="button" ID="btnGetData" VALUE="Download current data" onClick="exportGraphData();"><BR><BR>
+                <SPAN ID="spnSummaryStatistics"></SPAN><BR>
+                <FIELDSET STYLE="display: inline;"><LEGEND><STRONG>Quick Add</STRONG></LEGEND>
+                        Quickly add <INPUT TYPE="number" STEP="1" MIN="1" MAX="10000" ID="txtManySamples" onKeyDown="if (event.which == 13 || event.keyCode == 13) doManySamples();"> simulations of 50 free throws.
+                    <INPUT TYPE="button" VALUE="Go!" onClick="doManySamples();"><BR>
+                    </FIELDSET>                
+            </DIV>
+
+            <DIV ID="divOverlayWarning"></DIV>
+            <!-- Scroll buffer for screen bottom -->
+            <BR>
+            <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+        </FORM>
+    </BODY>
+</HTML>

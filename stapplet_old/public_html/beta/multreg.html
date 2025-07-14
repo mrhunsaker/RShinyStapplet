@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MVPXVT3DMR');
+</script>
+    <META CHARSET="UTF-8">
+   <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+    <TITLE>Multiple Regression</TITLE>
+    <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/d3.v3.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/stapplet_latest.js"></SCRIPT>
+    <SCRIPT SRC="./js/multreg.js"></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Multiple Regression</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divInputs">
+                <TABLE ID="tblInputs">
+                    <TR>
+                        <TH>Variable</TH>
+                        <TH>Name</TH>
+                        <TH>Observations (separated by commas or spaces)
+                        <BR><EM>Keep individuals in the same order.</EM></TH>
+                        <TH>Included in model</TH>
+                        <TH></TH>
+                    </TR>
+                    <TR>
+                        <TD><LABEL FOR="txtExplanatory1Name">Explanatory 1</LABEL></TD>
+                        <TD><INPUT TYPE="text" CLASS="name" ID="txtExplanatory1Name" SIZE="10"></TD>
+                        <TD><INPUT TYPE="text" CLASS="data" TITLE="Explanatory 1 Data" ID="txtExplanatory1Data" SIZE="50"></TD>
+                        <TD><INPUT TYPE="checkbox" CLASS="ctl" ID="chkExplanatory1" CHECKED="true"></TD> 
+                        <TD><INPUT TYPE="button" CLASS="ctl" ID="btnDeleteExplanatory1" VALUE="-" onClick="deleteTblInputRow(0);"></TD>
+		    </TR>
+                    <TR>
+                        <TD><LABEL FOR="txtExplanatory2Name">Explanatory 2</LABEL></TD>
+                        <TD><INPUT TYPE="text" CLASS="name" ID="txtExplanatory2Name" SIZE="10"></TD>
+                        <TD><INPUT TYPE="text" CLASS="data" TITLE="Explanatory 2 Data" ID="txtExplanatory2Data" SIZE="50"></TD>
+                        <TD><INPUT TYPE="checkbox" CLASS="ctl" ID="chkExplanatory2"></TD> 
+                        <TD><INPUT TYPE="button" CLASS="ctl" ID="btnDeleteExplanatory2" VALUE="-" onClick="deleteTblInputRow(1);"></TD>
+                    </TR>
+                    <TR>
+                    	<TD COLSPAN="5" STYLE="text-align: right">
+				<INPUT TYPE="button" ID="btnAddExplRow" VALUE="+" onClick="addTblInputRow();">
+                    	</TD>
+                    </TR>
+                    <TR>
+                        <TD><LABEL FOR="txtResponseName">Response</LABEL></TD>
+                        <TD><INPUT TYPE="text" ID="txtResponseName" SIZE="10"></TD>
+                        <TD><INPUT TYPE="text" TITLE="Response Data" ID="txtResponseData" SIZE="50"></TD>
+                        <TD COLSPAN="2"></TD>
+                    </TR>
+                </TABLE>
+                <SPAN ID="spnExplanatoryMsg" CLASS="errormsg"></SPAN>
+                <SPAN ID="spnResponseMsg" CLASS="errormsg"></SPAN><BR>
+                <INPUT TYPE="button" ID="btnBeginAnalysis" VALUE="Begin analysis" onClick="beginAnalysis()">
+                <INPUT TYPE="button" ID="btnChangeInputs" VALUE="Edit inputs" onClick="deactivatePage()">
+                <INPUT TYPE="button" VALUE="Reset everything" onClick="resetApplet()">
+            </DIV>
+            <DIV ID="divAnalysis">
+                <H3>Linear Regression Model</H3>
+                <SPAN ID="spnLSRLResults"></SPAN>
+                <H3>Residual Plot</H3>
+		<DIV ID="divResidualPlot"></DIV>
+		<DIV ID="divResidualDotplot"></DIV>
+		<H3>Make a Prediction</H3>
+		<DIV ID="divPredictionCtl"></DIV>
+		<INPUT TYPE="button" ID="btnPrediction" VALUE="Compute predicted value" onClick="updatePrediction()">
+		<SPAN ID="spnPredictionResult"></SPAN>
+		<SPAN ID="spnPredictionMsg" CLASS="errormsg"></SPAN>
+            </DIV>
+            <!-- Scroll buffer for screen bottom -->
+            <BR>
+            <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+        </FORM>
+    </BODY>
+</HTML>

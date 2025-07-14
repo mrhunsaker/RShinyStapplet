@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="./css/master.css" />
+        <title>One Quantitative Variable, Multiple Group (Collaborative)</title>
+        <script src="./js/d3.v3.min.js"></script>
+        <script src="./js/jstat.min.js"></script>
+        <script src="./js/stapplet_latest.js"></script>
+        <script src="./js/collab_common_quant.js"></script>
+        <script src="./js/quant1v_multi_collab.js"></script>
+    </head>
+    <body>
+        <span CLASS="errormsg" id="spnBrowserMsg"></span>
+        <div id="divHeader" ROLE="banner">
+            <span CLASS="header"
+                >One Quantitative Variable, Multiple Group (collaborative)</span
+            >
+        </div>
+        <form>
+            <div id="divCodes">
+                <input
+                    type="button"
+                    id="btnNewClassCode"
+                    value="Start a new class code as a teacher"
+                    onClick="newClassCode(1,2);"
+                /><br />
+                <input
+                    type="button"
+                    id="btnEnterClassCode"
+                    value="Enter an existing class code"
+                    onClick="enterClassCode();"
+                /><br />
+            </div>
+            <div id="divGraphBasicOptions">
+                <br />Class code: <span ID="spnClassCode">{none}</span>
+                <br />Class data will automatically update roughly every 5 - 10
+                seconds. <br />A new entry may briefly disappear before
+                reappearing in the next update. <br /><span
+                    ID="spnLastUpdate"
+                ></span>
+                <br /><br />
+                <label for="selInputGroup">Choose a group: </label>
+                <select
+                    id="selInputGroup"
+                    onchange="handleGroupSelect();"
+                ></select
+                ><br />
+                <label for="txtDataAdd"
+                    >Enter a value for the selected group:
+                </label>
+                <input
+                    type="number"
+                    id="txtDataAdd"
+                    onKeyDown="if (event.which == 13 || event.keyCode == 13) addSingleData();"
+                />
+                <input
+                    type="button"
+                    id="btnDataAdd"
+                    value="Add to plot"
+                    onClick="addSingleData();"
+                />
+                <input
+                    type="button"
+                    id="btnUndoLastAdd"
+                    value="Undo last add"
+                    onClick="undoLastAdd();"
+                    disabled="true"
+                />
+                <span ID="spnDataAddMsg"></span><br />
+            </div>
+            <div id="divGraphDistributions">
+                <h3>Graph Distributions</h3>
+                <span ID="spnGraphOptions">
+                    <label for="selGraphType">Graph type:</label>
+                    <select
+                        id="selGraphType"
+                        onChange="updateGraphDistributions()"
+                    >
+                        <option value="dotplot">Dotplot</option>
+                        <option value="histogram">Histogram</option>
+                        <option value="boxplot">Boxplot</option>
+                        <option value="stemplot" id="optStemplot">
+                            Stemplot
+                        </option>
+                        <option value="normplot">
+                            Normal probability plot
+                        </option>
+                    </select>
+                </span>
+                <span ID="spnHistogramOptions">
+                    <label for="selHistogramLabel">Label histogram with:</label>
+                    <select
+                        id="selHistogramLabel"
+                        onChange="updateGraphDistributions()"
+                    >
+                        <option value="freq">Frequency</option>
+                        <option value="rel">Relative frequency</option></select
+                    ><br />
+                    <label for="txtHistogramBinWidth"
+                        >Enter interval width:</label
+                    >
+                    <input
+                        type="number"
+                        step="0.1"
+                        class="ctl"
+                        id="txtHistogramBinWidth"
+                        size="4"
+                        onChange="updateGraphDistributions()"
+                    />
+                    <label for="txtHistogramBinAlignment"
+                        >Enter boundary value:</label
+                    >
+                    <input
+                        type="number"
+                        step="0.1"
+                        class="ctl"
+                        id="txtHistogramBinAlignment"
+                        size="4"
+                        onChange="updateGraphDistributions()"
+                    />
+                    <input
+                        type="button"
+                        id="btnResetIntervals"
+                        value="Reset intervals to default"
+                        onClick="resetHistogramOptions()"
+                    />
+                    <span
+                        CLASS="errormsg"
+                        ID="spnHistogramOptionsErrorMsg"
+                    ></span> </span
+                ><br />
+                <div
+                    id="divPlot"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Main plot area"
+                ></div>
+                <div id="divStemplot">
+                    Split stems:
+                    <select
+                        id="selStemplotStems"
+                        onChange="updateGraphDistributions()"
+                    >
+                        <option value="1">No</option>
+                        <option value="2">Yes, into two groups</option>
+                        <option value="5">Yes, into five groups</option></select
+                    ><br />
+                    Shift stem
+                    <input
+                        id="numSigAdj"
+                        type="number"
+                        min="0"
+                        max="20"
+                        value="0"
+                        onChange="updateGraphDistributions()"
+                    />
+                    additional decimal places to the left, truncating as
+                    needed.<br />
+                    Collapse groups of empty stems?
+                    <select
+                        id="selGapHide"
+                        onChange="updateGraphDistributions()"
+                    >
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                    <span ID="spnGapHide">
+                        Collapse groups of
+                        <input
+                            id="numGapHide"
+                            type="number"
+                            min="3"
+                            max="99"
+                            value="3"
+                            onChange="updateGraphDistributions()"
+                        />
+                        or more empty stems.</span
+                    >
+                    <div
+                        id="divStemplotPlot"
+                        class="stemplotContainer"
+                        tabindex="0"
+                        aria-live="polite"
+                        role="region"
+                        aria-label="Stemplot area"
+                    ></div>
+                </div>
+                <div
+                    id="divNormPlots"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Normal probability plots"
+                ></div>
+                <textarea
+                    id="txtGraphDataCSV"
+                    tabindex="0"
+                    aria-label="Graph data CSV"
+                ></textarea>
+                <input
+                    type="button"
+                    id="btnGetData"
+                    value="Download current data"
+                    onClick="exportGraphData();"
+                />
+                <input
+                    type="button"
+                    id="btnGetData"
+                    value="Analyze current data in non-collaborative version"
+                    onClick="transferDataNC();"
+                /><br />
+                For inference options, click the button to analyze current data
+                in the non-collaborative version.<br />
+            </div>
+            <div
+                id="divSummaryStatistics"
+                tabindex="0"
+                aria-live="polite"
+                role="region"
+                aria-label="Summary statistics"
+            >
+                <h3>Summary Statistics</h3>
+                <span ID="spnSummaryStatistics"></span><br />
+                <input
+                    type="button"
+                    id="btnExportSummary"
+                    value="Export summary statistics"
+                    onClick="exportSummaryStatistics()"
+                />
+                <textarea
+                    title="Summary Statistics"
+                    id="txtSummaryStatisticsCSV"
+                    tabindex="0"
+                    aria-label="Summary statistics CSV"
+                ></textarea>
+            </div>
+            <div id="divGraphAdmin">
+                <br /><input
+                    type="button"
+                    id="btnEnterAdminCode"
+                    value="Enter admin code to enable teacher privileges"
+                    onClick="enterAdminCode();"
+                />
+                <div id="divGraphAdminOptions">
+                    <fieldset style="display: inline">
+                        <legend><strong>Teacher Panel</strong></legend>
+                        Admin code: <span ID="spnAdminCode">{none}</span><br />
+                        <input
+                            type="button"
+                            id="btnPauseStudent"
+                            value="Pause data collection"
+                            onClick="toggleEnabled();"
+                        />
+                        <span ID="spnRenewBtn">
+                            <input
+                                type="button"
+                                id="btnRenew"
+                                value="Extend data collection for 5 minutes"
+                                onClick="renewDataCollection();"
+                            />
+                        </span>
+                        <br /><br />
+                        <label for="txtVariableName">Variable name:</label>
+                        <input
+                            type="text"
+                            value="Variable"
+                            id="txtVariableName"
+                            onKeyDown="if (event.which == 13 || event.keyCode == 13) handleVariableNameChange();"
+                            size="30"
+                        />
+                        <input
+                            type="button"
+                            id="btnVariableName"
+                            value="Update variable name"
+                            onClick="handleVariableNameChange();"
+                        />
+                        <span ID="spnVariableNameMsg"></span><br /><br />
+                        Work with group:
+                        <select
+                            id="selGroup"
+                            onChange="handleAdminGroupSelect();"
+                        ></select
+                        ><br />
+                        Add data to this group's plot (separate with spaces or
+                        commas):
+                        <input
+                            type="text"
+                            size="30"
+                            id="txtAdminBatchData"
+                            onKeyDown="if (event.which == 13 || event.keyCode == 13) addBatchData();"
+                        /><input
+                            type="button"
+                            id="btnAdminBatchData"
+                            value="Add these observations"
+                            onClick="addBatchData();"
+                        /><br />
+                        Delete a value from this group's plot:
+                        <input
+                            type="number"
+                            id="txtAdminDelete"
+                            onKeyDown="if (event.which == 13 || event.keyCode == 13) deleteSingle();"
+                        /><input
+                            type="button"
+                            id="btnAdminDelete"
+                            value="Delete observation"
+                            onClick="deleteSingle();"
+                        /><br />
+                        (Mouse over data to see exact values.)
+                        <span ID="spnDataDeleteMsg"></span><br />
+                        <input
+                            type="button"
+                            id="btnDeleteGroupData"
+                            value="Clear this group's data"
+                            onClick="deleteGroupData();"
+                        />
+                        <input
+                            type="button"
+                            id="btnDeleteGroup"
+                            value="Delete this group"
+                            onClick="deleteGroup();"
+                        />
+                        <input
+                            type="button"
+                            id="btnRenameGroup"
+                            value="Rename this group"
+                            onClick="renameGroup();"
+                        /><br />
+                        <span ID="spnEditMsg"></span>
+                        <span ID="spnGroupNameMsg"></span><br />
+                        <input
+                            type="button"
+                            id="btnAddGroup"
+                            value="Add a new group"
+                            onClick="addGroup();"
+                        />
+                        <span ID="spnAddGroupMsg"></span><br /><br />
+                        <input
+                            type="button"
+                            id="btnDataDeleteAll"
+                            value="Delete data for all groups"
+                            onClick="handleDeleteAllData();"
+                        />
+                        <span ID="spnDataDeleteAllMsg"></span><br /><br />
+                        <input
+                            type="button"
+                            id="btnExtend"
+                            value="Reset class expiration"
+                            onClick="resetClassExpiration();"
+                        /><br />
+                    </fieldset>
+                </div>
+            </div>
+            <div id="divOverlayWarning"></div>
+            <!-- Scroll buffer for screen bottom -->
+            <br />
+            <a href="javascript:STAP.Preferences.launchPreferencePage();"
+                >Adjust color, rounding, and percent/proportion preferences</a
+            >
+            | <a href="./">Back to menu</a>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </form>
+    </body>
+</html>

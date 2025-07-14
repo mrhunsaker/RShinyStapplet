@@ -1,14 +1,56 @@
 # Stapplet Shiny Suite
 
+A comprehensive, production-ready suite of interactive R Shiny modules for teaching and exploring statistics and probability. All modules are fully commented, accessible, and designed for clarity, maintainability, and ease of use.
+
 An accessible, R-based suite of statistical applets inspired by Stapplet.com, designed for educational purposes with a strong focus on accessibility, colorblind-friendliness, and WCAG alignment.
 
 ## About The Project
+
+Stapplet Shiny Suite provides a collection of self-contained statistical applets, calculators, and classroom activities. Each module is documented with detailed, self-explanatory comments and section headers, making the codebase easy to maintain and extend. The suite is designed for educators, students, and anyone interested in hands-on statistical learning.
+
+All modules include:
+- Clear UI and server logic with inline documentation
+- Accessibility features (ARIA labels, screen reader support, keyboard navigation)
+- Download/export options for results, plots, and data
+- Comprehensive help file (`help.md`) with instructions for every module
 
 This project provides a collection of interactive Shiny applications that mirror the functionality of the popular statistics education website, Stapplet.com. The primary goal is to offer a free, open-source, and highly accessible alternative for students and educators. Each applet is designed to illustrate a specific statistical concept, from sampling distributions and confidence intervals to hypothesis testing and regression.
 
 A key focus of this project is to ensure that all tools are usable by as many people as possible, including those who rely on screen readers and other assistive technologies.
 
 ### Features
+
+- **Universal Accessibility:**  
+  All modules now follow a unified accessibility standard, including ARIA roles, alt text, BrailleR integration, screen-reader descriptions, keyboard shortcuts, and accessible error/status messaging.
+- **Screen Reader Support:**  
+  Every output, especially plots and results, includes hidden descriptions (`.sr-only` class) and live regions for screen readers.
+- **Keyboard Navigation:**  
+  All UI elements are accessible via keyboard, with shortcuts for rapid navigation and actions.
+- **Color Contrast & Visual Accessibility:**  
+  High-contrast, colorblind-safe palettes are used throughout. All foreground/background pairs meet WCAG AA/AAA standards.
+- **Accessible Export/Download:**  
+  All modules provide accessible download buttons for CSV, PNG, and TXT formats, with alt text and screen-reader summaries.
+
+- **Universal Accessibility:**  
+  All modules now follow a unified accessibility standard, including ARIA roles, alt text, BrailleR integration, screen-reader descriptions, keyboard shortcuts, and accessible error/status messaging.
+- **Screen Reader Support:**  
+  Every output, especially plots and results, includes hidden descriptions (`.sr-only` class) and live regions for screen readers.
+- **Keyboard Navigation:**  
+  All UI elements are accessible via keyboard, with shortcuts for rapid navigation and actions.
+- **Color Contrast & Visual Accessibility:**  
+  High-contrast, colorblind-safe palettes are used throughout. All foreground/background pairs meet WCAG AA/AAA standards.
+- **Accessible Export/Download:**  
+  All modules provide accessible download buttons for CSV, PNG, and TXT formats, with alt text and screen-reader summaries.
+
+- **Distributions & Calculators:** Normal, Binomial, Poisson, Chi-Square, F, Discrete Random Variable, Counting Methods, Power Analysis
+- **Confidence Intervals:** For means, proportions, differences in means/proportions
+- **Hypothesis Tests:** For means, proportions, differences, chi-square tests
+- **Regression:** Simple and multiple linear regression
+- **Sampling & Simulations:** Sampling distributions, probability simulations, descriptive tools
+- **Classroom Activities:** Interactive modules for correlation guessing, discrimination testing, sampling, and more
+- **Accessibility:** ARIA roles, screen reader descriptions, keyboard navigation
+- **Exporting:** Download results, plots, and data in CSV, PNG, and TXT formats
+- **Comprehensive Documentation:** See `help.md` for detailed instructions and module overviews
 
 The suite includes interactive applets for:
 
@@ -41,18 +83,29 @@ The suite includes interactive applets for:
 
 ## Getting Started
 
+For full instructions and module details, see the [Stapplet R Shiny App Help Guide](help.md).
+
+
 To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
+
+- R (>= 4.0)
+- R Shiny
+- Required packages: `ggplot2`, `dplyr`, `DT`, `shinyjs`, `shinyWidgets`, `shinyAccessibility`, `htmltools`, `readr`
 
 *   **R**: You must have a recent version of R installed. You can download it from the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/).
 *   **RStudio or VS Code**: It is highly recommended to use an IDE like [RStudio Desktop](https://posit.co/download/rstudio-desktop/) or [VS Code](https://code.visualstudio.com/) with the [R Extension](https://marketplace.visualstudio.com/items?itemName=REditorSupport.r).
 
 ### Installation
 
+1. Clone or download this repository.
+2. Install required R packages.
+3. Launch the app with `shiny::runApp()` or open `app.R` in RStudio and click "Run App".
+
 1.  **Clone the repository:**
     ```sh
-    git clone https://github.com/your_username/StappletSHiny.git
+    git clone https://github.com/your_username/RShinyStapplet.git
     ```
 2.  **Navigate to the project directory:**
     ```sh
@@ -65,6 +118,39 @@ To get a local copy up and running, follow these simple steps.
     ```
 
 ### Usage
+
+- Select modules from the sidebar or tabs.
+- Follow instructions at the top of each module.
+- Enter data, adjust parameters, and view results.
+- Use download buttons to export plots, tables, or simulation results.
+- For detailed help, click the "Help" link in the app or open `help.md`.
+
+### Keyboard Shortcuts for Rapid Navigation & Actions
+
+Stapplet Shiny Suite supports keyboard shortcuts for efficient navigation and actions. These shortcuts work for both sighted and screen reader users.
+
+**Navigation Shortcuts:**
+- `Alt+1` — Focus sidebar and module selection (Distributions)
+- `Alt+2` — Focus sidebar (Confidence Intervals)
+- `Alt+3` — Focus sidebar (Hypothesis Tests)
+- `Alt+4` — Focus sidebar (Regression)
+- `Alt+5` — Focus sidebar (Sampling & Simulations)
+- `Alt+6` — Focus sidebar (Activities)
+- `Alt+H` — Focus Help section
+- `Alt+M` — Focus Main Panel
+
+**Action Shortcuts:**
+- `Alt+R` — Run simulation or calculation in current module
+- `Alt+D` — Focus Download/Export buttons
+- `Alt+E` — Export/download results
+- `Alt+F` — Open Preferences/Settings modal
+
+**Instructions for Use:**
+- Keyboard shortcuts are enabled by default.
+- Use `Alt` plus the specified key (Windows/Linux) or `Option` + key (Mac) to trigger the shortcut.
+- Screen reader users: Shortcuts will move focus to the relevant section or activate the action. Listen for confirmation or status messages.
+- For a full list of shortcuts, see the Accessibility section below or the Help file.
+
 
 You can run the application in several ways:
 
@@ -111,22 +197,90 @@ The application will launch in a new window or your web browser.
 
 ## Accessibility Statement
 
+Stapplet Shiny Suite is designed for accessibility and inclusivity. All modules include:
+- ARIA labels and roles for screen readers
+- Keyboard navigation for all UI elements
+- Hidden descriptions for plots and results
+- Error and status messages with appropriate ARIA live regions
+- **Keyboard Shortcuts:** Rapid navigation and actions (see above for details)
+
+See [help.md](help.md) for a full accessibility feature list and shortcut instructions.
+
 This project is committed to being accessible to all users, including those with disabilities. The applets have been developed to align with the principles of the Web Content Accessibility Guidelines (WCAG) 2.1 Level AA.
 
 ### Accessibility Features
 
-*   **Screen Reader Support**:
-    *   **ARIA Roles**: Proper use of ARIA landmarks (`role="main"`, `role="complementary"`, etc.) and roles (`role="form"`, `role="status"`) allows screen reader users to easily understand the page layout and navigate between sections.
-    *   **Programmatic Labels**: All form controls are programmatically linked to their labels, ensuring that screen readers announce the purpose of each input.
-    *   **Live Regions**: Dynamic content, such as calculated results, uses ARIA live regions (`aria-live="polite"`) to announce updates without interrupting the user's workflow.
+All modules in the Stapplet Shiny Suite now adhere to universal accessibility standards:
 
-*   **Text Alternatives for Visuals**:
-    *   **`BrailleR` Integration**: For all `ggplot2`-based visualizations, the `BrailleR` package is used to generate detailed, human-readable descriptions of the plot's contents. This provides a rich, equivalent experience for users who cannot see the plot.
-    *   **Descriptive Text**: For visuals where `BrailleR` is not suitable (e.g., base R plots), a screen-reader-only paragraph describes the plot's purpose, and accompanying data tables provide the raw values for inspection.
+- **Screen Reader Support:**  
+  - ARIA roles and landmarks (`role="main"`, `role="complementary"`, etc.) are used throughout for clear navigation.
+  - All form controls have programmatic labels (`aria-label`, `aria-labelledby`, or visible label).
+  - Dynamic content (results, errors, status) uses ARIA live regions (`aria-live="polite"` or `assertive"`) for non-intrusive updates.
+  - Every plot includes alt text, ARIA attributes, and a screen-reader-only dynamic description. BrailleR integration is used for ggplot2 plots where possible.
 
-*   **Keyboard Accessibility**: The application is designed to be fully operable using only a keyboard. Users can tab between all controls, use arrow keys for sliders and radio buttons, and activate buttons using the `Enter` or `Space` key.
+- **Keyboard Accessibility:**  
+  - All controls are reachable and operable via keyboard.
+  - Keyboard shortcuts are available for rapid navigation and actions (see below).
+  - Tab/Shift+Tab moves between interactive elements; Enter/Space activates buttons.
+
+- **Accessible Export/Download:**  
+  - Download/export buttons for CSV, PNG, and TXT formats include alt text and screen-reader summaries.
+
+- **Color Contrast & Visual Accessibility:**  
+  - All foreground/background color pairs meet WCAG AA/AAA standards.
+  - Colorblind-friendly palettes are used throughout.
+
+- **Error and Status Messaging:**  
+  - All error/status messages are specific, actionable, and announced via ARIA live regions.
+
+- **Focus Management:**  
+  - Modal dialogs and popups use ARIA attributes and return focus to the triggering element after close.
+
+#### Keyboard Shortcuts
+
+Shortcuts use the `Alt` key (Windows/Linux) or `Option` key (Mac) plus a number or letter.  
+Shortcuts work anywhere in the app.  
+Screen readers will announce shortcut activation if ARIA live regions are enabled.
+
+| Shortcut         | Action                                      |
+|------------------|---------------------------------------------|
+| Alt+1            | Go to Distributions module                  |
+| Alt+2            | Go to Confidence Intervals module           |
+| Alt+3            | Go to Hypothesis Tests module               |
+| Alt+4            | Go to Regression module                     |
+| Alt+5            | Go to Sampling & Simulations module         |
+| Alt+6            | Go to Activities module                     |
+| Alt+S            | Focus sidebar panel                         |
+| Alt+M            | Focus main panel                            |
+| Alt+H            | Open Help/Documentation                     |
+| Alt+R            | Run simulation or calculation               |
+| Alt+E            | Export/download results                     |
+| Alt+D            | Focus download buttons                      |
+| Alt+F            | Open Preferences/Settings                   |
+
+**Tips for Screen Reader Users:**  
+- ARIA live regions will announce navigation and actions.
+- All shortcut actions are available via keyboard and do not require a mouse.
+
 
 ### Limitations and Future Work
+
+- Some advanced visualizations may have brief alt text if BrailleR is not available.
+- Focus management for complex modals/popups may require further refinement.
+- Keyboard shortcuts may require additional user testing for edge cases.
+- Formal third-party accessibility audit is recommended for full WCAG/ADA compliance.
+
+**For questions, feedback, or suggestions regarding accessibility, please contact:**  
+Michael Ryan Hunsaker, M.Ed., Ph.D. (<hunsakerconsulting@gmail.com>)
+
+
+- Some advanced visualizations may have brief alt text if BrailleR is not available.
+- Focus management for complex modals/popups may require further refinement.
+- Keyboard shortcuts may require additional user testing for edge cases.
+- Formal third-party accessibility audit is recommended for full WCAG/ADA compliance.
+- Some advanced statistical methods may be added in future releases.
+- Accessibility testing is ongoing; feedback is welcome.
+- Additional classroom activities and simulation types are planned.
 
 While we have made every effort to ensure accessibility, we acknowledge the following limitations:
 
@@ -140,6 +294,12 @@ We are committed to improving the accessibility of this project. If you encounte
 
 ## Recent Changes
 
+- All R module files now include detailed, self-documenting comments and section headers.
+- The help file (`help.md`) provides comprehensive instructions for every module.
+- Accessibility features have been expanded and standardized.
+- Export/download options are available in every module.
+- Codebase refactored for clarity, maintainability, and production readiness.
+
 - **Accessibility Improvements**: All UI elements and tables have been refactored for better screen reader support and keyboard navigation. Unicode mathematical symbols are now rendered as actual characters.
 - **Colorblind-Friendly Theme**: The app uses a high-contrast, colorblind-safe theme for all UI elements and navigation. All plots use the viridis color palette for maximum accessibility.
 - **Navigation Bar Fixes**: Navigation buttons and links now have visible, high-contrast backgrounds and text.
@@ -152,11 +312,19 @@ We are committed to improving the accessibility of this project. If you encounte
 
 ## Contributing
 
+Contributions are welcome! Please review the code style and documentation standards before submitting pull requests. All new code should include clear comments and section headers.
+
+
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 
 ### How to Contribute
+
+- Fork the repository and create a new branch.
+- Add or improve modules, documentation, or accessibility features.
+- Ensure all code is commented and production-ready.
+- Submit a pull request with a clear description of changes.
 
 1.  **Fork the Project**
 2.  **Create your Feature Branch** (`git checkout -b feature/AmazingFeature`)
@@ -166,11 +334,25 @@ If you have a suggestion that would make this better, please fork the repo and c
 
 ### Reporting Bugs
 
+- Open an issue in the repository with a detailed description.
+- Include steps to reproduce, screenshots, and relevant error messages.
+- Accessibility and usability feedback is especially appreciated.
+
 If you find a bug, please [open an issue](https://github.com/your_username/StappletSHiny/issues) and provide a clear description of the issue, steps to reproduce it, and any relevant error messages.
 
 ---
 
 ## License
+
+Stapplet Shiny Suite is licensed under the Apache License, Version 2.0.  
+See individual files for copyright and licensing details.
+
+---
+
+**Author:** Michael Ryan Hunsaker, M.Ed., Ph.D. (<hunsakerconsulting@gmail.com>)  
+**Help & Documentation:** See [help.md](help.md) for module instructions and accessibility details.
+
+**Enjoy exploring statistics with Stapplet!**
 
 Distributed under the Apache 2.0 License. See `LICENSE` text below for more information.
 

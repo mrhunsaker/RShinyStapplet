@@ -1,0 +1,165 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+    <META NAME="author" CONTENT="Robert Amar">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./master.css">
+    <TITLE>SRiS: Difference in Means or Medians</TITLE>
+    <SCRIPT SRC="./prefs_format.js"></SCRIPT>
+    <SCRIPT SRC="./results_storage.js"></SCRIPT>
+    <SCRIPT SRC="./simple_validate.js"></SCRIPT>
+    <SCRIPT SRC="./utility.js"></SCRIPT>
+    <SCRIPT SRC="./mean_median_sd.js"></SCRIPT>
+    <SCRIPT SRC="./dotplot.js"></SCRIPT>
+    <SCRIPT SRC="./ui_handlers.js"></SCRIPT>
+    <SCRIPT><!--
+        var mm_arrfunc = mean;
+        
+        function subSingleValidate()
+        {
+            return validateInputFloatArray("txtContext1", "spnContext1Msg", "Context 1") &
+                   validateInputFloatArray("txtContext2", "spnContext2Msg", "Context 2");
+        }
+   
+        function validateSingleInput()
+        {
+            if (subSingleValidate())
+            {
+                var arr1 = splitStringGetArray(document.getElementById("txtContext1").value);
+                var arr2 = splitStringGetArray(document.getElementById("txtContext2").value);
+                var res1 = mm_arrfunc(arr1);
+                var res2 = mm_arrfunc(arr2);
+                document.getElementById("txtContext1").value = unsplitString(arr1);
+                document.getElementById("txtContext2").value = unsplitString(arr2);
+                recordInputState("txtContext1");
+                recordInputState("txtContext2");
+                
+                var testType = (document.getElementById("selType").value == "Mean" ? "mean" : "median");
+                document.getElementById("spnSingleResult").innerHTML = "<B>Context 1 observed " + testType + ": </B>" +
+                    formatNumber(res1) + "<BR><B>Context 2 observed " + testType + ": </B>" +
+                    formatNumber(res2) + "<BR><B>Observed difference: </B>" +
+                    formatNumber(res1 - res2);
+            }
+        }
+
+        function validateMultipleInput()
+        {
+            var valid = validateInputInt("txtTrials", 0, Number.MAX_VALUE, true, "spnTrialsMsg", "Number of trials", "must be positive.");
+            valid = valid & subSingleValidate();
+
+            if (valid)
+            {
+                var arr1 = splitStringGetArray(document.getElementById("txtContext1").value);
+                var arr2 = splitStringGetArray(document.getElementById("txtContext2").value);
+                var res1 = mm_arrfunc(arr1);
+                var res2 = mm_arrfunc(arr2);
+                document.getElementById("txtContext1").value = unsplitString(arr1);
+                document.getElementById("txtContext2").value = unsplitString(arr2);
+                recordInputStates(["txtContext1", "txtContext2", "selType"]);
+
+                var testType = document.getElementById("selType").value;
+                var trials = parseInt(document.getElementById("txtTrials").value);
+                document.getElementById("spnNumResults").innerHTML =
+                    addToStoredResults(diff_two_arrfunc_simulate_many(arr1, arr2, mm_arrfunc, trials),
+                        "txtMultipleResult", formatNumber,
+                        "cnvPlot", "Simulated Difference in " + testType + "s");
+                document.getElementById("spnMultObs").innerHTML = "<B>Observed difference: </B>" + formatNumber(res1 - res2);
+                ui_batchSetProperty(["btnSaveFile", "btnSavePlot", "txtCountBound", "btnCount"], "disabled", false);
+                document.getElementById("btnMoreTrials").value = "Add " + trials + " more trials";
+                ui_handleCount();
+            }
+        }
+
+        function resetApplet(bConfirm, input)
+        {
+            if (bConfirm)
+                if (!confirmStoredResultsReset())
+                {
+                    if (input) resetInputState(input.id);
+                    return false;
+                }
+                
+            resetStoredResults("txtMultipleResult", "cnvPlot");
+            ui_batchSetProperty(["btnSaveFile", "btnSavePlot", "txtCountBound", "btnCount"], "disabled", true);
+            document.getElementById("btnMoreTrials").value = "Add more trials";
+            ui_batchSetProperty(["spnSingleResult", "spnMultObs", "spnNumResults"], "innerHTML", "");
+            document.getElementById("txtTrials").value = "";
+            ui_clearCount();
+        }
+
+        function handleTypeChange(selType)
+        {
+            if (resetApplet(true, selType) === false)
+                return false;
+
+            var testType = (document.getElementById("selType").value == "Mean" ? "mean" : "median");
+            
+            for (var i = 1; i <= 4; i++)
+                document.getElementById("spnTestName" + i).innerHTML = "" + testType;
+            
+            mm_arrfunc = (selType.value == "Mean") ? mean : median;
+        }
+
+        function checkSaveCanvas()
+        {
+            if (!canvasSupported())
+            {
+                ui_removeElements(["btnSavePlot", "tdDotplot"]);
+                document.getElementById("spnBrowserMsg").innerHTML = "The dotplot feature is not supported on this browser.  Please consider using an upgraded browser.";
+            }
+        }
+
+        ui_setOnLoad(checkSaveCanvas);
+    //--></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="message" id="spnBrowserMsg"></SPAN>
+        <H1>Difference in Means or Medians</H1>
+        <FORM>
+            <B>Perform test for difference in: </B>
+            <SELECT ID="selType" onChange="handleTypeChange(this)">
+                <OPTION VALUE="Mean">means</OPTION>
+                <OPTION VALUE="Median">medians</OPTION>
+            </SELECT><BR>
+            Enter the observed PERFORMANCEs in each context below, separated by commas and/or spaces.
+            The test statistic will be computed as:<BR>
+            (<SPAN ID="spnTestName1">mean</SPAN> in context 1 - <SPAN ID="spnTestName2">mean</SPAN> in context 2).<BR><BR>
+            <B>Context 1: </B><INPUT TYPE="text" ID="txtContext1" SIZE="40" ONCHANGE="resetApplet(true, this)">
+            <SPAN CLASS="message" id="spnContext1Msg"></SPAN><BR>
+            <B>Context 2: </B><INPUT TYPE="text" ID="txtContext2" SIZE="40" ONCHANGE="resetApplet(true, this)">
+            <SPAN CLASS="message" id="spnContext2Msg"></SPAN><BR>
+        <DIV ID="divSingle">
+                Calculate the <SPAN ID="spnTestName3">mean</SPAN>s in each context and the observed difference between them.<BR>
+                <INPUT TYPE="button" VALUE="Calculate observed difference" onClick="validateSingleInput()"><BR>
+                <SPAN ID="spnSingleResult"></SPAN>
+        </DIV>
+        <DIV ID="divMultiple">
+            Simulate <INPUT TYPE="text" ID="txtTrials" SIZE="4" onKeyDown="if (event.which == 13 || event.keyCode == 13) validateMultipleInput()"> differences in <SPAN ID="spnTestName4" STYLE="vertical-align: top;">mean</SPAN>s and get those differences, 
+                arranged from smallest to largest.<BR>
+                The applet will keep track of all of your results until you hit "Reset."<BR>
+            <INPUT TYPE="button" ID="btnMoreTrials" VALUE="Add more trials" onClick="validateMultipleInput()">
+            <INPUT TYPE="button" ID="btnReset" VALUE="Reset" onClick="resetApplet()">
+            <INPUT TYPE="button" ID="btnSaveFile" VALUE="Save Excel file" onClick="saveCSV('txtMultipleResult','Simulation_Diff' + document.getElementById('selType').value)" disabled="true">
+            <INPUT TYPE="button" ID="btnSavePlot" VALUE="Save dotplot" onClick="saveCanvas('cnvPlot','Dotplot_Diff' + document.getElementById('selType').value)" disabled="true"><BR>
+            <SPAN CLASS="message" id="spnTrialsMsg"></SPAN><SPAN id="spnMultObs"></SPAN><BR>
+        <TABLE>
+            <TR><TD CLASS="internal">
+            All <SPAN ID="spnNumResults"></SPAN>
+            results:<BR>
+            <TEXTAREA ID="txtMultipleResult" COLS="10" ROWS="10" READONLY></TEXTAREA><BR>
+            </TD><TD ID="tdDotplot" CLASS="internal">
+            Dotplot of results:<BR>
+            <CANVAS ID="cnvPlot" WIDTH="500" HEIGHT="300"></CANVAS><BR>
+            Count the <SELECT ID="selCountType" onChange="ui_handleCount()">
+            <OPTION VALUE="number">number</OPTION><OPTION VALUE="percent">percent</OPTION></SELECT>
+            of dots <SELECT ID="selCountDir" onChange="ui_handleCount()"><OPTION VALUE="less">less than</OPTION>
+            <OPTION VALUE="greater">greater than</OPTION></SELECT>
+            or equal to <INPUT TYPE="text" ID="txtCountBound" SIZE="5" onKeyDown="if (event.which == 13 || event.keyCode == 13) ui_handleCount()" disabled="true">
+            <INPUT TYPE="button" ID="btnCount" VALUE="Count" onClick="ui_handleCount()" disabled="true">
+            <INPUT TYPE="button" ID="btnClearCount" VALUE="Remove count" onClick="ui_clearCount()" disabled="true"><BR>
+            <SPAN id="spnCountResult"></SPAN>
+            </TD></TR>
+        </TABLE>
+        </DIV>
+        </FORM>
+    </BODY>
+</HTML>

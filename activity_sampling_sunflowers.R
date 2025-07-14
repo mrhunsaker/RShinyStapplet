@@ -1,14 +1,41 @@
-# activity_sampling_sunflowers.R
+######################################################################
+#
+# Copyright 2025 Michael Ryan Hunsaker, M.Ed., Ph.D.
+#                <hunsakerconsulting@gmail.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+######################################################################
+# Stapplet Activity - Sampling Sunflowers (Central Limit Theorem)
+# Author: Michael Ryan Hunsaker, M.Ed., Ph.D.
+#    <hunsakerconsulting@gmail.com>
+# Date: 2025-07-13
+######################################################################
 
-library(shiny)
-library(ggplot2)
-library(dplyr)
+# --- Load required libraries ---
+library(shiny)    # For building interactive web applications
+library(ggplot2)  # For creating plots
+library(dplyr)    # For data wrangling
 
-# --- UI Definition ---
+# --- UI Definition for Sampling Sunflowers (CLT) Activity ---
+# This function builds the user interface for the module, allowing users to:
+# - Visualize a skewed population
+# - Take random samples and observe their means
+# - See the sampling distribution build and compare to the normal curve
+# - View summary statistics and reset simulation
 activity_sampling_sunflowers_ui <- function(id) {
   ns <- NS(id)
   fluidPage(
-    # Title and Instructions
     h2("Activity: Sampling Sunflowers (The Central Limit Theorem)"),
     wellPanel(
       h3("Instructions"),
@@ -21,12 +48,10 @@ activity_sampling_sunflowers_ui <- function(id) {
         tags$li("Observe how the bottom plot (the sampling distribution of the means) starts to look like a normal, bell-shaped curve, even though the original population was skewed! Notice also how its center is close to the population mean.")
       )
     ),
-
-    # Main content area
     fluidRow(
-      # Column for controls and statistics
       column(4,
         h4("Controls"),
+        # --- Sample size slider ---
         sliderInput(ns("sample_size"), "Sample Size (n):", min = 2, max = 100, value = 10),
         p(id = ns("n_desc"), class = "sr-only", "Set the number of sunflowers to pick in each random sample."),
         tags$script(paste0("document.getElementById('", ns("sample_size"), "').setAttribute('aria-describedby', '", ns("n_desc"), "')")),
@@ -43,11 +68,12 @@ activity_sampling_sunflowers_ui <- function(id) {
         actionButton(ns("reset"), "Reset Simulation", class = "btn-danger"),
         hr(),
         h4("Statistics"),
+        # --- Display summary statistics ---
         div(class = "results-box", role = "status", `aria-live` = "polite",
             uiOutput(ns("stats_output"))
         )
+        # To add export/download, insert downloadButton(ns("download_results"), "Download Results") here
       ),
-      # Column for plots
       column(8,
         fluidRow(
           column(6,
@@ -63,19 +89,21 @@ activity_sampling_sunflowers_ui <- function(id) {
         h5("Distribution of Sample Means", align = "center"),
         plotOutput(ns("sampling_dist_plot"), height = "300px"),
         tags$script(paste0("document.getElementById('", ns("sampling_dist_plot"), "').setAttribute('aria-label', 'A histogram of the means of all samples taken so far. A red dashed line shows the theoretical normal curve.')")),
-        p(id = ns("sampling_dist_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("sampling_dist_plot_desc_text")))
+        p(id = ns("sampling_dist_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("sampling_dist_plot_desc_text"))),
+        uiOutput(ns("plot_desc"))
       )
     )
   )
 }
 
-# --- Server Logic ---
+# --- Server Logic for Sampling Sunflowers (CLT) Activity ---
+# This function contains all reactive logic, simulation, and output rendering for the module.
 activity_sampling_sunflowers_server <- function(id) {
   moduleServer(id, function(input, output, session) {
     ns <- session$ns
 
     # --- 1. Create the Population ---
-    # Create a skewed population of "sunflower heights"
+    # Simulate a skewed population of sunflower heights using a gamma distribution
     set.seed(42)
     population_data <- data.frame(height = round(rgamma(10000, shape = 2, scale = 10) + 50))
     pop_mean <- mean(population_data$height)
@@ -83,49 +111,46 @@ activity_sampling_sunflowers_server <- function(id) {
     pop_n <- nrow(population_data)
 
     # --- 2. Reactive Values for Simulation State ---
+    # Stores the means of all samples taken and the most recent sample
     sample_means <- reactiveVal(data.frame(mean = numeric(0)))
     last_sample <- reactiveVal(data.frame(height = numeric(0)))
 
     # --- 3. Simulation Logic ---
-    # Function to take samples and update reactive values
+    # Function to take samples and update state
     take_samples <- function(num_to_take) {
       n <- input$sample_size
-
-      # Generate all sample means at once for efficiency
+      if (n < 2 || n > pop_n) return()
       new_means <- replicate(num_to_take, {
         sample_df <- population_data %>% sample_n(n)
         mean(sample_df$height)
       })
-
-      # Get the very last sample to display in the plot
       last_sample_df <- population_data %>% sample_n(n)
       last_sample(last_sample_df)
-
-      # Update the list of all sample means
-      updated_means <- rbind(sample_means(), data.frame(mean = c(new_means, mean(last_sample_df$height))))
+      updated_means <- rbind(sample_means(), data.frame(mean = c(new_means, mean(last_sample_df$height)))
+      )
       sample_means(updated_means)
     }
 
-    # Observe button clicks
-    observeEvent(input$take_1, { take_samples(0) }) # Special case for 1 sample to show the last one
+    # --- Button handlers for taking samples ---
+    observeEvent(input$take_1, { take_samples(0) })
     observeEvent(input$take_10, { take_samples(9) })
     observeEvent(input$take_100, { take_samples(99) })
     observeEvent(input$take_1000, { take_samples(999) })
 
-    # Reset logic
+    # --- Reset simulation state ---
     observeEvent(input$reset, {
       sample_means(data.frame(mean = numeric(0)))
       last_sample(data.frame(height = numeric(0)))
     })
 
-    # Reset if sample size changes
+    # --- Reset simulation when sample size changes ---
     observeEvent(input$sample_size, {
       sample_means(data.frame(mean = numeric(0)))
       last_sample(data.frame(height = numeric(0)))
     })
 
     # --- 4. Render Outputs ---
-    # Population Plot (doesn't change)
+    # --- Population plot: histogram and density of sunflower heights ---
     output$pop_plot <- renderPlot({
       ggplot(population_data, aes(x = height)) +
         geom_histogram(aes(y = ..density..), binwidth = 5, fill = "#f9a825", color = "white", alpha = 0.8) +
@@ -134,7 +159,7 @@ activity_sampling_sunflowers_server <- function(id) {
         theme_minimal()
     }, alt = "A histogram of the population data, showing a distribution skewed to the right.")
 
-    # Most Recent Sample Plot
+    # --- Most recent sample plot: histogram and mean line ---
     output$sample_plot <- renderPlot({
       df <- last_sample()
       if (nrow(df) == 0) {
@@ -148,38 +173,35 @@ activity_sampling_sunflowers_server <- function(id) {
         theme_minimal()
     }, alt = "A histogram of the most recently taken sample.")
 
-    # Sampling Distribution of Means Plot
+    # --- Sampling distribution plot: histogram and density of sample means ---
     output$sampling_dist_plot <- renderPlot({
       df <- sample_means()
       if (nrow(df) == 0) {
         return(ggplot() + labs(title = "Distribution will build here") + theme_void())
       }
-
       p <- ggplot(df, aes(x = mean)) +
         geom_histogram(aes(y = ..density..), binwidth = 1, fill = "#29b6f6", color = "white", alpha = 0.8) +
         geom_density(color = "#0277bd", size = 1) +
         coord_cartesian(xlim = range(population_data$height)) +
         labs(x = "Sample Mean Height", y = "Density") +
         theme_minimal()
-
-      # Overlay a normal curve based on CLT
+      # Overlay theoretical normal curve if enough samples
       if(nrow(df) > 1) {
         se <- pop_sd / sqrt(input$sample_size)
         p <- p + stat_function(fun = dnorm, args = list(mean = pop_mean, sd = se), color = "red", linetype = "dashed", size = 1)
       }
+      p
     }, alt = "A histogram of the means of all samples taken so far. A red dashed line shows the theoretical normal curve.")
 
-    # Text description for the sampling distribution plot
+    # --- Accessibility: Description for the sampling distribution plot ---
     output$sampling_dist_plot_desc_text <- renderText({
       df <- sample_means()
       if (nrow(df) == 0) {
         return("No samples have been taken yet, so there is no distribution to describe.")
       }
-
       mean_of_means <- mean(df$mean)
       sd_of_means <- sd(df$mean)
       se_theoretical <- pop_sd / sqrt(input$sample_size)
-
       shape_desc <- if (nrow(df) < 30) {
         "The shape of the distribution is still developing."
       } else if (input$sample_size < 30) {
@@ -187,7 +209,6 @@ activity_sampling_sunflowers_server <- function(id) {
       } else {
         "The shape is approximately normal and bell-shaped, as predicted by the Central Limit Theorem."
       }
-
       desc <- paste(
         sprintf("This histogram shows the distribution of %d sample means.", nrow(df)),
         shape_desc,
@@ -199,11 +220,10 @@ activity_sampling_sunflowers_server <- function(id) {
       return(desc)
     })
 
-    # Statistics Output
+    # --- Statistics output: population, most recent sample, and sampling distribution ---
     output$stats_output <- renderUI({
       means_df <- sample_means()
       last_sample_df <- last_sample()
-
       tagList(
         strong("Population:"),
         p(paste("Mean =", round(pop_mean, 2), " SD =", round(pop_sd, 2), " N =", pop_n)),
@@ -220,7 +240,7 @@ activity_sampling_sunflowers_server <- function(id) {
       )
     })
 
-    # Screen reader description
+    # --- Accessibility: Description for the sampling distribution plot (screen reader) ---
     output$plot_desc <- renderUI({
       num_samples <- nrow(sample_means())
       if (num_samples > 0) {
@@ -230,5 +250,6 @@ activity_sampling_sunflowers_server <- function(id) {
       }
     })
 
+    # To add export/download, add a downloadHandler here and corresponding button in the UI
   })
 }

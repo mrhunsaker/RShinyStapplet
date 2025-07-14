@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-MVPXVT3DMR");
+        </script>
+        <meta name="author" content="Robert Amar" />
+        <link rel="stylesheet" type="text/css" href="./css/master.css" />
+        <title>&chi;&sup2; Distributions</title>
+        <script src="./js/d3.v3.min.js"></script>
+        <script src="./js/jstat.min.js"></script>
+        <script src="./js/stapplet_latest.js"></script>
+        <script src="./js/x2dist.js"></script>
+    </head>
+    <body>
+        <span CLASS="errormsg" id="spnBrowserMsg"></span>
+        <div id="divHeader" ROLE="banner">
+            <table>
+                <tr>
+                    <td class="header">&chi;<sup>2</sup> Distributions</td>
+                </tr>
+            </table>
+        </div>
+        <form ROLE="form">
+            <div id="divX2">
+                <label for="selX2Type">Operation:</label>
+                <select id="selX2Type" ONCHANGE="handleX2Change()">
+                    <option value="spnX2Cdf">
+                        Calculate an area under the &chi;&sup2; curve
+                    </option>
+                    <option value="spnX2Inv">
+                        Calculate a value corresponding to an area
+                    </option></select
+                ><br /><br />
+                <label for="txtTDF">Degrees of freedom =</label>
+                <input
+                    type="number"
+                    step="ANY"
+                    min="1"
+                    max="300"
+                    value="1"
+                    id="txtDF"
+                    onChange="handleDFChange()"
+                />
+                <input
+                    type="button"
+                    value="Plot distribution"
+                    onClick="handleX2Change()"
+                /><br />
+                <span CLASS="errormsg" id="spnX2Msg"></span><br />
+                <div
+                    id="divPlot"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Chi-squared distribution plot area"
+                ></div>
+                <br />
+                <div id="divAnalysis">
+                    <span
+                        ID="spnX2Cdf"
+                        tabindex="0"
+                        aria-live="polite"
+                        role="region"
+                        aria-label="Chi-squared CDF results"
+                    >
+                        <label for="selX2CdfType">Calculate the area</label>
+                        <select
+                            id="selX2CdfType"
+                            ONCHANGE="handleX2CdfChange()"
+                        >
+                            <option value="right">
+                                to the right of a value
+                            </option>
+                            <option value="left">to the left of a value</option>
+                            <option value="between">between two values</option>
+                        </select>
+                        <span ID="spnCdfLabels"
+                            ><input
+                                type="checkbox"
+                                id="chkCdfLabels"
+                                onChange="calculateX2Cdf()"
+                            /><label for="chkCdfLabels"
+                                >Show labels on plot</label
+                            ></span
+                        >
+                        <br /><br />
+                        <span ID="spnX2CdfSingleInput"
+                            ><label for="txtX2CdfSingle">Value:</label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                min="0"
+                                id="txtX2CdfSingle"
+                                onChange="calculateX2Cdf()"
+                                onKeyDown="if (event.which == 13 || event.keyCode == 13) calculateX2Cdf()"
+                        /></span>
+                        <span ID="spnX2CdfRegionInput"
+                            ><label for="txtX2CdfLeft">Left boundary:</label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                min="0"
+                                size="8"
+                                ONCHANGE="calculateX2Cdf()"
+                                id="txtX2CdfLeft" />
+                            <label for="txtX2CdfRight">Right boundary:</label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                min="0"
+                                size="8"
+                                ONCHANGE="calculateX2Cdf()"
+                                id="txtX2CdfRight"
+                        /></span>
+                        <br /><br /><input
+                            type="button"
+                            value="Calculate area"
+                            onClick="calculateX2Cdf()"
+                        />
+                    </span>
+                    <span
+                        ID="spnX2Inv"
+                        tabindex="0"
+                        aria-live="polite"
+                        role="region"
+                        aria-label="Chi-squared inverse results"
+                    >
+                        <label for="txtX2InvArea"
+                            >Calculate boundary value(s) for a
+                            <select id="selX2InvType">
+                                <option value="right">right-tail</option>
+                                <option value="left">left-tail</option>
+                                <option value="center">central</option>
+                            </select>
+                            area of</label
+                        >
+                        <input
+                            type="number"
+                            step="0.01"
+                            max="1"
+                            min="0"
+                            id="txtX2InvArea"
+                            onChange="calculateX2Inv()"
+                            onKeyDown="if (event.which == 13 || event.keyCode == 13) calculateX2Inv()"
+                        /><br />
+                        <span ID="spnInvLabels"
+                            ><input
+                                type="checkbox"
+                                id="chkInvLabels"
+                                onChange="calculateX2Inv()"
+                            /><label for="chkInvLabels"
+                                >Show labels on plot</label
+                            ></span
+                        >
+                        <br /><br /><input
+                            type="button"
+                            value="Calculate value(s)"
+                            onClick="calculateX2Inv()"
+                        />
+                    </span>
+                    <span CLASS="errormsg" id="spnX2BoundMsg"></span>
+                    <span
+                        ID="spnX2Result"
+                        tabindex="0"
+                        aria-live="polite"
+                        role="region"
+                        aria-label="Chi-squared calculation result"
+                    ></span
+                    ><br />
+                </div>
+            </div>
+            <!-- Scroll buffer for screen bottom -->
+            <br />
+            <a href="javascript:STAP.Preferences.launchPreferencePage();"
+                >Adjust color, rounding, and percent/proportion preferences</a
+            >
+            | <a href="./">Back to menu</a>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </form>
+    </body>
+</html>

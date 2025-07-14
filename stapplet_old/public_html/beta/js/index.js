@@ -1,0 +1,1 @@
+STAP.UIHandlers.setOnLoad(STAP.UIHandlers.writeLinkColorOriginRules);

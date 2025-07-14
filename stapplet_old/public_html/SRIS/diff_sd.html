@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+    <META NAME="author" CONTENT="Robert Amar">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./master.css">
+    <TITLE>SRiS: Difference in Standard Deviations</TITLE>
+    <SCRIPT SRC="./prefs_format.js"></SCRIPT>
+    <SCRIPT SRC="./results_storage.js"></SCRIPT>
+    <SCRIPT SRC="./simple_validate.js"></SCRIPT>
+    <SCRIPT SRC="./utility.js"></SCRIPT>
+    <SCRIPT SRC="./mean_median_sd.js"></SCRIPT>
+    <SCRIPT SRC="./dotplot.js"></SCRIPT>
+    <SCRIPT SRC="./ui_handlers.js"></SCRIPT>
+    <SCRIPT><!--
+        function subSingleValidate()
+        {
+            var valid = validateInputFloatArray("txtContext1", "spnContext1Msg", "Context 1") &
+                   validateInputFloatArray("txtContext2", "spnContext2Msg", "Context 2");
+
+            if (valid)
+            {
+                var arr1 = splitStringGetArray(document.getElementById("txtContext1").value);
+                var arr2 = splitStringGetArray(document.getElementById("txtContext2").value);
+
+                // Need an extra validation since more than 1 obs is required
+                if (arr1.length < 2)
+                {
+                    document.getElementById("spnContext1Msg").innerHTML = "Not enough observations in Context 1. Please try again.";
+                    valid = false;
+                }
+                if (arr2.length < 2)
+                {
+                    document.getElementById("spnContext2Msg").innerHTML = "Not enough observations in Context 2. Please try again.";
+                    valid = false;
+                }
+            }
+            
+            return valid;
+        }
+   
+        function validateSingleInput()
+        {
+            if (subSingleValidate())
+            {
+                var arr1 = splitStringGetArray(document.getElementById("txtContext1").value);
+                var arr2 = splitStringGetArray(document.getElementById("txtContext2").value);
+                var sd1 = sampleSD(arr1);
+                var sd2 = sampleSD(arr2);
+                document.getElementById("txtContext1").value = unsplitString(arr1);
+                document.getElementById("txtContext2").value = unsplitString(arr2);
+                recordInputStates(["txtContext1", "txtContext2"]);
+                
+                document.getElementById("spnSingleResult").innerHTML = "<B>Context 1 observed SD: </B>" +
+                    formatNumber(sd1) + "<BR><B>Context 2 observed SD: </B>" +
+                    formatNumber(sd2) + "<BR><B>Observed difference: </B>" +
+                    formatNumber(sd1 - sd2);
+            }
+        }
+
+        function validateMultipleInput()
+        {
+            var valid = validateInputInt("txtTrials", 0, Number.MAX_VALUE, true, "spnTrialsMsg", "Number of trials", "must be positive.");
+            valid = valid & subSingleValidate();
+
+            if (valid)
+            {
+                var arr1 = splitStringGetArray(document.getElementById("txtContext1").value);
+                var arr2 = splitStringGetArray(document.getElementById("txtContext2").value);
+                var sd1 = sampleSD(arr1);
+                var sd2 = sampleSD(arr2);
+                document.getElementById("txtContext1").value = unsplitString(arr1);
+                document.getElementById("txtContext2").value = unsplitString(arr2);
+                recordInputStates(["txtContext1", "txtContext2"]);
+                
+                var trials = parseInt(document.getElementById("txtTrials").value);
+                document.getElementById("spnNumResults").innerHTML =
+                    addToStoredResults(diff_two_SD_simulate_many(arr1, arr2, trials), "txtMultipleResult", formatNumber, "cnvPlot",
+                        "Simulated Difference in Standard Deviations");
+                document.getElementById("spnMultObs").innerHTML = "<B>Observed difference: </B>" + formatNumber(sd1 - sd2);
+                ui_batchSetProperty(["btnSaveFile", "btnSavePlot", "txtCountBound", "btnCount"], "disabled", false);
+                document.getElementById("btnMoreTrials").value = "Add " + trials + " more trials";
+                ui_handleCount();
+            }
+        }
+
+        function resetApplet(bConfirm, input)
+        {
+            if (bConfirm)
+                if (!confirmStoredResultsReset())
+                {
+                    if (input) resetInputState(input.id);
+                    return false;
+                }
+                
+            resetStoredResults("txtMultipleResult", "cnvPlot");
+            ui_batchSetProperty(["btnSaveFile", "btnSavePlot", "txtCountBound", "btnCount"], "disabled", true);
+            document.getElementById("btnMoreTrials").value = "Add more trials";
+            ui_batchSetProperty(["spnSingleResult", "spnMultObs", "spnNumResults"], "innerHTML", "");
+            document.getElementById("txtTrials").value = "";
+            ui_clearCount();
+        }
+
+        function checkSaveCanvas()
+        {
+            if (!canvasSupported())
+            {
+                ui_removeElements(["btnSavePlot", "tdDotplot"]);
+                document.getElementById("spnBrowserMsg").innerHTML = "The dotplot feature is not supported on this browser.  Please consider using an upgraded browser.";
+            }
+        }
+
+        ui_setOnLoad(checkSaveCanvas);
+    //--></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="message" id="spnBrowserMsg"></SPAN>
+        <H1>Difference in Standard Deviations</H1>
+        <FORM>
+            Enter the observed PERFORMANCEs in each context below, separated by commas and/or spaces.
+            The test statistic will be computed as:<BR>
+            (SD in context 1 - SD in context 2).<BR><BR>
+            <B>Context 1: </B><INPUT TYPE="text" ID="txtContext1" SIZE="40" ONCHANGE="resetApplet(true, this)">
+            <SPAN CLASS="message" id="spnContext1Msg"></SPAN><BR>
+            <B>Context 2: </B><INPUT TYPE="text" ID="txtContext2" SIZE="40" ONCHANGE="resetApplet(true, this)">
+            <SPAN CLASS="message" id="spnContext2Msg"></SPAN><BR>
+        <DIV ID="divSingle">
+            Calculate the observed standard deviation in each context and the difference between them.<BR>
+            <INPUT TYPE="button" VALUE="Calculate observed difference in SD" onClick="validateSingleInput()"><BR>
+            <SPAN ID="spnSingleResult"></SPAN>
+        </DIV><DIV ID="divMultiple">
+            Simulate <INPUT TYPE="text" ID="txtTrials" SIZE="4" onKeyDown="if (event.which == 13 || event.keyCode == 13) validateMultipleInput()"> differences in standard deviations and get those differences, 
+                arranged from smallest to largest.<BR>
+                The applet will keep track of all of your results until you hit "Reset."<BR>
+            <INPUT TYPE="button" ID="btnMoreTrials" VALUE="Add more trials" onClick="validateMultipleInput()">
+            <INPUT TYPE="button" ID="btnReset" VALUE="Reset" onClick="resetApplet()">
+            <INPUT TYPE="button" ID="btnSaveFile" VALUE="Save Excel file" onClick="saveCSV('txtMultipleResult','Simulation_DiffSD')" disabled="true">
+            <INPUT TYPE="button" ID="btnSavePlot" VALUE="Save dotplot" onClick="saveCanvas('cnvPlot','Dotplot_DiffSD')" disabled="true"><BR>
+            <SPAN CLASS="message" id="spnTrialsMsg"></SPAN><SPAN id="spnMultObs"></SPAN><BR>
+        <TABLE>
+            <TR><TD CLASS="internal">
+            All <SPAN ID="spnNumResults"></SPAN>
+            results:<BR>
+            <TEXTAREA ID="txtMultipleResult" COLS="10" ROWS="10" READONLY></TEXTAREA><BR>
+            </TD><TD ID="tdDotplot" CLASS="internal">
+            Dotplot of results:<BR>
+            <CANVAS ID="cnvPlot" WIDTH="500" HEIGHT="300"></CANVAS><BR>
+            Count the <SELECT ID="selCountType" onChange="ui_handleCount()">
+            <OPTION VALUE="number">number</OPTION><OPTION VALUE="percent">percent</OPTION></SELECT>
+            of dots <SELECT ID="selCountDir" onChange="ui_handleCount()"><OPTION VALUE="less">less than</OPTION>
+            <OPTION VALUE="greater">greater than</OPTION></SELECT>
+            or equal to <INPUT TYPE="text" ID="txtCountBound" SIZE="5" onKeyDown="if (event.which == 13 || event.keyCode == 13) ui_handleCount()" disabled="true">
+            <INPUT TYPE="button" ID="btnCount" VALUE="Count" onClick="ui_handleCount()" disabled="true">
+            <INPUT TYPE="button" ID="btnClearCount" VALUE="Remove count" onClick="ui_clearCount()" disabled="true"><BR>
+            <SPAN id="spnCountResult"></SPAN>
+            </TD></TR>
+        </TABLE>
+        </DIV>
+        </FORM>
+    </BODY>
+</HTML>

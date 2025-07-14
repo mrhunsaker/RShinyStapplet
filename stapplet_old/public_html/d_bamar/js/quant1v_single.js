@@ -1,0 +1,547 @@
+var pageActive = false;
+var dataArr = null;
+var graphDataArr = null;
+var graph = null;
+var stem = null;
+var simGraph = null;
+var simulationResults = [];
+var simGraphDataArr = null;
+var optionSim1 = null;
+var optionDiffSim1 = null;
+var selectSim1 = null;
+
+var UI = STAP.UIHandlers;
+var stat = STAP.Statistics;
+var IV = STAP.InputValidation;
+var util = STAP.Utility;
+var format = STAP.Format;
+var file = STAP.FileIO;
+
+function simpleValidate(inputID, spnID, param, parseFn)
+{
+    parseFn = parseFn || parseFloat;
+    if (isNaN(parseFn(UI.getProperty(inputID, "value"))))
+    {
+        UI.setProperty(spnID, "innerHTML", param + " must be a valid numeric value.");
+        return false;
+    }
+    return true;
+}
+
+function simpleBatchValidate(inputIDarr, spnID, param, parseFn)
+{
+    for (var i = 0; i < inputIDarr.length; i++)
+        if (!simpleValidate(inputIDarr[i], spnID, param, parseFn)) return false;
+    return true;
+}
+
+function validateInput()
+{
+    UI.setProperty("spnGroup1InputMsg", "innerHTML", "");
+    var inputType = UI.getProperty("selInputType", "value");
+    if (inputType == "data")
+    {
+        if (selectSim1.length < 4)
+        {
+            selectSim1.add(optionSim1, 0);
+            selectSim1.add(optionDiffSim1, 0);
+        }
+        
+        return IV.validateInputFloatArray("txtGroup1Data", "spnGroup1InputMsg", "Group 1");
+    }
+    else if (inputType == "meanstats")
+    {
+        while (selectSim1.length > 2) selectSim1.remove(0);
+        var groupValidate = function(n)
+        {
+            if (!simpleValidate("txtGroup" + n + "Mean", "spnGroup" + n + "InputMsg", "Mean")) return false;
+            if (!simpleValidate("txtGroup" + n + "SD", "spnGroup" + n + "InputMsg", "SD")) return false;
+            if (!simpleValidate("txtGroup" + n + "N", "spnGroup" + n + "InputMsg", "n", parseInt)) return false;
+            if (parseFloat(UI.getProperty("txtGroup" + n + "SD", "value")) < 0)
+            {
+                UI.setProperty("spnGroup" + n + "InputMsg", "innerHTML", "SD must be non-negative.");
+                return false;
+            }
+            if (parseInt(UI.getProperty("txtGroup" + n + "N", "value")) <= 0)
+            {
+                UI.setProperty("spnGroup" + n + "InputMsg", "innerHTML", "Number of observations must be positive.");
+                return false;
+            }
+            return true;                
+        }
+
+        return groupValidate(1);
+    }
+    else // median stats -- don't care about inference option reset
+    {
+        var groupValidate = function(n)
+        {
+            if (!simpleBatchValidate(["txtGroup" + n + "Min", "txtGroup" + n + "Q1", "txtGroup" + n + "Median", "txtGroup" + n + "Q3", "txtGroup" + n + "Max"],
+                                      "spnGroup" + n + "InputMsg", "Each five-number summary value")) return false;
+            var min = parseFloat(UI.getProperty("txtGroup" + n + "Min", "value"));
+            var Q1 = parseFloat(UI.getProperty("txtGroup" + n + "Q1", "value"));
+            var median = parseFloat(UI.getProperty("txtGroup" + n + "Median", "value"));
+            var Q3 = parseFloat(UI.getProperty("txtGroup" + n + "Q3", "value"));
+            var max = parseFloat(UI.getProperty("txtGroup" + n + "Max", "value"));
+            if ((min > Q1) || (Q1 > median) || (median > Q3) || (Q3 > max))
+            {
+                UI.setProperty("spnGroup" + n + "InputMsg", "innerHTML", "Five-number summary values are out of order.")
+                return false;
+            }
+            return true;
+        }
+
+        return groupValidate(1);
+    }
+}
+
+function resetApplet()
+{
+    if (confirm("Are you sure? All data and unsaved results will be lost."))
+    {
+        // Clear inputs and deactivate the page
+        deactivatePage();
+        UI.batchSetProperty(["txtGroup1Data", "txtGroup1Max", "txtGroup1Mean", "txtGroup1Median",
+                             "txtGroup1Min", "txtGroup1N", "txtGroup1Q1",
+                             "txtGroup1Q3", "txtGroup1SD",
+                             "txtVariableName", "txtHistogramBinWidth", "txtHistogramBinAlignment",
+                             "txtSimulationDotplotCountBound", "txtNumSamples"],
+                             "value","");
+        UI.batchSetProperty(["spnGroup1InputMsg", "divStemplot"],
+                             "innerHTML", "");
+        UI.batchSetProperty(["selInputType", "selSimulationDotplotCountType", "selSimulationDotplotCountDir", "selStemplotStems"], "selectedIndex", 0);
+        UI.setStyleProperty("divStemplot", "display", "none");
+        UI.setProperty("selInputType", "disabled", false);
+        UI.setProperty("numSigAdj", "value", 0);
+	clearSimulationResults();
+	UI.setProperty("num1CLevel", "value", "95");
+        dataArr = null;
+        handleInputTypeChange(document.getElementById("selInputType"));
+    }
+}
+
+function deactivatePage()
+{
+    UI.setProperty("txtSummaryStatisticsCSV", "value", "");
+    UI.batchSetStyleProperty(["divSummaryStatistics", "divGraphDistributions", "divInference",
+                         "divInference1Group", "divSimulationOptions",
+                         "spnInference1GroupTestOptions"], 
+                         "display", "none");
+    UI.batchSetProperty(["spnSummaryStatistics", "spnInferenceResults"],
+                         "innerHTML", "");
+    UI.batchSetProperty(["selGraphType1or2Groups",
+                         "selInference1Group", "sel1SampTTestSides"], "selectedIndex", 0);
+    handle1GroupInferenceChange(document.getElementById("selInference1Group"));
+    UI.setProperty("btnChangeInputs", "disabled", true);
+    pageActive = false;
+}
+
+function clearSimulationResults()
+{
+    simulationResults = [];
+    simGraph.clearGraph();
+    UI.batchSetProperty(["spnNumTrials", "spnRecentResult", "spnSimMean", "spnSimSD"], "innerHTML", "");
+    clearSimulationDotplotCount();
+}
+
+function inputsChanged(obj)
+{
+    if (pageActive)
+    {
+        if (obj && validateInput() && !confirm("Are you sure? The entries will remain, but any unsaved output will be lost."))
+        {
+            UI.resetInputState(obj.id);
+            return;
+        }
+        deactivatePage();
+    }
+}
+
+function variableName()
+{
+    var name = util.trimString(UI.getProperty("txtVariableName", "value"));
+    if (name == "") name = "Variable";
+    return name;
+}
+
+function beginAnalysis()
+{
+    if (validateInput())
+    {
+        pageActive = true;
+        UI.setProperty("btnChangeInputs", "disabled", false);
+        var inputType = UI.getProperty("selInputType", "value");
+        UI.setStyleProperty("divGraphDistributions", "display", (inputType != "meanstats" ? "block" : "none"));
+        UI.setStyleProperty("divSummaryStatistics", "display", (inputType == "data" ? "block" : "none"));
+        handle1GroupInferenceChange(document.getElementById("selInference1Group"));
+        
+        if (inputType != "medianstats")
+        {
+            UI.setStyleProperty("divInference", "display", "block");
+            UI.setStyleProperty("divInference1Group", "display", "block");
+        }
+        else                                    
+            UI.setStyleProperty("divInference", "display", "none");
+
+        UI.recordInputStates(["selInputType"]);
+        var inputType = UI.getProperty("selInputType", "value");
+        if (inputType == "data")
+        {              
+            UI.recordInputStates(["txtGroup1Data"]);
+            dataArr = util.splitStringGetArray(document.getElementById("txtGroup1Data").value);
+            updateSummaryStatistics();
+            updateGraphDistributions();
+        }               
+        else if (inputType == "meanstats")
+        {
+            UI.recordInputStates(["txtGroup1Mean", "txtGroup1SD", "txtGroup1N"]);
+        }
+        else // median stats
+        {
+            UI.recordInputStates(["txtGroup1Min", "txtGroup1Q1", "txtGroup1Median", "txtGroup1Q3", "txtGroup1Max"]);
+            var makeArr = function(n)
+            {
+                // Notice that Q1 and Q3 appear twice to properly fake out the boxplot / quartile algorithm
+                return [parseFloat(UI.getProperty("txtGroup" + n + "Min", "value")),
+                        parseFloat(UI.getProperty("txtGroup" + n + "Q1", "value")),
+                        parseFloat(UI.getProperty("txtGroup" + n + "Q1", "value")),
+                        parseFloat(UI.getProperty("txtGroup" + n + "Median", "value")),
+                        parseFloat(UI.getProperty("txtGroup" + n + "Q3", "value")),
+                        parseFloat(UI.getProperty("txtGroup" + n + "Q3", "value")),
+                        parseFloat(UI.getProperty("txtGroup" + n + "Max", "value"))]
+            };
+
+            dataArr = makeArr(1);
+            graphDataArr = util.arrayToGraphData(dataArr, variableName());
+            updateGraphDistributions();
+        }
+
+        var queryString = UI.getQueryString();
+        if (queryString["inf"])
+        {
+        	UI.setProperty("selInference1Group", "value", queryString["inf"]);
+        	handle1GroupInferenceChange(document.getElementById("selInference1Group"));
+        }
+    }
+}
+
+function updateSummaryStatistics()
+{
+    var stat1 = stat.getOneVariableStatistics(dataArr);
+    
+    // Render a table programmatically
+    var tableHTML = "<TABLE><TR>";
+    tableHTML += "<TH>n</TH><TH>mean</TH><TH>SD</TH><TH>min</TH><TH>Q<sub>1</sub></TH><TH>med</TH><TH>Q<sub>3</sub></TH><TH>max</TH></TR><TR>"
+    tableHTML += "<TD>" + stat1.n + "</TD><TD>" + format.formatNumber(stat1.mean) + "</TD><TD>" +
+        + format.formatNumber(stat1.Sx) + "</TD><TD>"
+        + format.formatNumber(stat1.min) + "</TD><TD>" + format.formatNumber(stat1.Q1) + "</TD><TD>"
+        + format.formatNumber(stat1.median) + "</TD><TD>" + format.formatNumber(stat1.Q3)
+        + "</TD><TD>" + format.formatNumber(stat1.max) + "</TD></TR>";
+    tableHTML += "</TABLE>"
+    UI.setStyleProperty("spnSummaryStatistics", "display", "inline");
+    UI.setProperty("spnSummaryStatistics", "innerHTML", tableHTML);
+
+    // Also render a CSV and store it in the hidden textarea
+    var resultsCSV = "n,mean,SD,min,Q1,med,Q3,max\r\n";
+    resultsCSV += stat1.n + "," + format.formatNumber(stat1.mean) + "," + format.formatNumber(stat1.Sx)
+        + "," + format.formatNumber(stat1.min) + "," + format.formatNumber(stat1.Q1) + ","
+        + format.formatNumber(stat1.median) + "," + format.formatNumber(stat1.Q3) + ","
+        + format.formatNumber(stat1.max) + "\r\n";
+    UI.setProperty("txtSummaryStatisticsCSV", "value", resultsCSV);
+}
+
+function updateGraphDistributions()
+{
+    graph.setTitle(variableName());
+    graphDataArr = util.arrayToGraphData(dataArr, variableName());
+
+    var inputType = UI.getProperty("selInputType", "value");
+    if (inputType == "data")
+        UI.setStyleProperty("spnGraphOptions1or2Groups", "display", "inline");
+    else
+        UI.setStyleProperty("spnGraphOptions1or2Groups", "display", "none");
+        
+    var graphType = (inputType == "medianstats" ? "boxplot" :
+                                         UI.getProperty("selGraphType1or2Groups", "value"));
+                                         
+    if (graphType == "histogram")
+    {
+	UI.setStyleProperty("spnHistogramOptions", "display", "inline");
+	UI.setStyleProperty("divPlot", "display", "block");
+	UI.setStyleProperty("divStemplot", "display", "none");
+	replotHistogram();
+    }
+    else if (graphType == "boxplot")
+    {
+	UI.setStyleProperty("spnHistogramOptions", "display", "none");
+	UI.setStyleProperty("divPlot", "display", "block");
+	UI.setStyleProperty("divStemplot", "display", "none");
+    	graph.boxplot(graphDataArr, variableName());
+    }
+    else if (graphType == "dotplot")
+    {
+	UI.setStyleProperty("spnHistogramOptions", "display", "none");
+	UI.setStyleProperty("divPlot", "display", "block");
+	UI.setStyleProperty("divStemplot", "display", "none");
+    	graph.dotplot(graphDataArr, variableName());
+    }
+    else // stemplot
+    {
+        var gapHide = (UI.getProperty("selGapHide", "value") == "yes");
+        UI.setStyleProperty("spnGapHide", "display",
+            (gapHide ? "inline" : "none"));
+        var gap = gapHide ?
+                        parseInt(UI.getProperty("numGapHide", "value")) :
+                        Number.MAX_VALUE;
+        UI.setStyleProperty("spnHistogramOptions", "display", "none");
+    	UI.setStyleProperty("divPlot", "display", "none");
+    	UI.setStyleProperty("divStemplot", "display", "block");
+    	stem.stemplot(dataArr, null, variableName(),
+    	    parseInt(UI.getProperty("selStemplotStems", "value")),
+    	    parseInt(UI.getProperty("numSigAdj", "value")),
+    	    gap);
+    }
+}
+
+function replotHistogram()
+{
+	// validate histogram bin alignment
+        var align = util.trimString(UI.getProperty("txtHistogramBinAlignment", "value"));
+        if (align.length > 0)
+	{
+		if (!IV.validateInputFloat("txtHistogramBinAlignment", Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false,
+	            "spnHistogramOptionsErrorMsg", "Bin alignment")) return;
+        	else
+			align = parseFloat(align);
+	}
+	else
+		align = null;
+
+	// validate histogram bin alignment
+        var width = util.trimString(UI.getProperty("txtHistogramBinWidth", "value"));
+        if (width.length > 0)
+	{
+		if (!IV.validateInputFloat("txtHistogramBinWidth", Number.NEGATIVE_INFINITY, Number.POSITIVE_INFINITY, false,
+	            "spnHistogramOptionsErrorMsg", "Bin width")) return;
+        	else
+			width = parseFloat(width);
+	}
+	else
+		width = null;
+
+    	graph.histogram(graphDataArr, variableName(),
+                            (UI.getProperty("selHistogramLabel", "value") == "rel"),
+			width, align);
+}
+
+function resetHistogramOptions()
+{
+	UI.setProperty("txtHistogramBinAlignment", "value", "");
+	UI.setProperty("txtHistogramBinWidth", "value", "");
+	replotHistogram();
+}
+
+function handle1GroupInferenceChange(sel)
+{
+    UI.batchSetStyleProperty(["spnInferenceResults", "spnSimulationResults"], "display", "none");
+    UI.setStyleProperty("spnInference1GroupTestOptions", "display", (sel.value == "test" ? "inline" : "none"));
+    UI.setStyleProperty("spnInference1GroupIntervalOptions", "display", (sel.value == "interval" ? "inline" : "none"));
+    UI.setStyleProperty("divSimulationOptions", "display", ((sel.value == "simulation" || sel.value == "simulationDiff") ? "block" : "none"));
+    if (sel.value == "simulation")
+    {
+        clearSimulationResults();
+        UI.setProperty("spnSimulationDescription", "innerHTML",
+        "Simulates the distribution of the sample mean when selecting samples of the original size <EM>with replacement</EM> from the original sample.<BR>");
+    }
+    else if (sel.value == "simulationDiff")
+    {
+        clearSimulationResults();
+        UI.setProperty("spnSimulationDescription", "innerHTML",
+        "Applet assumes data values are differences from paired data. This procedure simulates the distribution of the mean difference when randomly shuffling the outcomes within each pair and calculating the difference for each pair.<BR>");
+    }
+}
+
+function updateInference()
+{
+    var inferenceType = UI.getProperty("selInference1Group", "value");
+    var inputType = UI.getProperty("selInputType", "value");
+
+        if (inferenceType == "interval")
+        {
+            var cLevel = parseFloat(UI.getProperty("num1CLevel", "value")) / 100;
+            var results = (inputType == "data") ? stat.oneSampTIntervalMean(dataArr, cLevel) :
+                            stat.oneSampTIntervalMeanStats(parseFloat(UI.getProperty("txtGroup1Mean", "value")),
+                                                           parseFloat(UI.getProperty("txtGroup1SD", "value")),
+                                                           parseInt(UI.getProperty("txtGroup1N", "value")), cLevel);
+            // Render a table programmatically
+            var tableHTML = "<TABLE><TR>";
+            tableHTML += "<TH>Lower Bound</TH><TH>Upper Bound</TH><TH>df</TH></TR><TR>"
+            tableHTML += "<TD>" + format.formatNumber(results.lowerBound)
+                    + "</TD><TD>" + format.formatNumber(results.upperBound)
+                    + "</TD><TD>" + format.formatNumber(results.df)
+                    + "</TD></TR></TABLE>"
+            UI.setStyleProperty("spnSimulationResults", "display", "none");
+            UI.setProperty("spnInferenceResults", "innerHTML", tableHTML);
+            UI.setStyleProperty("spnInferenceResults", "display", "inline");
+        }
+        else if (inferenceType == "test")
+        {
+            if (IV.validateInputFloat("txt1SampTTestHypothesizedMean", Number.NEGATIVE_INFINITY,
+            Number.POSITIVE_INFINITY, false, "spn1SampTTestOptionsErrorMsg", "Hypothesized mean"))
+            {
+                var mean = parseFloat(UI.getProperty("txt1SampTTestHypothesizedMean", "value"));
+                var sides = parseInt(UI.getProperty("sel1SampTTestSides", "value"));
+                
+                var results = (inputType == "data") ? stat.oneSampTTestMean(dataArr, mean, sides) :
+                            stat.oneSampTTestMeanStats(parseFloat(UI.getProperty("txtGroup1Mean", "value")),
+                                                       parseFloat(UI.getProperty("txtGroup1SD", "value")),
+                                                       parseInt(UI.getProperty("txtGroup1N", "value")),
+                                                       mean, sides);
+
+                // Render a table programmatically
+                var tableHTML = "<TABLE><TR>";
+                tableHTML += "<TH>t</TH><TH>P-value</TH><TH>df</TH></TR><TR>"
+                tableHTML += "<TD>" + format.formatNumber(results.t)
+                        + "</TD><TD>" + format.formatPValueHTML(results.pValue)
+                        + "</TD><TD>" + format.formatNumber(results.df)
+                        + "</TD></TR></TABLE>"
+	        UI.setStyleProperty("spnSimulationResults", "display", "none");
+	        UI.setProperty("spnInferenceResults", "innerHTML", tableHTML);
+	        UI.setStyleProperty("spnInferenceResults", "display", "inline");
+            }
+        }
+        else if (inferenceType == "simulation")
+        {
+            UI.setProperty("spnSimulationErrorMsg", "innerHTML", "");
+            if (IV.validateInputInt("txtNumSamples", 1,
+                Number.POSITIVE_INFINITY, false, "spnSimulationErrorMsg", "Number of samples", "must be positive."))
+            {
+                Array.prototype.push.apply(simulationResults, stat.simulationMeans(dataArr, parseInt(UI.getProperty("txtNumSamples", "value"))));
+
+		var varname = "Simulated sample mean " + variableName();
+		simGraphDataArray = util.arrayToGraphData(simulationResults, varname);
+
+            UI.setStyleProperty("spnSimulationResults", "display", "inline");
+            UI.setProperty("spnInferenceResults", "innerHTML", "");
+            UI.setStyleProperty("spnInferenceResults", "display", "none");
+
+		simGraph.dotplot(simGraphDataArray, varname, null, true);
+                UI.setProperty("spnNumTrials", "innerHTML", format.formatNumber(simulationResults.length));
+		UI.setProperty("spnRecentResult", "innerHTML", format.formatNumber(simulationResults[simulationResults.length - 1]));
+                var resultStats = stat.getOneVariableStatistics(simulationResults);
+		UI.setProperty("spnSimMean", "innerHTML", format.formatNumber(resultStats.mean));
+		UI.setProperty("spnSimSD", "innerHTML", format.formatNumber(resultStats.Sx));
+
+                if (util.trimString(UI.getProperty("txtSimulationDotplotCountBound", "value")).length > 0)
+                    handleSimulationDotplotCount();
+            }
+        }
+        else if (inferenceType == "simulationDiff")
+        {
+            UI.setProperty("spnSimulationErrorMsg", "innerHTML", "");
+            if (IV.validateInputInt("txtNumSamples", 1,
+                Number.POSITIVE_INFINITY, false, "spnSimulationErrorMsg", "Number of samples", "must be positive."))
+            {
+                Array.prototype.push.apply(simulationResults, stat.simulationMeanDiff(dataArr, parseInt(UI.getProperty("txtNumSamples", "value"))));
+
+		var varname = "Simulated mean difference";
+					// removed: in " + variableName();
+		simGraphDataArray = util.arrayToGraphData(simulationResults, varname);
+
+	        UI.setStyleProperty("spnSimulationResults", "display", "inline");
+	        UI.setProperty("spnInferenceResults", "innerHTML", "");
+	        UI.setStyleProperty("spnInferenceResults", "display", "none");
+
+		simGraph.dotplot(simGraphDataArray, varname, null, true);
+                UI.setProperty("spnNumTrials", "innerHTML", format.formatNumber(simulationResults.length));
+		UI.setProperty("spnRecentResult", "innerHTML", format.formatNumber(simulationResults[simulationResults.length - 1]));
+                var resultStats = stat.getOneVariableStatistics(simulationResults);
+		UI.setProperty("spnSimMean", "innerHTML", format.formatNumber(resultStats.mean));
+		UI.setProperty("spnSimSD", "innerHTML", format.formatNumber(resultStats.Sx));
+
+                if (util.trimString(UI.getProperty("txtSimulationDotplotCountBound", "value")).length > 0)
+                    handleSimulationDotplotCount();
+            }
+        }
+}
+
+function exportSummaryStatistics()
+{
+    var variableName = UI.getProperty("txtVariableName", "value");
+    file.saveCSV("txtSummaryStatisticsCSV", "summary_statistics" + (variableName.length > 0 ? "_" + variableName : ""));
+}
+
+function initializePage()
+{
+    UI.batchSetStyleProperty(["spnGroup1Name", "divGraphDistributions",
+            "divInference", "divSummaryStatistics", "spnGroup1MeanStats", "spnGroup1MedianStats",
+            "txtSummaryStatisticsCSV", "spnInference1GroupTestOptions", "spnSimulationResults", "divSimulationOptions", "divPlot", "divStemplot"],
+            	"display", "none");
+    UI.setProperty("btnChangeInputs", "disabled", true);
+    optionSim1 = document.getElementById("opt1GroupSimulation");
+    optionDiffSim1 = document.getElementById("opt1GroupDiffSimulation");
+    selectSim1 = document.getElementById("selInference1Group");
+    graph = new STAP.SVGGraph("divPlot");
+    simGraph = new STAP.SVGGraph("divSimulationPlot");
+    stem = new STAP.HTMLStemplot("divStemplotPlot");
+    UI.writeLinkColorOriginRules();
+}
+
+function handleInputTypeChange(sel)
+{
+    if (pageActive)
+    {
+        if (!confirm("Are you sure? Unsaved results will be lost. (The entries will remain.)"))
+        {
+            UI.resetInputState("selInputType");
+            return;                    
+        }
+    }
+    UI.recordInputState(sel.id);
+    var inputType = sel.value;
+    
+    // Set inputs correctly
+    if (inputType == "data")
+    {
+        UI.batchSetStyleProperty(["spnInputInstructions", "spnGroup1Data"], "display", "inline");
+        UI.batchSetStyleProperty(["spnGroup1MeanStats", "spnGroup1MedianStats"], "display", "none");
+    }
+    else if (inputType == "meanstats")
+    {
+        UI.setStyleProperty("spnGroup1MeanStats", "display", "inline");
+        UI.batchSetStyleProperty(["spnInputInstructions", "spnGroup1Data",
+                                  "spnGroup1MedianStats"], "display", "none");
+    }
+    else // median stats
+    {
+        UI.setStyleProperty("spnGroup1MedianStats", "display", "inline");
+        UI.batchSetStyleProperty(["spnInputInstructions", "spnGroup1Data", "spnGroup1MeanStats"], "display", "none");
+    }
+    deactivatePage();
+}
+
+function handleSimulationDotplotCount()
+{
+    UI.setProperty("spnSimulationDotplotCountErrorMsg", "innerHTML", "");
+    if ( (UI.getProperty("txtSimulationDotplotCountBound", "value").length > 0)
+              && IV.validateInputFloat("txtSimulationDotplotCountBound", Number.NEGATIVE_INFINITY,
+            Number.POSITIVE_INFINITY, false, "spnSimulationDotplotCountErrorMsg", "Bound"))
+    {
+	var sel = UI.getProperty("selSimulationDotplotCountDir", "value");
+	var bound = parseFloat(UI.getProperty("txtSimulationDotplotCountBound", "value"));
+
+	if (sel == "left")
+		simGraph.forceSelectionRectangle(null, bound);
+	else
+		simGraph.forceSelectionRectangle(bound, null);
+    }
+}
+
+function clearSimulationDotplotCount()
+{
+    UI.setProperty("spnSimulationDotplotCountErrorMsg", "innerHTML", "");
+    UI.setProperty("txtSimulationDotplotCountBound", "value", "");
+    simGraph.clearSelectionRectangle();
+}
+
+STAP.UIHandlers.setOnLoad(initializePage);

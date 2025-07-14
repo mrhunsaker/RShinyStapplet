@@ -1,0 +1,238 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+	<meta name="robots" content="noindex">
+    <META CHARSET="UTF-8">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./master.css">
+    <TITLE>SPA: One Quantitative Variable</TITLE>
+    <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/spa_0.1.js"></SCRIPT>
+    <SCRIPT SRC="./js/quant1v.js"></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">One Quantitative Variable</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divOptions">
+            <LABEL FOR="txtVariableName">Variable name:</LABEL> <INPUT TYPE="text" ID="txtVariableName" SIZE="40"><BR>
+            <LABEL FOR="selNumGroups">Number of groups:</LABEL>
+            <SELECT ID="selNumGroups" onChange="handleGroupsChange(this)">
+                <OPTION VALUE="1">1</OPTION>
+                <OPTION VALUE="2">2</OPTION>
+                <OPTION VALUE="3">3</OPTION>
+            </SELECT><BR>
+            <LABEL FOR="selInputType">Input:</LABEL>
+            <SELECT ID="selInputType" onChange="handleInputTypeChange(this)">
+                <OPTION VALUE="data">Raw data</OPTION>
+                <OPTION VALUE="meanstats">Mean and standard deviation</OPTION>
+                <OPTION VALUE="medianstats">Five-number summary</OPTION>
+            </SELECT>
+            </DIV>
+            <DIV ID="divInput">
+                <BR><SPAN ID="spnInputInstructions">Input data separated by commas or spaces.</SPAN>
+                <DIV ID="divGroup1Input">
+                    <SPAN ID="spnGroup1Name"><LABEL FOR="txtGroup1Name">Group 1 name:</LABEL> <INPUT TYPE="text" ID="txtGroup1Name" SIZE="10" onChange="inputsChanged()"></SPAN>
+                    <SPAN ID="spnGroup1Data"><LABEL FOR="txtGroup1Data">Group 1 data:</LABEL> <INPUT TYPE="text" ID="txtGroup1Data" SIZE="40" onChange="inputsChanged(this)"></SPAN>
+                    <SPAN ID="spnGroup1MeanStats">
+                        <LABEL FOR="txtGroup1Mean">Group 1 mean:</LABEL> <INPUT TYPE="text" ID="txtGroup1Mean" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup1SD">SD:</LABEL> <INPUT TYPE="text" ID="txtGroup1SD" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup1N">n:</LABEL> <INPUT TYPE="text" ID="txtGroup1N" SIZE="6" onChange="inputsChanged(this)">
+                    </SPAN>
+                    <SPAN ID="spnGroup1MedianStats">
+                        <LABEL FOR="txtGroup1Min">Group 1 min:</LABEL> <INPUT TYPE="text" ID="txtGroup1Min" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup1Q1">Q1:</LABEL> <INPUT TYPE="text" ID="txtGroup1Q1" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup1Median">median:</LABEL> <INPUT TYPE="text" ID="txtGroup1Median" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup1Q3">Q3:</LABEL> <INPUT TYPE="text" ID="txtGroup1Q3" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup1Max">max:</LABEL> <INPUT TYPE="text" ID="txtGroup1Max" SIZE="6" onChange="inputsChanged(this)">
+                    </SPAN>
+                    <BR><SPAN CLASS="errormsg" ID="spnGroup1InputMsg"></SPAN>
+                </DIV>
+                <DIV ID="divGroup2Input">
+                    <LABEL FOR="txtGroup2Name">Group 2 name:</LABEL> <INPUT TYPE="text" ID="txtGroup2Name" SIZE="10" onChange="inputsChanged()">
+                    <SPAN ID="spnGroup2Data"><LABEL FOR="txtGroup2Data">Group 2 data:</LABEL> <INPUT TYPE="text" ID="txtGroup2Data" SIZE="40" onChange="inputsChanged(this)"></SPAN>
+                    <SPAN ID="spnGroup2MeanStats">
+                        <LABEL FOR="txtGroup2Mean">Group 2 mean:</LABEL> <INPUT TYPE="text" ID="txtGroup2Mean" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup2SD">SD:</LABEL> <INPUT TYPE="text" ID="txtGroup2SD" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup2N">n:</LABEL> <INPUT TYPE="text" ID="txtGroup2N" SIZE="6" onChange="inputsChanged(this)">
+                    </SPAN>
+                    <SPAN ID="spnGroup2MedianStats">
+                        <LABEL FOR="txtGroup2Min">Group 2 min:</LABEL> <INPUT TYPE="text" ID="txtGroup2Min" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup2Q1">Q1:</LABEL> <INPUT TYPE="text" ID="txtGroup2Q1" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup2Median">median:</LABEL> <INPUT TYPE="text" ID="txtGroup2Median" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup2Q3">Q3:</LABEL> <INPUT TYPE="text" ID="txtGroup2Q3" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup2Max">max:</LABEL> <INPUT TYPE="text" ID="txtGroup2Max" SIZE="6" onChange="inputsChanged(this)">
+                    </SPAN>
+                    <BR><SPAN CLASS="errormsg" ID="spnGroup2InputMsg"></SPAN>
+                </DIV>
+                <DIV ID="divGroup3Input">
+                    <LABEL FOR="txtGroup3Name">Group 3 name:</LABEL> <INPUT TYPE="text" ID="txtGroup3Name" SIZE="10" onChange="inputsChanged()">
+                    <SPAN ID="spnGroup3Data"><LABEL FOR="txtGroup3Data">Group 3 data:</LABEL> <INPUT TYPE="text" ID="txtGroup3Data" SIZE="40" onChange="inputsChanged(this)"></SPAN>
+                    <SPAN ID="spnGroup3MeanStats">
+                        <LABEL FOR="txtGroup3Mean">Group 3 mean:</LABEL> <INPUT TYPE="text" ID="txtGroup3Mean" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup3SD">SD:</LABEL> <INPUT TYPE="text" ID="txtGroup3SD" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup3N">n:</LABEL> <INPUT TYPE="text" ID="txtGroup3N" SIZE="6" onChange="inputsChanged(this)">
+                    </SPAN>
+                    <SPAN ID="spnGroup3MedianStats">
+                        <LABEL FOR="txtGroup3Min">Group 3 min:</LABEL> <INPUT TYPE="text" ID="txtGroup3Min" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup3Q1">Q1:</LABEL> <INPUT TYPE="text" ID="txtGroup3Q1" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup3Median">median:</LABEL> <INPUT TYPE="text" ID="txtGroup3Median" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup3Q3">Q3:</LABEL> <INPUT TYPE="text" ID="txtGroup3Q3" SIZE="6" onChange="inputsChanged(this)">
+                        <LABEL FOR="txtGroup3Max">max:</LABEL> <INPUT TYPE="text" ID="txtGroup3Max" SIZE="6" onChange="inputsChanged(this)">
+                    </SPAN>
+                    <BR><SPAN CLASS="errormsg" ID="spnGroup3InputMsg"></SPAN>
+                </DIV><BR>
+                <INPUT TYPE="button" ID="btnBeginAnalysis" VALUE="Begin analysis" onClick="beginAnalysis()">
+                <INPUT TYPE="button" ID="btnChangeInputs" VALUE="Edit inputs" onClick="deactivatePage()">
+                <INPUT TYPE="button" ID="btnResetEverything" VALUE="Reset everything" onClick="resetApplet()">
+            </DIV>
+            <DIV ID="divGraphDistributions">
+                <H3>Graph Distributions</H3>
+                <SPAN ID="spnGraphOptions1or2Groups">
+                    <LABEL FOR="selGraphType1or2Groups">Graph type:</LABEL>
+                    <SELECT ID="selGraphType1or2Groups" onChange="updateGraphDistributions()">
+                        <OPTION VALUE="dotplot">Dotplot</OPTION>
+                        <OPTION VALUE="stemplot">Stemplot</OPTION>
+                        <OPTION VALUE="histogram">Histogram</OPTION>
+                        <OPTION VALUE="boxplot">Boxplot</OPTION>
+                    </SELECT>
+                </SPAN>
+                <SPAN ID="spnGraphOptions3Groups">
+                    <LABEL FOR="selGraphType3Groups">Graph type:</LABEL>
+                    <SELECT ID="selGraphType3Groups" onChange="updateGraphDistributions()">
+                        <OPTION VALUE="dotplot">Dotplot</OPTION>
+                        <OPTION VALUE="histogram">Histogram</OPTION>
+                        <OPTION VALUE="boxplot">Boxplot</OPTION>
+                    </SELECT>
+                </SPAN>
+                <SPAN ID="spnStemplotOptions">
+                    <LABEL FOR="selSplitStems">Split stems:</LABEL>
+                    <SELECT ID="selSplitStems" onChange="handleStemSplitBasis(this)">
+                        <OPTION VALUE="1">No</OPTION>
+                        <OPTION VALUE="2">Yes, into two</OPTION>
+                        <OPTION VALUE="5">Yes, into five</OPTION>
+                    </SELECT><SPAN ID="spnStemplotWarningMsg" CLASS="errormsg"></SPAN>
+                </SPAN>
+                <SPAN ID="spnHistogramOptions">
+                    <LABEL FOR="selHistogramLabel">Label histogram with:</LABEL>
+                    <SELECT ID="selHistogramLabel" onChange="handleHistogramLabelChange(this)">
+                        <OPTION VALUE="freq">Frequency</OPTION>
+                        <OPTION VALUE="rel">Relative frequency</OPTION>
+                    </SELECT><BR>
+                    <LABEL FOR="txtHistogramBinWidth">Enter interval width:</LABEL>
+                    <INPUT TYPE="text" ID="txtHistogramBinWidth" SIZE="4" onChange="handleHistogramBinWidth(this)">
+                    <LABEL FOR="txtHistogramBinAlignment">Enter boundary value:</LABEL>
+                    <INPUT TYPE="text" ID="txtHistogramBinAlignment" SIZE="4" onChange="handleHistogramBinAlignment(this)">
+                    <INPUT TYPE="button" ID="btnResetIntervals" VALUE="Reset intervals to default" onClick="setHistogramDefaultBins()">
+                    <SPAN CLASS="errormsg" ID="spnHistogramOptionsErrorMsg"></SPAN>
+                </SPAN><BR>
+                <CANVAS ID="cnvPlot" WIDTH="500" HEIGHT="300">
+                        <SPAN CLASS="errormsg">Your browser does not support canvas graphing.<BR>
+                        Please consider using an updated browser.</SPAN>
+                </CANVAS><BR>
+                <INPUT TYPE="button" ID="btnExportGraph" VALUE="Export this graph" onClick="exportGraph()">
+            </DIV>
+            <DIV ID="divSummaryStatistics">
+                <H3>Summary Statistics</H3>
+                <SPAN ID="spnSummaryStatistics"></SPAN><BR>
+                <INPUT TYPE="button" ID="btnExportSummary" VALUE="Export summary statistics" onClick="exportSummaryStatistics()">
+                <TEXTAREA TITLE="Summary Statistics" ID="txtSummaryStatisticsCSV"></TEXTAREA>
+            </DIV>
+            <DIV ID="divInference">
+                <H3>Perform Inference</H3>
+                <DIV ID="divInference1Group">
+                    <LABEL FOR="selInference1Group">Inference procedure:</LABEL>
+                    <SELECT ID="selInference1Group" onChange="handle1GroupInferenceChange(this)">
+                        <OPTION VALUE="interval">1-sample t interval</OPTION>
+                        <OPTION VALUE="test">1-sample t test</OPTION>
+                        <OPTION ID="opt1GroupSimulation" VALUE="simulation">Simulate sample mean</OPTION>
+                        <OPTION ID="opt1GroupDiffSimulation" VALUE="simulationDiff">Simulate mean difference</OPTION>
+                    </SELECT>
+                    <SPAN ID="spnInference1GroupIntervalOptions">
+                        <LABEL FOR="sel1CLevel">Confidence level:</LABEL> <SELECT ID="sel1CLevel">
+                            <OPTION VALUE=".90">90%</OPTION>
+                            <OPTION VALUE=".95" SELECTED>95%</OPTION>
+                            <OPTION VALUE=".99">99%</OPTION>
+                        </SELECT>
+                        <BR><BR><INPUT TYPE="button" ID="btnPerformInference1GroupCI" VALUE="Perform inference" onClick="updateInference()">
+                    </SPAN>
+                    <SPAN ID="spnInference1GroupTestOptions">
+                        <LABEL FOR="sel1SampTTestSides">Alternative hypothesis:</LABEL> <SELECT ID="sel1SampTTestSides">
+                            <OPTION VALUE="0">&mu; &lt;</OPTION>
+                            <OPTION VALUE="1">&mu; &#8800;</OPTION>
+                            <OPTION VALUE="2">&mu; &gt;</OPTION>
+                        </SELECT>
+                        <LABEL FOR="txt1SampTTestHypothesizedMean">Hypothesized mean:</LABEL> <INPUT TYPE="text" ID="txt1SampTTestHypothesizedMean" SIZE="4">
+                        <BR><BR><INPUT TYPE="button" ID="btnPerformInference1GroupTest" VALUE="Perform inference" onClick="updateInference()">
+                        <SPAN ID="spn1SampTTestOptionsErrorMsg" CLASS="errormsg"></SPAN>
+                    </SPAN>
+                </DIV>
+                <DIV ID="divInference2Groups">
+                    <LABEL FOR="selInference2Group">Inference procedure:</LABEL>
+                    <SELECT ID="selInference2Group" onChange="handle2GroupInferenceChange(this)">
+                        <OPTION VALUE="interval">2-sample t interval (&mu;&#x2081; - &mu;&#x2082;)</OPTION>
+                        <OPTION VALUE="test">2-sample t test</OPTION>
+                        <OPTION ID="opt2GroupSimulation" VALUE="simulation">Simulate difference in two means</OPTION>
+                    </SELECT>
+                    <SPAN ID="spnInference2GroupConservativeDFOptions">
+                    <LABEL FOR="sel2SampTDF">Conservative degrees of freedom:</LABEL> <SELECT ID="sel2SampTDF">
+                        <OPTION VALUE="0">No</OPTION>
+                        <OPTION VALUE="1">Yes</OPTION>
+                    </SELECT>
+                    </SPAN>
+                    <SPAN ID="spnInference2GroupIntervalOptions">
+                        <LABEL FOR="sel2CLevel">Confidence level:</LABEL> <SELECT ID="sel2CLevel">
+                            <OPTION VALUE=".90">90%</OPTION>
+                            <OPTION VALUE=".95" SELECTED>95%</OPTION>
+                            <OPTION VALUE=".99">99%</OPTION>
+                        </SELECT>
+                        <BR><BR><INPUT TYPE="button" ID="btnPerformInference2GroupCI" VALUE="Perform inference" onClick="updateInference()">
+                    </SPAN>
+                    <SPAN ID="spnInference2GroupTestOptions">
+                        <LABEL FOR="sel2SampTTestSides">Alternative hypothesis:</LABEL> <SELECT ID="sel2SampTTestSides">
+                            <OPTION VALUE="0">&mu;&#x2081; - &mu;&#x2082; &lt; 0</OPTION>
+                            <OPTION VALUE="1">&mu;&#x2081; - &mu;&#x2082; &#8800; 0</OPTION>
+                            <OPTION VALUE="2">&mu;&#x2081; - &mu;&#x2082; &gt; 0</OPTION>
+                        </SELECT>
+                        <BR><BR><INPUT TYPE="button" ID="btnPerformInference2GroupTest" VALUE="Perform inference" onClick="updateInference()">
+                    </SPAN>
+                </DIV>
+                <DIV ID="divSimulationOptions">
+                    <SPAN ID="spnSimulationDescription"></SPAN>
+                    <LABEL FOR="txtNumSamples">Add this many samples:</LABEL> <INPUT TYPE="text" ID="txtNumSamples" SIZE="4" onKeyDown="if (event.which == 13 || event.keyCode == 13) updateInference()">
+                    <INPUT TYPE="button" ID="btnPerformSimulation" VALUE="Perform simulation" onClick="updateInference()">
+                    <INPUT TYPE="button" ID="btnClearSimulation" VALUE="Clear simulation results" onClick="clearSimulationResults()">
+                    <SPAN ID="spnSimulationErrorMsg" CLASS="errormsg"></SPAN>
+                </DIV><BR>
+                <SPAN ID="spnInferenceResults"></SPAN>
+                <SPAN ID="spnSimulationResults">
+                    <CANVAS ID="cnvSimulationPlot" WIDTH="500" HEIGHT="300">
+                        <SPAN CLASS="errormsg">Your browser does not support canvas graphing.<BR>
+                        Please consider using an updated browser.</SPAN>
+                    </CANVAS><BR>
+                    <INPUT TYPE="button" ID="btnExportSimulationGraph" VALUE="Export this graph" onClick="exportSimulationGraph()"><BR><BR>
+                    <SPAN ID="spnSimulationTable"></SPAN>
+                    <SPAN ID="spnSimulationDotplotCountingOptions">
+                        <LABEL FOR="selSimulationDotplotCountType">Count the</LABEL> <SELECT ID="selSimulationDotplotCountType" onChange="handleSimulationDotplotCount()">
+                        <OPTION VALUE="number">number</OPTION><OPTION VALUE="percent">percent</OPTION></SELECT>
+                        <LABEL FOR="selSimulationDotplotCountDir">of dots</LABEL> <SELECT ID="selSimulationDotplotCountDir" onChange="handleSimulationDotplotCount()">
+                            <OPTION VALUE="0">less than</OPTION>
+                            <OPTION VALUE="2">greater than</OPTION>
+                        </SELECT>
+                        <LABEL FOR="txtSimulationDotplotCountBound">or equal to</LABEL> <INPUT TYPE="text" ID="txtSimulationDotplotCountBound" SIZE="5" onChange="handleSimulationDotplotCount()" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSimulationDotplotCount()">
+                        <INPUT TYPE="button" ID="btnDotplotCount" VALUE="Count" onClick="handleSimulationDotplotCount()">
+                        <INPUT TYPE="button" ID="btnClearDotplotCount" VALUE="Remove count" onClick="clearSimulationDotplotCount()"><BR>
+                        <SPAN id="spnSimulationDotplotCountResult"></SPAN><BR>
+                        <SPAN ID="spnSimulationDotplotCountErrorMsg" CLASS="errormsg"></SPAN>
+                    </SPAN>
+                </SPAN><BR>
+            </DIV>
+            <!-- Scroll buffer for screen bottom -->
+            <BR>
+            <A HREF="javascript:SPAApplet.Preferences.launchPreferencePage();">Adjust rounding and color preferences</A> | <A HREF="./">Back to menu</A>
+        </FORM>
+    </BODY>
+</HTML>

@@ -1,0 +1,1786 @@
+[03-Aug-2020 02:52:37 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[06-Aug-2020 02:05:20 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '42223C-1' for key 'PRIMARY' in /home/joshtabor/public_html/bamar/php/_editSharedPlotGroup.php:38
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_editSharedPlotGroup.php(38): PDOStatement->execute(Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_editSharedPlotGroup.php on line 38
+[06-Aug-2020 02:30:35 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '42223C-1' for key 'PRIMARY' in /home/joshtabor/public_html/bamar/php/_editSharedPlotGroup.php:38
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_editSharedPlotGroup.php(38): PDOStatement->execute(Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_editSharedPlotGroup.php on line 38
+[08-Aug-2020 03:24:17 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1 in /home/joshtabor/public_html/bamar/php/_addSharedPlotBatchData.php:67
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_addSharedPlotBatchData.php(67): PDO->prepare('INSERT INTO tbl...')
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_addSharedPlotBatchData.php on line 67
+[08-Aug-2020 03:28:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1 in /home/joshtabor/public_html/bamar/php/_addSharedPlotBatchData.php:67
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_addSharedPlotBatchData.php(67): PDO->prepare('INSERT INTO tbl...')
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_addSharedPlotBatchData.php on line 67
+[08-Aug-2020 03:32:39 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'ClassCode ' in 'where clause' in /home/joshtabor/public_html/bamar/php/_deleteSharedPlotAllData.php:37
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_deleteSharedPlotAllData.php(37): PDO->query('DELETE FROM `tb...')
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_deleteSharedPlotAllData.php on line 37
+[15-Aug-2020 03:25:44 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:44 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:44 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:46 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:46 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:46 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:47 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:47 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:47 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:49 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:49 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:49 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:49 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:49 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:49 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:49 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:49 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 03:25:49 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[15-Aug-2020 13:55:17 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1 in /home/joshtabor/public_html/bamar/php/_addSharedPlotBatchData.php:67
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_addSharedPlotBatchData.php(67): PDO->prepare('INSERT INTO tbl...')
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_addSharedPlotBatchData.php on line 67
+[16-Aug-2020 15:12:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2013] Lost connection to MySQL server at 'reading initial communication packet', system error: 104 in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:12:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:12:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:12:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:12:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:12:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:12:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:12:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:12:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:12:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:12:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:12:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:12:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:00 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:01 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:01 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:01 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:01 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:01 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:01 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:01 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:01 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:02 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:04 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:04 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:04 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[16-Aug-2020 15:13:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 02:37:35 UTC] PHP Notice:  Undefined index: c in /home/joshtabor/public_html/bamar/php/_addSharedPlotSingleData.php on line 17
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2013] Lost connection to MySQL server at 'reading initial communication packet', system error: 104 in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:06 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:07 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:08 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:09 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:10 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:12 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15
+[17-Aug-2020 17:24:13 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Can't connect to local MySQL server through socket '/var/lib/mysql/mysql.sock' (2) in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php:15
+Stack trace:
+#0 /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php(15): PDO->__construct('mysql:host=loca...', 'client', 'stap_client', Array)
+#1 {main}
+  thrown in /home/joshtabor/public_html/bamar/php/_getSharedPlotData.php on line 15

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-MVPXVT3DMR");
+        </script>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="./css/master.css" />
+        <title>One Categorical Variable, Multiple Groups</title>
+        <script src="./js/d3.v3.min.js"></script>
+        <script src="./js/jstat.min.js"></script>
+        <script src="./js/stapplet_latest.js"></script>
+        <script src="./js/cat1v_multi.js"></script>
+    </head>
+    <body>
+        <span CLASS="errormsg" id="spnBrowserMsg"></span>
+        <div id="divHeader" ROLE="banner">
+            <table>
+                <tr>
+                    <td class="header">
+                        One Categorical Variable, Multiple Groups
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <form ROLE="form">
+            <label for="selInputType">Input data as:</label>
+            <select id="selInputType" onChange="return handleInputChange(this)">
+                <option value="counts">Two-way table</option>
+                <option value="raw">Raw data</option></select
+            ><br /><br />
+            <div id="divInputCounts">
+                <table id="tblInputCounts">
+                    <tr>
+                        <td rowspan="4" id="tdRowspanOuter">
+                            <label for="txtVariableNameCounts"
+                                >Variable name:</label
+                            ><br /><input
+                                type="text"
+                                id="txtVariableNameCounts"
+                                size="40"
+                                ONCHANGE="return deactivatePage(this)"
+                            />
+                        </td>
+                        <td></td>
+                        <td>
+                            <input
+                                type="text"
+                                class="colName"
+                                title="Column Name"
+                                id="txtCountsTblColName1"
+                                onChange="return deactivatePage(this)"
+                                placeholder="Group 1"
+                                size="15"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                class="colName"
+                                title="Column Name"
+                                id="txtCountsTblColName2"
+                                onChange="return deactivatePage(this)"
+                                placeholder="Group 2"
+                                size="15"
+                            />
+                        </td>
+                        <td
+                            rowspan="3"
+                            id="tdRowspanInner"
+                            style="vertical-align: top"
+                        >
+                            <input
+                                type="button"
+                                id="btnDelCol"
+                                value="-"
+                                onClick="removeCountsTableColumn()"
+                            />
+                            <input
+                                type="button"
+                                id="btnAddCol"
+                                value="+"
+                                onClick="addCountsTableColumn()"
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input
+                                type="text"
+                                class="rowName"
+                                title="Row Name"
+                                id="txtCountsTblRowName1"
+                                onChange="return deactivatePage(this)"
+                                placeholder="Category 1"
+                                size="15"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                class="data"
+                                title="Frequency"
+                                id="txtCountsTblData1_1"
+                                onChange="return deactivatePage(this)"
+                                size="15"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                class="data"
+                                title="Frequency"
+                                id="txtCountsTblData1_2"
+                                onChange="return deactivatePage(this)"
+                                size="15"
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input
+                                type="text"
+                                class="rowName"
+                                title="Row Name"
+                                id="txtCountsTblRowName2"
+                                onChange="return deactivatePage(this)"
+                                placeholder="Category 2"
+                                size="15"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                class="data"
+                                title="Frequency"
+                                id="txtCountsTblData2_1"
+                                onChange="return deactivatePage(this)"
+                                size="15"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                class="data"
+                                title="Frequency"
+                                id="txtCountsTblData2_2"
+                                onChange="return deactivatePage(this)"
+                                size="15"
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td
+                            colspan="4"
+                            id="tdColspanLower"
+                            style="text-align: left"
+                        >
+                            <input
+                                type="button"
+                                id="btnDelRow"
+                                value="-"
+                                onClick="removeCountsTableRow()"
+                            />
+                            <input
+                                type="button"
+                                id="btnAddRow"
+                                value="+"
+                                onClick="addCountsTableRow()"
+                            />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="divInputRawData">
+                <label for="txtVariableNameRawData">Variable name:</label
+                ><input
+                    type="text"
+                    id="txtVariableNameRawData"
+                    size="40"
+                /><br /><br />
+                Enter the data (category names) for each group. Separate with
+                commas or spaces. Category names cannot have spaces in them.<br />
+                <table id="tblRawDataMultiGrp">
+                    <tr>
+                        <th></th>
+                        <th>Group Name</th>
+                        <th>Data</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td><label for="txtRawTblName1">1</label></td>
+                        <td>
+                            <input
+                                type="text"
+                                class="name"
+                                id="txtRawTblName1"
+                                size="10"
+                                onChange="return deactivatePage(this)"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                title="Data"
+                                class="data"
+                                id="txtRawTblData1"
+                                size="10"
+                                onChange="return deactivatePage(this)"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="button"
+                                class="ctl"
+                                id="txtRawTblCtl1"
+                                value="-"
+                                onClick="removeRawDataTableRow(this)"
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><label for="txtRawTblName2">2</label></td>
+                        <td>
+                            <input
+                                type="text"
+                                class="name"
+                                id="txtRawTblName2"
+                                size="10"
+                                onChange="return deactivatePage(this)"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="text"
+                                title="Data"
+                                class="data"
+                                id="txtRawTblData2"
+                                size="10"
+                                onChange="return deactivatePage(this)"
+                            />
+                        </td>
+                        <td>
+                            <input
+                                type="button"
+                                class="ctl"
+                                id="txtRawTblCtl2"
+                                value="-"
+                                onClick="removeRawDataTableRow(this)"
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" style="text-align: right">
+                            <input
+                                type="button"
+                                id="btnAddRowMultiRaw"
+                                value="+"
+                                onClick="addNewRawDataTableRow()"
+                            />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <span ID="spnDataMsg" CLASS="errormsg"></span><br />
+            <input
+                type="button"
+                value="Begin analysis"
+                onClick="beginAnalysis()"
+            />
+            <input
+                type="button"
+                id="btnChangeInputs"
+                value="Edit inputs"
+                onClick="deactivatePage()"
+            />
+            <input
+                type="button"
+                value="Reset everything"
+                onClick="resetApplet()"
+            />
+            <div id="divDisplayGraph">
+                <h3>Graph Distributions</h3>
+                <label for="selGraphType">Chart type:</label>
+                <select id="selGraphType" onChange="updateGraph()">
+                    <option value="stacked">Segmented bar</option>
+                    <option value="mosaic">Mosaic plot</option>
+                    <option value="side">Side-by-side bar</option>
+                </select>
+                <span ID="spnSideBarGraphOptions">
+                    <label for="selSideBarGraphFreq"
+                        >Label bar graph with:</label
+                    >
+                    <select id="selSideBarGraphFreq" onChange="updateGraph()">
+                        <option value="rel">Relative frequency</option>
+                        <option value="freq">Frequency</option>
+                    </select> </span
+                ><br /><br />
+                <div
+                    id="divGraph"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Data plot area"
+                ></div>
+            </div>
+            <br />
+            <div id="divSummaryStatistics">
+                <h3>Summary Statistics</h3>
+                <span
+                    ID="spnSummaryStatistics"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Summary statistics"
+                ></span
+                ><br /><br />
+                <input
+                    type="button"
+                    value="Export summary statistics"
+                    onClick="exportSummaryStatistics()"
+                />
+                <textarea
+                    title="Summary Statistics"
+                    id="txtSummaryStatisticsCSV"
+                ></textarea>
+            </div>
+            <br />
+            <div id="divInference">
+                <h3>Perform Inference</h3>
+                <span ID="spn2CatInferenceOptions">
+                    <label for="sel2CatInference">Inference procedure:</label>
+                    <select
+                        id="sel2CatInference"
+                        onChange="handle2CatInferenceChange(this)"
+                    >
+                        <option value="simulation" id="optSimProp">
+                            Simulate difference in percents/proportions
+                        </option>
+                        <option value="interval">
+                            2-sample z interval (p&#x2081; - p&#x2082;)
+                        </option>
+                        <option value="test">
+                            2-sample z test (p&#x2081; - p&#x2082;)
+                        </option>
+                        <option value="chi">
+                            Chi-square test for homogeneity
+                        </option></select
+                    ><br />
+                    <span ID="spnZIntervalOptions">
+                        Confidence level:
+                        <input
+                            id="numCLevel"
+                            type="number"
+                            value="95"
+                            step="0.1"
+                            min="0.1"
+                            max="99.9"
+                            size="5"
+                        />%<br />
+                    </span>
+                    <span ID="spnZTestOptions">
+                        <label for="selZTestSides"
+                            >Alternative hypothesis:</label
+                        >
+                        <select id="selZTestSides">
+                            <option value="2">
+                                p&#x2081; - p&#x2082; &gt; 0
+                            </option>
+                            <option value="0">
+                                p&#x2081; - p&#x2082; &lt; 0
+                            </option>
+                            <option value="1">
+                                p&#x2081; - p&#x2082; &#8800; 0
+                            </option></select
+                        ><br />
+                    </span>
+                    <span ID="spnSuccessCat">
+                        <label for="sel2CatSuccess"
+                            >Category to indicate as success:</label
+                        >
+                        <select id="sel2CatSuccess"></select
+                        ><br />
+                    </span>
+                    <span ID="spnTradButton">
+                        <br /><input
+                            type="button"
+                            value="Perform inference"
+                            onClick="updateInference()"
+                        />
+                    </span>
+                    <span ID="spnSimulationOptions">
+                        <br />Simulates the distribution of the difference in
+                        sample <span CLASS="fillPropPct"></span> of successes
+                        when the observed successes and failures are combined,
+                        shuffled, and redistributed into two groups that match
+                        the sizes of the original groups.<br />
+                        <label for="txtNumSamples"
+                            >Number of trials to add:</label
+                        >
+                        <input
+                            type="text"
+                            id="txtNumSamples"
+                            size="4"
+                            onKeyDown="if (event.which == 13 || event.keyCode == 13) updateInference()"
+                        /><br />
+                        The applet will graph all of your results until you hit
+                        "Reset simulation."<br />
+                        <input
+                            type="button"
+                            id="btnPerformSimulation"
+                            value="Add trials"
+                            onClick="updateInference()"
+                        />
+                        <input
+                            type="button"
+                            id="btnClearSimulation"
+                            value="Reset simulation"
+                            onClick="clearSimulationResults()"
+                        />
+                    </span>
+                </span>
+                <span ID="spn3CatInferenceOptions">
+                    <input
+                        type="button"
+                        value="Perform chi-square test for homogeneity"
+                        onClick="updateInference()"
+                    />
+                </span>
+                <span ID="spnInferenceMsg" CLASS="errormsg"></span>
+                <span
+                    ID="spnInferenceResults"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Inference results"
+                ></span>
+                <span
+                    ID="spnSimulationResults"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Simulation results"
+                >
+                    <table>
+                        <tr>
+                            <td>
+                                <div
+                                    id="divSimGraph"
+                                    tabindex="0"
+                                    aria-live="polite"
+                                    role="region"
+                                    aria-label="Simulation plot area"
+                                ></div>
+                                <span ID="spnSimulationDotplotCountingOptions">
+                                    Count the number and percent of dots
+                                    <select
+                                        id="selSimulation1GrpDotplotCountDir"
+                                        onChange="handleSimulation1GrpDotplotCount()"
+                                    >
+                                        <option value="left">less than</option>
+                                        <option value="right">
+                                            greater than
+                                        </option>
+                                    </select>
+                                    <label
+                                        for="txtSimulation1GrpDotplotCountBound"
+                                        >or equal to</label
+                                    >
+                                    <input
+                                        type="text"
+                                        id="txtSimulation1GrpDotplotCountBound"
+                                        size="5"
+                                        onChange="handleSimulation1GrpDotplotCount()"
+                                        onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSimulationDotplotCount()"
+                                    />
+                                    <input
+                                        type="button"
+                                        id="btnDotplotCount"
+                                        value="Count"
+                                        onClick="handleSimulation1GrpDotplotCount()"
+                                    />
+                                    <input
+                                        type="button"
+                                        id="btnClearDotplotCount"
+                                        value="Remove count"
+                                        onClick="clearSimulationDotplotCount()"
+                                    /><br />
+                                    <span
+                                        ID="spnSimulationDotplotCountErrorMsg"
+                                        CLASS="errormsg"
+                                    ></span>
+                                </span>
+                            </td>
+                            <td valign="top">
+                                # of trials:<br /><span ID="spnNumTrials"></span
+                                ><br />
+                                Most recent result:<br /><span
+                                    ID="spnRecentResult"
+                                ></span
+                                ><br />
+                                Mean:<br /><span ID="spnSimMean"></span><br />
+                                SD:<br /><span ID="spnSimSD"></span><br />
+                            </td>
+                        </tr>
+                    </table> </span
+                ><br />
+            </div>
+            <!-- Scroll buffer for screen bottom -->
+            <br />
+            <a href="javascript:STAP.Preferences.launchPreferencePage();"
+                >Adjust color, rounding, and percent/proportion preferences</a
+            >
+            | <a href="./">Back to menu</a>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </form>
+    </body>
+</html>

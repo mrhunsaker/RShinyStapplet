@@ -1,0 +1,130 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+    <META CHARSET="UTF-8">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+    <TITLE>Hiring Discrimination</TITLE>
+    <script src="./js/d3.v3.min.js"></script>
+    <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/stapplet_1.0.1.js"></SCRIPT>
+    <SCRIPT SRC="./js/collab_common_quant.js"></SCRIPT>
+    <SCRIPT SRC="./js/hiring_disc_demo.js"></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Hiring Discrimination: It Just Won't Fly!</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divCodes">
+                <INPUT TYPE="button" ID="btnNewClassCode" VALUE="Start a new class code as a teacher" onClick="newClassCode();"><BR>
+                <INPUT TYPE="button" ID="btnEnterClassCode" VALUE="Enter an existing class code" onClick="enterClassCode();"><BR>
+            </DIV>
+            <DIV ID="divIntro">
+                <BR>Class code: <SPAN ID="spnClassCode">{none}</SPAN>
+                <BR>Class data will automatically update every 3 - 5 seconds.
+                <BR><SPAN ID="spnLastUpdate"></SPAN>
+                <BR><BR>
+                <H3>Let's do the activity!</H3>
+<P>An airline has trained 15 male pilots and 10 female pilots to be captains, but only 8 captain positions are available. A lottery results in 5 females and 3 males being selected. Some of the male pilots who weren’t selected suspect the lottery wasn’t carried out fairly. Is it plausible that these results could happen by chance alone in a fair lottery?</P>
+<P>Press the Sample button to select a random sample of 8 pilots from the population of 25 pilots. The number of female pilots in the sample will be displayed and recorded on the dotplot.</P>
+            </DIV>
+            <DIV ID="divSRS">
+                <INPUT TYPE="button" ID="btnSRS" VALUE="Generate sample" onClick="generateSRS();"><SPAN ID="spnSRSMsg" CLASS="errormsg"></SPAN>
+                    <TABLE ID="tblSRS">
+                        <TR>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>M</STRONG></TD>
+                        <TD><STRONG>F</STRONG></TD>
+                        <TD><STRONG>F</STRONG></TD>
+                        <TD><STRONG>F</STRONG></TD>
+                        <TD><STRONG>F</STRONG></TD>
+                        <TD><STRONG>F</STRONG></TD>
+                        <TD><STRONG>F</STRONG></TD>
+                        <TD><STRONG>F</STRONG></TD>
+                        <TD><STRONG>F</STRONG></TD>
+                        <TD><STRONG>F</STRONG></TD>
+                        <TD><STRONG>F</STRONG></TD>
+                        </TR>
+                        <TR>
+                        <TD></TD><TD></TD><TD></TD><TD></TD><TD></TD>
+                        <TD></TD><TD></TD><TD></TD><TD></TD><TD></TD>
+                        <TD></TD><TD></TD><TD></TD><TD></TD><TD></TD>
+                        <TD></TD><TD></TD><TD></TD><TD></TD><TD></TD>
+                        <TD></TD><TD></TD><TD></TD><TD></TD><TD></TD>
+                        </TR>
+                    </TABLE>
+                Number of females selected: <SPAN ID="spnNumFemales">?</SPAN><BR><BR>
+            </DIV>
+            <DIV ID="divResults">
+                <DIV ID="divPlot"></DIV>
+                <DIV ID="divDotplotCountingOptions">
+	                Count the number and percent of dots <SELECT ID="selDotplotCountDir" onChange="handleDotplotCount()">
+	                    <OPTION VALUE="left">less than</OPTION>
+	                    <OPTION VALUE="right">greater than</OPTION>
+	                </SELECT>
+	                <LABEL FOR="txtDotplotCountBound">or equal to</LABEL> <INPUT TYPE="text" ID="txtDotplotCountBound" SIZE="5" onChange="handleDotplotCount()" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleDotplotCount()">
+                        <INPUT TYPE="button" ID="btnDotplotCount" VALUE="Count" onClick="handleDotplotCount()">
+                        <INPUT TYPE="button" ID="btnClearDotplotCount" VALUE="Remove count" onClick="clearDotplotCount()">
+                        <SPAN ID="spnDotplotCountErrorMsg" CLASS="errormsg"></SPAN>
+                </DIV>
+                <TEXTAREA TITLE="Graph Data" ID="txtGraphDataCSV"></TEXTAREA>
+                <INPUT TYPE="button" ID="btnGetData" VALUE="Download current data" onClick="exportGraphData();">
+            </DIV>
+            <DIV ID="divGraphAdmin">
+                <BR><INPUT TYPE="button" ID="btnEnterAdminCode" VALUE="Enter admin code to enable teacher privileges" onClick="enterAdminCode();">
+                <DIV ID="divGraphAdminOptions">
+                    <FIELDSET STYLE="display: inline;"><LEGEND><STRONG>Teacher Panel</STRONG></LEGEND>
+                    Admin code: <SPAN ID="spnAdminCode">{none}</SPAN><BR>
+                    <INPUT TYPE="button" ID="btnExtend" VALUE="Reset class expiration" onClick="resetClassExpiration();"><BR>
+                    <INPUT TYPE="button" ID="btnPauseStudent" VALUE="Pause student data collection" onClick="toggleEnabled();">
+                    <BR><BR>
+                    <LABEL FOR="txtManySamples">Run the experiment this many times silently (max 2000) and add results to the plot: </LABEL> <INPUT TYPE="number" MIN="1" MAX="2000" ID="txtManySamples" onKeyDown="if (event.which == 13 || event.keyCode == 13) doManySamples();">
+                    <INPUT TYPE="button" ID="btnManySamples" VALUE="Add these data" onClick="doManySamples();">
+                    <SPAN ID="spnManySamplesMsg"></SPAN><BR>
+                    <LABEL FOR="txtDataBatchAdd">Add up to 2000 values separated by spaces or commas: </LABEL> <INPUT TYPE="text" ID="txtDataBatchAdd" onKeyDown="if (event.which == 13 || event.keyCode == 13) addBatchData();" SIZE="50">
+                    <INPUT TYPE="button" ID="btnDataBatchAdd" VALUE="Add these data" onClick="addBatchData();">
+                    <SPAN ID="spnDataBatchAddMsg"></SPAN><BR>
+                    <LABEL FOR="txtDataDelete">Delete observation:</LABEL> <INPUT TYPE="number" ID="txtDataDelete" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSingleDataDelete();">
+                    <INPUT TYPE="button" ID="btnDataDelete" VALUE="Delete observation" onClick="handleSingleDataDelete();">
+                    <INPUT TYPE="button" ID="btnDataDeleteAll" VALUE="Delete all data" onClick="handleDeleteAllData('spnDataDeleteAllMsg');">
+                        <SPAN ID="spnDataDeleteMsg"></SPAN>
+                        <SPAN ID="spnDataDeleteAllMsg"></SPAN><BR>
+                    (Mouse over data to see exact values.)<BR>
+                    </FIELDSET>
+                </DIV>
+            </DIV>
+            <!-- Scroll buffer for screen bottom -->
+            <BR>
+            <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+        </FORM>
+    </BODY>
+</HTML>

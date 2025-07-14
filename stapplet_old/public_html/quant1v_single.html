@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script
+            async
+            src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"
+        ></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag("js", new Date());
+
+            gtag("config", "G-MVPXVT3DMR");
+        </script>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="./css/master.css" />
+        <title>One Quantitative Variable, Single Group</title>
+        <script src="./js/d3.v3.min.js"></script>
+        <script src="./js/jstat.min.js"></script>
+        <script src="./js/stapplet_latest.js"></script>
+        <script src="./js/quant1v_single.js"></script>
+    </head>
+    <body>
+        <span CLASS="errormsg" id="spnBrowserMsg"></span>
+        <div id="divHeader" ROLE="banner">
+            <table>
+                <tr>
+                    <td class="header">
+                        One Quantitative Variable, Single Group
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <form ROLE="form">
+            <div id="divOptions">
+                <label for="txtVariableName">Variable name:</label>
+                <input type="text" id="txtVariableName" size="40" /><br />
+                <label for="selInputType">Input:</label>
+                <select
+                    id="selInputType"
+                    onChange="handleInputTypeChange(this)"
+                >
+                    <option value="data">Raw data</option>
+                    <option value="meanstats">
+                        Mean and standard deviation
+                    </option>
+                    <option value="medianstats">Five-number summary</option>
+                </select>
+            </div>
+            <div id="divInput">
+                <br /><span ID="spnInputInstructions"
+                    >Input data separated by commas or spaces.</span
+                >
+                <div id="divGroup1Input">
+                    <span ID="spnGroup1Data"
+                        ><label for="txtGroup1Data">Data:</label>
+                        <input
+                            type="text"
+                            id="txtGroup1Data"
+                            size="40"
+                            onChange="inputsChanged(this)"
+                    /></span>
+                    <span ID="spnGroup1MeanStats">
+                        <label for="txtGroup1Mean">Mean:</label>
+                        <input
+                            type="text"
+                            id="txtGroup1Mean"
+                            size="6"
+                            onChange="inputsChanged(this)"
+                        />
+                        <label for="txtGroup1SD">SD:</label>
+                        <input
+                            type="text"
+                            id="txtGroup1SD"
+                            size="6"
+                            onChange="inputsChanged(this)"
+                        />
+                        <label for="txtGroup1N">n:</label>
+                        <input
+                            type="text"
+                            id="txtGroup1N"
+                            size="6"
+                            onChange="inputsChanged(this)"
+                        />
+                    </span>
+                    <span ID="spnGroup1MedianStats">
+                        <label for="txtGroup1Min">Min:</label>
+                        <input
+                            type="text"
+                            id="txtGroup1Min"
+                            size="6"
+                            onChange="inputsChanged(this)"
+                        />
+                        <label for="txtGroup1Q1">Q1:</label>
+                        <input
+                            type="text"
+                            id="txtGroup1Q1"
+                            size="6"
+                            onChange="inputsChanged(this)"
+                        />
+                        <label for="txtGroup1Median">median:</label>
+                        <input
+                            type="text"
+                            id="txtGroup1Median"
+                            size="6"
+                            onChange="inputsChanged(this)"
+                        />
+                        <label for="txtGroup1Q3">Q3:</label>
+                        <input
+                            type="text"
+                            id="txtGroup1Q3"
+                            size="6"
+                            onChange="inputsChanged(this)"
+                        />
+                        <label for="txtGroup1Max">max:</label>
+                        <input
+                            type="text"
+                            id="txtGroup1Max"
+                            size="6"
+                            onChange="inputsChanged(this)"
+                        />
+                    </span>
+                    <br /><span CLASS="errormsg" ID="spnGroup1InputMsg"></span>
+                </div>
+                <br />
+                <input
+                    type="button"
+                    id="btnBeginAnalysis"
+                    value="Begin analysis"
+                    onClick="beginAnalysis()"
+                />
+                <input
+                    type="button"
+                    id="btnChangeInputs"
+                    value="Edit inputs"
+                    onClick="deactivatePage()"
+                />
+                <input
+                    type="button"
+                    id="btnResetEverything"
+                    value="Reset everything"
+                    onClick="resetApplet()"
+                />
+            </div>
+            <div id="divGraphDistributions">
+                <h3>Graph Distribution</h3>
+                <span ID="spnGraphOptions1or2Groups">
+                    <label for="selGraphType1or2Groups">Graph type:</label>
+                    <select
+                        id="selGraphType1or2Groups"
+                        onChange="updateGraphDistributions()"
+                    >
+                        <option value="dotplot">Dotplot</option>
+                        <option value="histogram">Histogram</option>
+                        <option value="boxplot">Boxplot</option>
+                        <option value="stemplot">Stemplot</option>
+                        <option value="normplot">
+                            Normal probability plot
+                        </option>
+                    </select>
+                </span>
+                <span ID="spnHistogramOptions">
+                    <label for="selHistogramLabel">Label histogram with:</label>
+                    <select
+                        id="selHistogramLabel"
+                        onChange="replotHistogram();"
+                    >
+                        <option value="freq">Frequency</option>
+                        <option value="rel">Relative frequency</option></select
+                    ><br />
+                    <label for="txtHistogramBinWidth"
+                        >Enter interval width:</label
+                    >
+                    <input
+                        type="text"
+                        id="txtHistogramBinWidth"
+                        size="4"
+                        onChange="replotHistogram()"
+                    />
+                    <label for="txtHistogramBinAlignment"
+                        >Enter boundary value:</label
+                    >
+                    <input
+                        type="text"
+                        id="txtHistogramBinAlignment"
+                        size="4"
+                        onChange="replotHistogram()"
+                    />
+                    <input
+                        type="button"
+                        id="btnResetIntervals"
+                        value="Reset intervals to default"
+                        onClick="resetHistogramOptions()"
+                    />
+                    <span
+                        CLASS="errormsg"
+                        ID="spnHistogramOptionsErrorMsg"
+                    ></span>
+                </span>
+                <div id="divSideBoxplotOption">
+                    <input
+                        type="checkbox"
+                        id="chkSideBoxplot"
+                        onChange="updateGraphDistributions()"
+                    />
+                    <label for="chkSideBoxplot">Show boxplot</label>
+                    <div
+                        id="divSideBoxplot"
+                        style="height: 70px; overflow: hidden"
+                    ></div>
+                </div>
+                <div
+                    id="divPlot"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Data plot area"
+                ></div>
+                <div id="divStemplot">
+                    Split stems:
+                    <select
+                        id="selStemplotStems"
+                        onChange="updateGraphDistributions()"
+                    >
+                        <option value="1">No</option>
+                        <option value="2">Yes, into two groups</option>
+                        <option value="5">Yes, into five groups</option></select
+                    ><br />
+                    Shift stem
+                    <input
+                        id="numSigAdj"
+                        type="number"
+                        min="0"
+                        max="20"
+                        value="0"
+                        onChange="updateGraphDistributions()"
+                    />
+                    additional decimal places to the left, truncating as
+                    needed.<br />
+                    Collapse groups of empty stems?
+                    <select
+                        id="selGapHide"
+                        onChange="updateGraphDistributions()"
+                    >
+                        <option value="no">No</option>
+                        <option value="yes">Yes</option>
+                    </select>
+                    <span ID="spnGapHide">
+                        Collapse groups of
+                        <input
+                            id="numGapHide"
+                            type="number"
+                            min="3"
+                            max="99"
+                            value="3"
+                            onChange="updateGraphDistributions()"
+                        />
+                        or more empty stems.</span
+                    >
+                    <div
+                        id="divStemplotPlot"
+                        class="stemplotContainer"
+                        tabindex="0"
+                        aria-live="polite"
+                        role="region"
+                        aria-label="Stemplot area"
+                    ></div>
+                </div>
+            </div>
+            <div id="divSummaryStatistics">
+                <h3>Summary Statistics</h3>
+                <span
+                    ID="spnSummaryStatistics"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Summary statistics"
+                ></span
+                ><br />
+                <input
+                    type="button"
+                    id="btnExportSummary"
+                    value="Export summary statistics"
+                    onClick="exportSummaryStatistics()"
+                />
+                <textarea
+                    title="Summary Statistics"
+                    id="txtSummaryStatisticsCSV"
+                ></textarea>
+            </div>
+            <div id="divInference">
+                <h3>Perform Inference</h3>
+                <div
+                    id="divInference1Group"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Inference options"
+                >
+                    <label for="selInference1Group">Inference procedure:</label>
+                    <select
+                        id="selInference1Group"
+                        onChange="handle1GroupInferenceChange(this)"
+                    >
+                        <option
+                            id="opt1GroupDiffSimulation"
+                            value="simulationDiff"
+                        >
+                            Simulate mean difference
+                        </option>
+                        <option id="opt1GroupSimulation" value="simulation">
+                            Simulate sample mean
+                        </option>
+                        <option value="interval">
+                            1-sample t interval for &mu;
+                        </option>
+                        <option value="test">1-sample t test for &mu;</option>
+                        <option value="SDinterval">
+                            1-sample &chi;&sup2; interval for &sigma;
+                        </option>
+                        <option value="SDtest">
+                            1-sample &chi;&sup2; test for &sigma;
+                        </option>
+                        <option id="opt1GroupSign" value="sign">
+                            Sign test for paired data
+                        </option>
+                        <option id="opt1GroupMedianSign" value="medsign">
+                            Sign test for population median
+                        </option>
+                        <option id="opt1Wilcoxon" value="wilcoxon">
+                            Wilcoxon signed rank test for paired data
+                        </option>
+                        <option id="opt1MedianWilcoxon" value="medwilcoxon">
+                            Wilcoxon signed rank test for population median
+                        </option>
+                    </select>
+                    <span ID="spnInference1GroupIntervalOptions">
+                        Confidence level:
+                        <input
+                            id="num1CLevel"
+                            type="number"
+                            step="0.1"
+                            value="95"
+                            min="0.1"
+                            max="99.9"
+                        />% <br /><br /><input
+                            type="button"
+                            id="btnPerformInference1GroupCI"
+                            value="Perform inference"
+                            onClick="updateInference()"
+                        />
+                    </span>
+                    <span ID="spnInference1GroupTestOptions">
+                        <label for="sel1SampTTestSides"
+                            >Alternative hypothesis:</label
+                        >
+                        <select id="sel1SampTTestSides">
+                            <option value="2">&mu; &gt;</option>
+                            <option value="0">&mu; &lt;</option>
+                            <option value="1">&mu; &#8800;</option>
+                        </select>
+                        <label for="txt1SampTTestHypothesizedMean"
+                            >Hypothesized mean:</label
+                        >
+                        <input
+                            type="text"
+                            id="txt1SampTTestHypothesizedMean"
+                            size="4"
+                        />
+                        <br /><br /><input
+                            type="button"
+                            id="btnPerformInference1GroupTest"
+                            value="Perform inference"
+                            onClick="updateInference()"
+                        />
+                        <span
+                            ID="spn1SampTTestOptionsErrorMsg"
+                            CLASS="errormsg"
+                        ></span>
+                    </span>
+                    <span ID="spnInference1GroupSDIntervalOptions">
+                        Confidence level:
+                        <input
+                            id="num1SDCLevel"
+                            type="number"
+                            step="0.1"
+                            value="95"
+                            min="0.1"
+                            max="99.9"
+                        />% <br /><br /><input
+                            type="button"
+                            id="btnPerformInference1GroupSDCI"
+                            value="Perform inference"
+                            onClick="updateInference()"
+                        />
+                    </span>
+                    <span ID="spnInference1GroupSDTestOptions">
+                        <label for="sel1SampSDTestSides"
+                            >Alternative hypothesis:</label
+                        >
+                        <select id="sel1SampSDTestSides">
+                            <option value="2">&sigma; &gt;</option>
+                            <option value="0">&sigma; &lt;</option>
+                            <option value="1">&sigma; &#8800;</option>
+                        </select>
+                        <label for="txt1SampSDTestHypothesizedSD"
+                            >Hypothesized standard deviation:</label
+                        >
+                        <input
+                            type="text"
+                            id="txt1SampSDTestHypothesizedSD"
+                            size="4"
+                        />
+                        <br /><br /><input
+                            type="button"
+                            id="btnPerformInference1GroupSDTest"
+                            value="Perform inference"
+                            onClick="updateInference()"
+                        />
+                        <span
+                            ID="spn1SampSDTestOptionsErrorMsg"
+                            CLASS="errormsg"
+                        ></span>
+                    </span>
+                    <span ID="spnInference1GroupPairedTestOptions"
+                        ><br />
+                        <label for="sel1SampPairedTestSides"
+                            >Alternative hypothesis is that the population
+                            median difference (Group 1 - Group 2) is
+                        </label>
+                        <select id="sel1SampPairedTestSides">
+                            <option value="2">&gt; 0</option>
+                            <option value="0">&lt; 0</option>
+                            <option value="1">&#8800; 0</option>
+                        </select>
+                        <br /><br /><input
+                            type="button"
+                            id="btnPerformInferencePairedTest"
+                            value="Perform inference"
+                            onClick="updateInference()"
+                        />
+                    </span>
+                    <span ID="spnInference1GroupMedianTestOptions"
+                        ><br />
+                        <label for="sel1SampMedianTestSides"
+                            >Alternative hypothesis is that the population
+                            median is
+                        </label>
+                        <select id="sel1SampMedianTestSides">
+                            <option value="2">&gt;</option>
+                            <option value="0">&lt;</option>
+                            <option value="1">&#8800;</option>
+                        </select>
+                        <label for="txt1SampMedianTestHypothesizedMedian"
+                            >Hypothesized median:</label
+                        >
+                        <input
+                            type="text"
+                            id="txt1SampMedianTestHypothesizedMedian"
+                            size="4"
+                        />
+                        <br /><br /><input
+                            type="button"
+                            id="btnPerformInference1GroupMedianTest"
+                            value="Perform inference"
+                            onClick="updateInference()"
+                        />
+                        <span
+                            ID="spn1SampMedianTestOptionsErrorMsg"
+                            CLASS="errormsg"
+                        ></span>
+                    </span>
+                </div>
+                <div id="divSimulationOptions">
+                    <span ID="spnSimulationDescription"></span><br />
+                    <label for="txtNumSamples">Number of samples to add:</label>
+                    <input
+                        type="text"
+                        id="txtNumSamples"
+                        size="4"
+                        onKeyDown="if (event.which == 13 || event.keyCode == 13) updateInference()"
+                    /><br />
+                    The applet will graph all of your results until you hit
+                    "Reset simulation."<br />
+                    <input
+                        type="button"
+                        id="btnPerformSimulation"
+                        value="Add samples"
+                        onClick="updateInference()"
+                    />
+                    <input
+                        type="button"
+                        id="btnClearSimulation"
+                        value="Reset simulation"
+                        onClick="clearSimulationResults()"
+                    />
+                    <span ID="spnSimulationErrorMsg" CLASS="errormsg"></span>
+                </div>
+                <br />
+                <span
+                    ID="spnInferenceResults"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Inference results"
+                ></span>
+                <span
+                    ID="spnSimulationResults"
+                    tabindex="0"
+                    aria-live="polite"
+                    role="region"
+                    aria-label="Simulation results"
+                >
+                    <table>
+                        <tr>
+                            <td>
+                                <div
+                                    id="divSimulationPlot"
+                                    tabindex="0"
+                                    aria-live="polite"
+                                    role="region"
+                                    aria-label="Simulation plot area"
+                                ></div>
+                                <span ID="spnSimulationDotplotCountingOptions">
+                                    Count the number and percent of dots
+                                    <select
+                                        id="selSimulationDotplotCountDir"
+                                        onChange="handleSimulationDotplotCount()"
+                                    >
+                                        <option value="left">less than</option>
+                                        <option value="right">
+                                            greater than
+                                        </option>
+                                    </select>
+                                    <label for="txtSimulationDotplotCountBound"
+                                        >or equal to</label
+                                    >
+                                    <input
+                                        type="text"
+                                        id="txtSimulationDotplotCountBound"
+                                        size="5"
+                                        onChange="handleSimulationDotplotCount()"
+                                        onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSimulationDotplotCount()"
+                                    />
+                                    <input
+                                        type="button"
+                                        id="btnDotplotCount"
+                                        value="Count"
+                                        onClick="handleSimulationDotplotCount()"
+                                    /><br />
+                                    -OR-<br />
+                                    <label for="txtSimulationDotplotMiddlePct"
+                                        >Find endpoints for the middle</label
+                                    >
+                                    <input
+                                        type="number"
+                                        id="txtSimulationDotplotMiddlePct"
+                                        min="0"
+                                        max="100"
+                                        step="0.1"
+                                        value="95"
+                                        onChange="handleSimulationDotplotCount(true)"
+                                        onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSimulationDotplotCount(true)"
+                                    />% of simulated means
+                                    <input
+                                        type="button"
+                                        id="btnDotplotCI"
+                                        value="Find endpoints"
+                                        onClick="handleSimulationDotplotCount(true)"
+                                    /><br />
+                                    <input
+                                        type="button"
+                                        id="btnClearDotplotCount"
+                                        value="Clear selection"
+                                        onClick="clearSimulationDotplotCount()"
+                                    /><br />
+                                    <span
+                                        ID="spnSimulationDotplotCountErrorMsg"
+                                        CLASS="errormsg"
+                                    ></span>
+                                </span>
+                            </td>
+                            <td valign="top">
+                                # of samples:<br /><span
+                                    ID="spnNumTrials"
+                                ></span
+                                ><br />
+                                Most recent result:<br /><span
+                                    ID="spnRecentResult"
+                                ></span
+                                ><br />
+                                Mean:<br /><span ID="spnSimMean"></span><br />
+                                SD:<br /><span ID="spnSimSD"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </span>
+            </div>
+            <!-- Scroll buffer for screen bottom -->
+            <br />
+            <a href="javascript:STAP.Preferences.launchPreferencePage();"
+                >Adjust color, rounding, and percent/proportion preferences</a
+            >
+            | <a href="./">Back to menu</a>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+        </form>
+    </body>
+</html>

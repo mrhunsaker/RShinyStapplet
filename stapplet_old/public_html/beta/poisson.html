@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MVPXVT3DMR');
+</script>
+    <META CHARSET="UTF-8">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+    <TITLE>Poisson Distributions</TITLE>
+    <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/d3.v3.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/stapplet_latest.js"></SCRIPT>
+    <SCRIPT SRC="./js/poisson.js"></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Poisson Distributions</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divPoisson">
+                <LABEL FOR="txtPoissonMean">Mean =</LABEL> <INPUT TYPE="number" STEP="0.01" MIN="0.01" ID="txtPoissonMean"><BR><BR>
+                <LABEL FOR="selPoissonX">Calculate the probability of</LABEL> <SELECT ID="selPoissonX">
+                    <OPTION VALUE="eq">exactly</OPTION>
+                    <OPTION VALUE="lt">less than</OPTION>
+                    <OPTION VALUE="le">at most</OPTION>
+                    <OPTION VALUE="ge">at least</OPTION>
+                    <OPTION VALUE="gt">more than</SELECT>
+                <INPUT TYPE="number" MIN="0" MAX="1000" STEP="1" ID="txtPoissonX" onChange="calculatePoissonX()"> <LABEL FOR="txtPoissonX">successes.</LABEL>
+                <INPUT TYPE="button" VALUE="Go!" onClick="calculatePoissonX()"> <SPAN ID="spnPoissonXResult"></SPAN><BR>
+                -OR-<BR>
+                <LABEL FOR="txtPoissonCdfLeft">Calculate the probability of between</LABEL> <INPUT TYPE="number" MIN="0" MAX="1000" STEP="1" ID="txtPoissonCdfLeft" onChange="calculatePoissonCdf()">
+                <LABEL FOR="txtPoissonCdfRight">and</LABEL> <INPUT TYPE="number" MIN="0" MAX="1000" STEP="1" ID="txtPoissonCdfRight" onChange="calculatePoissonCdf()"> successes (inclusive).
+                <INPUT TYPE="button" VALUE="Go!" onClick="calculatePoissonCdf()"> <SPAN ID="spnPoissonCdfResult"></SPAN><BR><BR>
+                <SPAN CLASS="errormsg" id="spnPoissonMsg"></SPAN>
+            </DIV>
+            <BR>
+            <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+        </FORM>
+    </BODY>
+</HTML>

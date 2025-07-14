@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+    <META NAME="author" CONTENT="Robert Amar">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+    <TITLE>Streakiness</TITLE>
+	<link href="./css/master.css" rel="stylesheet">
+	<script src="./js/jstat.min.js"></script>
+	<script src="./js/d3.v3.min.js"></script>
+	<script src="./js/stapplet_1.0.js"></script>
+	<script src="./js/streak.js"></script>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Number of Streaks</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM>
+		Data entry method:
+		<SELECT ID="selDataEntryMethod" onChange="handleDataEntryChange()">
+			<OPTION VALUE="raw">Raw Data</OPTION>
+			<OPTION VALUE="summary">Summary</OPTION>
+		</SELECT>
+		<DIV ID="divDataEntryRaw">
+	            Enter the observed sequence of outcomes as a string of single uppercase letters with no spaces.<BR>
+	            Outcome entry format: <SELECT ID="selDataRawFormat" onChange="handleDataRawFormatChange()">
+	            	<OPTION VALUE="0">Y/N (Yes / No)</OPTION>
+	            	<OPTION VALUE="1">S/F (Success / Failure)</OPTION>
+	            	<OPTION VALUE="2">W/L (Win / Loss)</OPTION>
+	            </SELECT><BR>
+	            Observed sequence: <INPUT TYPE="text" ID="txtDataRaw" SIZE="40" onInput="streakInputChanged()"><BR>
+		    Number of observed streaks: <SPAN ID="spnRawStreakCount"></SPAN>
+		</DIV>
+		<DIV ID="divDataEntrySummary">
+			Number of observed successes: <INPUT TYPE="text" ID="txtDataSummarySuccesses" SIZE="4" onChange="handleInputChanged(this)"><BR>
+			Number of observed failures: <INPUT TYPE="text" ID="txtDataSummaryFailures" SIZE="4" onChange="handleInputChanged(this)">
+		</DIV>
+               <SPAN CLASS="errormsg" id="spnSeqMsg"></SPAN>
+	<INPUT TYPE="button" ID="btnBeginAnalysis" VALUE="Begin analysis" onClick="beginAnalysis()">
+	<INPUT TYPE="button" ID="btnChangeInputs" VALUE="Change inputs" onClick="deactivatePage()" DISABLED="true">
+	<INPUT TYPE="button" ID="btnResetApplet" VALUE="Reset applet" onClick="resetApplet()">
+        <DIV ID="divAnalysis">
+            <BR>Number of simulated sequences to add: <INPUT TYPE="text" ID="txtTrials" SIZE="4" onKeyDown="if (event.which == 13 || event.keyCode == 13) validateSimulationInput()"><BR>
+                The applet will graph all of your results until you hit "Reset simulation."<BR>
+            <INPUT TYPE="button" ID="btnAddTrials" VALUE="Add simulated sequences" onClick="validateSimulationInput()">
+            <INPUT TYPE="button" ID="btnResetTrials" VALUE="Reset simulation" onClick="clearAnalysis()">
+            <SPAN CLASS="message" id="spnTrialsMsg"></SPAN>
+        <SPAN ID="spnSimulationResults">
+	<TABLE>
+	<TR><TD>
+	    <DIV ID="divDotplot"></DIV>
+            <SPAN ID="spnSimulationDotplotCountingOptions">
+                Count the number and percent of dots <SELECT ID="selSimulationDotplotCountDir" onChange="handleSimulationDotplotCount()">
+                    <OPTION VALUE="left">less than</OPTION>
+                    <OPTION VALUE="right">greater than</OPTION>
+                </SELECT>
+                <LABEL FOR="txtSimulationDotplotCountBound">or equal to</LABEL> <INPUT TYPE="text" ID="txtSimulationDotplotCountBound" SIZE="5" onChange="handleSimulationDotplotCount()" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSimulationDotplotCount()">
+                <INPUT TYPE="button" ID="btnDotplotCount" VALUE="Count" onClick="handleSimulationDotplotCount()">
+                <INPUT TYPE="button" ID="btnClearDotplotCount" VALUE="Remove count" onClick="clearSimulationDotplotCount()"><BR>
+                <SPAN id="spnSimulationDotplotCountResult"></SPAN><BR>
+                <SPAN ID="spnSimulationDotplotCountErrorMsg" CLASS="errormsg"></SPAN>
+            </SPAN>
+	</TD>
+	<TD VALIGN="top">
+	    # of sequences:<BR><SPAN ID="spnNumSeq"></SPAN><BR>
+            Most recent result:<BR><SPAN ID="spnRecentResult"></SPAN><BR>
+            Mean:<BR><SPAN ID="spnSimMean"></SPAN><BR>
+            SD:<BR><SPAN ID="spnSimSD"></SPAN>
+	</TD></TR>
+	</TABLE>
+	</SPAN>
+        </DIV>
+        </FORM>
+	    <BR>
+	    <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+    </BODY>
+</HTML>

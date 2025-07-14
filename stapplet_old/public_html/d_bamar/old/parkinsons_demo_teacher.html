@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+    <META CHARSET="UTF-8">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+    <TITLE>Parkinson's Activity - Teacher Page</TITLE>
+    <script src="./js/d3.v3.min.js"></script>
+    <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/stapplet_1.0.js"></SCRIPT>
+    <SCRIPT SRC="./js/parkinsons_demo_teacher.js"></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Parkinson's Activity - Teacher Page</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divOptions">
+                Class code: <SPAN ID="spnClassCode">{none}</SPAN>
+                <INPUT TYPE="button" ID="btnNewClassCode" VALUE="Generate new" onClick="newClassCode();">
+                <INPUT TYPE="button" ID="btnEnterClassCode" VALUE="Enter a code" onClick="enterClassCode();"><BR>
+                <SPAN ID="spnClassCodeMsg"></SPAN><BR>
+            </DIV>
+            <DIV ID="divActivity">
+                <H3>Parkinson's Activity Trial</H3>
+                Trial <SPAN ID="spnTrialNumber"></SPAN> of 12<BR>
+                <INPUT TYPE="button" ID="btnGuessYes" VALUE="Parkinson's" onClick="makeGuess(true);">
+                <INPUT TYPE="button" ID="btnGuessNo" VALUE="No Parkinson's" onClick="makeGuess(false);">
+            </DIV>
+            <DIV ID="divActivityResults">
+                <H3>Trial Results</H3>
+                You got <SPAN ID="spnNumCorrect"></SPAN> of 12 correct.<BR>
+                <SPAN ID="spnDataAddMsg"></SPAN><BR>
+                <INPUT TYPE="button" ID="btnRestart" VALUE="Do it again!" onClick="initializeActivity();">
+            </DIV>
+            <DIV ID="divGraphDistributions">
+                <H3>Class Results</H3>
+                <LABEL FOR="txtRefreshTime">Refresh after this many seconds:</LABEL> <INPUT TYPE="number" ID="txtRefreshTime" MIN="0" MAX="30" VALUE="5" onChange="checkRefresh();"> (set to 0 to pause)<BR>
+                <DIV ID="divPlot"></DIV>
+                <DIV ID="divDotplotCountingOptions">
+	                Count the number and percent of dots <SELECT ID="selDotplotCountDir" onChange="handleDotplotCount()">
+	                    <OPTION VALUE="left">less than</OPTION>
+	                    <OPTION VALUE="right">greater than</OPTION>
+	                </SELECT>
+	                <LABEL FOR="txtDotplotCountBound">or equal to</LABEL> <INPUT TYPE="text" ID="txtDotplotCountBound" SIZE="5" onChange="handleDotplotCount()" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleDotplotCount()">
+                        <INPUT TYPE="button" ID="btnDotplotCount" VALUE="Count" onClick="handleDotplotCount()">
+                        <INPUT TYPE="button" ID="btnClearDotplotCount" VALUE="Remove count" onClick="clearDotplotCount()"><BR>
+                        NOTE: For counting to work properly, you need to pause the refresh using the options above.<BR>
+                        <SPAN ID="spnDotplotCountErrorMsg" CLASS="errormsg"></SPAN>
+                </DIV>
+                <TEXTAREA TITLE="Graph Data" ID="txtGraphDataCSV"></TEXTAREA>
+                <INPUT TYPE="button" ID="btnGetData" VALUE="Download current data" onClick="exportGraphData();">
+            </DIV>
+            <DIV ID="divSummaryStatistics">
+                <H3>Class Summary Statistics</H3>
+                <SPAN ID="spnSummaryStatistics"></SPAN><BR>
+                <INPUT TYPE="button" ID="btnExportSummary" VALUE="Export summary statistics" onClick="exportSummaryStatistics()">
+                <TEXTAREA TITLE="Summary Statistics" ID="txtSummaryStatisticsCSV"></TEXTAREA>
+            </DIV>
+            <!-- Scroll buffer for screen bottom -->
+            <BR>
+            <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+        </FORM>
+    </BODY>
+</HTML>

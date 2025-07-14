@@ -1,0 +1,189 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+        <META CHARSET="UTF-8">
+        <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+        <TITLE>Two Categorical Variables</TITLE>
+        <SCRIPT SRC="./js/d3.v3.min.js"></SCRIPT>
+        <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+        <SCRIPT SRC="./js/stapplet_1.0.js"></SCRIPT>
+        <SCRIPT SRC="./js/cat2v.js"></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Two Categorical Variables</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <LABEL FOR="selInputType">Input data as:</LABEL>
+            <SELECT ID="selInputType" onChange="return handleInputChange(this)">
+                <OPTION VALUE="counts">Two-way table</OPTION>
+                <OPTION VALUE="raw">Raw data</OPTION>
+            </SELECT><BR><BR>
+            <DIV ID="divInputCounts">
+                <TABLE ID="tblInputCounts">
+                    <TR>
+                        <TD ROWSPAN="5" ID="tdRowspanOuter">
+                            <LABEL FOR="txtCountsResponseName">Response variable:</LABEL><BR><INPUT TYPE="text" onChange="return deactivatePage(this)" ID="txtCountsResponseName" SIZE="30">
+                        </TD>
+                        <TD COLSPAN="4" ID="tdColspanUpper"><LABEL FOR="txtCountsExplanatoryName">Explanatory variable:</LABEL> <INPUT TYPE="text" onChange="return deactivatePage(this)" ID="txtCountsExplanatoryName" SIZE="30"></TD>
+                    </TR>
+                    <TR>
+                        <TD></TD>
+                        <TD><INPUT TYPE="text" TITLE="Column Name" CLASS="colName" onChange="return deactivatePage(this)" onFocus="handleTableEntryFocus(this)" onBlur="handleTableEntryBlur(this,'[column name]')" VALUE="[column name]" SIZE="15"></TD>
+                        <TD><INPUT TYPE="text" TITLE="Column Name" CLASS="colName" onChange="return deactivatePage(this)" onFocus="handleTableEntryFocus(this)" onBlur="handleTableEntryBlur(this,'[column name]')" VALUE="[column name]" SIZE="15"></TD>
+                        <TD ROWSPAN="3" ID="tdRowspanInner" STYLE="vertical-align: top">
+                            <INPUT TYPE="button" ID="btnDelCol" VALUE="-" onClick="removeCountsTableColumn()">
+                            <INPUT TYPE="button" ID="btnAddCol" VALUE="+" onClick="addCountsTableColumn()">
+                        </TD>
+                    </TR>
+                    <TR>
+                        <TD><INPUT TYPE="text" TITLE="Row Name" CLASS="rowName" onChange="return deactivatePage(this)" onFocus="handleTableEntryFocus(this)" onBlur="handleTableEntryBlur(this,'[row name]')" VALUE="[row name]" SIZE="15"></TD>
+                        <TD><INPUT TYPE="text" TITLE="Row Data" CLASS="data" onChange="return deactivatePage(this)" onFocus="handleTableEntryFocus(this)" onBlur="handleTableEntryBlur(this,'[count]')" VALUE="[count]" SIZE="15"></TD>
+                        <TD><INPUT TYPE="text" TITLE="Row Data" CLASS="data" onChange="return deactivatePage(this)" onFocus="handleTableEntryFocus(this)" onBlur="handleTableEntryBlur(this,'[count]')" VALUE="[count]" SIZE="15"></TD>
+                    </TR>
+                    <TR>
+                        <TD><INPUT TYPE="text" TITLE="Row Name" CLASS="rowName" onChange="return deactivatePage(this)" onFocus="handleTableEntryFocus(this)" onBlur="handleTableEntryBlur(this,'[row name]')" VALUE="[row name]" SIZE="15"></TD>
+                        <TD><INPUT TYPE="text" TITLE="Row Data" CLASS="data" onChange="return deactivatePage(this)" onFocus="handleTableEntryFocus(this)" onBlur="handleTableEntryBlur(this,'[count]')" VALUE="[count]" SIZE="15"></TD>
+                        <TD><INPUT TYPE="text" TITLE="Row Data" CLASS="data" onChange="return deactivatePage(this)" onFocus="handleTableEntryFocus(this)" onBlur="handleTableEntryBlur(this,'[count]')" VALUE="[count]" SIZE="15"></TD>
+                    </TR>
+                    <TR>
+                        <TD COLSPAN="4" ID="tdColspanLower" STYLE="text-align: left;">
+                            <INPUT TYPE="button" ID="btnDelRow" VALUE="-" onClick="removeCountsTableRow()">
+                            <INPUT TYPE="button" ID="btnAddRow" VALUE="+" onClick="addCountsTableRow()">
+                        </TD>
+                    </TR>
+                </TABLE>
+            </DIV>
+            <DIV ID="divInputRawData">
+Enter the data (category names) keeping individuals in the same order for both variables. Separate with commas or spaces. Category names cannot have spaces in them.<BR><BR>
+                <TABLE>
+                    <TR>
+                        <TH>Variable</TH>
+                        <TH>Name</TH>
+                        <TH>Data</TH>
+                    </TR>
+                    <TR>
+                        <TD><LABEL FOR="txtRawExplanatoryName">Explanatory</LABEL></TD>
+                        <TD><INPUT TYPE="text" ID="txtRawExplanatoryName" SIZE="10" onChange="return deactivatePage(this)"></TD>
+                        <TD><INPUT TYPE="text" TITLE="Explanatory Data" ID="txtRawExplanatoryData" SIZE="50" onChange="return deactivatePage(this)"></TD>
+                    </TR>
+                    <TR>
+                        <TD><LABEL FOR="txtRawResponseName">Response</LABEL></TD>
+                        <TD><INPUT TYPE="text" ID="txtRawResponseName" SIZE="10" onChange="return deactivatePage(this)"></TD>
+                        <TD><INPUT TYPE="text" TITLE="Response Data" ID="txtRawResponseData" SIZE="50" onChange="return deactivatePage(this)"></TD>
+                    </TR>
+                </TABLE>            
+            </DIV>
+            <SPAN ID="spnDataMsg" CLASS="errormsg"></SPAN><BR>
+            <INPUT TYPE="button" VALUE="Begin analysis" onClick="beginAnalysis()">
+            <INPUT TYPE="button" ID="btnChangeInputs" VALUE="Edit inputs" onClick="deactivatePage()">
+            <INPUT TYPE="button" VALUE="Reset everything" onClick="resetApplet()">
+            <DIV ID="divDisplayGraph">
+                <H3>Graph Distributions</H3>
+                <LABEL FOR="selGraphType">Chart type:</LABEL>
+                <SELECT ID="selGraphType" onChange="updateGraph()">
+                    <OPTION VALUE="stacked">Segmented bar</OPTION>
+                    <OPTION VALUE="mosaic">Mosaic plot</OPTION>
+                    <OPTION VALUE="side">Side-by-side bar</OPTION>
+                </SELECT>
+                <SPAN ID="spnSideBarGraphOptions">
+                    <LABEL FOR="selSideBarGraphFreq">Label bar graph with:</LABEL>
+                    <SELECT ID="selSideBarGraphFreq" onChange="updateGraph()">
+                        <OPTION VALUE="rel">Relative frequency</OPTION>
+                        <OPTION VALUE="freq">Frequency</OPTION>
+                    </SELECT>
+                </SPAN><BR><BR>
+                <DIV ID="divPlot"></DIV><BR>
+            </DIV><BR>
+            <DIV ID="divSummaryStatistics">
+                <H3>Summary Statistics</H3>
+                <SPAN ID="spnSummaryStatistics"></SPAN><BR><BR>
+                <INPUT TYPE="button" VALUE="Export summary statistics" onClick="exportSummaryStatistics()">
+                <TEXTAREA TITLE="Summary Statistics" ID="txtSummaryStatisticsCSV"></TEXTAREA>
+            </DIV><BR>
+            <DIV ID="divInference">
+                <H3>Perform Inference</H3>
+                <SPAN ID="spn2CatInferenceOptions">
+                    <LABEL FOR="sel2CatInference">Inference procedure:</LABEL>
+                    <SELECT ID="sel2CatInference" onChange="handle2CatInferenceChange(this)">
+                        <OPTION VALUE="simulation" ID="optSimProp">Simulate difference in percents</OPTION>
+                        <OPTION VALUE="interval">2-sample z interval (p&#x2081; - p&#x2082;)</OPTION>
+                        <OPTION VALUE="test">2-sample z test (p&#x2081; - p&#x2082;)</OPTION>
+                        <OPTION VALUE="chi">Chi-square test for independence</OPTION>
+                    </SELECT><BR>
+                    <SPAN ID="spnZIntervalOptions">
+                        Confidence level: <INPUT ID="numCLevel" TYPE="number" VALUE="95" STEP="0.1" MIN="0.1" MAX="99.9" SIZE="5">%<BR>
+                    </SPAN>
+                    <SPAN ID="spnZTestOptions">
+                        <LABEL FOR="selZTestSides">Alternative hypothesis:</LABEL> <SELECT ID="selZTestSides">
+                            <OPTION VALUE="2">p&#x2081; - p&#x2082; &gt; 0</OPTION>
+                            <OPTION VALUE="0">p&#x2081; - p&#x2082; &lt; 0</OPTION>
+                            <OPTION VALUE="1">p&#x2081; - p&#x2082; &#8800; 0</OPTION>
+                        </SELECT><BR>
+                    </SPAN>
+                    <SPAN ID="spnSuccessCat">
+                        <LABEL FOR="sel2CatSuccess">Category to indicate as success:</LABEL>
+                        <SELECT ID="sel2CatSuccess"></SELECT><BR>
+                    </SPAN>
+                    <SPAN ID="spnTradButton">
+	                    <BR><INPUT TYPE="button" VALUE="Perform inference" onClick="updateInference()">
+	            </SPAN>
+                        <SPAN ID="spnSimulationOptions">
+                            <BR>Simulates the distribution of the difference in sample <SPAN CLASS="fillPropPct"></SPAN> of successes when the observed successes and failures are
+                            combined, shuffled, and redistributed into two groups that match the sizes of the original groups.<BR>
+	                    <LABEL FOR="txtNumSamples">Number of trials to add:</LABEL> <INPUT TYPE="text" ID="txtNumSamples" SIZE="4" onKeyDown="if (event.which == 13 || event.keyCode == 13) updateInference()"><BR>
+	                The applet will graph all of your results until you hit "Reset simulation."<BR>
+	                    <INPUT TYPE="button" ID="btnPerformSimulation" VALUE="Add trials" onClick="updateInference()">
+	                    <INPUT TYPE="button" ID="btnClearSimulation" VALUE="Reset simulation" onClick="clearSimulationResults()">
+                        </SPAN>
+                </SPAN>
+                <SPAN ID="spn3CatInferenceOptions">
+                    <INPUT TYPE="button" VALUE="Perform chi-square test for independence" onClick="updateInference()">
+                </SPAN><BR>
+                <SPAN ID="spnInferenceMsg" CLASS="errormsg"></SPAN><BR>
+                <SPAN ID="spnInferenceResults"></SPAN><BR>
+                    <SPAN ID="spnSimulationResults">
+			<TABLE>
+			<TR><TD>
+		                    <DIV ID="divSimGraph"></DIV>
+                    <SPAN ID="spnSimulationDotplotCountingOptions">
+	                Count the number and percent of dots <SELECT ID="selSimulationDotplotCountDir" onChange="handleSimulationDotplotCount()">
+	                    <OPTION VALUE="left">less than</OPTION>
+	                    <OPTION VALUE="right">greater than</OPTION>
+	                </SELECT>
+	                <LABEL FOR="txtSimulationDotplotCountBound">or equal to</LABEL> <INPUT TYPE="text" ID="txtSimulationDotplotCountBound" SIZE="5" onChange="handleSimulationDotplotCount()" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSimulationDotplotCount()">
+                        <INPUT TYPE="button" ID="btnDotplotCount" VALUE="Count" onClick="handleSimulationDotplotCount()">
+                        <INPUT TYPE="button" ID="btnClearDotplotCount" VALUE="Remove count" onClick="clearSimulationDotplotCount()"><BR>
+                        <SPAN ID="spnSimulationDotplotCountErrorMsg" CLASS="errormsg"></SPAN>
+                    </SPAN>
+			</TD>
+			<TD VALIGN="top">
+			    # of trials:<BR><SPAN ID="spnNumTrials"></SPAN><BR>
+		            Most recent result:<BR><SPAN ID="spnRecentResult"></SPAN><BR>
+		            Mean:<BR><SPAN ID="spnSimMean"></SPAN><BR>
+		            SD:<BR><SPAN ID="spnSimSD"></SPAN><BR>
+			</TD></TR>
+			</TABLE>	
+                    </SPAN><BR> 
+            </DIV>
+            <BR>
+            <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+            <BR>
+        </FORM>
+    </BODY>
+</HTML>

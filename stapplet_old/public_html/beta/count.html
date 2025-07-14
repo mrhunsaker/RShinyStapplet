@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MVPXVT3DMR');
+</script>
+    <META CHARSET="UTF-8">
+    <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+    <TITLE>Counting Methods</TITLE>
+    <SCRIPT SRC="./js/d3.v3.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+    <SCRIPT SRC="./js/stapplet_latest.js"></SCRIPT>
+    <SCRIPT SRC="./js/count.js"></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">Counting Methods</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divCounting">
+                <LABEL FOR="txtCountingN">n =</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtCountingN">
+                <LABEL FOR="txtCountingR">r =</LABEL> <INPUT TYPE="text" SIZE="8" ID="txtCountingR"><BR><BR>
+                <INPUT TYPE="button" VALUE="Calculate n!" onClick="calculateFactorial()">
+                <INPUT TYPE="button" VALUE="Calculate nPr" onClick="calculatePermutations()">
+                <INPUT TYPE="button" VALUE="Calculate nCr" onClick="calculateCombinations()"><BR>
+                <SPAN CLASS="errormsg" id="spnCountingMsg"></SPAN>
+                <SPAN ID="spnCountingResult"></SPAN><BR>
+            </DIV>
+            <BR>
+            <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+        </FORM>
+    </BODY>
+</HTML>

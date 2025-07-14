@@ -1,0 +1,182 @@
+<!DOCTYPE HTML>
+<HTML LANG="en">
+    <HEAD>
+        <META CHARSET="UTF-8">
+        <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+        <TITLE>One Categorical Variable, Single Group</TITLE>
+	    <script src="./js/d3.v3.min.js"></script>
+        <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+        <SCRIPT SRC="./js/stapplet_1.0.1.js"></SCRIPT>
+        <SCRIPT SRC="./js/cat1v_single.js"></SCRIPT>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <SPAN CLASS="header">One Categorical Variable,
+                Single Group(revised)</SPAN>
+        </DIV>
+        <FORM>
+            <DIV>
+            <P>
+            <LABEL FOR="txtVariableName">Variable name:</LABEL><INPUT TYPE="text" ID="txtVariableName" SIZE="40">
+            </P><P>
+            <LABEL FOR="selInputType1Grp">Input data as:</LABEL><SELECT ID="selInputType1Grp" onChange="return handleInput1GrpChange(this)">
+                    <OPTION VALUE="counts">Counts in categories</OPTION>
+                    <OPTION VALUE="raw">Raw data</OPTION>
+                </SELECT>
+            </P>
+            </DIV>
+            <DIV ID="divInputCounts1Grp">
+                <TABLE ID="tblInputCounts1Grp">
+                        <TR>
+                            <TD></TD>
+                            <TH SCOPE="col">Category Name</TH>
+                            <TH SCOPE="col">Frequency</TH>
+                            <TD CLASS="tableleft"><LABEL FOR="txtNumCategories">Number of categories: </LABEL><INPUT TYPE="number" ID="txtNumCategories" MIN="2" MAX="100" STEP="1" VALUE="2" onChange="handleNumCategoriesChange();">
+                            <DIV ID="spnNumCategoriesMsg" CLASS="errormsg"></DIV></TD>
+                        </TR>
+                        <TR>
+                            <TH SCOPE="row">1</TH>
+                            <TD><INPUT TYPE="text" ARIA-LABEL="Category 1 Name" CLASS="name" ID="txtInputCounts1GrpName1" SIZE="10" onChange="return deactivatePage1Grp(this)"></TD>
+                            <TD><INPUT TYPE="text" ARIA-LABEL="Category 1 Frequency" CLASS="data" ID="txtInputCounts1GrpData1" SIZE="10" onChange="return deactivatePage1Grp(this)"></TD>
+                            <TD CLASS="tableleft"><INPUT TYPE="button" CLASS="ctl" ARIA-LABEL="Delete Category 1" VALUE="Delete category 1" ID="txtInputCounts1GrpCtl1" onClick="removeCountsTableRow1Grp(this)"></TD>
+                        </TR>
+                        <TR>
+                            <TH SCOPE="row">2</TH>
+                            <TD><INPUT TYPE="text" ARIA-LABEL="Category 2 Name" CLASS="name" ID="txtInputCounts1GrpName2" SIZE="10" onChange="return deactivatePage1Grp(this)"></TD>
+                            <TD><INPUT TYPE="text" ARIA-LABEL="Category 2 Frequency" CLASS="data" ID="txtInputCounts1GrpData2" SIZE="10" onChange="return deactivatePage1Grp(this)"></TD>
+                            <TD CLASS="tableleft"><INPUT TYPE="button" CLASS="ctl" ARIA-LABEL="Delete Category 2" VALUE="Delete category 2" ID="txtInputCounts1GrpCtl2" onClick="removeCountsTableRow1Grp(this)"></TD>
+                        </TR>
+                        <TR>
+                            <TD COLSPAN="4" STYLE="text-align: center;">
+                                <INPUT TYPE="button" ID="btnAddRow1Grp" ARIA-LABEL="Add Category" VALUE="Add category" onClick="addNewCountsRow1Grp()">
+                            </TD>
+                        </TR>
+                    </TABLE>
+                </DIV>
+                <DIV ID="divInputRawData1Grp">
+                    <P>
+                        <LABEL FOR="txtInputRawData1Grp">Input observations (category names) separated by spaces or commas. (Category names cannot have spaces in them.)</LABEL>
+                        </P><P>
+                    <INPUT TYPE="text" ID="txtInputRawData1Grp" SIZE="80" onChange="deactivatePage1Grp(this)">
+                    </P>
+                </DIV>
+                <DIV ID="spnData1GrpMsg" CLASS="errormsg"></DIV>
+                <INPUT TYPE="button" ARIA-LABEL="Begin analysis" VALUE="Begin analysis" onClick="beginAnalysis1Grp()">
+                <INPUT TYPE="button" ARIA-LABEL="Edit inputs" ID="btnChangeInputs1Grp" VALUE="Edit inputs" onClick="deactivatePage1Grp()">
+                <INPUT TYPE="button" ARIA-LABEL="Reset everything" VALUE="Reset everything" onClick="resetApplet1Grp()">
+                <DIV ID="divDisplayGraph1Grp">
+                    <P CLASS="sectionheader">Graph Distribution</P>
+                    <LABEL FOR="selGraphType1Grp">Plot type:</LABEL>
+                    <SELECT ID="selGraphType1Grp" onChange="updateGraph1Grp()">
+                        <OPTION VALUE="bar">Bar chart</OPTION>
+                        <OPTION VALUE="seg">Segmented bar chart</OPTION>
+                        <OPTION VALUE="pie">Pie chart</OPTION>
+                    </SELECT>
+                    <SPAN ID="spnBarGraph1GrpOptions">
+                        <LABEL FOR="selBarGraph1GrpFreq">Label bar chart with:</LABEL>
+                        <SELECT ID="selBarGraph1GrpFreq" onChange="handleBarGraph1GrpFreq()">
+                            <OPTION VALUE="freq">Frequency</OPTION>
+                            <OPTION VALUE="rel">Relative frequency</OPTION>
+                        </SELECT>
+                    </SPAN>
+		    <DIV ID="divDataGraph"></DIV>
+                </DIV>
+                <DIV ID="divSummaryStatistics1Grp">
+                    <P CLASS="sectionheader">Summary Statistics</P>
+                    <SPAN ID="spnSummaryStatistics1Grp"></SPAN><BR>
+                    <INPUT TYPE="button" VALUE="Export summary statistics" onClick="exportSummaryStatistics1Grp()">
+                    <TEXTAREA TITLE="Summary Statistics" ID="txtSummaryStatistics1GrpCSV"></TEXTAREA>
+                </DIV>
+                <DIV ID="divInference1Grp">
+                    <P CLASS="sectionheader">Perform Inference</P>
+                        <LABEL FOR="selInference1GrpType">Inference procedure:</LABEL>
+                        <SELECT ID="selInference1GrpType" onChange="handleInference1GrpChange(this)">
+                            <OPTION VALUE="simcount">Simulate sample count</OPTION>
+                            <OPTION VALUE="simprop" ID="optSimProp">Simulate sample percent</OPTION>
+                            <OPTION VALUE="interval">1-sample z interval</OPTION>
+                            <OPTION VALUE="test">1-sample z test</OPTION>
+                            <OPTION VALUE="GOF">Chi-square goodness-of-fit test</OPTION>
+                        </SELECT>
+                        <SPAN ID="spnCatSuccess1Grp">
+                            <LABEL FOR="selCatSuccess1Grp">Category to indicate as success:</LABEL>
+                            <SELECT ID="selCatSuccess1Grp"></SELECT>
+                        </SPAN>
+                        <SPAN ID="spnZInterval1GrpOptions">
+                            <LABEL FOR="numCLevel1Grp">Confidence level:</LABEL>
+                            <INPUT TYPE="number" STEP="0.1" MAX="99.9" MIN="0.1" ID="numCLevel1Grp" VALUE="95" SIZE="5">%
+                            <P>
+                            <INPUT TYPE="button" VALUE="Perform inference" onClick="updateInference1Grp()">
+                            </P>
+                        </SPAN>
+                        <SPAN ID="spnZTest1GrpOptions">
+                            <P>
+                            <LABEL FOR="selZTestSides1Grp">Alternative hypothesis:</LABEL> <SELECT ID="selZTestSides1Grp">
+                                <OPTION VALUE="2">p &gt;</OPTION>
+                                <OPTION VALUE="0">p &lt;</OPTION>
+                                <OPTION VALUE="1">p &#8800;</OPTION>
+                            </SELECT>
+                            <LABEL FOR="txtHypothesizedProp1Grp">Hypothesized <SPAN CLASS="fillPropPct"></SPAN>:</LABEL> <INPUT TYPE="text" ID="txtHypothesizedProp1Grp" SIZE="4">
+                            </P><P>
+                            <INPUT TYPE="button" VALUE="Perform inference" onClick="updateInference1Grp()">
+                            </P>
+                        </SPAN>
+                        <DIV ID="spnChiSquaredTest1GrpOptions">
+                            <P>Enter expected counts for each category.</P>
+                            <TABLE ID="tblChiSquaredExpected1Grp">
+                                <TR><TH>Category</TH><TH>Observed count</TH><TH>Expected count</TH></TR>
+                            </TABLE>
+                            <P>
+                            <INPUT TYPE="button" VALUE="Perform inference" onClick="updateInference1Grp()">
+                            </P>
+                        </DIV>
+                        <SPAN ID="spnSimulation1GrpOptions">
+                            <P><LABEL FOR="selSimulation1GrpType">Simulate the distribution of the sample <SPAN ID="spnSimulation1GrpMeasure"></SPAN> for samples of the original size
+                            assuming that the true <SPAN CLASS="fillPropPct"></SPAN> is equal to</LABEL> <SELECT ID="selSimulation1GrpType" onChange="handleSimulation1GrpTypeChange(this)">
+                                <OPTION VALUE="hyp">a hypothesized value</OPTION>
+                                <OPTION VALUE="obs">the observed value</OPTION>
+                                </SELECT>.</P>
+                                <P>
+                                <SPAN ID="spnSimulation1GrpHypOptions"><LABEL FOR="txtSimulation1GrpHypProportion">Hypothesized <SPAN CLASS="fillPropPct"></SPAN>:</LABEL> 
+                                    <INPUT TYPE="text" ID="txtSimulation1GrpHypProportion" SIZE="4">
+                                </SPAN></P><P>
+                    <LABEL FOR="txtNumSamples1Grp">Number of samples to add:</LABEL> <INPUT TYPE="text" ID="txtNumSamples1Grp" SIZE="4" onKeyDown="if (event.which == 13 || event.keyCode == 13) updateInference()"></P>
+                The applet will graph all of your results until you hit "Reset simulation."<BR>
+                    <INPUT TYPE="button" ID="btnPerformSimulation" VALUE="Add samples" onClick="updateInference1Grp()">
+                    <INPUT TYPE="button" ID="btnClearSimulation" VALUE="Reset simulation" onClick="clearSimulation1GrpResults()">
+                            <SPAN ID="spnSimulation1GrpErrorMsg" CLASS="errormsg"></SPAN>
+                        </SPAN>
+                    <SPAN ID="spnInference1GrpMsg" CLASS="errormsg"></SPAN>
+                    <P><SPAN ID="spnInference1GrpResults"></SPAN>
+                    <SPAN ID="spnSimulation1GrpResults"></SPAN></P>
+			<TABLE>
+			<TR><TD>
+		                    <DIV ID="divSimGraph"></DIV>
+                    <SPAN ID="spnSimulationDotplotCountingOptions">
+	                <P>
+	                    Count the number and percent of dots <SELECT ID="selSimulation1GrpDotplotCountDir" onChange="handleSimulation1GrpDotplotCount()">
+	                    <OPTION VALUE="left">less than</OPTION>
+	                    <OPTION VALUE="right">greater than</OPTION>
+	                </SELECT>
+	                <LABEL FOR="txtSimulation1GrpDotplotCountBound">or equal to</LABEL> <INPUT TYPE="text" ID="txtSimulation1GrpDotplotCountBound" SIZE="5" onChange="handleSimulation1GrpDotplotCount()" onKeyDown="if (event.which == 13 || event.keyCode == 13) handleSimulationDotplotCount()">
+                        <INPUT TYPE="button" ID="btnDotplotCount" VALUE="Count" onClick="handleSimulation1GrpDotplotCount()">
+                        <INPUT TYPE="button" ID="btnClearDotplotCount" VALUE="Remove count" onClick="clearSimulation1GrpDotplotCount()"></P><P>
+                        <SPAN ID="divSimGraphSpnCountMsg"></SPAN>
+                        <SPAN ID="spnSimulation1GrpDotplotCountErrorMsg" CLASS="errormsg"></SPAN>
+                        </P>
+                    </SPAN>
+			</TD>
+			<TD VALIGN="top">
+			    <P># of samples:</P><P><SPAN ID="spnNumTrials"></SPAN></P>
+		        <P>Most recent result:</P><P><SPAN ID="spnRecentResult"></SPAN></P>
+		        <P>Mean:</P><P><SPAN ID="spnSimMean"></SPAN></P>
+		        <P>SD:</P><P><SPAN ID="spnSimSD"></SPAN></P>
+			</TD></TR>
+			</TABLE>	
+                </DIV>
+            <DIV CLASS="bottombar">
+            <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+            </DIV>
+        </FORM>
+    </BODY>
+</HTML>

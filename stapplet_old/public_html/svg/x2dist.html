@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<HTML>
+    <HEAD>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MVPXVT3DMR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MVPXVT3DMR');
+</script>
+        <META NAME="author" CONTENT="Robert Amar">
+        <LINK REL="stylesheet" TYPE="text/css" HREF="./css/master.css">
+        <TITLE>&chi;&sup2; Distributions</TITLE>
+        <script src="./js/d3.v3.min.js"></script>
+        <SCRIPT SRC="./js/jstat.min.js"></SCRIPT>
+        <script src="./js/stapplet_latest.js"></script>
+        <script src="./js/x2dist.js"></script>
+    </HEAD>
+    <BODY>
+        <SPAN CLASS="errormsg" id="spnBrowserMsg"></SPAN>
+        <DIV ID="divHeader" ROLE="banner">
+            <TABLE>
+                <TR><TD CLASS="header">&chi;<SUP>2</SUP> Distributions</TD></TR>
+            </TABLE>
+        </DIV>
+        <FORM ROLE="form">
+            <DIV ID="divX2">
+                <LABEL FOR="selX2Type">Operation:</LABEL> <SELECT ID="selX2Type" ONCHANGE="handleX2Change()">
+                    <OPTION VALUE="spnX2Cdf">Calculate an area under the &chi;&sup2; curve</OPTION>
+                    <OPTION VALUE="spnX2Inv">Calculate a value corresponding to an area</OPTION>
+                </SELECT><BR><BR>
+                <LABEL FOR="txtTDF">Degrees of freedom =</LABEL> <INPUT TYPE="number" STEP="ANY" MIN="1" MAX="300" VALUE="1" ID="txtDF" onChange="handleDFChange()"> 
+                <INPUT TYPE="button" VALUE="Plot distribution" onClick="handleX2Change()"><BR>
+                <SPAN CLASS="errormsg" id="spnX2Msg"></SPAN><BR>
+                <DIV ID="divPlot"></DIV>
+		        <BR>
+        		<DIV ID="divAnalysis">
+        		<INPUT TYPE="button" VALUE="Export SVG" onClick="exportSVG();">
+        		    <BR><BR>
+	                <SPAN ID="spnX2Cdf">
+	                    <LABEL FOR="selX2CdfType">Calculate the area</LABEL> <SELECT ID="selX2CdfType" ONCHANGE="handleX2CdfChange()">
+	                        <OPTION VALUE="right">to the right of a value</OPTION>
+	                        <OPTION VALUE="left">to the left of a value</OPTION>
+	                        <OPTION VALUE="between">between two values</OPTION>
+	                    </SELECT>
+	                    <SPAN ID="spnCdfLabels"><INPUT TYPE="checkbox" ID="chkCdfLabels" onChange="calculateX2Cdf()"><LABEL FOR="chkCdfLabels">Show labels on plot</LABEL></SPAN>
+	                    <BR><BR>
+	                    <SPAN ID="spnX2CdfSingleInput"><LABEL FOR="txtX2CdfSingle">Value:</LABEL> <INPUT TYPE="number" STEP="0.1" MIN="0" ID="txtX2CdfSingle" onChange="calculateX2Cdf()" onKeyDown="if (event.which == 13 || event.keyCode == 13) calculateX2Cdf()"></SPAN>
+	                    <SPAN ID="spnX2CdfRegionInput"><LABEL FOR="txtX2CdfLeft">Left boundary:</LABEL> <INPUT TYPE="number" STEP="0.1" MIN="0" SIZE="8" ONCHANGE="calculateX2Cdf()" ID="txtX2CdfLeft">
+	                    <LABEL FOR="txtX2CdfRight">Right boundary:</LABEL> <INPUT TYPE="number" STEP="0.1" MIN="0" SIZE="8" ONCHANGE="calculateX2Cdf()" ID="txtX2CdfRight"></SPAN>
+	                    <BR><BR><INPUT TYPE="button" VALUE="Calculate area" onClick="calculateX2Cdf()">
+	                </SPAN>
+	                <SPAN ID="spnX2Inv">
+	                    <LABEL FOR="txtX2InvArea">Calculate boundary value(s) for a
+				<SELECT ID="selX2InvType">
+	                           <OPTION VALUE="right">right-tail</OPTION>
+	                           <OPTION VALUE="left">left-tail</OPTION>
+	                           <OPTION VALUE="center">central</OPTION>
+	                        </SELECT>	                    
+	                    area of</LABEL> <INPUT TYPE="number" STEP="0.01" MAX="1" MIN="0" ID="txtX2InvArea" onChange="calculateX2Inv()" onKeyDown="if (event.which == 13 || event.keyCode == 13) calculateX2Inv()"><BR>
+	                    <SPAN ID="spnInvLabels"><INPUT TYPE="checkbox" ID="chkInvLabels" onChange="calculateX2Inv()"><LABEL FOR="chkInvLabels">Show labels on plot</LABEL></SPAN>	                        
+	                    <BR><BR><INPUT TYPE="button" VALUE="Calculate value(s)" onClick="calculateX2Inv()">
+	                </SPAN>
+	                <SPAN CLASS="errormsg" id="spnX2BoundMsg"></SPAN>
+	                <SPAN ID="spnX2Result"></SPAN><BR>
+        		</DIV>
+            </DIV>
+	    <!-- Scroll buffer for screen bottom -->
+	    <BR>
+	    <A HREF="javascript:STAP.Preferences.launchPreferencePage();">Adjust color, rounding, and percent/proportion preferences</A> | <A HREF="./">Back to menu</A>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+	    <BR>
+        </FORM>
+    </BODY>
+</HTML>

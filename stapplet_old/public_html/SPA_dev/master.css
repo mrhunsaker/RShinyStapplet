@@ -1,0 +1,91 @@
+body
+{
+    font: 12pt "Palatino Linotype", "Book Antiqua", Palatino, serif;
+}
+
+.errormsg
+{
+    color: red;
+}
+
+.swatch
+{
+    width: 50px;
+    height: 8px;
+    border: 1px solid black;
+    padding: 0px;
+}
+
+table
+{
+    border-collapse: collapse;
+    text-align: center;
+    vertical-align: middle;
+}
+
+th, td
+{
+    padding: 3px;
+    border: 1px solid black;
+}
+
+.noborder
+{
+    border: none;
+}
+
+.tableUpperLeft
+{
+    border-top: none;
+    border-left: none;
+}
+
+.rotate90CCW {
+    -ms-transform: rotate(-90deg); /* IE 9 */
+    -moz-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+    -webkit-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+    -o-transform: rotate(-90deg); /* Chrome, Safari, Opera */
+    transform: rotate(-90deg);
+}
+
+/* Adapted from http://tympanus.net/codrops/2013/11/07/css-overlay-techniques/ */
+.modal {
+    /* some styles to position the modal at the center of the page */
+    position: fixed;
+    top: 2%;
+    left: 2%;
+    width: 96%;
+    height: 96%;
+    background-color: #ffffff;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    /* needed styles for the overlay */
+    z-index: 10; /* keep on top of other elements on the page */
+    outline: 9999px solid rgba(0,0,0,0.5);
+    
+    overflow-y: scroll;
+}
+
+.headertable {
+    border: none;
+    vertical-align: top;
+    text-align: left;
+}
+
+.header {
+    font: bold 150% Verdana, Geneva, sans-serif;
+    vertical-align: middle;
+    text-align: left;
+    border: none;
+}
+
+.jumboheader {
+    font: bold 200% Verdana, Geneva, sans-serif;
+    text-align: left;
+    border: none;
+}
+
+a:focus {
+    color: red;
+}
