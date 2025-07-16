@@ -16,20 +16,21 @@
 # limitations under the License.
 #
 ######################################################################
-# Stapplet Applet - Confidence Interval for a Population Mean
+# Simulating Confidence Intervals for a Mean
 # Author: Michael Ryan Hunsaker, M.Ed., Ph.D.
 #    <hunsakerconsulting@gmail.com>
 # Date: 2025-07-13
 ######################################################################
+library(shinyjs)
 
 # Confidence Interval Simulation Applet (Full Feature Parity with HTML/JS Stapplet)
 # Author: Upgraded for full parity and accessibility
 
 # --- Load required libraries ---
-library(shiny)    # For building interactive web applications
-library(ggplot2)  # For creating plots
-library(DT)       # For interactive tables
-library(shinyjs)  # For JavaScript integration in Shiny
+library(shiny) # For building interactive web applications
+library(ggplot2) # For creating plots
+library(DT) # For interactive tables
+library(shinyjs) # For JavaScript integration in Shiny
 
 # UI for Confidence Interval Simulation
 ci_mean_ui <- function(id) {
@@ -125,22 +126,28 @@ ci_mean_ui <- function(id) {
         id = ns("mainPanel"),
         role = "main",
         fluidRow(
-          column(6,
-            div(class = "plot-container",
+          column(
+            6,
+            div(
+              class = "plot-container",
               h4("Population Distribution", id = ns("popPlotHeading")),
-              plotOutput(ns("populationPlot"), height = "250px", inline = TRUE)
+              plotOutput(ns("populationPlot"), height = "400px", inline = TRUE)
             )
           ),
-          column(6,
-            div(class = "plot-container",
+          column(
+            6,
+            div(
+              class = "plot-container",
               h4("Last Sample", id = ns("samplePlotHeading")),
-              plotOutput(ns("samplePlot"), height = "250px", inline = TRUE)
+              plotOutput(ns("samplePlot"), height = "400px", inline = TRUE)
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "plot-container",
+          column(
+            12,
+            div(
+              class = "plot-container",
               h4("Generated Confidence Intervals", id = ns("ciPlotHeading")),
               plotOutput(ns("ciPlot"), height = "400px", inline = TRUE),
               p(id = ns("ciPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("ciPlot_desc_text")))
@@ -148,16 +155,20 @@ ci_mean_ui <- function(id) {
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Simulation Summary", id = ns("summaryStatsHeading")),
               verbatimTextOutput(ns("summaryStats"), placeholder = TRUE)
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Error/Warning Messages", id = ns("errorHeading")),
               uiOutput(ns("errorMsg"))
             )
@@ -185,9 +196,11 @@ ci_mean_server <- function(id) {
     # --- Input Validation ---
     validate_inputs <- reactive({
       errs <- character(0)
-      if (input$sample_size < 1) errs <- c(errs, "Sample size must be at least 1.")
-      if (input$conf_level <= 0 || input$conf_level >= 100) errs <- c(errs, "Confidence level must be between 1 and 99.")
-      if (input$pop_type == "categorical") {
+      if (is.null(input$sample_size) || input$sample_size < 1) errs <- c(errs, "Sample size must be at least 1.")
+      if (is.null(input$conf_level) || input$conf_level <= 0 || input$conf_level >= 100) errs <- c(errs, "Confidence level must be between 1 and 99.")
+      if (is.null(input$pop_type)) {
+        errs <- c(errs, "Population type must be selected.")
+      } else if (input$pop_type == "categorical") {
         if (is.null(input$cat_p) || input$cat_p < 0 || input$cat_p > 1) errs <- c(errs, "True proportion must be between 0 and 1.")
       } else {
         if (is.null(input$pop_mean) || is.null(input$pop_sd) || input$pop_sd <= 0) errs <- c(errs, "Population mean and SD must be valid, SD > 0.")
@@ -210,7 +223,8 @@ ci_mean_server <- function(id) {
         rv$population <- sample(c(1, 0), size = 10000, replace = TRUE, prob = c(p, 1 - p))
         rv$pop_params <- list(type = "categorical", p = p)
       } else if (pop_type == "normal") {
-        mu <- input$pop_mean; sigma <- input$pop_sd
+        mu <- input$pop_mean
+        sigma <- input$pop_sd
         rv$population <- rnorm(10000, mean = mu, sd = sigma)
         rv$pop_params <- list(type = "normal", mean = mu, sd = sigma)
       } else if (pop_type == "uniform") {
@@ -289,7 +303,9 @@ ci_mean_server <- function(id) {
     }
 
     # --- Button Handlers ---
-    observeEvent(input$draw_one, { draw_ci(1) })
+    observeEvent(input$draw_one, {
+      draw_ci(1)
+    })
     observeEvent(input$draw_many, {
       n <- input$num_samples
       if (is.null(n) || n < 1 || n > 500) {
@@ -362,7 +378,9 @@ ci_mean_server <- function(id) {
     # --- Confidence Intervals Plot ---
     output$ciPlot <- renderPlot({
       if (nrow(rv$intervals) == 0) {
-        return(ggplot() + labs(title = "Draw a sample to generate a confidence interval") + theme_void())
+        return(ggplot() +
+          labs(title = "Draw a sample to generate a confidence interval") +
+          theme_void())
       }
       display_data <- tail(rv$intervals, 100)
       display_data$estimate <- as.numeric(display_data$estimate)
@@ -390,7 +408,9 @@ ci_mean_server <- function(id) {
 
     # --- CI Plot Description (Accessibility) ---
     output$ciPlot_desc_text <- renderText({
-      if (nrow(rv$intervals) == 0) return("No intervals have been generated yet.")
+      if (nrow(rv$intervals) == 0) {
+        return("No intervals have been generated yet.")
+      }
       total_intervals <- nrow(rv$intervals)
       num_captured <- sum(rv$intervals$captured)
       percent_captured <- if (total_intervals > 0) round((num_captured / total_intervals) * 100, 1) else 0

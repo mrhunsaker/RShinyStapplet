@@ -46,11 +46,11 @@
 ######################################################################
 # SECTION: Load Required Libraries
 ######################################################################
-library(shiny)            # Shiny web application framework
-library(ggplot2)          # For plotting histograms and densities
-library(shinyjs)          # For UI interactivity
-library(shinyWidgets)     # For enhanced widgets
-library(shinyAccessibility) # For accessibility enhancements
+library(shiny) # Shiny web application framework
+library(ggplot2) # For plotting histograms and densities
+library(shinyjs) # For UI interactivity
+library(shinyWidgets) # For enhanced widgets
+library(colourpicker) # For colourInput widget
 
 ######################################################################
 # SECTION: UI Definition
@@ -83,13 +83,11 @@ sampling_dist_mean_ui <- function(id) {
         # Conditional panels for population parameters
         conditionalPanel(
           condition = sprintf("input['%s'] == 'Normal' || input['%s'] == 'Skewed Right' || input['%s'] == 'Skewed Left' || input['%s'] == 'Bimodal'", ns("pop_shape"), ns("pop_shape"), ns("pop_shape"), ns("pop_shape")),
-          ns = ns,
           sliderInput(ns("pop_mean"), "Population Mean (\u03bc):", min = 0, max = 100, value = 50),
           sliderInput(ns("pop_sd"), "Population SD (\u03c3):", min = 1, max = 30, value = 10)
         ),
         conditionalPanel(
           condition = sprintf("input['%s'] == 'Categorical'", ns("pop_shape")),
-          ns = ns,
           sliderInput(ns("cat_p"), "True Proportion of Successes (p):", min = 0, max = 1, value = 0.5, step = 0.01)
         ),
         hr(),
@@ -126,45 +124,45 @@ sampling_dist_mean_ui <- function(id) {
         id = ns("mainPanel"),
         role = "main",
         fluidRow(
-          column(6,
-            div(class = "plot-container",
+          column(
+            6,
+            div(
+              class = "plot-container",
               h4("Population Distribution", style = "text-align: center;", id = ns("popDistLabel")),
               plotOutput(ns("populationPlot"), height = "250px")
             )
           ),
-          column(6,
-            div(class = "plot-container",
+          column(
+            6,
+            div(
+              class = "plot-container",
               h4("Most Recent Sample", style = "text-align: center;", id = ns("lastSampleLabel")),
               plotOutput(ns("samplePlot"), height = "250px")
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "plot-container",
+          column(
+            12,
+            div(
+              class = "plot-container",
               h4("Distribution of Sample Statistics", style = "text-align: center;", id = ns("sampDistLabel")),
               plotOutput(ns("samplingDistPlot"), height = "300px")
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h3("Summary Statistics", id = ns("summaryStatsLabel")),
               verbatimTextOutput(ns("summaryStats"))
             )
           )
         )
       ),
-      modalDialog(
-        id = ns("prefs_modal"),
-        title = "Preferences",
-        easyClose = TRUE,
-        footer = modalButton("Close"),
-        sliderInput(ns("round_digits"), "Rounding Digits:", min = 0, max = 6, value = 3),
-        colourInput(ns("plot_color"), "Plot Color:", value = "#1e40af"),
-        checkboxInput(ns("show_percent"), "Show Percent/Proportion", value = FALSE)
-      )
+      position = "left" # <-- Correct placement for the position argument
     )
   )
 }
@@ -196,9 +194,15 @@ sampling_dist_mean_server <- function(id) {
         easyClose = TRUE
       ))
     })
-    observeEvent(input$round_digits, { prefs$round_digits <- input$round_digits })
-    observeEvent(input$plot_color, { prefs$plot_color <- input$plot_color })
-    observeEvent(input$show_percent, { prefs$show_percent <- input$show_percent })
+    observeEvent(input$round_digits, {
+      prefs$round_digits <- input$round_digits
+    })
+    observeEvent(input$plot_color, {
+      prefs$plot_color <- input$plot_color
+    })
+    observeEvent(input$show_percent, {
+      prefs$show_percent <- input$show_percent
+    })
 
     ##################################################################
     # SECTION: Reactive Values for Simulation State
@@ -222,13 +226,21 @@ sampling_dist_mean_server <- function(id) {
       cat_p <- input$cat_p
       n_pop <- 10000
 
+      if (is.null(pop_shape) || length(pop_shape) != 1) {
+        rv$population <- NULL
+        rv$pop_stats <- NULL
+        rv$sample_stats <- numeric()
+        rv$last_sample <- numeric()
+        return()
+      }
       new_population <- switch(pop_shape,
         "Normal" = rnorm(n_pop, mean = pop_mean, sd = pop_sd),
         "Uniform" = runif(n_pop, min = 0, max = 100),
         "Skewed Right" = rbeta(n_pop, 2, 5) * 100,
         "Skewed Left" = rbeta(n_pop, 5, 2) * 100,
-        "Bimodal" = c(rnorm(n_pop/2, mean = pop_mean, sd = pop_sd), rnorm(n_pop/2, mean = pop_mean + pop_sd*2, sd = pop_sd)),
-        "Categorical" = rbinom(n_pop, 1, prob = cat_p)
+        "Bimodal" = c(rnorm(n_pop / 2, mean = pop_mean, sd = pop_sd), rnorm(n_pop / 2, mean = pop_mean + pop_sd * 2, sd = pop_sd)),
+        "Categorical" = rbinom(n_pop, 1, prob = cat_p),
+        NULL
       )
       rv$population <- new_population
       rv$pop_stats <- list(mean = mean(new_population), sd = sd(new_population))
@@ -290,9 +302,15 @@ sampling_dist_mean_server <- function(id) {
     ##################################################################
     # SECTION: Event Handlers for UI Buttons
     ##################################################################
-    observeEvent(input$draw_one, { draw_samples(1) })
-    observeEvent(input$draw_100, { draw_samples(100) })
-    observeEvent(input$draw_1000, { draw_samples(1000) })
+    observeEvent(input$draw_one, {
+      draw_samples(1)
+    })
+    observeEvent(input$draw_100, {
+      draw_samples(100)
+    })
+    observeEvent(input$draw_1000, {
+      draw_samples(1000)
+    })
     observeEvent(input$reset, {
       rv$sample_stats <- numeric()
       rv$last_sample <- numeric()
@@ -327,7 +345,9 @@ sampling_dist_mean_server <- function(id) {
       pop_shape <- input$pop_shape
       stat_type <- input$samp_stat
       if (length(sample_data) == 0) {
-        return(ggplot() + labs(title = "No sample drawn yet") + theme_void())
+        return(ggplot() +
+          labs(title = "No sample drawn yet") +
+          theme_void())
       }
       df_sample <- data.frame(x = sample_data)
       if (pop_shape == "Categorical") {
@@ -356,7 +376,12 @@ sampling_dist_mean_server <- function(id) {
       stat_type <- input$samp_stat
       pop_shape <- input$pop_shape
       if (length(stats) < 2) {
-        return(ggplot() + labs(title = "Draw at least 2 samples to see distribution") + theme_void())
+        if (is.null(input$draw_samples) || input$draw_samples == 0) {
+          return(NULL)
+        }
+        ggplot() +
+          labs(title = "Draw at least 2 samples to see distribution") +
+          theme_void()
       }
       df_stats <- data.frame(x = stats)
       mean_of_stats <- mean(df_stats$x)
@@ -364,8 +389,10 @@ sampling_dist_mean_server <- function(id) {
       p <- ggplot(df_stats, aes(x = x)) +
         geom_histogram(aes(y = ..density..), bins = 20, fill = "#fbbf24", color = "white") +
         geom_vline(xintercept = mean_of_stats, color = prefs$plot_color, linetype = "solid", size = 1.2) +
-        labs(x = paste("Sample", stat_type), y = "Density",
-             title = sprintf("Mean of %d samples = %.2f", length(stats), mean_of_stats)) +
+        labs(
+          x = paste("Sample", stat_type), y = "Density",
+          title = sprintf("Mean of %d samples = %.2f", length(stats), mean_of_stats)
+        ) +
         theme_minimal()
       # Overlay theoretical normal curve (CLT)
       if (input$show_normal_curve && pop_shape != "Categorical" && stat_type == "mean") {
@@ -427,7 +454,9 @@ sampling_dist_mean_server <- function(id) {
     # Allows users to export summary, data, and plot.
     ##################################################################
     output$download_summary <- downloadHandler(
-      filename = function() { "sampling_summary.txt" },
+      filename = function() {
+        "sampling_summary.txt"
+      },
       content = function(file) {
         sink(file)
         cat(capture.output(output$summaryStats()))
@@ -435,13 +464,17 @@ sampling_dist_mean_server <- function(id) {
       }
     )
     output$download_data <- downloadHandler(
-      filename = function() { "sampling_data.csv" },
+      filename = function() {
+        "sampling_data.csv"
+      },
       content = function(file) {
         write.csv(data.frame(sample_stat = rv$sample_stats), file, row.names = FALSE)
       }
     )
     output$download_plot <- downloadHandler(
-      filename = function() { "sampling_plot.png" },
+      filename = function() {
+        "sampling_plot.png"
+      },
       content = function(file) {
         png(file, width = 800, height = 600)
         print({
@@ -449,6 +482,9 @@ sampling_dist_mean_server <- function(id) {
           stat_type <- input$samp_stat
           pop_shape <- input$pop_shape
           if (length(stats) < 2) {
+            if (is.null(input$draw_samples) || input$draw_samples == 0) {
+              return(NULL)
+            }
             plot.new()
             title("Draw at least 2 samples to see distribution")
           } else {
@@ -458,8 +494,10 @@ sampling_dist_mean_server <- function(id) {
             p <- ggplot(df_stats, aes(x = x)) +
               geom_histogram(aes(y = ..density..), bins = 20, fill = "#fbbf24", color = "white") +
               geom_vline(xintercept = mean_of_stats, color = prefs$plot_color, linetype = "solid", size = 1.2) +
-              labs(x = paste("Sample", stat_type), y = "Density",
-                   title = sprintf("Mean of %d samples = %.2f", length(stats), mean_of_stats)) +
+              labs(
+                x = paste("Sample", stat_type), y = "Density",
+                title = sprintf("Mean of %d samples = %.2f", length(stats), mean_of_stats)
+              ) +
               theme_minimal()
             if (input$show_normal_curve && pop_shape != "Categorical" && stat_type == "mean") {
               theoretical_sd <- rv$pop_stats$sd / sqrt(input$sample_size)
@@ -474,26 +512,6 @@ sampling_dist_mean_server <- function(id) {
         })
         dev.off()
       }
-    )
-
-    ##################################################################
-    # SECTION: Accessibility Enhancements
-    # Adds ARIA roles, labels, and alerts for improved accessibility.
-    ##################################################################
-    shinyAccessibility::add_accessibility(
-      inputId = ns("mainPanel"),
-      role = "main",
-      aria_label = "Sampling Distribution Main Panel"
-    )
-    shinyAccessibility::add_accessibility(
-      inputId = ns("sidebarPanel"),
-      role = "form",
-      aria_label = "Population and Sampling Parameters"
-    )
-    shinyAccessibility::add_accessibility(
-      inputId = ns("error_msg"),
-      role = "alert",
-      aria_live = "assertive"
     )
   })
 }

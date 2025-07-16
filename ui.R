@@ -1,5 +1,28 @@
 ######################################################################
-
+#
+# Copyright 2025 Michael Ryan Hunsaker, M.Ed., Ph.D.
+#                <hunsakerconsulting@gmail.com>
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+######################################################################
+# Stapplet Main UI File
+# Author: Michael Ryan Hunsaker, M.Ed., Ph.D.
+#    <hunsakerconsulting@gmail.com>
+# Accessibility Enhancement: Added skip-to-content links and ARIA landmarks
+# Date: 2025-07-13
+######################################################################
+#
 # Add CSS for skip link and focus indicators
 tags$head(
   tags$style(HTML("
@@ -27,37 +50,14 @@ tags$head(
       box-shadow: 0 0 0 2px #FFD700;
     }
   "))
-),
-#
-# Copyright 2025 Michael Ryan Hunsaker, M.Ed., Ph.D.
-#                <hunsakerconsulting@gmail.com>
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-#
-######################################################################
-# Stapplet Main UI File
-# Author: Michael Ryan Hunsaker, M.Ed., Ph.D.
-#    <hunsakerconsulting@gmail.com>
-# Accessibility Enhancement: Added skip-to-content links and ARIA landmarks
-# Date: 2025-07-13
-######################################################################
+)
 
 # Add a visible skip link for keyboard users at the top of the UI
 tags$a(
   href = "#mainPanel",
   class = "skip-link",
   "Skip to main content"
-),
+)
 
 # ui.R (User Interface)
 library(shiny)

@@ -31,10 +31,10 @@
 ######################################################################
 
 # --- Load required libraries ---
-library(shiny)    # For building interactive web applications
-library(ggplot2)  # For creating plots
-library(DT)       # For interactive tables
-library(shinyjs)  # For JavaScript integration in Shiny
+library(shiny) # For building interactive web applications
+library(ggplot2) # For creating plots
+library(DT) # For interactive tables
+library(shinyjs) # For JavaScript integration in Shiny
 
 # --- UI Definition for Normal Distribution Calculator & Simulator ---
 # This function builds the user interface for the module, allowing users to:
@@ -44,6 +44,8 @@ library(shinyjs)  # For JavaScript integration in Shiny
 # - View plots, results, and download outputs
 dist_normal_ui <- function(id) {
   ns <- NS(id)
+  library(shinyjs)
+
   fluidPage(
     useShinyjs(),
     tags$head(
@@ -122,33 +124,41 @@ dist_normal_ui <- function(id) {
         id = ns("mainPanel"),
         role = "main",
         fluidRow(
-          column(12,
-            div(class = "plot-container",
+          column(
+            12,
+            div(
+              class = "plot-container",
               h4("Normal Distribution", id = ns("normalPlotHeading")),
-              plotOutput(ns("normalPlot"), height = "300px", inline = TRUE),
+              plotOutput(ns("normalPlot"), height = "400px", inline = TRUE),
               p(id = ns("normalPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("normalPlot_desc_text")))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Calculated Probability:", id = ns("probResultHeading")),
-              textOutput(ns("probabilityResult"), placeholder = TRUE)
+              textOutput(ns("probabilityResult"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Simulation Results", id = ns("simulationHeading")),
               DTOutput(ns("simulationTable"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Error/Warning Messages", id = ns("errorHeading")),
               uiOutput(ns("errorMsg"))
             )
@@ -232,27 +242,31 @@ dist_normal_server <- function(id) {
       p <- ggplot(df, aes(x = x, y = y)) +
         geom_line(color = "#1e40af", linewidth = 1) +
         geom_vline(xintercept = plot_mean, linetype = "dashed", color = "#dc2626") +
-        labs(title = paste("Normal Distribution (\u03bc =", plot_mean, ", \u03c3 =", plot_sd, ")"),
-             x = "X", y = "Density") +
+        labs(
+          title = paste("Normal Distribution (\u03bc =", plot_mean, ", \u03c3 =", plot_sd, ")"),
+          x = "X", y = "Density"
+        ) +
         theme_minimal() +
-        theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold", color = "#0f172a"),
-              axis.title = element_text(size = 12, color = "#334155"),
-              axis.text = element_text(size = 10, color = "#475569"))
+        theme(
+          plot.title = element_text(hjust = 0.5, size = 16, face = "bold", color = "#0f172a"),
+          axis.title = element_text(size = 12, color = "#334155"),
+          axis.text = element_text(size = 10, color = "#475569")
+        )
 
       # --- Shade probability region based on user selection ---
       if (prob_type == "lt" && !is.null(x_val)) {
         shade_data <- subset(df, x <= x_val)
         p <- p + geom_area(data = shade_data, aes(x = x, y = y), fill = "#60a5fa", alpha = 0.5) +
-                 geom_vline(xintercept = x_val, linetype = "solid", color = "#ef4444")
+          geom_vline(xintercept = x_val, linetype = "solid", color = "#ef4444")
       } else if (prob_type == "gt" && !is.null(x_val)) {
         shade_data <- subset(df, x >= x_val)
         p <- p + geom_area(data = shade_data, aes(x = x, y = y), fill = "#fbbf24", alpha = 0.5) +
-                 geom_vline(xintercept = x_val, linetype = "solid", color = "#ef4444")
+          geom_vline(xintercept = x_val, linetype = "solid", color = "#ef4444")
       } else if (prob_type == "between" && !is.null(x1_val) && !is.null(x2_val) && x1_val < x2_val) {
         shade_data <- subset(df, x >= x1_val & x <= x2_val)
         p <- p + geom_area(data = shade_data, aes(x = x, y = y), fill = "#84cc16", alpha = 0.5) +
-                 geom_vline(xintercept = x1_val, linetype = "solid", color = "#ef4444") +
-                 geom_vline(xintercept = x2_val, linetype = "solid", color = "#ef4444")
+          geom_vline(xintercept = x1_val, linetype = "solid", color = "#ef4444") +
+          geom_vline(xintercept = x2_val, linetype = "solid", color = "#ef4444")
       }
       p
     })
@@ -299,7 +313,9 @@ dist_normal_server <- function(id) {
       x_val <- input$x_val
       x1_val <- input$x1_val
       x2_val <- input$x2_val
-      if (is.numeric(prob)) {
+      if (is.null(prob)) {
+        "No result yet."
+      } else if (is.numeric(prob)) {
         prob_text_part <- switch(prob_type,
           "lt" = paste("X <", x_val),
           "gt" = paste("X >", x_val),
@@ -341,8 +357,10 @@ dist_normal_server <- function(id) {
     # --- Simulation Table ---
     # Displays simulated samples in a table
     output$simulationTable <- renderDT({
-      if (nrow(rv$simulation) == 0) return(NULL)
-      datatable(rv$simulation, rownames = FALSE, options = list(pageLength = 10, dom = 'tip'))
+      if (nrow(rv$simulation) == 0) {
+        return(NULL)
+      }
+      datatable(rv$simulation, rownames = FALSE, options = list(pageLength = 10, dom = "tip"))
     })
 
     # --- Export/Download Handlers ---

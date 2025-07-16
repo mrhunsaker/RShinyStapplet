@@ -31,10 +31,10 @@
 ######################################################################
 
 # --- Load required libraries ---
-library(shiny)    # For building interactive web applications
-library(ggplot2)  # For creating plots
-library(DT)       # For interactive tables
-library(shinyjs)  # For JavaScript integration in Shiny
+library(shiny) # For building interactive web applications
+library(ggplot2) # For creating plots
+library(DT) # For interactive tables
+library(shinyjs) # For JavaScript integration in Shiny
 
 # --- UI Definition for Confidence Interval for a Proportion Applet ---
 # This function builds the user interface for the module, allowing users to:
@@ -114,39 +114,49 @@ ci_proportion_ui <- function(id) {
         id = ns("mainPanel"),
         role = "main",
         fluidRow(
-          column(6,
-            div(class = "plot-container",
+          column(
+            6,
+            div(
+              class = "plot-container",
               h4("Population Visualization", id = ns("popPlotHeading")),
-              plotOutput(ns("populationPlot"), height = "200px", inline = TRUE)
+              plotOutput(ns("populationPlot"), height = "400px", inline = TRUE)
             )
           ),
-          column(6,
-            div(class = "plot-container",
+          column(
+            6,
+            div(
+              class = "plot-container",
               h4("Last Sample Visualization", id = ns("samplePlotHeading")),
-              plotOutput(ns("samplePlot"), height = "200px", inline = TRUE)
+              plotOutput(ns("samplePlot"), height = "400px", inline = TRUE)
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "plot-container",
+          column(
+            12,
+            div(
+              class = "plot-container",
               h4("Generated Confidence Intervals", id = ns("ciPlotHeading")),
-              plotOutput(ns("ciPlot"), height = "300px", inline = TRUE),
+              plotOutput(ns("ciPlot"), height = "400px", inline = TRUE),
               p(id = ns("ciPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("ciPlot_desc_text")))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Simulation Summary", id = ns("summaryStatsHeading")),
               verbatimTextOutput(ns("summaryStats"), placeholder = TRUE)
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Error/Warning Messages", id = ns("errorHeading")),
               uiOutput(ns("errorMsg"))
             )
@@ -208,19 +218,21 @@ ci_proportion_server <- function(id) {
     validate_inputs <- reactive({
       errs <- character(0)
       mode <- input$input_mode
-      if (mode == "counts") {
+      if (is.null(mode)) {
+        errs <- c(errs, "Input mode must be selected.")
+      } else if (mode == "counts") {
         if (is.null(input$successes) || is.null(input$trials)) {
           errs <- c(errs, "Please enter both number of successes and trials.")
         } else {
-          if (input$successes < 0 || input$trials <= 0) errs <- c(errs, "Successes must be >= 0 and trials > 0.")
-          if (input$successes > input$trials) errs <- c(errs, "Successes cannot exceed trials.")
+          if (is.null(input$successes) || input$successes < 0 || is.null(input$trials) || input$trials <= 0) errs <- c(errs, "Successes must be >= 0 and trials > 0.")
+          if (!is.null(input$successes) && !is.null(input$trials) && input$successes > input$trials) errs <- c(errs, "Successes cannot exceed trials.")
         }
       } else if (mode == "raw") {
         if (is.null(rv$raw_parsed)) errs <- c(errs, "Raw data not parsed or invalid.")
         if (!is.null(rv$raw_parsed) && length(rv$raw_parsed) < 1) errs <- c(errs, "Raw data must contain at least one value.")
       }
-      if (input$conf_level <= 0 || input$conf_level >= 100) errs <- c(errs, "Confidence level must be between 1 and 99.")
-      if (input$num_samples < 1 || input$num_samples > 500) errs <- c(errs, "Number of samples must be between 1 and 500.")
+      if (is.null(input$conf_level) || input$conf_level <= 0 || input$conf_level >= 100) errs <- c(errs, "Confidence level must be between 1 and 99.")
+      if (is.null(input$num_samples) || input$num_samples < 1 || input$num_samples > 500) errs <- c(errs, "Number of samples must be between 1 and 500.")
       if (length(errs) > 0) {
         rv$error <- paste(errs, collapse = "\n")
         FALSE
@@ -341,7 +353,9 @@ ci_proportion_server <- function(id) {
     # Displays horizontal error bars for the most recent confidence intervals
     output$ciPlot <- renderPlot({
       if (nrow(rv$intervals) == 0) {
-        return(ggplot() + labs(title = "Simulate to generate confidence intervals") + theme_void())
+        return(ggplot() +
+          labs(title = "Simulate to generate confidence intervals") +
+          theme_void())
       }
       display_data <- tail(rv$intervals, 100)
       display_data$estimate <- as.numeric(display_data$estimate)
@@ -369,7 +383,9 @@ ci_proportion_server <- function(id) {
     # --- CI Plot Description (Accessibility) ---
     # Provides a text description of the confidence intervals plot for screen readers
     output$ciPlot_desc_text <- renderText({
-      if (nrow(rv$intervals) == 0) return("No intervals have been generated yet.")
+      if (nrow(rv$intervals) == 0) {
+        return("No intervals have been generated yet.")
+      }
       total_intervals <- nrow(rv$intervals)
       num_captured <- sum(rv$intervals$captured)
       percent_captured <- if (total_intervals > 0) round((num_captured / total_intervals) * 100, 1) else 0

@@ -48,7 +48,6 @@ library(ggplot2)
 library(DT)
 library(shinyjs)
 library(shinyWidgets)
-library(shinyAccessibility)
 library(shinyFiles)
 library(readr)
 
@@ -57,9 +56,25 @@ library(readr)
 # Validate counts table input
 validate_counts_table <- function(counts) {
   errors <- c()
-  if (any(is.na(counts))) errors <- c(errors, "All cells must be filled.")
-  if (any(counts < 0)) errors <- c(errors, "Counts must be non-negative.")
-  if (any(counts != floor(counts))) errors <- c(errors, "Counts must be integers.")
+  empty <- is.null(counts) || length(counts) == 0 ||
+    (is.matrix(counts) && (nrow(counts) == 0 || ncol(counts) == 0)) ||
+    (is.data.frame(counts) && (nrow(counts) == 0 || ncol(counts) == 0)) ||
+    (is.list(counts) && all(sapply(counts, function(x) is.null(x) || length(x) == 0)))
+  if (empty) {
+    errors <- c(errors, "Counts table is empty or missing.")
+    return(errors)
+  }
+  # Only check for NA and numeric properties if counts is numeric, matrix, or data.frame
+  if ((is.numeric(counts) || is.matrix(counts) || is.data.frame(counts))) {
+    if (is.null(counts) || length(counts) == 0 || (is.matrix(counts) && (nrow(counts) == 0 || ncol(counts) == 0)) || (is.data.frame(counts) && (nrow(counts) == 0 || ncol(counts) == 0))) {
+      # Don't show error until user enters data
+    } else if (any(is.na(counts))) {
+      errors <- c(errors, "All cells must be filled.")
+      return(errors)
+    }
+  }
+  if ((is.numeric(counts) || is.matrix(counts) || is.data.frame(counts)) && any(counts < 0, na.rm = TRUE)) errors <- c(errors, "Counts must be non-negative.")
+  if ((is.numeric(counts) || is.matrix(counts) || is.data.frame(counts)) && any(counts != floor(counts), na.rm = TRUE)) errors <- c(errors, "Counts must be integers.")
   errors
 }
 
@@ -76,14 +91,17 @@ raw_to_counts <- function(raw_data) {
   # raw_data: list of list(group, data)
   all_categories <- unique(unlist(lapply(raw_data, function(x) unlist(strsplit(x$data, "[, ]+")))))
   all_groups <- sapply(raw_data, function(x) x$group)
-  counts <- matrix(0, nrow = length(all_categories), ncol = length(all_groups),
-                   dimnames = list(all_categories, all_groups))
+  if (is.null(all_categories) || length(all_categories) == 0 || is.null(all_groups) || length(all_groups) == 0) {
+    return(matrix(0, nrow = 0, ncol = 0))
+  }
+  counts <- matrix(0,
+    nrow = length(all_categories), ncol = length(all_groups),
+    dimnames = list(all_categories, all_groups)
+  )
   for (i in seq_along(raw_data)) {
     cats <- unlist(strsplit(raw_data[[i]]$data, "[, ]+"))
     for (cat in cats) {
-      if (cat %in% all_categories) {
-        counts[cat, raw_data[[i]]$group] <- counts[cat, raw_data[[i]]$group] + 1
-      }
+      counts[cat, raw_data[[i]]$group] <- counts[cat, raw_data[[i]]$group] + 1
     }
   }
   counts
@@ -113,8 +131,9 @@ ht_diff_proportions_ui <- function(id) {
         "aria-labelledby" = "paramsHeading",
         h3("Data Input", id = "paramsHeading"),
         radioButtons(ns("input_mode"), "Input data as:",
-                     choices = c("Counts table" = "counts", "Raw data" = "raw"),
-                     selected = "counts", inline = TRUE),
+          choices = c("Counts table" = "counts", "Raw data" = "raw"),
+          selected = "counts", inline = TRUE
+        ),
         conditionalPanel(
           condition = sprintf("input['%s'] == 'counts'", ns("input_mode")),
           textInput(ns("variable_name_counts"), "Variable name:", value = "Category"),
@@ -134,8 +153,9 @@ ht_diff_proportions_ui <- function(id) {
         hr(role = "separator"),
         h3("Preferences"),
         pickerInput(ns("color_palette"), "Color palette:",
-                    choices = c("Default", "Colorblind", "Viridis", "Pastel"),
-                    selected = "Default"),
+          choices = c("Default", "Colorblind", "Viridis", "Pastel"),
+          selected = "Default"
+        ),
         switchInput(ns("show_percent"), "Show as percent", value = TRUE),
         sliderInput(ns("round_digits"), "Rounding digits:", min = 0, max = 4, value = 2),
         hr(role = "separator"),
@@ -149,16 +169,21 @@ ht_diff_proportions_ui <- function(id) {
         id = "mainPanel",
         role = "main",
         tabsetPanel(
-          tabPanel("Visualization",
+          tabPanel(
+            "Visualization",
             h4("Graph Distributions", style = "text-align: center;", id = ns("graph_label")),
             selectInput(ns("graph_type"), "Chart type:",
-                        choices = c("Segmented bar" = "stacked",
-                                    "Mosaic plot" = "mosaic",
-                                    "Side-by-side bar" = "side")),
+              choices = c(
+                "Segmented bar" = "stacked",
+                "Mosaic plot" = "mosaic",
+                "Side-by-side bar" = "side"
+              )
+            ),
             conditionalPanel(
               condition = sprintf("input['%s'] == 'side'", ns("graph_type")),
               selectInput(ns("side_bar_label"), "Label bar graph with:",
-                          choices = c("Relative frequency" = "rel", "Frequency" = "freq"))
+                choices = c("Relative frequency" = "rel", "Frequency" = "freq")
+              )
             ),
             plotOutput(ns("main_plot"), height = "350px", inline = TRUE),
             hr(),
@@ -166,7 +191,8 @@ ht_diff_proportions_ui <- function(id) {
             DTOutput(ns("summary_stats")),
             hr()
           ),
-          tabPanel("Inference",
+          tabPanel(
+            "Inference",
             h4("Perform Inference"),
             uiOutput(ns("inference_ui")),
             uiOutput(ns("inference_results")),
@@ -202,8 +228,10 @@ ht_diff_proportions_server <- function(id) {
     # --- Data Input State ---
     # Counts table state
     counts_table <- reactiveVal({
-      matrix(NA_integer_, nrow = 2, ncol = 2,
-             dimnames = list(c("Category 1", "Category 2"), c("Group 1", "Group 2")))
+      matrix(NA_integer_,
+        nrow = 2, ncol = 2,
+        dimnames = list(c("Category 1", "Category 2"), c("Group 1", "Group 2"))
+      )
     })
     observeEvent(input$add_row_counts, {
       tbl <- counts_table()
@@ -233,9 +261,11 @@ ht_diff_proportions_server <- function(id) {
       counts_table(tbl)
     })
     output$counts_table <- renderDT({
-      datatable(counts_table(), editable = TRUE, selection = "none",
-                options = list(dom = 't', ordering = FALSE, paging = FALSE),
-                rownames = TRUE)
+      datatable(counts_table(),
+        editable = TRUE, selection = "none",
+        options = list(dom = "t", ordering = FALSE, paging = FALSE),
+        rownames = TRUE
+      )
     })
 
     # Raw data state
@@ -283,24 +313,36 @@ ht_diff_proportions_server <- function(id) {
 
     # --- Data Extraction & Validation ---
     data_input <- reactive({
-      if (input$input_mode == "counts") {
+      mode <- input$input_mode
+      if (is.null(mode)) {
+        return(NULL)
+      }
+      if (mode == "counts") {
         tbl <- counts_table()
         errors <- validate_counts_table(tbl)
-        list(type = "counts", counts = tbl, errors = errors,
-             variable_name = input$variable_name_counts)
-      } else {
+        list(
+          type = "counts", counts = tbl, errors = errors,
+          variable_name = input$variable_name_counts
+        )
+      } else if (mode == "raw") {
         rd <- raw_data()
         errors <- validate_raw_data(rd)
-        counts <- if (length(errors) == 0) raw_to_counts(rd) else NULL
-        list(type = "raw", raw = rd, counts = counts, errors = errors,
-             variable_name = input$variable_name_raw)
+        counts <- if (!is.null(errors) && length(errors) == 0) raw_to_counts(rd) else NULL
+        list(
+          type = "raw", raw = rd, counts = counts, errors = errors,
+          variable_name = input$variable_name_raw
+        )
+      } else {
+        NULL
       }
     })
 
     # --- Summary Statistics ---
     output$summary_stats <- renderDT({
       dat <- data_input()
-      if (length(dat$errors) > 0 || is.null(dat$counts)) return(datatable(data.frame(Error = dat$errors)))
+      if (length(dat$errors) > 0 || is.null(dat$counts)) {
+        return(datatable(data.frame(Error = dat$errors)))
+      }
       counts <- dat$counts
       total <- sum(counts)
       prop <- round(counts / rep(colSums(counts), each = nrow(counts)), input$round_digits)
@@ -311,13 +353,15 @@ ht_diff_proportions_server <- function(id) {
         df[[paste0(g, " Count")]] <- counts[, g]
         df[[paste0(g, if (show_percent) " %" else " Proportion")]] <- if (show_percent) percent[, g] else prop[, g]
       }
-      datatable(df, rownames = FALSE, options = list(dom = 't', ordering = FALSE, paging = FALSE))
+      datatable(df, rownames = FALSE, options = list(dom = "t", ordering = FALSE, paging = FALSE))
     })
 
     # --- Visualization ---
     output$main_plot <- renderPlot({
       dat <- data_input()
-      if (length(dat$errors) > 0 || is.null(dat$counts)) return(NULL)
+      if (length(dat$errors) > 0 || is.null(dat$counts)) {
+        return(NULL)
+      }
       counts <- dat$counts
       df <- as.data.frame(as.table(counts))
       colnames(df) <- c("Category", "Group", "Count")
@@ -367,7 +411,9 @@ ht_diff_proportions_server <- function(id) {
     # --- Inference UI ---
     output$inference_ui <- renderUI({
       dat <- data_input()
-      if (length(dat$errors) > 0 || is.null(dat$counts)) return(tags$p(dat$errors, style = "color: red;"))
+      if (length(dat$errors) > 0 || is.null(dat$counts)) {
+        return(tags$p(dat$errors, style = "color: red;"))
+      }
       counts <- dat$counts
       n_groups <- ncol(counts)
       n_categories <- nrow(counts)
@@ -375,12 +421,16 @@ ht_diff_proportions_server <- function(id) {
         # Two-proportion inference
         tagList(
           selectInput(ns("inference_type"), "Inference procedure:",
-                      choices = c("Simulate difference in percents/proportions" = "simulation",
-                                  "2-sample z interval (p₁ - p₂)" = "interval",
-                                  "2-sample z test (p₁ - p₂)" = "test",
-                                  "Chi-square test for homogeneity" = "chi")),
+            choices = c(
+              "Simulate difference in percents/proportions" = "simulation",
+              "2-sample z interval (p₁ - p₂)" = "interval",
+              "2-sample z test (p₁ - p₂)" = "test",
+              "Chi-square test for homogeneity" = "chi"
+            )
+          ),
           selectInput(ns("success_cat"), "Category to indicate as success:",
-                      choices = rownames(counts)),
+            choices = rownames(counts)
+          ),
           conditionalPanel(
             condition = sprintf("input['%s'] == 'interval'", ns("inference_type")),
             numericInput(ns("conf_level"), "Confidence level (%)", value = 95, min = 0.1, max = 99.9, step = 0.1)
@@ -388,9 +438,12 @@ ht_diff_proportions_server <- function(id) {
           conditionalPanel(
             condition = sprintf("input['%s'] == 'test'", ns("inference_type")),
             selectInput(ns("alt_hypothesis"), "Alternative hypothesis:",
-                        choices = c("p₁ - p₂ > 0" = "greater",
-                                    "p₁ - p₂ < 0" = "less",
-                                    "p₁ - p₂ ≠ 0" = "two.sided"))
+              choices = c(
+                "p₁ - p₂ > 0" = "greater",
+                "p₁ - p₂ < 0" = "less",
+                "p₁ - p₂ ≠ 0" = "two.sided"
+              )
+            )
           ),
           actionButton(ns("run_inference"), "Perform inference", class = "btn-primary")
         )
@@ -406,7 +459,9 @@ ht_diff_proportions_server <- function(id) {
     # --- Inference Calculation ---
     inference_results <- eventReactive(input$run_inference, {
       dat <- data_input()
-      if (length(dat$errors) > 0 || is.null(dat$counts)) return(list(error = dat$errors))
+      if (length(dat$errors) > 0 || is.null(dat$counts)) {
+        return(list(error = dat$errors))
+      }
       counts <- dat$counts
       n_groups <- ncol(counts)
       n_categories <- nrow(counts)
@@ -440,9 +495,11 @@ ht_diff_proportions_server <- function(id) {
           list(type = "test", z = z_stat, p_value = p_value, se = se_pool, alt = alt)
         } else if (input$inference_type == "chi") {
           test <- suppressWarnings(chisq.test(counts))
-          list(type = "chi", statistic = test$statistic, p_value = test$p.value, df = test$parameter,
-               expected = test$expected, contributions = (counts - test$expected)^2 / test$expected,
-               low_count_warning = any(test$expected < 5))
+          list(
+            type = "chi", statistic = test$statistic, p_value = test$p.value, df = test$parameter,
+            expected = test$expected, contributions = (counts - test$expected)^2 / test$expected,
+            low_count_warning = any(test$expected < 5)
+          )
         } else if (input$inference_type == "simulation") {
           # Simulation handled separately
           list(type = "simulation", x1 = x1, n1 = n1, x2 = x2, n2 = n2, p1 = p1, p2 = p2)
@@ -450,34 +507,47 @@ ht_diff_proportions_server <- function(id) {
       } else {
         # Chi-square test for homogeneity
         test <- suppressWarnings(chisq.test(counts))
-        list(type = "chi", statistic = test$statistic, p_value = test$p.value, df = test$parameter,
-             expected = test$expected, contributions = (counts - test$expected)^2 / test$expected,
-             low_count_warning = any(test$expected < 5))
+        list(
+          type = "chi", statistic = test$statistic, p_value = test$p.value, df = test$parameter,
+          expected = test$expected, contributions = (counts - test$expected)^2 / test$expected,
+          low_count_warning = any(test$expected < 5)
+        )
       }
     })
 
     output$inference_results <- renderUI({
       res <- inference_results()
-      if (!is.null(res$error)) return(tags$p(res$error, style = "color: red;"))
+      if (!is.null(res$error)) {
+        return(tags$p(res$error, style = "color: red;"))
+      }
       if (res$type == "interval") {
-        tags$table(class = "table table-striped",
+        tags$table(
+          class = "table table-striped",
           tags$tr(tags$th("Lower Bound"), tags$th("Upper Bound")),
-          tags$tr(tags$td(round(res$lower, input$round_digits)),
-                  tags$td(round(res$upper, input$round_digits)))
+          tags$tr(
+            tags$td(round(res$lower, input$round_digits)),
+            tags$td(round(res$upper, input$round_digits))
+          )
         )
       } else if (res$type == "test") {
-        tags$table(class = "table table-striped",
+        tags$table(
+          class = "table table-striped",
           tags$tr(tags$th("z"), tags$th("P-value")),
-          tags$tr(tags$td(round(res$z, 3)),
-                  tags$td(format.pval(res$p_value, digits = 4, eps = 0.0001)))
+          tags$tr(
+            tags$td(round(res$z, 3)),
+            tags$td(format.pval(res$p_value, digits = 4, eps = 0.0001))
+          )
         )
       } else if (res$type == "chi") {
         tagList(
-          tags$table(class = "table table-striped",
+          tags$table(
+            class = "table table-striped",
             tags$tr(tags$th("χ²"), tags$th("P-value"), tags$th("df")),
-            tags$tr(tags$td(round(res$statistic, 3)),
-                    tags$td(format.pval(res$p_value, digits = 4, eps = 0.0001)),
-                    tags$td(res$df))
+            tags$tr(
+              tags$td(round(res$statistic, 3)),
+              tags$td(format.pval(res$p_value, digits = 4, eps = 0.0001)),
+              tags$td(res$df)
+            )
           ),
           tags$p(if (res$low_count_warning) "Warning: At least one expected count is less than 5." else NULL, style = "color: #d9534f;"),
           tags$h4("Expected Counts"),
@@ -492,7 +562,9 @@ ht_diff_proportions_server <- function(id) {
     simulation_results <- reactiveVal(NULL)
     output$simulation_ui <- renderUI({
       res <- inference_results()
-      if (is.null(res) || res$type != "simulation") return(NULL)
+      if (is.null(res) || res$type != "simulation") {
+        return(NULL)
+      }
       tagList(
         numericInput(ns("num_trials"), "Number of trials to add:", value = 1000, min = 1, step = 1),
         actionButton(ns("run_simulation"), "Add trials"),
@@ -509,8 +581,13 @@ ht_diff_proportions_server <- function(id) {
     })
     observeEvent(input$run_simulation, {
       res <- inference_results()
-      if (is.null(res) || res$type != "simulation") return()
-      x1 <- res$x1; n1 <- res$n1; x2 <- res$x2; n2 <- res$n2
+      if (is.null(res) || res$type != "simulation") {
+        return()
+      }
+      x1 <- res$x1
+      n1 <- res$n1
+      x2 <- res$x2
+      n2 <- res$n2
       total_success <- x1 + x2
       total_n <- n1 + n2
       trials <- input$num_trials
@@ -530,7 +607,9 @@ ht_diff_proportions_server <- function(id) {
     })
     output$simulation_plot <- renderPlot({
       sims <- simulation_results()
-      if (is.null(sims) || length(sims) == 0) return(NULL)
+      if (is.null(sims) || length(sims) == 0) {
+        return(NULL)
+      }
       palette <- switch(input$color_palette,
         "Default" = "Set2",
         "Colorblind" = "Dark2",
@@ -545,7 +624,9 @@ ht_diff_proportions_server <- function(id) {
     })
     output$simulation_stats <- renderUI({
       sims <- simulation_results()
-      if (is.null(sims) || length(sims) == 0) return(NULL)
+      if (is.null(sims) || length(sims) == 0) {
+        return(NULL)
+      }
       mean_val <- mean(sims)
       sd_val <- sd(sims)
       most_recent <- tail(sims, 1)
@@ -562,10 +643,14 @@ ht_diff_proportions_server <- function(id) {
     dotplot_count <- reactiveVal(NULL)
     observeEvent(input$count_dotplot, {
       sims <- simulation_results()
-      if (is.null(sims) || length(sims) == 0) return()
+      if (is.null(sims) || length(sims) == 0) {
+        return()
+      }
       bound <- as.numeric(input$dotplot_count_bound)
       dir <- input$dotplot_count_dir
-      if (is.na(bound)) return()
+      if (is.na(bound)) {
+        return()
+      }
       if (dir == "left") {
         count <- sum(sims <= bound)
       } else {
@@ -579,7 +664,9 @@ ht_diff_proportions_server <- function(id) {
     })
     output$simulation_stats <- renderUI({
       sims <- simulation_results()
-      if (is.null(sims) || length(sims) == 0) return(NULL)
+      if (is.null(sims) || length(sims) == 0) {
+        return(NULL)
+      }
       mean_val <- mean(sims)
       sd_val <- sd(sims)
       most_recent <- tail(sims, 1)
@@ -592,11 +679,15 @@ ht_diff_proportions_server <- function(id) {
           tags$tr(tags$td("SD:"), tags$td(round(sd_val, input$round_digits)))
         ),
         if (!is.null(count_info)) {
-          tags$p(sprintf("Counted %d dots (%0.2f%%) %s %s.",
-                         count_info$count, count_info$percent,
-                         ifelse(count_info$dir == "left", "≤", "≥"),
-                         count_info$bound),
-                 style = "color: #2563eb; font-weight: bold;")
+          tags$p(
+            sprintf(
+              "Counted %d dots (%0.2f%%) %s %s.",
+              count_info$count, count_info$percent,
+              ifelse(count_info$dir == "left", "≤", "≥"),
+              count_info$bound
+            ),
+            style = "color: #2563eb; font-weight: bold;"
+          )
         }
       )
     })
@@ -631,7 +722,9 @@ ht_diff_proportions_server <- function(id) {
       },
       content = function(file) {
         dat <- data_input()
-        if (length(dat$errors) > 0 || is.null(dat$counts)) return()
+        if (length(dat$errors) > 0 || is.null(dat$counts)) {
+          return()
+        }
         counts <- dat$counts
         df <- as.data.frame(as.table(counts))
         colnames(df) <- c("Category", "Group", "Count")
@@ -648,19 +741,15 @@ ht_diff_proportions_server <- function(id) {
           labs(y = "Proportion", x = "Group") +
           theme_minimal()
         ggsave(file, plot = p, width = 7, height = 5)
-      # --------------------------------------------------------------------
-      # END OF MODULE
-      # --------------------------------------------------------------------
+        # --------------------------------------------------------------------
+        # END OF MODULE
+        # --------------------------------------------------------------------
       }
     )
 
     # --- Accessibility ---
     observe({
-      if (input$aria_enable) {
-        shinyAccessibility::enableAccessibility()
-      } else {
-        shinyAccessibility::disableAccessibility()
-      }
+      # Accessibility toggle removed (shinyAccessibility not available)
     })
 
     # --- Error Messaging ---

@@ -31,10 +31,10 @@
 ######################################################################
 
 # --- Load required libraries ---
-library(shiny)    # For building interactive web applications
-library(ggplot2)  # For creating plots
-library(DT)       # For interactive tables
-library(shinyjs)  # For JavaScript integration in Shiny
+library(shiny) # For building interactive web applications
+library(ggplot2) # For creating plots
+library(DT) # For interactive tables
+library(shinyjs) # For JavaScript integration in Shiny
 
 dist_chi_square_ui <- function(id) {
   ns <- NS(id)
@@ -132,33 +132,41 @@ dist_chi_square_ui <- function(id) {
         id = ns("mainPanel"),
         role = "main",
         fluidRow(
-          column(12,
-            div(class = "plot-container",
+          column(
+            12,
+            div(
+              class = "plot-container",
               h4("Chi-Square Distribution", id = ns("distPlotHeading")),
-              plotOutput(ns("distPlot"), height = "300px", inline = TRUE),
+              plotOutput(ns("distPlot"), height = "400px", inline = TRUE),
               p(id = ns("distPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("distPlot_desc_text")))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Calculated Probability:", id = ns("probResultHeading")),
-              textOutput(ns("probabilityResult"), placeholder = TRUE)
+              textOutput(ns("probabilityResult"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Simulation Results", id = ns("simulationHeading")),
               DTOutput(ns("simulationTable"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Error/Warning Messages", id = ns("errorHeading")),
               uiOutput(ns("errorMsg"))
             )
@@ -207,7 +215,9 @@ dist_chi_square_server <- function(id) {
       }
       obs_items <- as.numeric(obs_items)
       exp_items <- as.numeric(exp_items)
-      if (any(is.na(obs_items)) || any(is.na(exp_items))) {
+      if ((is.null(obs_items) || length(obs_items) == 0) || (is.null(exp_items) || length(exp_items) == 0)) {
+        # Don't show error until user enters data
+      } else if (any(is.na(obs_items)) || any(is.na(exp_items))) {
         rv$error <- "Observed and expected counts must be numeric."
         rv$raw_obs <- NULL
         rv$raw_exp <- NULL
@@ -231,16 +241,19 @@ dist_chi_square_server <- function(id) {
     validate_inputs <- reactive({
       errs <- character(0)
       mode <- input$input_mode
-      if (mode == "params") {
+      if (is.null(mode) || length(mode) == 0) {
+        errs <- c(errs, "Input mode must be selected.")
+      } else if (mode == "params") {
         if (is.null(input$df)) {
           errs <- c(errs, "Degrees of freedom must be specified.")
+        } else if (is.na(input$df) || input$df < 1) {
+          errs <- c(errs, "Degrees of freedom must be at least 1.")
         }
-        if (input$df < 1) errs <- c(errs, "Degrees of freedom must be at least 1.")
       } else if (mode == "raw") {
         if (is.null(rv$raw_obs) || is.null(rv$raw_exp)) errs <- c(errs, "Observed and expected counts must be parsed and valid.")
         if (!is.null(rv$raw_obs) && length(rv$raw_obs) < 2) errs <- c(errs, "Counts table must have at least two categories.")
       }
-      if (input$num_samples < 1 || input$num_samples > 500) errs <- c(errs, "Number of samples must be between 1 and 500.")
+      if (is.null(input$num_samples) || is.na(input$num_samples) || input$num_samples < 1 || input$num_samples > 500) errs <- c(errs, "Number of samples must be between 1 and 500.")
       if (length(errs) > 0) {
         rv$error <- paste(errs, collapse = "\n")
         FALSE
@@ -259,7 +272,9 @@ dist_chi_square_server <- function(id) {
       } else {
         df_val <- rv$df
       }
-      if (is.null(df_val)) return()
+      if (is.null(df_val)) {
+        return()
+      }
       max_x <- max(qchisq(0.999, df = df_val), 30)
       start_x <- if (df_val <= 2) 1e-4 else 0
       dist_data <- data.frame(x = seq(start_x, max_x, length.out = 500))
@@ -279,7 +294,9 @@ dist_chi_square_server <- function(id) {
         df_val <- rv$df
       }
       prob_type <- input$prob_type
-      if (is.null(df_val)) return("Error: Degrees of freedom not set.")
+      if (is.null(df_val)) {
+        return("Error: Degrees of freedom not set.")
+      }
       if (prob_type == "lt") {
         req(input$x_val)
         if (input$x_val >= 0) {
@@ -308,7 +325,9 @@ dist_chi_square_server <- function(id) {
           prob_text_part <- ""
         }
       }
-      if (is.numeric(prob)) {
+      if (is.null(prob)) {
+        "No result yet."
+      } else if (is.numeric(prob)) {
         sprintf("P(%s) = %.4f", prob_text_part, prob)
       } else {
         prob
@@ -317,7 +336,9 @@ dist_chi_square_server <- function(id) {
 
     # --- Simulation ---
     observeEvent(input$simulate, {
-      if (!validate_inputs()) return()
+      if (!validate_inputs()) {
+        return()
+      }
       mode <- input$input_mode
       if (mode == "params") {
         df_val <- input$df
@@ -325,7 +346,9 @@ dist_chi_square_server <- function(id) {
         df_val <- rv$df
       }
       num_samples <- input$num_samples
-      if (is.null(df_val) || is.null(num_samples)) return()
+      if (is.null(df_val) || is.null(num_samples)) {
+        return()
+      }
       sim <- rchisq(num_samples, df = df_val)
       sim_df <- data.frame(
         Sample = seq_len(num_samples),
@@ -363,23 +386,25 @@ dist_chi_square_server <- function(id) {
       fill_colors <- if (input$colorblind) c("shade" = "#0072B2") else c("shade" = "#60a5fa")
       p <- ggplot(dist_data, aes(x = x, y = y)) +
         geom_line(color = "#1e40af", linewidth = 1) +
-        labs(title = paste("Chi-Square Distribution (df =", df_val, ")"),
-             x = "Chi-Square Value", y = "Density") +
+        labs(
+          title = paste("Chi-Square Distribution (df =", df_val, ")"),
+          x = "Chi-Square Value", y = "Density"
+        ) +
         theme_minimal() +
         theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold"))
       # Shading logic
       if (prob_type == "lt" && !is.null(input$x_val) && input$x_val >= 0) {
         shade_data <- subset(dist_data, x <= input$x_val)
         p <- p + geom_area(data = shade_data, aes(x = x, y = y), fill = fill_colors["shade"], alpha = 0.5) +
-                 geom_vline(xintercept = input$x_val, color = "#ef4444", linetype = "dashed")
+          geom_vline(xintercept = input$x_val, color = "#ef4444", linetype = "dashed")
       } else if (prob_type == "gt" && !is.null(input$x_val) && input$x_val >= 0) {
         shade_data <- subset(dist_data, x >= input$x_val)
         p <- p + geom_area(data = shade_data, aes(x = x, y = y), fill = fill_colors["shade"], alpha = 0.5) +
-                 geom_vline(xintercept = input$x_val, color = "#ef4444", linetype = "dashed")
+          geom_vline(xintercept = input$x_val, color = "#ef4444", linetype = "dashed")
       } else if (prob_type == "between" && !is.null(input$x1_val) && !is.null(input$x2_val) && input$x1_val < input$x2_val) {
         shade_data <- subset(dist_data, x >= input$x1_val & x <= input$x2_val)
         p <- p + geom_area(data = shade_data, aes(x = x, y = y), fill = fill_colors["shade"], alpha = 0.5) +
-                 geom_vline(xintercept = c(input$x1_val, input$x2_val), color = "#ef4444", linetype = "dashed")
+          geom_vline(xintercept = c(input$x1_val, input$x2_val), color = "#ef4444", linetype = "dashed")
       }
       p
     })
@@ -418,7 +443,7 @@ dist_chi_square_server <- function(id) {
         sprintf("This is a plot of a chi-square distribution with df=%d.", df_val),
         sprintf("The distribution is centered at %.1f and is %s.", mean_dist, shape_desc),
         shaded_desc,
-        sprintf("The total probability of the shaded area is %s.", if(is.character(prob)) "N/A" else sprintf("%.5f", as.numeric(sub(".*= ", "", prob)))),
+        sprintf("The total probability of the shaded area is %s.", if (is.character(prob)) "N/A" else sprintf("%.5f", as.numeric(sub(".*= ", "", prob)))),
         collapse = " "
       )
       return(desc)
@@ -432,10 +457,12 @@ dist_chi_square_server <- function(id) {
 
     # --- Simulation Table ---
     output$simulationTable <- renderDT({
-      if (nrow(rv$simulation) == 0) return(NULL)
+      if (nrow(rv$simulation) == 0) {
+        return(NULL)
+      }
       dat <- rv$simulation
       dat$Chi_Square <- round(dat$Chi_Square, input$round_digits)
-      datatable(dat, rownames = FALSE, options = list(pageLength = 10, dom = 'tip'))
+      datatable(dat, rownames = FALSE, options = list(pageLength = 10, dom = "tip"))
     })
 
     # --- Export/Download Handlers ---

@@ -1,4 +1,3 @@
-
 ######################################################################
 #
 # Copyright 2025 Michael Ryan Hunsaker, M.Ed., Ph.D.
@@ -47,7 +46,6 @@ library(ggplot2)
 library(DT)
 library(shinyjs)
 library(shinyWidgets)
-library(shinyAccessibility)
 library(readr)
 library(stats)
 library(coin) # For nonparametric tests
@@ -73,7 +71,11 @@ validate_mean_sd_n <- function(mean, sd, n) {
 validate_fivenum <- function(min, q1, med, q3, max) {
   errors <- c()
   vals <- c(min, q1, med, q3, max)
-  if (any(is.na(vals))) errors <- c(errors, "All five-number summary values must be numeric.")
+  if (all(is.na(vals)) || all(trimws(as.character(vals)) == "")) {
+    # Don't show error until user enters data
+  } else if (any(is.na(vals))) {
+    errors <- c(errors, "All five-number summary values must be numeric.")
+  }
   if (!(min <= q1 && q1 <= med && med <= q3 && q3 <= max)) errors <- c(errors, "Five-number summary values are out of order.")
   errors
 }
@@ -96,14 +98,18 @@ ht_mean_ui <- function(id) {
         h3("Data Input", id = "paramsHeading"),
         textInput(ns("variable_name"), "Variable name:", value = "Variable"),
         selectInput(ns("input_mode"), "Input type:",
-                    choices = c("Raw data" = "raw",
-                                "Mean and SD" = "meanstats",
-                                "Five-number summary" = "fivenum"),
-                    selected = "raw"),
+          choices = c(
+            "Raw data" = "raw",
+            "Mean and SD" = "meanstats",
+            "Five-number summary" = "fivenum"
+          ),
+          selected = "raw"
+        ),
         conditionalPanel(
           condition = sprintf("input['%s'] == 'raw'", ns("input_mode")),
           textAreaInput(ns("raw_data"), "Enter numeric data (comma, space, or newline separated):",
-                        rows = 5, placeholder = "e.g., 25.1, 27.3, 24.8, 26.5, 25.9")
+            rows = 5, placeholder = "e.g., 25.1, 27.3, 24.8, 26.5, 25.9"
+          )
         ),
         conditionalPanel(
           condition = sprintf("input['%s'] == 'meanstats'", ns("input_mode")),
@@ -122,8 +128,9 @@ ht_mean_ui <- function(id) {
         hr(),
         h3("Preferences"),
         pickerInput(ns("color_palette"), "Color palette:",
-                    choices = c("Default", "Colorblind", "Viridis", "Pastel"),
-                    selected = "Default"),
+          choices = c("Default", "Colorblind", "Viridis", "Pastel"),
+          selected = "Default"
+        ),
         sliderInput(ns("round_digits"), "Rounding digits:", min = 0, max = 4, value = 2),
         switchInput(ns("aria_enable"), "Enable ARIA roles/labels", value = TRUE),
         hr(),
@@ -134,18 +141,23 @@ ht_mean_ui <- function(id) {
         id = "mainPanel",
         role = "main",
         tabsetPanel(
-          tabPanel("Visualization",
+          tabPanel(
+            "Visualization",
             h4("Graph Distribution", style = "text-align: center;", id = ns("graph_label")),
             selectInput(ns("graph_type"), "Graph type:",
-                        choices = c("Dotplot" = "dotplot",
-                                    "Histogram" = "histogram",
-                                    "Boxplot" = "boxplot",
-                                    "Stemplot" = "stemplot",
-                                    "Normal probability plot" = "normplot")),
+              choices = c(
+                "Dotplot" = "dotplot",
+                "Histogram" = "histogram",
+                "Boxplot" = "boxplot",
+                "Stemplot" = "stemplot",
+                "Normal probability plot" = "normplot"
+              )
+            ),
             conditionalPanel(
               condition = sprintf("input['%s'] == 'histogram'", ns("graph_type")),
               selectInput(ns("hist_label"), "Label histogram with:",
-                          choices = c("Frequency" = "freq", "Relative frequency" = "rel")),
+                choices = c("Frequency" = "freq", "Relative frequency" = "rel")
+              ),
               numericInput(ns("hist_binwidth"), "Interval width:", value = NA, min = 0.01, step = 0.01),
               numericInput(ns("hist_align"), "Boundary value:", value = NA, step = 0.01)
             ),
@@ -155,7 +167,8 @@ ht_mean_ui <- function(id) {
             DTOutput(ns("summary_stats")),
             hr()
           ),
-          tabPanel("Inference",
+          tabPanel(
+            "Inference",
             h4("Perform Inference"),
             uiOutput(ns("inference_ui")),
             uiOutput(ns("inference_results")),
@@ -181,25 +194,44 @@ ht_mean_server <- function(id) {
     # --- Data Extraction & Validation ---
     data_input <- reactive({
       mode <- input$input_mode
+      if (is.null(mode)) {
+        return(NULL)
+      }
       if (mode == "raw") {
         vals <- parse_raw_data(input$raw_data)
-        errors <- if (length(vals) < 2) "At least 2 numeric values required." else NULL
+        if (is.null(input$raw_data) || trimws(input$raw_data) == "") {
+          errors <- NULL
+        } else if (is.null(vals) || length(vals) < 2) {
+          errors <- "At least 2 numeric values required."
+        } else {
+          errors <- NULL
+        }
         list(type = "raw", data = vals, errors = errors, variable_name = input$variable_name)
       } else if (mode == "meanstats") {
-        mean <- input$mean; sd <- input$sd; n <- input$n
+        mean <- input$mean
+        sd <- input$sd
+        n <- input$n
         errors <- validate_mean_sd_n(mean, sd, n)
         list(type = "meanstats", mean = mean, sd = sd, n = n, errors = errors, variable_name = input$variable_name)
-      } else {
-        min <- input$min; q1 <- input$q1; med <- input$med; q3 <- input$q3; max <- input$max
+      } else if (mode == "fivenum") {
+        min <- input$min
+        q1 <- input$q1
+        med <- input$med
+        q3 <- input$q3
+        max <- input$max
         errors <- validate_fivenum(min, q1, med, q3, max)
         list(type = "fivenum", min = min, q1 = q1, med = med, q3 = q3, max = max, errors = errors, variable_name = input$variable_name)
+      } else {
+        NULL
       }
     })
 
     # --- Summary Statistics ---
     output$summary_stats <- renderDT({
       dat <- data_input()
-      if (!is.null(dat$errors)) return(datatable(data.frame(Error = dat$errors)))
+      if (!is.null(dat$errors)) {
+        return(datatable(data.frame(Error = dat$errors)))
+      }
       if (dat$type == "raw") {
         vals <- dat$data
         df <- data.frame(
@@ -227,13 +259,15 @@ ht_mean_server <- function(id) {
           Max = dat$max
         )
       }
-      datatable(df, rownames = FALSE, options = list(dom = 't', ordering = FALSE, paging = FALSE))
+      datatable(df, rownames = FALSE, options = list(dom = "t", ordering = FALSE, paging = FALSE))
     })
 
     # --- Visualization ---
     output$main_plot <- renderPlot({
       dat <- data_input()
-      if (!is.null(dat$errors)) return(NULL)
+      if (!is.null(dat$errors)) {
+        return(NULL)
+      }
       palette <- switch(input$color_palette,
         "Default" = "Set2",
         "Colorblind" = "Dark2",
@@ -253,9 +287,11 @@ ht_mean_server <- function(id) {
           align <- input$hist_align
           label_type <- input$hist_label
           p <- ggplot(data.frame(x = vals), aes(x = x)) +
-            geom_histogram(binwidth = ifelse(is.na(binwidth), NULL, binwidth),
-                           boundary = ifelse(is.na(align), NULL, align),
-                           fill = "#60a5fa", color = "white", alpha = 0.8)
+            geom_histogram(
+              binwidth = ifelse(is.na(binwidth), NULL, binwidth),
+              boundary = ifelse(is.na(align), NULL, align),
+              fill = "#60a5fa", color = "white", alpha = 0.8
+            )
           if (label_type == "rel") {
             p <- p + aes(y = ..density..) + labs(y = "Relative Frequency")
           } else {
@@ -287,9 +323,11 @@ ht_mean_server <- function(id) {
           align <- input$hist_align
           label_type <- input$hist_label
           p <- ggplot(data.frame(x = vals), aes(x = x)) +
-            geom_histogram(binwidth = ifelse(is.na(binwidth), NULL, binwidth),
-                           boundary = ifelse(is.na(align), NULL, align),
-                           fill = "#60a5fa", color = "white", alpha = 0.8)
+            geom_histogram(
+              binwidth = ifelse(is.na(binwidth), NULL, binwidth),
+              boundary = ifelse(is.na(align), NULL, align),
+              fill = "#60a5fa", color = "white", alpha = 0.8
+            )
           if (label_type == "rel") {
             p <- p + aes(y = ..density..) + labs(y = "Relative Frequency")
           } else {
@@ -305,27 +343,34 @@ ht_mean_server <- function(id) {
       } else if (dat$type == "fivenum") {
         # Only boxplot possible
         box_stats <- c(dat$min, dat$q1, dat$med, dat$q3, dat$max)
-        boxplot(box_stats, main = paste("Five-number summary:", dat$variable_name),
-                names = c("Min", "Q1", "Median", "Q3", "Max"), col = "#60a5fa")
+        boxplot(box_stats,
+          main = paste("Five-number summary:", dat$variable_name),
+          names = c("Min", "Q1", "Median", "Q3", "Max"), col = "#60a5fa"
+        )
       }
     })
 
     # --- Inference UI ---
     output$inference_ui <- renderUI({
       dat <- data_input()
-      if (!is.null(dat$errors)) return(tags$p(dat$errors, style = "color: red;"))
+      if (!is.null(dat$errors)) {
+        return(tags$p(dat$errors, style = "color: red;"))
+      }
       tagList(
         selectInput(ns("inference_type"), "Inference procedure:",
-          choices = c("Simulate sample mean" = "simulation",
-                      "Simulate mean difference" = "simulationDiff",
-                      "1-sample t interval for μ" = "interval",
-                      "1-sample t test for μ" = "test",
-                      "1-sample χ² interval for σ" = "SDinterval",
-                      "1-sample χ² test for σ" = "SDtest",
-                      "Sign test for paired data" = "sign",
-                      "Sign test for population median" = "medsign",
-                      "Wilcoxon signed rank test for paired data" = "wilcoxon",
-                      "Wilcoxon signed rank test for population median" = "medwilcoxon")),
+          choices = c(
+            "Simulate sample mean" = "simulation",
+            "Simulate mean difference" = "simulationDiff",
+            "1-sample t interval for μ" = "interval",
+            "1-sample t test for μ" = "test",
+            "1-sample χ² interval for σ" = "SDinterval",
+            "1-sample χ² test for σ" = "SDtest",
+            "Sign test for paired data" = "sign",
+            "Sign test for population median" = "medsign",
+            "Wilcoxon signed rank test for paired data" = "wilcoxon",
+            "Wilcoxon signed rank test for population median" = "medwilcoxon"
+          )
+        ),
         conditionalPanel(
           condition = sprintf("input['%s'] == 'interval'", ns("inference_type")),
           numericInput(ns("conf_level"), "Confidence level (%)", value = 95, min = 0.1, max = 99.9, step = 0.1)
@@ -333,9 +378,12 @@ ht_mean_server <- function(id) {
         conditionalPanel(
           condition = sprintf("input['%s'] == 'test'", ns("inference_type")),
           selectInput(ns("alt_hypothesis"), "Alternative hypothesis:",
-                      choices = c("μ > μ₀" = "greater",
-                                  "μ < μ₀" = "less",
-                                  "μ ≠ μ₀" = "two.sided")),
+            choices = c(
+              "μ > μ₀" = "greater",
+              "μ < μ₀" = "less",
+              "μ ≠ μ₀" = "two.sided"
+            )
+          ),
           numericInput(ns("null_mean"), "Hypothesized mean (μ₀):", value = NA)
         ),
         conditionalPanel(
@@ -345,17 +393,23 @@ ht_mean_server <- function(id) {
         conditionalPanel(
           condition = sprintf("input['%s'] == 'SDtest'", ns("inference_type")),
           selectInput(ns("alt_hypothesis_sd"), "Alternative hypothesis:",
-                      choices = c("σ > σ₀" = "greater",
-                                  "σ < σ₀" = "less",
-                                  "σ ≠ σ₀" = "two.sided")),
+            choices = c(
+              "σ > σ₀" = "greater",
+              "σ < σ₀" = "less",
+              "σ ≠ σ₀" = "two.sided"
+            )
+          ),
           numericInput(ns("null_sd"), "Hypothesized SD (σ₀):", value = NA)
         ),
         conditionalPanel(
           condition = sprintf("input['%s'] == 'medsign'", ns("inference_type")),
           selectInput(ns("alt_hypothesis_med"), "Alternative hypothesis:",
-                      choices = c("Median > M₀" = "greater",
-                                  "Median < M₀" = "less",
-                                  "Median ≠ M₀" = "two.sided")),
+            choices = c(
+              "Median > M₀" = "greater",
+              "Median < M₀" = "less",
+              "Median ≠ M₀" = "two.sided"
+            )
+          ),
           numericInput(ns("null_median"), "Hypothesized median (M₀):", value = NA)
         ),
         actionButton(ns("run_inference"), "Perform inference", class = "btn-primary")
@@ -365,12 +419,15 @@ ht_mean_server <- function(id) {
     # --- Inference Calculation ---
     inference_results <- eventReactive(input$run_inference, {
       dat <- data_input()
-      if (!is.null(dat$errors)) return(list(error = dat$errors))
+      if (!is.null(dat$errors)) {
+        return(list(error = dat$errors))
+      }
       vals <- if (dat$type == "raw") dat$data else if (dat$type == "meanstats") rnorm(dat$n, mean = dat$mean, sd = dat$sd) else NULL
       n <- if (dat$type == "raw") length(vals) else if (dat$type == "meanstats") dat$n else NA
       if (input$inference_type == "interval") {
         conf <- input$conf_level / 100
-        m <- mean(vals); s <- sd(vals)
+        m <- mean(vals)
+        s <- sd(vals)
         se <- s / sqrt(n)
         df <- n - 1
         tstar <- qt(1 - (1 - conf) / 2, df)
@@ -384,7 +441,8 @@ ht_mean_server <- function(id) {
         list(type = "test", t = ttest$statistic, p_value = ttest$p.value, df = ttest$parameter)
       } else if (input$inference_type == "SDinterval") {
         conf <- input$conf_level_sd / 100
-        s <- sd(vals); df <- n - 1
+        s <- sd(vals)
+        df <- n - 1
         chi2_lower <- qchisq((1 - conf) / 2, df)
         chi2_upper <- qchisq(1 - (1 - conf) / 2, df)
         lower <- sqrt((df * s^2) / chi2_upper)
@@ -393,7 +451,8 @@ ht_mean_server <- function(id) {
       } else if (input$inference_type == "SDtest") {
         null_sd <- input$null_sd
         alt <- input$alt_hypothesis_sd
-        s <- sd(vals); df <- n - 1
+        s <- sd(vals)
+        df <- n - 1
         chi2 <- df * s^2 / null_sd^2
         if (alt == "greater") {
           pval <- 1 - pchisq(chi2, df)
@@ -429,40 +488,57 @@ ht_mean_server <- function(id) {
 
     output$inference_results <- renderUI({
       res <- inference_results()
-      if (!is.null(res$error)) return(tags$p(res$error, style = "color: red;"))
+      if (!is.null(res$error)) {
+        return(tags$p(res$error, style = "color: red;"))
+      }
       if (res$type == "interval") {
-        tags$table(class = "table table-striped",
+        tags$table(
+          class = "table table-striped",
           tags$tr(tags$th("Lower Bound"), tags$th("Upper Bound"), tags$th("df")),
-          tags$tr(tags$td(round(res$lower, input$round_digits)),
-                  tags$td(round(res$upper, input$round_digits)),
-                  tags$td(res$df))
+          tags$tr(
+            tags$td(round(res$lower, input$round_digits)),
+            tags$td(round(res$upper, input$round_digits)),
+            tags$td(res$df)
+          )
         )
       } else if (res$type == "test") {
-        tags$table(class = "table table-striped",
+        tags$table(
+          class = "table table-striped",
           tags$tr(tags$th("t"), tags$th("P-value"), tags$th("df")),
-          tags$tr(tags$td(round(res$t, 3)),
-                  tags$td(format.pval(res$p_value, digits = 4, eps = 0.0001)),
-                  tags$td(res$df))
+          tags$tr(
+            tags$td(round(res$t, 3)),
+            tags$td(format.pval(res$p_value, digits = 4, eps = 0.0001)),
+            tags$td(res$df)
+          )
         )
       } else if (res$type == "SDinterval") {
-        tags$table(class = "table table-striped",
+        tags$table(
+          class = "table table-striped",
           tags$tr(tags$th("Lower Bound"), tags$th("Upper Bound"), tags$th("df")),
-          tags$tr(tags$td(round(res$lower, input$round_digits)),
-                  tags$td(round(res$upper, input$round_digits)),
-                  tags$td(res$df))
+          tags$tr(
+            tags$td(round(res$lower, input$round_digits)),
+            tags$td(round(res$upper, input$round_digits)),
+            tags$td(res$df)
+          )
         )
       } else if (res$type == "SDtest") {
-        tags$table(class = "table table-striped",
+        tags$table(
+          class = "table table-striped",
           tags$tr(tags$th("χ²"), tags$th("P-value"), tags$th("df")),
-          tags$tr(tags$td(round(res$chi2, 3)),
-                  tags$td(format.pval(res$p_value, digits = 4, eps = 0.0001)),
-                  tags$td(res$df))
+          tags$tr(
+            tags$td(round(res$chi2, 3)),
+            tags$td(format.pval(res$p_value, digits = 4, eps = 0.0001)),
+            tags$td(res$df)
+          )
         )
       } else if (res$type %in% c("sign", "medsign", "wilcoxon", "medwilcoxon")) {
-        tags$table(class = "table table-striped",
+        tags$table(
+          class = "table table-striped",
           tags$tr(tags$th("Statistic"), tags$th("P-value")),
-          tags$tr(tags$td(round(res$statistic, 3)),
-                  tags$td(format.pval(res$p_value, digits = 4, eps = 0.0001)))
+          tags$tr(
+            tags$td(round(res$statistic, 3)),
+            tags$td(format.pval(res$p_value, digits = 4, eps = 0.0001))
+          )
         )
       }
     })
@@ -471,7 +547,9 @@ ht_mean_server <- function(id) {
     simulation_results <- reactiveVal(NULL)
     output$simulation_ui <- renderUI({
       res <- inference_results()
-      if (is.null(res) || !(res$type %in% c("simulation", "simulationDiff"))) return(NULL)
+      if (is.null(res) || !(res$type %in% c("simulation", "simulationDiff"))) {
+        return(NULL)
+      }
       tagList(
         numericInput(ns("num_trials"), "Number of samples to add:", value = 1000, min = 1, step = 1),
         actionButton(ns("run_simulation"), "Add samples"),
@@ -487,8 +565,12 @@ ht_mean_server <- function(id) {
     })
     observeEvent(input$run_simulation, {
       res <- inference_results()
-      if (is.null(res) || !(res$type %in% c("simulation", "simulationDiff"))) return()
-      vals <- res$vals; n <- res$n; trials <- input$num_trials
+      if (is.null(res) || !(res$type %in% c("simulation", "simulationDiff"))) {
+        return()
+      }
+      vals <- res$vals
+      n <- res$n
+      trials <- input$num_trials
       sim_results <- numeric(trials)
       if (res$type == "simulation") {
         for (i in seq_len(trials)) {
@@ -511,7 +593,9 @@ ht_mean_server <- function(id) {
     })
     output$simulation_plot <- renderPlot({
       sims <- simulation_results()
-      if (is.null(sims) || length(sims) == 0) return(NULL)
+      if (is.null(sims) || length(sims) == 0) {
+        return(NULL)
+      }
       ggplot(data.frame(Sim = sims), aes(x = Sim)) +
         geom_dotplot(binwidth = 0.01, dotsize = 0.5, fill = "#60a5fa") +
         labs(x = "Simulated sample mean", y = "Count") +
@@ -520,10 +604,14 @@ ht_mean_server <- function(id) {
     dotplot_count <- reactiveVal(NULL)
     observeEvent(input$count_dotplot, {
       sims <- simulation_results()
-      if (is.null(sims) || length(sims) == 0) return()
+      if (is.null(sims) || length(sims) == 0) {
+        return()
+      }
       bound <- as.numeric(input$dotplot_count_bound)
       dir <- input$dotplot_count_dir
-      if (is.na(bound)) return()
+      if (is.na(bound)) {
+        return()
+      }
       if (dir == "left") {
         count <- sum(sims <= bound)
       } else {
@@ -537,7 +625,9 @@ ht_mean_server <- function(id) {
     })
     output$simulation_stats <- renderUI({
       sims <- simulation_results()
-      if (is.null(sims) || length(sims) == 0) return(NULL)
+      if (is.null(sims) || length(sims) == 0) {
+        return(NULL)
+      }
       mean_val <- mean(sims)
       sd_val <- sd(sims)
       most_recent <- tail(sims, 1)
@@ -550,11 +640,15 @@ ht_mean_server <- function(id) {
           tags$tr(tags$td("SD:"), tags$td(round(sd_val, input$round_digits)))
         ),
         if (!is.null(count_info)) {
-          tags$p(sprintf("Counted %d dots (%0.2f%%) %s %s.",
-                         count_info$count, count_info$percent,
-                         ifelse(count_info$dir == "left", "≤", "≥"),
-                         count_info$bound),
-                 style = "color: #2563eb; font-weight: bold;")
+          tags$p(
+            sprintf(
+              "Counted %d dots (%0.2f%%) %s %s.",
+              count_info$count, count_info$percent,
+              ifelse(count_info$dir == "left", "≤", "≥"),
+              count_info$bound
+            ),
+            style = "color: #2563eb; font-weight: bold;"
+          )
         }
       )
     })
@@ -606,7 +700,9 @@ ht_mean_server <- function(id) {
       },
       content = function(file) {
         dat <- data_input()
-        if (!is.null(dat$errors)) return()
+        if (!is.null(dat$errors)) {
+          return()
+        }
         palette <- switch(input$color_palette,
           "Default" = "Set2",
           "Colorblind" = "Dark2",
@@ -627,11 +723,7 @@ ht_mean_server <- function(id) {
 
     # --- Accessibility ---
     observe({
-      if (input$aria_enable) {
-        shinyAccessibility::enableAccessibility()
-      } else {
-        shinyAccessibility::disableAccessibility()
-      }
+      # Accessibility toggling removed (shinyAccessibility package not used)
     })
 
     # --- Error Messaging ---

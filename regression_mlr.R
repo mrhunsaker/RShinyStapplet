@@ -34,14 +34,14 @@
 # Matches features of stapplet HTML/JS applet
 
 # --- Load required libraries ---
-library(shiny)              # For building interactive web applications
-library(ggplot2)            # For creating plots
-library(DT)                 # For interactive tables
-library(shinyjs)            # For JavaScript integration in Shiny
-library(shinyWidgets)       # For enhanced UI widgets
-library(shinyAccessibility) # For accessibility features
-library(GGally)             # For advanced regression plots
-library(MASS)               # For datasets and regression support
+library(shiny) # For building interactive web applications
+library(ggplot2) # For creating plots
+library(DT) # For interactive tables
+library(shinyjs) # For JavaScript integration in Shiny
+library(colourpicker) # For colourInput widget
+library(shinyWidgets) # For enhanced UI widgets
+library(GGally) # For advanced regression plots
+library(MASS) # For datasets and regression support
 
 # --- UI Definition for Multiple Linear Regression Applet ---
 # This function builds the user interface for the module, allowing users to:
@@ -90,7 +90,8 @@ regression_mlr_ui <- function(id) {
           condition = sprintf("input['%s'] == 'paste'", ns("input_mode")),
           ns = ns,
           checkboxInput(ns("has_header"), "Data includes header row", value = TRUE),
-          textAreaInput(ns("custom_data"), "Paste your data here:", rows = 10,
+          textAreaInput(ns("custom_data"), "Paste your data here:",
+            rows = 10,
             placeholder = "Example:\nprice,sqft,bedrooms,bathrooms\n250000,1500,3,2\n300000,1800,3,2.5\n..."
           ),
           helpText("Data should be comma, tab, or space separated.")
@@ -117,11 +118,13 @@ regression_mlr_ui <- function(id) {
         id = ns("mainPanel"),
         role = "main",
         tabsetPanel(
-          tabPanel("Regression",
+          tabPanel(
+            "Regression",
             conditionalPanel(
               condition = sprintf("input['%s']", ns("show_summary")),
               ns = ns,
-              tags$div(class = "results-box",
+              tags$div(
+                class = "results-box",
                 h4("Regression Model Summary", id = ns("modelSummaryHeading")),
                 verbatimTextOutput(ns("model_summary"), placeholder = TRUE)
               )
@@ -129,17 +132,20 @@ regression_mlr_ui <- function(id) {
             conditionalPanel(
               condition = sprintf("input['%s']", ns("show_anova")),
               ns = ns,
-              tags$div(class = "results-box",
+              tags$div(
+                class = "results-box",
                 h4("ANOVA Table", id = ns("anovaHeading")),
                 DTOutput(ns("anova_table"))
               )
             )
           ),
-          tabPanel("Plots",
+          tabPanel(
+            "Plots",
             conditionalPanel(
               condition = sprintf("input['%s']", ns("show_residuals")),
               ns = ns,
-              tags$div(class = "plot-container",
+              tags$div(
+                class = "plot-container",
                 h4("Residuals vs. Fitted Values Plot", id = ns("residualPlotHeading")),
                 plotOutput(ns("residual_plot"), height = "300px")
               )
@@ -147,7 +153,8 @@ regression_mlr_ui <- function(id) {
             conditionalPanel(
               condition = sprintf("input['%s']", ns("show_dotplot")),
               ns = ns,
-              tags$div(class = "plot-container",
+              tags$div(
+                class = "plot-container",
                 h4("Residual Dotplot", id = ns("residualDotplotHeading")),
                 plotOutput(ns("residual_dotplot"), height = "150px")
               )
@@ -155,23 +162,27 @@ regression_mlr_ui <- function(id) {
             conditionalPanel(
               condition = sprintf("input['%s']", ns("show_pairs")),
               ns = ns,
-              tags$div(class = "plot-container",
+              tags$div(
+                class = "plot-container",
                 h4("Pairs Plot of Variables", id = ns("pairsPlotHeading")),
                 plotOutput(ns("pairs_plot"), height = "350px")
               )
             )
           ),
-          tabPanel("Statistics",
+          tabPanel(
+            "Statistics",
             conditionalPanel(
               condition = sprintf("input['%s']", ns("show_stats")),
               ns = ns,
-              tags$div(class = "results-box",
+              tags$div(
+                class = "results-box",
                 h4("Descriptive Statistics", id = ns("descStatsHeading")),
                 verbatimTextOutput(ns("descriptive_stats"), placeholder = TRUE)
               )
             )
           ),
-          tabPanel("Prediction",
+          tabPanel(
+            "Prediction",
             h4("Make a Prediction", id = ns("predictionHeading")),
             uiOutput(ns("prediction_inputs")),
             actionButton(ns("compute_prediction"), "Compute Predicted Value"),
@@ -215,9 +226,15 @@ regression_mlr_server <- function(id) {
         easyClose = TRUE
       ))
     })
-    observeEvent(input$round_digits, { prefs$round_digits <- input$round_digits })
-    observeEvent(input$plot_color, { prefs$plot_color <- input$plot_color })
-    observeEvent(input$show_percent, { prefs$show_percent <- input$show_percent })
+    observeEvent(input$round_digits, {
+      prefs$round_digits <- input$round_digits
+    })
+    observeEvent(input$plot_color, {
+      prefs$plot_color <- input$plot_color
+    })
+    observeEvent(input$show_percent, {
+      prefs$show_percent <- input$show_percent
+    })
 
     # --- Data Input Management ---
     predictors <- reactiveVal(data.frame(
@@ -229,24 +246,27 @@ regression_mlr_server <- function(id) {
 
     observeEvent(input$add_predictor, {
       df <- predictors()
-      new_row <- data.frame(Name = paste0("X", nrow(df)+1), Data = "", Include = TRUE, stringsAsFactors = FALSE)
+      new_row <- data.frame(Name = paste0("X", nrow(df) + 1), Data = "", Include = TRUE, stringsAsFactors = FALSE)
       predictors(rbind(df, new_row))
     })
 
-    output$predictor_table <- renderDT({
-      datatable(
-        predictors(),
-        editable = list(target = "cell", disable = list(columns = c(2))),
-        rownames = FALSE,
-        selection = "none",
-        options = list(dom = 't', paging = FALSE)
-      )
-    }, server = FALSE)
+    output$predictor_table <- renderDT(
+      {
+        datatable(
+          predictors(),
+          editable = list(target = "cell", disable = list(columns = c(2))),
+          rownames = FALSE,
+          selection = "none",
+          options = list(dom = "t", paging = FALSE)
+        )
+      },
+      server = FALSE
+    )
 
     observeEvent(input$predictor_table_cell_edit, {
       info <- input$predictor_table_cell_edit
       df <- predictors()
-      df[info$row, info$col+1] <- info$value
+      df[info$row, info$col + 1] <- info$value
       predictors(df)
     })
 
@@ -255,9 +275,12 @@ regression_mlr_server <- function(id) {
       df <- predictors()
       if (nrow(df) > 1) {
         for (i in seq_len(nrow(df))) {
-          observeEvent(input[[paste0("delete_predictor_", i)]], {
-            predictors(df[-i, ])
-          }, ignoreInit = TRUE)
+          observeEvent(input[[paste0("delete_predictor_", i)]],
+            {
+              predictors(df[-i, ])
+            },
+            ignoreInit = TRUE
+          )
         }
       }
     })
@@ -266,13 +289,16 @@ regression_mlr_server <- function(id) {
     active_data <- reactive({
       # Counts Table
       if (input$input_mode == "counts" && !is.null(input$counts_file)) {
-        tryCatch({
-          df <- read.csv(input$counts_file$datapath)
-          df
-        }, error = function(e) {
-          showError("Failed to read counts table.")
-          NULL
-        })
+        tryCatch(
+          {
+            df <- read.csv(input$counts_file$datapath)
+            df
+          },
+          error = function(e) {
+            showError("Failed to read counts table.")
+            NULL
+          }
+        )
       }
       # Raw Data (variable-by-variable)
       else if (input$input_mode == "raw") {
@@ -281,7 +307,9 @@ regression_mlr_server <- function(id) {
         for (i in seq_len(nrow(pred_df))) {
           if (pred_df$Include[i]) {
             vals <- as.numeric(unlist(strsplit(pred_df$Data[i], "[, ]+")))
-            if (length(vals) == 0 || any(is.na(vals))) {
+            if (is.null(pred_df$Data[i]) || trimws(pred_df$Data[i]) == "") {
+              # Don't show error until user enters data
+            } else if (length(vals) == 0 || any(is.na(vals))) {
               showError(sprintf("Explanatory variable '%s' must be numeric.", pred_df$Name[i]))
               return(NULL)
             }
@@ -289,7 +317,9 @@ regression_mlr_server <- function(id) {
           }
         }
         resp_vals <- as.numeric(unlist(strsplit(input$response_data, "[, ]+")))
-        if (length(resp_vals) == 0 || any(is.na(resp_vals))) {
+        if (is.null(input$response_data) || trimws(input$response_data) == "") {
+          # Don't show error until user enters data
+        } else if (length(resp_vals) == 0 || any(is.na(resp_vals))) {
           showError("Response variable must be numeric.")
           return(NULL)
         }
@@ -304,19 +334,26 @@ regression_mlr_server <- function(id) {
       }
       # Paste Data
       else if (input$input_mode == "paste" && nzchar(input$custom_data)) {
-        tryCatch({
-          df <- read.table(text = input$custom_data, header = input$has_header,
-                           sep = ",", stringsAsFactors = FALSE, fill = TRUE,
-                           blank.lines.skip = TRUE)
-          if (ncol(df) < 2) {
-            df <- read.table(text = input$custom_data, header = input$has_header,
-                             stringsAsFactors = FALSE, fill = TRUE, blank.lines.skip = TRUE)
+        tryCatch(
+          {
+            df <- read.table(
+              text = input$custom_data, header = input$has_header,
+              sep = ",", stringsAsFactors = FALSE, fill = TRUE,
+              blank.lines.skip = TRUE
+            )
+            if (ncol(df) < 2) {
+              df <- read.table(
+                text = input$custom_data, header = input$has_header,
+                stringsAsFactors = FALSE, fill = TRUE, blank.lines.skip = TRUE
+              )
+            }
+            df[sapply(df, is.numeric)]
+          },
+          error = function(e) {
+            showError("Failed to parse pasted data.")
+            NULL
           }
-          df[sapply(df, is.numeric)]
-        }, error = function(e) {
-          showError("Failed to parse pasted data.")
-          NULL
-        })
+        )
       } else {
         NULL
       }
@@ -332,10 +369,15 @@ regression_mlr_server <- function(id) {
 
     # --- Variable Selection ---
     response_var <- reactive({
-      if (input$input_mode == "raw") input$response_name
-      else if (input$input_mode == "paste" && active_data() != NULL) colnames(active_data())[1]
-      else if (input$input_mode == "counts" && active_data() != NULL) colnames(active_data())[1]
-      else NULL
+      if (input$input_mode == "raw") {
+        input$response_name
+      } else if (input$input_mode == "paste" && active_data() != NULL) {
+        colnames(active_data())[1]
+      } else if (input$input_mode == "counts" && active_data() != NULL) {
+        colnames(active_data())[1]
+      } else {
+        NULL
+      }
     })
     explanatory_vars <- reactive({
       if (input$input_mode == "raw") {
@@ -343,7 +385,9 @@ regression_mlr_server <- function(id) {
         pred_df$Name[pred_df$Include]
       } else if (active_data() != NULL) {
         setdiff(colnames(active_data()), response_var())
-      } else NULL
+      } else {
+        NULL
+      }
     })
 
     # --- Model Fitting ---
@@ -351,7 +395,9 @@ regression_mlr_server <- function(id) {
       df <- active_data()
       y <- response_var()
       x <- explanatory_vars()
-      if (is.null(df) || is.null(y) || is.null(x) || length(x) == 0) return(NULL)
+      if (is.null(df) || is.null(y) || is.null(x) || length(x) == 0) {
+        return(NULL)
+      }
       # Check linear independence
       if (length(x) > 1) {
         xmat <- as.matrix(df[, x, drop = FALSE])
@@ -379,7 +425,7 @@ regression_mlr_server <- function(id) {
       datatable(
         aov_df,
         rownames = FALSE,
-        options = list(dom = 't', paging = FALSE),
+        options = list(dom = "t", paging = FALSE),
         caption = "Analysis of Variance"
       )
     })
@@ -402,7 +448,7 @@ regression_mlr_server <- function(id) {
       req(model())
       res <- residuals(model())
       ggplot(data.frame(residuals = res), aes(x = residuals)) +
-        geom_dotplot(binwidth = diff(range(res))/30, dotsize = 0.7, fill = prefs$plot_color) +
+        geom_dotplot(binwidth = diff(range(res)) / 30, dotsize = 0.7, fill = prefs$plot_color) +
         labs(x = "Residuals", y = NULL) +
         theme_minimal(base_size = 14)
     })
@@ -416,12 +462,14 @@ regression_mlr_server <- function(id) {
       if (requireNamespace("GGally", quietly = TRUE)) {
         GGally::ggpairs(df_subset,
           upper = list(continuous = GGally::wrap("cor", size = 4)),
-          lower = list(continuous = GGally::wrap("points", alpha = 0.5, size=2)),
+          lower = list(continuous = GGally::wrap("points", alpha = 0.5, size = 2)),
           diag = list(continuous = GGally::wrap("densityDiag", alpha = 0.5))
         ) + theme_minimal()
       } else {
-        pairs(df_subset, pch = 19, col = scales::alpha(prefs$plot_color, 0.7),
-              main = "Pairs Plot of Selected Variables")
+        pairs(df_subset,
+          pch = 19, col = scales::alpha(prefs$plot_color, 0.7),
+          main = "Pairs Plot of Selected Variables"
+        )
       }
     })
 
@@ -443,7 +491,9 @@ regression_mlr_server <- function(id) {
     output$prediction_inputs <- renderUI({
       req(model())
       xvars <- explanatory_vars()
-      if (is.null(xvars) || length(xvars) == 0) return(NULL)
+      if (is.null(xvars) || length(xvars) == 0) {
+        return(NULL)
+      }
       tagList(
         lapply(seq_along(xvars), function(i) {
           numericInput(ns(paste0("pred_x_", i)), xvars[i], value = NA, width = "120px")
@@ -455,7 +505,9 @@ regression_mlr_server <- function(id) {
       req(model())
       xvars <- explanatory_vars()
       vals <- sapply(seq_along(xvars), function(i) input[[paste0("pred_x_", i)]])
-      if (any(is.na(vals))) {
+      if (is.null(vals) || length(vals) == 0) {
+        # Don't show error until user enters prediction variables
+      } else if (any(is.na(vals))) {
         shinyjs::html(ns("prediction_msg"), "All prediction variables must be numeric.")
         shinyjs::html(ns("prediction_result"), "")
         return()
@@ -463,15 +515,20 @@ regression_mlr_server <- function(id) {
       coefs <- coef(model())
       pred <- coefs[1] + sum(coefs[-1] * vals)
       respname <- response_var()
-      if (is.null(respname)) respname <- "<em>ŷ</em>"
-      else respname <- paste("Predicted value of", respname)
+      if (is.null(respname)) {
+        respname <- "<em>ŷ</em>"
+      } else {
+        respname <- paste("Predicted value of", respname)
+      }
       shinyjs::html(ns("prediction_result"), sprintf("%s = %s", respname, round(pred, prefs$round_digits)))
       shinyjs::html(ns("prediction_msg"), "")
     })
 
     # --- Export/Download ---
     output$download_summary <- downloadHandler(
-      filename = function() { "regression_summary.txt" },
+      filename = function() {
+        "regression_summary.txt"
+      },
       content = function(file) {
         sink(file)
         print(summary(model()))
@@ -479,13 +536,17 @@ regression_mlr_server <- function(id) {
       }
     )
     output$download_data <- downloadHandler(
-      filename = function() { "regression_data.csv" },
+      filename = function() {
+        "regression_data.csv"
+      },
       content = function(file) {
         write.csv(active_data(), file, row.names = FALSE)
       }
     )
     output$download_plot <- downloadHandler(
-      filename = function() { "regression_plot.png" },
+      filename = function() {
+        "regression_plot.png"
+      },
       content = function(file) {
         png(file, width = 800, height = 600)
         print({
@@ -499,7 +560,7 @@ regression_mlr_server <- function(id) {
           } else if (input$show_dotplot) {
             res <- residuals(model())
             ggplot(data.frame(residuals = res), aes(x = residuals)) +
-              geom_dotplot(binwidth = diff(range(res))/30, dotsize = 0.7, fill = prefs$plot_color) +
+              geom_dotplot(binwidth = diff(range(res)) / 30, dotsize = 0.7, fill = prefs$plot_color) +
               labs(x = "Residuals", y = NULL) +
               theme_minimal(base_size = 14)
           }
@@ -524,32 +585,7 @@ regression_mlr_server <- function(id) {
     })
 
     # --- Accessibility Enhancements ---
-    # Use shinyAccessibility for ARIA roles, keyboard navigation, screen reader support
-    shinyAccessibility::add_accessibility(
-      inputId = ns("mainPanel"),
-      role = "main",
-      aria_label = "Multiple Linear Regression Main Panel"
-    )
-    shinyAccessibility::add_accessibility(
-      inputId = ns("sidebarPanel"),
-      role = "form",
-      aria_label = "Data Input and Analysis Options"
-    )
-    shinyAccessibility::add_accessibility(
-      inputId = ns("error_msg"),
-      role = "alert",
-      aria_live = "assertive"
-    )
-    shinyAccessibility::add_accessibility(
-      inputId = ns("prediction_result"),
-      role = "region",
-      aria_live = "polite"
-    )
-    shinyAccessibility::add_accessibility(
-      inputId = ns("prediction_msg"),
-      role = "region",
-      aria_live = "polite"
-    )
+    # (shinyAccessibility removed)
     # Keyboard navigation: tabIndex for all inputs
     # (Handled by Shiny and Bootstrap, but can be extended if needed)
   })

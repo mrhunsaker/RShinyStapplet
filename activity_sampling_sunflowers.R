@@ -23,9 +23,9 @@
 ######################################################################
 
 # --- Load required libraries ---
-library(shiny)    # For building interactive web applications
-library(ggplot2)  # For creating plots
-library(dplyr)    # For data wrangling
+library(shiny) # For building interactive web applications
+library(ggplot2) # For creating plots
+library(dplyr) # For data wrangling
 
 # --- UI Definition for Sampling Sunflowers (CLT) Activity ---
 # This function builds the user interface for the module, allowing users to:
@@ -49,7 +49,8 @@ activity_sampling_sunflowers_ui <- function(id) {
       )
     ),
     fluidRow(
-      column(4,
+      column(
+        4,
         h4("Controls"),
         # --- Sample size slider ---
         sliderInput(ns("sample_size"), "Sample Size (n):", min = 2, max = 100, value = 10),
@@ -69,25 +70,29 @@ activity_sampling_sunflowers_ui <- function(id) {
         hr(),
         h4("Statistics"),
         # --- Display summary statistics ---
-        div(class = "results-box", role = "status", `aria-live` = "polite",
-            uiOutput(ns("stats_output"))
+        div(
+          class = "results-box", role = "status", `aria-live` = "polite",
+          uiOutput(ns("stats_output"))
         )
         # To add export/download, insert downloadButton(ns("download_results"), "Download Results") here
       ),
-      column(8,
+      column(
+        8,
         fluidRow(
-          column(6,
+          column(
+            6,
             h5("Population of Sunflowers", align = "center"),
-            plotOutput(ns("pop_plot"), height = "250px")
+            plotOutput(ns("pop_plot"), height = "400px")
           ),
-          column(6,
+          column(
+            6,
             h5("Most Recent Sample", align = "center"),
-            plotOutput(ns("sample_plot"), height = "250px")
+            plotOutput(ns("sample_plot"), height = "400px")
           )
         ),
         hr(),
         h5("Distribution of Sample Means", align = "center"),
-        plotOutput(ns("sampling_dist_plot"), height = "300px"),
+        plotOutput(ns("sampling_dist_plot"), height = "400px"),
         tags$script(paste0("document.getElementById('", ns("sampling_dist_plot"), "').setAttribute('aria-label', 'A histogram of the means of all samples taken so far. A red dashed line shows the theoretical normal curve.')")),
         p(id = ns("sampling_dist_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("sampling_dist_plot_desc_text"))),
         uiOutput(ns("plot_desc"))
@@ -119,23 +124,37 @@ activity_sampling_sunflowers_server <- function(id) {
     # Function to take samples and update state
     take_samples <- function(num_to_take) {
       n <- input$sample_size
-      if (n < 2 || n > pop_n) return()
+      if (is.null(input$sample_size) || trimws(as.character(input$sample_size)) == "") {
+        # Don't show error until user enters sample size
+        return()
+      }
+      if (n < 2 || n > pop_n) {
+        showNotification("Sample size must be at least 2 and no more than population size.", type = "error")
+        return()
+      }
       new_means <- replicate(num_to_take, {
         sample_df <- population_data %>% sample_n(n)
         mean(sample_df$height)
       })
       last_sample_df <- population_data %>% sample_n(n)
       last_sample(last_sample_df)
-      updated_means <- rbind(sample_means(), data.frame(mean = c(new_means, mean(last_sample_df$height)))
-      )
+      updated_means <- rbind(sample_means(), data.frame(mean = c(new_means, mean(last_sample_df$height))))
       sample_means(updated_means)
     }
 
     # --- Button handlers for taking samples ---
-    observeEvent(input$take_1, { take_samples(0) })
-    observeEvent(input$take_10, { take_samples(9) })
-    observeEvent(input$take_100, { take_samples(99) })
-    observeEvent(input$take_1000, { take_samples(999) })
+    observeEvent(input$take_1, {
+      take_samples(0)
+    })
+    observeEvent(input$take_10, {
+      take_samples(9)
+    })
+    observeEvent(input$take_100, {
+      take_samples(99)
+    })
+    observeEvent(input$take_1000, {
+      take_samples(999)
+    })
 
     # --- Reset simulation state ---
     observeEvent(input$reset, {
@@ -151,47 +170,60 @@ activity_sampling_sunflowers_server <- function(id) {
 
     # --- 4. Render Outputs ---
     # --- Population plot: histogram and density of sunflower heights ---
-    output$pop_plot <- renderPlot({
-      ggplot(population_data, aes(x = height)) +
-        geom_histogram(aes(y = ..density..), binwidth = 5, fill = "#f9a825", color = "white", alpha = 0.8) +
-        geom_density(color = "#c77700", size = 1) +
-        labs(x = "Height", y = "Density") +
-        theme_minimal()
-    }, alt = "A histogram of the population data, showing a distribution skewed to the right.")
+    output$pop_plot <- renderPlot(
+      {
+        ggplot(population_data, aes(x = height)) +
+          geom_histogram(aes(y = ..density..), binwidth = 5, fill = "#f9a825", color = "white", alpha = 0.8) +
+          geom_density(color = "#c77700", size = 1) +
+          labs(x = "Height", y = "Density") +
+          theme_minimal()
+      },
+      alt = "A histogram of the population data, showing a distribution skewed to the right."
+    )
 
     # --- Most recent sample plot: histogram and mean line ---
-    output$sample_plot <- renderPlot({
-      df <- last_sample()
-      if (nrow(df) == 0) {
-        return(ggplot() + labs(title = "Take a sample") + theme_void())
-      }
-      ggplot(df, aes(x = height)) +
-        geom_histogram(binwidth = 5, fill = "#42a5f5", color = "white", alpha = 0.8) +
-        geom_vline(aes(xintercept = mean(height)), color = "#0d47a1", size = 1.5, linetype = "dashed") +
-        coord_cartesian(xlim = range(population_data$height)) +
-        labs(x = "Height", y = "Count") +
-        theme_minimal()
-    }, alt = "A histogram of the most recently taken sample.")
+    output$sample_plot <- renderPlot(
+      {
+        df <- last_sample()
+        if (nrow(df) == 0) {
+          return(ggplot() +
+            labs(title = "Take a sample") +
+            theme_void())
+        }
+        ggplot(df, aes(x = height)) +
+          geom_histogram(binwidth = 5, fill = "#42a5f5", color = "white", alpha = 0.8) +
+          geom_vline(aes(xintercept = mean(height)), color = "#0d47a1", size = 1.5, linetype = "dashed") +
+          coord_cartesian(xlim = range(population_data$height)) +
+          labs(x = "Height", y = "Count") +
+          theme_minimal()
+      },
+      alt = "A histogram of the most recently taken sample."
+    )
 
     # --- Sampling distribution plot: histogram and density of sample means ---
-    output$sampling_dist_plot <- renderPlot({
-      df <- sample_means()
-      if (nrow(df) == 0) {
-        return(ggplot() + labs(title = "Distribution will build here") + theme_void())
-      }
-      p <- ggplot(df, aes(x = mean)) +
-        geom_histogram(aes(y = ..density..), binwidth = 1, fill = "#29b6f6", color = "white", alpha = 0.8) +
-        geom_density(color = "#0277bd", size = 1) +
-        coord_cartesian(xlim = range(population_data$height)) +
-        labs(x = "Sample Mean Height", y = "Density") +
-        theme_minimal()
-      # Overlay theoretical normal curve if enough samples
-      if(nrow(df) > 1) {
-        se <- pop_sd / sqrt(input$sample_size)
-        p <- p + stat_function(fun = dnorm, args = list(mean = pop_mean, sd = se), color = "red", linetype = "dashed", size = 1)
-      }
-      p
-    }, alt = "A histogram of the means of all samples taken so far. A red dashed line shows the theoretical normal curve.")
+    output$sampling_dist_plot <- renderPlot(
+      {
+        df <- sample_means()
+        if (nrow(df) == 0) {
+          return(ggplot() +
+            labs(title = "Distribution will build here") +
+            theme_void())
+        }
+        p <- ggplot(df, aes(x = mean)) +
+          geom_histogram(aes(y = ..density..), binwidth = 1, fill = "#29b6f6", color = "white", alpha = 0.8) +
+          geom_density(color = "#0277bd", size = 1) +
+          coord_cartesian(xlim = range(population_data$height)) +
+          labs(x = "Sample Mean Height", y = "Density") +
+          theme_minimal()
+        # Overlay theoretical normal curve if enough samples
+        if (nrow(df) > 1) {
+          se <- pop_sd / sqrt(input$sample_size)
+          p <- p + stat_function(fun = dnorm, args = list(mean = pop_mean, sd = se), color = "red", linetype = "dashed", size = 1)
+        }
+        p
+      },
+      alt = "A histogram of the means of all samples taken so far. A red dashed line shows the theoretical normal curve."
+    )
 
     # --- Accessibility: Description for the sampling distribution plot ---
     output$sampling_dist_plot_desc_text <- renderText({
@@ -231,12 +263,16 @@ activity_sampling_sunflowers_server <- function(id) {
         strong("Most Recent Sample:"),
         if (nrow(last_sample_df) > 0) {
           p(paste("Mean =", round(mean(last_sample_df$height), 2), " SD =", round(sd(last_sample_df$height), 2), " n =", nrow(last_sample_df)))
-        } else { p("No sample taken yet.") },
+        } else {
+          p("No sample taken yet.")
+        },
         hr(),
         strong("Sampling Distribution of Means:"),
         if (nrow(means_df) > 0) {
           p(paste("Mean =", round(mean(means_df$mean), 2), " SD =", round(sd(means_df$mean), 2), " Samples =", nrow(means_df)))
-        } else { p("No samples taken yet.") }
+        } else {
+          p("No samples taken yet.")
+        }
       )
     })
 

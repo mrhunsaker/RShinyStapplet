@@ -61,8 +61,9 @@ dist_t_ui <- function(id) {
           tags$label(id = ns("df_label"), "Degrees of Freedom (df):"),
           sliderInput(ns("df"), NULL, min = 1, max = 300, value = 10, step = 1, width = "100%")
         ),
-        div(class = "form-group",
-            checkboxInput(ns("show_normal"), "Also plot normal distribution as dashed line", value = FALSE)
+        div(
+          class = "form-group",
+          checkboxInput(ns("show_normal"), "Also plot normal distribution as dashed line", value = FALSE)
         ),
         hr(role = "separator"),
         h3("Operation", id = "operationHeading"),
@@ -72,33 +73,40 @@ dist_t_ui <- function(id) {
         ),
         conditionalPanel(
           condition = sprintf("input['%s'] == 'cdf'", ns("operation")),
-          div(class = "form-group",
+          div(
+            class = "form-group",
             tags$label(id = ns("region_type_label"), "Region type:"),
             selectInput(ns("region_type"), NULL,
-              choices = c("between two values" = "between",
-                          "to the left of a value" = "left",
-                          "to the right of a value" = "right",
-                          "outside a region" = "outside"),
+              choices = c(
+                "between two values" = "between",
+                "to the left of a value" = "left",
+                "to the right of a value" = "right",
+                "outside a region" = "outside"
+              ),
               selected = "between"
             )
           ),
-          div(class = "form-group",
+          div(
+            class = "form-group",
             checkboxInput(ns("show_labels"), "Show labels on plot", value = TRUE)
           ),
           conditionalPanel(
             condition = sprintf("input['%s'] == 'between' || input['%s'] == 'outside'", ns("region_type"), ns("region_type")),
-            div(class = "form-group",
+            div(
+              class = "form-group",
               tags$label(id = ns("left_label"), "Left boundary:"),
               numericInput(ns("left"), NULL, value = -1, step = 0.1, width = "100%")
             ),
-            div(class = "form-group",
+            div(
+              class = "form-group",
               tags$label(id = ns("right_label"), "Right boundary:"),
               numericInput(ns("right"), NULL, value = 1, step = 0.1, width = "100%")
             )
           ),
           conditionalPanel(
             condition = sprintf("input['%s'] == 'left' || input['%s'] == 'right'", ns("region_type"), ns("region_type")),
-            div(class = "form-group",
+            div(
+              class = "form-group",
               tags$label(id = ns("single_label"), "Value:"),
               numericInput(ns("single"), NULL, value = 0, step = 0.1, width = "100%")
             )
@@ -107,19 +115,24 @@ dist_t_ui <- function(id) {
         ),
         conditionalPanel(
           condition = sprintf("input['%s'] == 'inv'", ns("operation")),
-          div(class = "form-group",
+          div(
+            class = "form-group",
             tags$label(id = ns("inv_type_label"), "Region type:"),
             selectInput(ns("inv_type"), NULL,
-              choices = c("left-tail" = "left",
-                          "right-tail" = "right",
-                          "central" = "center"),
+              choices = c(
+                "left-tail" = "left",
+                "right-tail" = "right",
+                "central" = "center"
+              ),
               selected = "left"
             )
           ),
-          div(class = "form-group",
+          div(
+            class = "form-group",
             checkboxInput(ns("show_inv_labels"), "Show labels on plot", value = TRUE)
           ),
-          div(class = "form-group",
+          div(
+            class = "form-group",
             tags$label(id = ns("area_label"), "Area:"),
             numericInput(ns("area"), NULL, value = 0.05, min = 0, max = 1, step = 0.01, width = "100%")
           ),
@@ -127,9 +140,11 @@ dist_t_ui <- function(id) {
         ),
         hr(),
         h3("Preferences"),
-        div(class = "prefs-box",
+        div(
+          class = "prefs-box",
           selectInput(ns("color_palette"), "Color Palette",
-                      choices = c("viridis", "plasma", "magma", "inferno", "cividis")),
+            choices = c("viridis", "plasma", "magma", "inferno", "cividis")
+          ),
           numericInput(ns("rounding"), "Decimal Places", value = default_prefs$rounding, min = 0, max = 10, step = 1),
           checkboxInput(ns("percent_display"), "Display probabilities as percentages", value = default_prefs$percent_display)
         ),
@@ -142,13 +157,19 @@ dist_t_ui <- function(id) {
         id = "mainPanel",
         role = "main",
         "aria-labelledby" = "appTitle",
-        div(class = "error-msg", textOutput(ns("error_msg"), `aria-live` = "assertive")),
-        div(class = "plot-container",
+        tags$div(
+          class = "error-msg",
+          `aria-live` = "assertive",
+          textOutput(ns("error_msg"))
+        ),
+        div(
+          class = "plot-container",
           plotOutput(ns("tPlot"), height = "350px"),
           tags$script(paste0("document.getElementById('", ns("tPlot"), "').setAttribute('aria-label', 'A plot showing the t-distribution curve and shaded region.')")),
           p(id = "plotDescription", class = "sr-only", role = "status", "aria-live" = "polite", textOutput(ns("brailleRDescription")))
         ),
-        div(class = "results-box",
+        div(
+          class = "results-box",
           h3("Result:", id = "probResultHeading"),
           htmlOutput(ns("result_text")),
           DTOutput(ns("result_table"))
@@ -302,8 +323,10 @@ dist_t_server <- function(id) {
       calc <- calculation()
       p <- ggplot(df, aes(x = x, y = y)) +
         geom_line(color = "#1e40af", linewidth = 1) +
-        labs(title = paste("t-Distribution (df =", plot_df, ")"),
-             x = "t-value", y = "Density") +
+        labs(
+          title = paste("t-Distribution (df =", plot_df, ")"),
+          x = "t-value", y = "Density"
+        ) +
         theme_minimal() +
         theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold", color = "#0f172a"))
       # Normal overlay
@@ -382,7 +405,9 @@ dist_t_server <- function(id) {
     # --- Result Output ---
     output$result_text <- renderUI({
       calc <- calculation()
-      if (is.null(calc)) return(NULL)
+      if (is.null(calc)) {
+        return(NULL)
+      }
       if (calc$type == "cdf") {
         if (calc$region == "between") {
           HTML(paste0("Area between t = ", calc$left, " and t = ", calc$right, ": <b>", calc$area_disp, "</b>"))
@@ -402,18 +427,20 @@ dist_t_server <- function(id) {
       calc <- calculation()
       rounding <- prefs()$rounding
       percent <- prefs()$percent_display
-      if (is.null(calc)) return(datatable(data.frame()))
+      if (is.null(calc)) {
+        return(datatable(data.frame()))
+      }
       if (calc$type == "cdf") {
         if (calc$region == "between" || calc$region == "outside") {
           datatable(data.frame(
             Region = paste(calc$region, "(", calc$left, ",", calc$right, ")"),
             Area = calc$area_disp
-          ), rownames = FALSE, options = list(dom = 't'))
+          ), rownames = FALSE, options = list(dom = "t"))
         } else {
           datatable(data.frame(
             Region = paste(calc$region, "(", ifelse(is.null(calc$single), "", calc$single), ")"),
             Area = calc$area_disp
-          ), rownames = FALSE, options = list(dom = 't'))
+          ), rownames = FALSE, options = list(dom = "t"))
         }
       } else if (calc$type == "inv") {
         if (calc$inv_type == "center" && all(is.finite(calc$value))) {
@@ -421,12 +448,12 @@ dist_t_server <- function(id) {
             Type = "Central",
             Lower = round(calc$value[1], rounding),
             Upper = round(calc$value[2], rounding)
-          ), rownames = FALSE, options = list(dom = 't'))
+          ), rownames = FALSE, options = list(dom = "t"))
         } else {
           datatable(data.frame(
             Type = calc$inv_type,
             Value = if (is.finite(calc$value)) round(calc$value, rounding) else calc$value_disp
-          ), rownames = FALSE, options = list(dom = 't'))
+          ), rownames = FALSE, options = list(dom = "t"))
         }
       }
     })

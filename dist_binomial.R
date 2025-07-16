@@ -31,10 +31,10 @@
 ######################################################################
 
 # --- Load required libraries ---
-library(shiny)    # For building interactive web applications
-library(ggplot2)  # For creating plots
-library(DT)       # For interactive tables
-library(shinyjs)  # For JavaScript integration in Shiny
+library(shiny) # For building interactive web applications
+library(ggplot2) # For creating plots
+library(DT) # For interactive tables
+library(shinyjs) # For JavaScript integration in Shiny
 
 dist_binomial_ui <- function(id) {
   ns <- NS(id)
@@ -133,33 +133,41 @@ dist_binomial_ui <- function(id) {
         id = ns("mainPanel"),
         role = "main",
         fluidRow(
-          column(12,
-            div(class = "plot-container",
+          column(
+            12,
+            div(
+              class = "plot-container",
               h4("Binomial Distribution", id = ns("binomialPlotHeading")),
-              plotOutput(ns("binomialPlot"), height = "300px", inline = TRUE),
+              plotOutput(ns("binomialPlot"), height = "400px", inline = TRUE),
               p(id = ns("binomialPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("binomialPlot_desc_text")))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Calculated Probability:", id = ns("probResultHeading")),
-              textOutput(ns("probabilityResult"), placeholder = TRUE)
+              textOutput(ns("probabilityResult"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Simulation Results", id = ns("simulationHeading")),
               DTOutput(ns("simulationTable"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Error/Warning Messages", id = ns("errorHeading")),
               uiOutput(ns("errorMsg"))
             )
@@ -219,18 +227,20 @@ dist_binomial_server <- function(id) {
     validate_inputs <- reactive({
       errs <- character(0)
       mode <- input$input_mode
-      if (mode == "params") {
+      if (is.null(mode) || length(mode) == 0) {
+        errs <- c(errs, "Input mode must be selected.")
+      } else if (mode == "params") {
         if (is.null(input$n_trials) || is.null(input$p_success)) {
           errs <- c(errs, "Please enter both number of trials and probability of success.")
         } else {
-          if (input$n_trials < 1) errs <- c(errs, "Number of trials must be at least 1.")
-          if (input$p_success < 0 || input$p_success > 1) errs <- c(errs, "Probability must be between 0 and 1.")
+          if (is.null(input$n_trials) || is.na(input$n_trials) || input$n_trials < 1) errs <- c(errs, "Number of trials must be at least 1.")
+          if (is.null(input$p_success) || is.na(input$p_success) || input$p_success < 0 || input$p_success > 1) errs <- c(errs, "Probability must be between 0 and 1.")
         }
       } else if (mode == "raw") {
         if (is.null(rv$raw_parsed)) errs <- c(errs, "Raw data not parsed or invalid.")
-        if (!is.null(rv$raw_parsed) && length(rv$raw_parsed) < 1) errs <- c(errs, "Raw data must contain at least one value.")
+        if (!is.null(rv$raw_parsed) && !is.na(rv$raw_parsed) && length(rv$raw_parsed) < 1) errs <- c(errs, "Raw data must contain at least one value.")
       }
-      if (input$num_samples < 1 || input$num_samples > 500) errs <- c(errs, "Number of samples must be between 1 and 500.")
+      if (is.null(input$num_samples) || is.na(input$num_samples) || input$num_samples < 1 || input$num_samples > 500) errs <- c(errs, "Number of samples must be between 1 and 500.")
       if (length(errs) > 0) {
         rv$error <- paste(errs, collapse = "\n")
         FALSE
@@ -251,7 +261,9 @@ dist_binomial_server <- function(id) {
         n <- rv$n
         p <- rv$p
       }
-      if (is.null(n) || is.null(p)) return()
+      if (is.null(n) || is.null(p)) {
+        return()
+      }
       x <- 0:n
       y <- dbinom(x, size = n, prob = p)
       rv$distribution <- data.frame(x = x, y = y)
@@ -271,30 +283,81 @@ dist_binomial_server <- function(id) {
         p <- rv$p
       }
       prob_type <- input$prob_type
-      if (is.null(n) || is.null(p)) return("Error: Distribution parameters not set.")
+      if (is.null(n) || is.null(p)) {
+        return("Error: Distribution parameters not set.")
+      }
       if (prob_type == "exact") {
         req(input$k_val)
-        if (input$k_val < 0 || input$k_val > n) return("Error: k must be between 0 and n.")
+        if (input$k_val < 0 || input$k_val > n) {
+          return("Error: k must be between 0 and n.")
+        }
         dbinom(input$k_val, size = n, prob = p)
       } else if (prob_type == "at_most") {
         req(input$k_val)
-        if (input$k_val < 0) return("Error: k must be non-negative.")
+        if (input$k_val < 0) {
+          return("Error: k must be non-negative.")
+        }
         pbinom(input$k_val, size = n, prob = p)
       } else if (prob_type == "greater_than") {
         req(input$k_val)
-        if (input$k_val > n) return("Error: k cannot be greater than n.")
+        if (input$k_val > n) {
+          return("Error: k cannot be greater than n.")
+        }
         1 - pbinom(input$k_val, size = n, prob = p)
       } else if (prob_type == "between") {
         req(input$k1_val, input$k2_val)
-        if (input$k1_val > input$k2_val) return("Error: k1 must be less than or equal to k2.")
-        if (input$k1_val < 0 || input$k2_val > n) return("Error: k values must be within the range [0, n].")
+        if (input$k1_val > input$k2_val) {
+          return("Error: k1 must be less than or equal to k2.")
+        }
+        if (input$k1_val < 0 || input$k2_val > n) {
+          return("Error: k values must be within the range [0, n].")
+        }
         pbinom(input$k2_val, size = n, prob = p) - pbinom(input$k1_val - 1, size = n, prob = p)
+      }
+      result <- NULL
+      if (prob_type == "exact") {
+        req(input$k_val)
+        if (input$k_val < 0 || input$k_val > n) {
+          result <- "Error: k must be between 0 and n."
+        } else {
+          result <- dbinom(input$k_val, size = n, prob = p)
+        }
+      } else if (prob_type == "at_most") {
+        req(input$k_val)
+        if (input$k_val < 0) {
+          result <- "Error: k must be non-negative."
+        } else {
+          result <- pbinom(input$k_val, size = n, prob = p)
+        }
+      } else if (prob_type == "greater_than") {
+        req(input$k_val)
+        if (input$k_val > n) {
+          result <- "Error: k cannot be greater than n."
+        } else {
+          result <- 1 - pbinom(input$k_val, size = n, prob = p)
+        }
+      } else if (prob_type == "between") {
+        req(input$k1_val, input$k2_val)
+        if (input$k1_val > input$k2_val) {
+          result <- "Error: k1 must be less than or equal to k2."
+        } else if (input$k1_val < 0 || input$k2_val > n) {
+          result <- "Error: k values must be within the range [0, n]."
+        } else {
+          result <- pbinom(input$k2_val, size = n, prob = p) - pbinom(input$k1_val - 1, size = n, prob = p)
+        }
+      }
+      if (is.null(result)) {
+        "No result yet."
+      } else {
+        result
       }
     })
 
     # --- Simulation ---
     observeEvent(input$simulate, {
-      if (!validate_inputs()) return()
+      if (!validate_inputs()) {
+        return()
+      }
       mode <- input$input_mode
       if (mode == "params") {
         n <- input$n_trials
@@ -304,7 +367,9 @@ dist_binomial_server <- function(id) {
         p <- rv$p
       }
       num_samples <- input$num_samples
-      if (is.null(n) || is.null(p) || is.null(num_samples)) return()
+      if (is.null(n) || is.null(p) || is.null(num_samples)) {
+        return()
+      }
       sim <- rbinom(num_samples, size = n, prob = p)
       sim_df <- data.frame(
         Sample = seq_len(num_samples),
@@ -406,7 +471,7 @@ dist_binomial_server <- function(id) {
         sprintf("The distribution is centered around %.1f and is %s.", mean_dist, shape_desc),
         "Each bar represents the probability of achieving a specific number of successes (k).",
         shaded_desc,
-        sprintf("The total probability of the shaded area is %.5f.", if(is.numeric(prob)) prob else 0),
+        sprintf("The total probability of the shaded area is %.5f.", if (is.numeric(prob)) prob else 0),
         collapse = " "
       )
       return(desc)
@@ -434,10 +499,12 @@ dist_binomial_server <- function(id) {
 
     # --- Simulation Table ---
     output$simulationTable <- renderDT({
-      if (nrow(rv$simulation) == 0) return(NULL)
+      if (nrow(rv$simulation) == 0) {
+        return(NULL)
+      }
       dat <- rv$simulation
       dat$Successes <- round(dat$Successes, input$round_digits)
-      datatable(dat, rownames = FALSE, options = list(pageLength = 10, dom = 'tip'))
+      datatable(dat, rownames = FALSE, options = list(pageLength = 10, dom = "tip"))
     })
 
     # --- Export/Download Handlers ---

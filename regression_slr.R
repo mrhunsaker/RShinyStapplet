@@ -34,12 +34,12 @@
 # Matches features of stapplet HTML/JS applet (quant2v.html + quant2v.js)
 
 # --- Load required libraries ---
-library(shiny)              # For building interactive web applications
-library(ggplot2)            # For creating plots
-library(DT)                 # For interactive tables
-library(shinyjs)            # For JavaScript integration in Shiny
-library(shinyWidgets)       # For enhanced UI widgets
-library(shinyAccessibility) # For accessibility features
+library(shiny) # For building interactive web applications
+library(ggplot2) # For creating plots
+library(DT) # For interactive tables
+library(shinyjs) # For JavaScript integration in Shiny
+library(colourpicker) # For colourInput widget
+library(shinyWidgets) # For enhanced UI widgets
 
 # --- UI Definition for Simple Linear Regression Applet ---
 # This function builds the user interface for the module, allowing users to:
@@ -83,7 +83,8 @@ regression_slr_ui <- function(id) {
           condition = sprintf("input['%s'] == 'paste'", ns("input_mode")),
           ns = ns,
           checkboxInput(ns("has_header"), "Data includes header row", value = TRUE),
-          textAreaInput(ns("custom_data"), "Paste your data here:", rows = 10,
+          textAreaInput(ns("custom_data"), "Paste your data here:",
+            rows = 10,
             placeholder = "Example:\nx,y\n1,2.1\n2,3.9\n3,6.2\n4,8.1\n5,9.8"
           ),
           helpText("Data should be comma, tab, or space separated.")
@@ -116,15 +117,18 @@ regression_slr_ui <- function(id) {
         id = ns("mainPanel"),
         role = "main",
         tabsetPanel(
-          tabPanel("Regression",
-            tags$div(class = "plot-container",
+          tabPanel(
+            "Regression",
+            tags$div(
+              class = "plot-container",
               h4("Scatterplot", id = ns("scatterHeading")),
               plotOutput(ns("scatterplot"), height = "350px")
             ),
             conditionalPanel(
               condition = sprintf("input['%s']", ns("show_line")),
               ns = ns,
-              tags$div(class = "results-box",
+              tags$div(
+                class = "results-box",
                 h4("Regression Model Summary", id = ns("modelSummaryHeading")),
                 verbatimTextOutput(ns("model_summary"), placeholder = TRUE)
               )
@@ -132,7 +136,8 @@ regression_slr_ui <- function(id) {
             conditionalPanel(
               condition = sprintf("input['%s']", ns("show_confint")),
               ns = ns,
-              tags$div(class = "results-box",
+              tags$div(
+                class = "results-box",
                 h4("Confidence Interval for Slope", id = ns("confintHeading")),
                 verbatimTextOutput(ns("confint_out"), placeholder = TRUE)
               )
@@ -140,7 +145,8 @@ regression_slr_ui <- function(id) {
             conditionalPanel(
               condition = sprintf("input['%s']", ns("show_predint")),
               ns = ns,
-              tags$div(class = "results-box",
+              tags$div(
+                class = "results-box",
                 h4("Prediction Interval", id = ns("predintHeading")),
                 verbatimTextOutput(ns("predint_out"), placeholder = TRUE)
               )
@@ -148,17 +154,20 @@ regression_slr_ui <- function(id) {
             conditionalPanel(
               condition = sprintf("input['%s']", ns("show_test")),
               ns = ns,
-              tags$div(class = "results-box",
+              tags$div(
+                class = "results-box",
                 h4("Hypothesis Test for Slope", id = ns("testHeading")),
                 verbatimTextOutput(ns("test_out"), placeholder = TRUE)
               )
             )
           ),
-          tabPanel("Plots",
+          tabPanel(
+            "Plots",
             conditionalPanel(
               condition = sprintf("input['%s']", ns("show_residuals")),
               ns = ns,
-              tags$div(class = "plot-container",
+              tags$div(
+                class = "plot-container",
                 h4("Residuals vs. Fitted Values Plot", id = ns("residualPlotHeading")),
                 plotOutput(ns("residual_plot"), height = "250px")
               )
@@ -166,23 +175,27 @@ regression_slr_ui <- function(id) {
             conditionalPanel(
               condition = sprintf("input['%s']", ns("show_dotplot")),
               ns = ns,
-              tags$div(class = "plot-container",
+              tags$div(
+                class = "plot-container",
                 h4("Residual Dotplot", id = ns("residualDotplotHeading")),
                 plotOutput(ns("residual_dotplot"), height = "150px")
               )
             )
           ),
-          tabPanel("Statistics",
+          tabPanel(
+            "Statistics",
             conditionalPanel(
               condition = sprintf("input['%s']", ns("show_stats")),
               ns = ns,
-              tags$div(class = "results-box",
+              tags$div(
+                class = "results-box",
                 h4("Descriptive Statistics", id = ns("descStatsHeading")),
                 verbatimTextOutput(ns("descriptive_stats"), placeholder = TRUE)
               )
             )
           ),
-          tabPanel("Simulation",
+          tabPanel(
+            "Simulation",
             h4("Simulation Results", id = ns("simHeading")),
             plotOutput(ns("sim_dotplot"), height = "200px"),
             verbatimTextOutput(ns("sim_summary"), placeholder = TRUE)
@@ -223,9 +236,15 @@ regression_slr_server <- function(id) {
         easyClose = TRUE
       ))
     })
-    observeEvent(input$round_digits, { prefs$round_digits <- input$round_digits })
-    observeEvent(input$plot_color, { prefs$plot_color <- input$plot_color })
-    observeEvent(input$show_percent, { prefs$show_percent <- input$show_percent })
+    observeEvent(input$round_digits, {
+      prefs$round_digits <- input$round_digits
+    })
+    observeEvent(input$plot_color, {
+      prefs$plot_color <- input$plot_color
+    })
+    observeEvent(input$show_percent, {
+      prefs$show_percent <- input$show_percent
+    })
 
     # --- Data Input Management ---
     active_data <- reactive({
@@ -233,11 +252,15 @@ regression_slr_server <- function(id) {
       if (input$input_mode == "var") {
         xvals <- as.numeric(unlist(strsplit(input$x_data, "[, ]+")))
         yvals <- as.numeric(unlist(strsplit(input$y_data, "[, ]+")))
-        if (length(xvals) == 0 || any(is.na(xvals))) {
+        if ((is.null(input$x_data) || trimws(input$x_data) == "")) {
+          # Don't show error until user enters data
+        } else if (length(xvals) == 0 || any(is.na(xvals))) {
           showError(sprintf("Explanatory variable '%s' must be numeric.", input$x_name))
           return(NULL)
         }
-        if (length(yvals) == 0 || any(is.na(yvals))) {
+        if ((is.null(input$y_data) || trimws(input$y_data) == "")) {
+          # Don't show error until user enters data
+        } else if (length(yvals) == 0 || any(is.na(yvals))) {
           showError(sprintf("Response variable '%s' must be numeric.", input$y_name))
           return(NULL)
         }
@@ -251,25 +274,32 @@ regression_slr_server <- function(id) {
       }
       # Paste Data
       else if (input$input_mode == "paste" && nzchar(input$custom_data)) {
-        tryCatch({
-          df <- read.table(text = input$custom_data, header = input$has_header,
-                           sep = ",", stringsAsFactors = FALSE, fill = TRUE,
-                           blank.lines.skip = TRUE)
-          if (ncol(df) < 2) {
-            df <- read.table(text = input$custom_data, header = input$has_header,
-                             stringsAsFactors = FALSE, fill = TRUE, blank.lines.skip = TRUE)
+        tryCatch(
+          {
+            df <- read.table(
+              text = input$custom_data, header = input$has_header,
+              sep = ",", stringsAsFactors = FALSE, fill = TRUE,
+              blank.lines.skip = TRUE
+            )
+            if (ncol(df) < 2) {
+              df <- read.table(
+                text = input$custom_data, header = input$has_header,
+                stringsAsFactors = FALSE, fill = TRUE, blank.lines.skip = TRUE
+              )
+            }
+            df <- df[sapply(df, is.numeric)]
+            if (ncol(df) < 2) {
+              showError("Data must have two numeric columns.")
+              return(NULL)
+            }
+            names(df) <- c("X", "Y")
+            df
+          },
+          error = function(e) {
+            showError("Failed to parse pasted data.")
+            NULL
           }
-          df <- df[sapply(df, is.numeric)]
-          if (ncol(df) < 2) {
-            showError("Data must have two numeric columns.")
-            return(NULL)
-          }
-          names(df) <- c("X", "Y")
-          df
-        }, error = function(e) {
-          showError("Failed to parse pasted data.")
-          NULL
-        })
+        )
       } else {
         NULL
       }
@@ -286,7 +316,9 @@ regression_slr_server <- function(id) {
     # --- Model Fitting ---
     model <- reactive({
       df <- active_data()
-      if (is.null(df) || nrow(df) < 2) return(NULL)
+      if (is.null(df) || nrow(df) < 2) {
+        return(NULL)
+      }
       lm(Y ~ X, data = setNames(df, c("X", "Y")))
     })
 
@@ -358,7 +390,7 @@ regression_slr_server <- function(id) {
       req(model())
       res <- residuals(model())
       ggplot(data.frame(residuals = res), aes(x = residuals)) +
-        geom_dotplot(binwidth = diff(range(res))/30, dotsize = 0.7, fill = prefs$plot_color) +
+        geom_dotplot(binwidth = diff(range(res)) / 30, dotsize = 0.7, fill = prefs$plot_color) +
         labs(x = "Residuals", y = NULL) +
         theme_minimal(base_size = 14)
     })
@@ -411,7 +443,7 @@ regression_slr_server <- function(id) {
       req(sim)
       vals <- sim$values
       ggplot(data.frame(val = vals), aes(x = val)) +
-        geom_dotplot(binwidth = diff(range(vals))/30, dotsize = 0.7, fill = prefs$plot_color) +
+        geom_dotplot(binwidth = diff(range(vals)) / 30, dotsize = 0.7, fill = prefs$plot_color) +
         labs(x = sim$type, y = NULL) +
         theme_minimal(base_size = 14)
     })
@@ -420,13 +452,17 @@ regression_slr_server <- function(id) {
       sim <- sim_results()
       req(sim)
       vals <- sim$values
-      cat(sprintf("Simulation of %s\nMean: %.3f\nSD: %.3f\nMin: %.3f\nMax: %.3f",
-                  sim$type, mean(vals), sd(vals), min(vals), max(vals)))
+      cat(sprintf(
+        "Simulation of %s\nMean: %.3f\nSD: %.3f\nMin: %.3f\nMax: %.3f",
+        sim$type, mean(vals), sd(vals), min(vals), max(vals)
+      ))
     })
 
     # --- Export/Download ---
     output$download_summary <- downloadHandler(
-      filename = function() { "regression_summary.txt" },
+      filename = function() {
+        "regression_summary.txt"
+      },
       content = function(file) {
         sink(file)
         print(summary(model()))
@@ -434,13 +470,17 @@ regression_slr_server <- function(id) {
       }
     )
     output$download_data <- downloadHandler(
-      filename = function() { "regression_data.csv" },
+      filename = function() {
+        "regression_data.csv"
+      },
       content = function(file) {
         write.csv(active_data(), file, row.names = FALSE)
       }
     )
     output$download_plot <- downloadHandler(
-      filename = function() { "regression_plot.png" },
+      filename = function() {
+        "regression_plot.png"
+      },
       content = function(file) {
         png(file, width = 800, height = 600)
         print({
@@ -475,20 +515,6 @@ regression_slr_server <- function(id) {
     })
 
     # --- Accessibility Enhancements ---
-    shinyAccessibility::add_accessibility(
-      inputId = ns("mainPanel"),
-      role = "main",
-      aria_label = "Simple Linear Regression Main Panel"
-    )
-    shinyAccessibility::add_accessibility(
-      inputId = ns("sidebarPanel"),
-      role = "form",
-      aria_label = "Data Input and Analysis Options"
-    )
-    shinyAccessibility::add_accessibility(
-      inputId = ns("error_msg"),
-      role = "alert",
-      aria_live = "assertive"
-    )
+    # (shinyAccessibility usage removed)
   })
 }

@@ -20,26 +20,26 @@ A key focus of this project is to ensure that all tools are usable by as many pe
 
 ### Features
 
-- **Universal Accessibility:**  
+- **Universal Accessibility:**
   All modules now follow a unified accessibility standard, including ARIA roles, alt text, BrailleR integration, screen-reader descriptions, keyboard shortcuts, and accessible error/status messaging.
-- **Screen Reader Support:**  
+- **Screen Reader Support:**
   Every output, especially plots and results, includes hidden descriptions (`.sr-only` class) and live regions for screen readers.
-- **Keyboard Navigation:**  
+- **Keyboard Navigation:**
   All UI elements are accessible via keyboard, with shortcuts for rapid navigation and actions.
-- **Color Contrast & Visual Accessibility:**  
+- **Color Contrast & Visual Accessibility:**
   High-contrast, colorblind-safe palettes are used throughout. All foreground/background pairs meet WCAG AA/AAA standards.
-- **Accessible Export/Download:**  
+- **Accessible Export/Download:**
   All modules provide accessible download buttons for CSV, PNG, and TXT formats, with alt text and screen-reader summaries.
 
-- **Universal Accessibility:**  
+- **Universal Accessibility:**
   All modules now follow a unified accessibility standard, including ARIA roles, alt text, BrailleR integration, screen-reader descriptions, keyboard shortcuts, and accessible error/status messaging.
-- **Screen Reader Support:**  
+- **Screen Reader Support:**
   Every output, especially plots and results, includes hidden descriptions (`.sr-only` class) and live regions for screen readers.
-- **Keyboard Navigation:**  
+- **Keyboard Navigation:**
   All UI elements are accessible via keyboard, with shortcuts for rapid navigation and actions.
-- **Color Contrast & Visual Accessibility:**  
+- **Color Contrast & Visual Accessibility:**
   High-contrast, colorblind-safe palettes are used throughout. All foreground/background pairs meet WCAG AA/AAA standards.
-- **Accessible Export/Download:**  
+- **Accessible Export/Download:**
   All modules provide accessible download buttons for CSV, PNG, and TXT formats, with alt text and screen-reader summaries.
 
 - **Distributions & Calculators:** Normal, Binomial, Poisson, Chi-Square, F, Discrete Random Variable, Counting Methods, Power Analysis
@@ -92,7 +92,7 @@ To get a local copy up and running, follow these simple steps.
 
 - R (>= 4.0)
 - R Shiny
-- Required packages: `ggplot2`, `dplyr`, `DT`, `shinyjs`, `shinyWidgets`, `shinyAccessibility`, `htmltools`, `readr`
+- Required packages: `ggplot2`, `dplyr`, `DT`, `shinyjs`, `shinyWidgets`, `htmltools`, `readr`
 
 *   **R**: You must have a recent version of R installed. You can download it from the [Comprehensive R Archive Network (CRAN)](https://cran.r-project.org/).
 *   **RStudio or VS Code**: It is highly recommended to use an IDE like [RStudio Desktop](https://posit.co/download/rstudio-desktop/) or [VS Code](https://code.visualstudio.com/) with the [R Extension](https://marketplace.visualstudio.com/items?itemName=REditorSupport.r).
@@ -212,34 +212,34 @@ This project is committed to being accessible to all users, including those with
 
 All modules in the Stapplet Shiny Suite now adhere to universal accessibility standards:
 
-- **Screen Reader Support:**  
+- **Screen Reader Support:**
   - ARIA roles and landmarks (`role="main"`, `role="complementary"`, etc.) are used throughout for clear navigation.
   - All form controls have programmatic labels (`aria-label`, `aria-labelledby`, or visible label).
   - Dynamic content (results, errors, status) uses ARIA live regions (`aria-live="polite"` or `assertive"`) for non-intrusive updates.
   - Every plot includes alt text, ARIA attributes, and a screen-reader-only dynamic description. BrailleR integration is used for ggplot2 plots where possible.
 
-- **Keyboard Accessibility:**  
+- **Keyboard Accessibility:**
   - All controls are reachable and operable via keyboard.
   - Keyboard shortcuts are available for rapid navigation and actions (see below).
   - Tab/Shift+Tab moves between interactive elements; Enter/Space activates buttons.
 
-- **Accessible Export/Download:**  
+- **Accessible Export/Download:**
   - Download/export buttons for CSV, PNG, and TXT formats include alt text and screen-reader summaries.
 
-- **Color Contrast & Visual Accessibility:**  
+- **Color Contrast & Visual Accessibility:**
   - All foreground/background color pairs meet WCAG AA/AAA standards.
   - Colorblind-friendly palettes are used throughout.
 
-- **Error and Status Messaging:**  
+- **Error and Status Messaging:**
   - All error/status messages are specific, actionable, and announced via ARIA live regions.
 
-- **Focus Management:**  
+- **Focus Management:**
   - Modal dialogs and popups use ARIA attributes and return focus to the triggering element after close.
 
 #### Keyboard Shortcuts
 
-Shortcuts use the `Alt` key (Windows/Linux) or `Option` key (Mac) plus a number or letter.  
-Shortcuts work anywhere in the app.  
+Shortcuts use the `Alt` key (Windows/Linux) or `Option` key (Mac) plus a number or letter.
+Shortcuts work anywhere in the app.
 Screen readers will announce shortcut activation if ARIA live regions are enabled.
 
 | Shortcut         | Action                                      |
@@ -258,7 +258,7 @@ Screen readers will announce shortcut activation if ARIA live regions are enable
 | Alt+D            | Focus download buttons                      |
 | Alt+F            | Open Preferences/Settings                   |
 
-**Tips for Screen Reader Users:**  
+**Tips for Screen Reader Users:**
 - ARIA live regions will announce navigation and actions.
 - All shortcut actions are available via keyboard and do not require a mouse.
 
@@ -270,7 +270,7 @@ Screen readers will announce shortcut activation if ARIA live regions are enable
 - Keyboard shortcuts may require additional user testing for edge cases.
 - Formal third-party accessibility audit is recommended for full WCAG/ADA compliance.
 
-**For questions, feedback, or suggestions regarding accessibility, please contact:**  
+**For questions, feedback, or suggestions regarding accessibility, please contact:**
 Michael Ryan Hunsaker, M.Ed., Ph.D. (<hunsakerconsulting@gmail.com>)
 
 
@@ -344,12 +344,12 @@ If you find a bug, please [open an issue](https://github.com/your_username/Stapp
 
 ## License
 
-Stapplet Shiny Suite is licensed under the Apache License, Version 2.0.  
+Stapplet Shiny Suite is licensed under the Apache License, Version 2.0.
 See individual files for copyright and licensing details.
 
 ---
 
-**Author:** Michael Ryan Hunsaker, M.Ed., Ph.D. (<hunsakerconsulting@gmail.com>)  
+**Author:** Michael Ryan Hunsaker, M.Ed., Ph.D. (<hunsakerconsulting@gmail.com>)
 **Help & Documentation:** See [help.md](help.md) for module instructions and accessibility details.
 
 **Enjoy exploring statistics with Stapplet!**

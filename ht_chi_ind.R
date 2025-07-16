@@ -16,10 +16,13 @@
 # limitations under the License.
 #
 ######################################################################
-# Stapplet Applet - Chi-Square Test of Independence (Contingency Table)
+# Stapplet Applet - Chi-Square Test for Independence
 # Author: Michael Ryan Hunsaker, M.Ed., Ph.D.
 #    <hunsakerconsulting@gmail.com>
 # Date: 2025-07-13
+######################################################################
+
+library(shinyjs)
 # Accessibility Enhancements (2025-07-13):
 # - ARIA attributes for all UI containers and controls
 # - Alt text and aria-label for all plots
@@ -38,9 +41,10 @@
 # -------------------------------
 # Load required libraries
 # -------------------------------
-library(shiny)    # Shiny web application framework
-library(ggplot2)  # For plotting
-library(DT)       # For interactive tables
+library(shiny) # Shiny web application framework
+library(ggplot2) # For plotting
+library(DT) # For interactive tables
+library(shinyjs) # For accessibility enhancements
 
 # -------------------------------
 # Default preferences for UI
@@ -59,7 +63,7 @@ default_prefs <- list(
 ht_chi_ind_ui <- function(id) {
   ns <- NS(id)
   fluidPage(
-    useShinyjs::useShinyjs(),
+    useShinyjs(),
     tags$head(
       tags$style(HTML("
         .error-msg { color: #b30000; font-weight: bold; }
@@ -92,7 +96,8 @@ ht_chi_ind_ui <- function(id) {
         h4("Preferences"),
         # Preferences for color palette, rounding, and percent display
         selectInput(ns("color_palette"), "Color Palette",
-                    choices = c("viridis", "plasma", "magma", "inferno", "cividis")),
+          choices = c("viridis", "plasma", "magma", "inferno", "cividis")
+        ),
         numericInput(ns("rounding"), "Decimal Places", value = default_prefs$rounding, min = 0, max = 10, step = 1),
         checkboxInput(ns("percent_display"), "Display probabilities as percentages", value = default_prefs$percent_display),
         hr(),
@@ -108,7 +113,11 @@ ht_chi_ind_ui <- function(id) {
         id = "mainPanel",
         role = "main",
         # Error message display
-        div(class = "error-msg", textOutput(ns("error_msg"), `aria-live` = "assertive")),
+        tags$div(
+          class = "error-msg",
+          `aria-live` = "assertive",
+          textOutput(ns("error_msg"))
+        ),
         # Main results area
         uiOutput(ns("results_area"))
       )
@@ -168,7 +177,9 @@ ht_chi_ind_server <- function(id) {
         for (j in 1:input$num_cols) {
           input_id <- paste0("cell_", i, "_", j)
           val <- input[[input_id]]
-          if (is.null(val) || is.na(val) || val < 0) return(NULL)
+          if (is.null(val) || is.na(val) || val < 0) {
+            return(NULL)
+          }
           mat[i, j] <- val
         }
       }
@@ -185,12 +196,15 @@ ht_chi_ind_server <- function(id) {
         error_msg("All cells in the contingency table must have a non-negative numeric value.")
         return(NULL)
       }
-      test_output <- tryCatch({
-        chisq.test(mat, simulate.p.value = FALSE)
-      }, error = function(e) {
-        error_msg(paste("Error in chi-square calculation:", e$message))
-        return(NULL)
-      })
+      test_output <- tryCatch(
+        {
+          chisq.test(mat, simulate.p.value = FALSE)
+        },
+        error = function(e) {
+          error_msg(paste("Error in chi-square calculation:", e$message))
+          return(NULL)
+        }
+      )
       error_msg("")
       test_output
     })
@@ -202,7 +216,9 @@ ht_chi_ind_server <- function(id) {
     sim_results <- reactiveVal(NULL)
     observeEvent(input$simulate, {
       mat <- observed_counts()
-      if (is.null(mat)) return()
+      if (is.null(mat)) {
+        return()
+      }
       n <- sum(mat)
       row_totals <- rowSums(mat)
       col_totals <- colSums(mat)
@@ -235,38 +251,48 @@ ht_chi_ind_server <- function(id) {
       req(input$calculate > 0)
       tagList(
         fluidRow(
-          column(12,
-            div(class = "plot-container",
+          column(
+            12,
+            div(
+              class = "plot-container",
               h4("Mosaic Plot of Observed Counts", style = "text-align: center;", id = ns("mosaicPlotHeading")),
               plotOutput(ns("mosaicPlot"), height = "350px")
             )
           )
         ),
         fluidRow(
-          column(6,
-            div(class = "results-box",
+          column(
+            6,
+            div(
+              class = "results-box",
               h4("Observed Counts", id = ns("observedTableHeading")),
               verbatimTextOutput(ns("observedTable"))
             )
           ),
-          column(6,
-            div(class = "results-box",
+          column(
+            6,
+            div(
+              class = "results-box",
               h4("Expected Counts", id = ns("expectedTableHeading")),
               verbatimTextOutput(ns("expectedTable"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h3("Chi-Square Test Results", id = ns("testResultsHeading")),
               verbatimTextOutput(ns("testResults"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "plot-container",
+          column(
+            12,
+            div(
+              class = "plot-container",
               h4("Simulation Dotplot", id = ns("sim_dotplot_heading"), style = "text-align: center;"),
               plotOutput(ns("sim_dotplot"), height = "300px")
             )
@@ -287,8 +313,10 @@ ht_chi_ind_server <- function(id) {
         paste("Var1-Cat", 1:nrow(observed_counts)),
         paste("Var2-Cat", 1:ncol(observed_counts))
       )
-      graphics::mosaicplot(observed_counts, main = "Mosaic Plot of Observed vs. Expected Counts",
-                           color = TRUE, shade = TRUE, xlab = "Variable 1", ylab = "Variable 2")
+      graphics::mosaicplot(observed_counts,
+        main = "Mosaic Plot of Observed vs. Expected Counts",
+        color = TRUE, shade = TRUE, xlab = "Variable 1", ylab = "Variable 2"
+      )
     })
 
     # ---------------------------------------------------------------
@@ -355,8 +383,10 @@ ht_chi_ind_server <- function(id) {
       ggplot(plot_df, aes(x = ChiSq)) +
         geom_dotplot(binwidth = 0.5, dotsize = 0.7, fill = "#60a5fa") +
         geom_vline(xintercept = stat, color = "#dc2626", linetype = "dashed", size = 1.2) +
-        labs(x = "Simulated X-squared Statistic", y = "Count",
-             title = "Distribution of Simulated X-squared Statistics") +
+        labs(
+          x = "Simulated X-squared Statistic", y = "Count",
+          title = "Distribution of Simulated X-squared Statistics"
+        ) +
         theme_minimal() +
         theme(plot.title = element_text(hjust = 0.5))
     })
@@ -371,12 +401,18 @@ ht_chi_ind_server <- function(id) {
       },
       content = function(file) {
         res <- results()
-        p <- ggplot(data.frame(Observed = as.vector(res$observed),
-                               Expected = as.vector(res$expected)),
-                    aes(x = Observed, y = Expected)) +
+        p <- ggplot(
+          data.frame(
+            Observed = as.vector(res$observed),
+            Expected = as.vector(res$expected)
+          ),
+          aes(x = Observed, y = Expected)
+        ) +
           geom_point(size = 3, color = "#1e40af") +
-          labs(x = "Observed Count", y = "Expected Count",
-               title = "Observed vs. Expected Counts") +
+          labs(
+            x = "Observed Count", y = "Expected Count",
+            title = "Observed vs. Expected Counts"
+          ) +
           theme_minimal() +
           theme(plot.title = element_text(hjust = 0.5))
         ggsave(file, plot = p, width = 7, height = 4.5, dpi = 300)

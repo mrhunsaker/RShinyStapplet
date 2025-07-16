@@ -31,9 +31,9 @@
 ######################################################################
 
 # --- Load required libraries ---
-library(shiny)    # For building interactive web applications
-library(DT)       # For interactive tables
-library(shinyjs)  # For JavaScript integration in Shiny
+library(shiny) # For building interactive web applications
+library(DT) # For interactive tables
+library(shinyjs) # For JavaScript integration in Shiny
 
 # --- UI Definition for Counting Methods Calculator & Simulator ---
 # This function builds the user interface for the module, allowing users to:
@@ -126,24 +126,30 @@ dist_counting_methods_ui <- function(id) {
         id = ns("mainPanel"),
         role = "main",
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Calculation Result", id = ns("resultHeading")),
               uiOutput(ns("resultText"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Simulation Results", id = ns("simulationHeading")),
               DTOutput(ns("simulationTable"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Error/Warning Messages", id = ns("errorHeading")),
               uiOutput(ns("errorMsg"))
             )
@@ -172,7 +178,9 @@ dist_counting_methods_server <- function(id) {
     output$multi_counts_ui <- renderUI({
       num_cat <- input$num_cat
       n_multi <- input$n_multi
-      if (is.null(num_cat) || num_cat < 2 || is.null(n_multi)) return(NULL)
+      if (is.null(num_cat) || num_cat < 2 || is.null(n_multi)) {
+        return(NULL)
+      }
       lapply(seq_len(num_cat), function(i) {
         numericInput(ns(paste0("multi_count_", i)), paste0("Count for category ", i, ":"), value = floor(n_multi / num_cat), min = 0, max = n_multi, step = 1)
       })
@@ -254,7 +262,11 @@ dist_counting_methods_server <- function(id) {
         n <- input$n_multi
         num_cat <- input$num_cat
         counts <- sapply(seq_len(num_cat), function(i) input[[paste0("multi_count_", i)]])
-        if (is.null(n) || is.null(num_cat) || any(is.na(counts)) || any(counts < 0) || sum(counts) != n) {
+        if (is.null(n) || is.null(num_cat) || length(counts) == 0) {
+          # Don't show error until user enters data
+          return(NULL)
+        }
+        if (any(is.na(counts)) || any(counts < 0) || sum(counts) != n) {
           rv$error <- "Counts must be non-negative and sum to n."
           return(NULL)
         }
@@ -265,8 +277,7 @@ dist_counting_methods_server <- function(id) {
           if (show_formula) p(strong("Formula:"), formula),
           p(paste0("M(", n, "; ", paste(counts, collapse = ", "), ") = ", format(round(result, digits), scientific = FALSE, big.mark = ",")))
         )
-      }
-      else {
+      } else {
         rv$error <- "Unknown method."
         return(NULL)
       }
@@ -330,7 +341,11 @@ dist_counting_methods_server <- function(id) {
         n <- input$n_multi
         num_cat <- input$num_cat
         counts <- sapply(seq_len(num_cat), function(i) input[[paste0("multi_count_", i)]])
-        if (is.null(n) || is.null(num_cat) || any(is.na(counts)) || any(counts < 0) || sum(counts) != n) {
+        if (is.null(n) || is.null(num_cat) || length(counts) == 0) {
+          # Don't show error until user enters data
+          return()
+        }
+        if (any(is.na(counts)) || any(counts < 0) || sum(counts) != n) {
           rv$error <- "Counts must be non-negative and sum to n."
           rv$simulation <- data.frame()
           return()
@@ -343,8 +358,7 @@ dist_counting_methods_server <- function(id) {
             paste(sample(items), collapse = ", ")
           })
         )
-      }
-      else {
+      } else {
         rv$error <- "Unknown method."
         rv$simulation <- data.frame()
         return()
@@ -362,8 +376,10 @@ dist_counting_methods_server <- function(id) {
     # --- Simulation Table ---
     # Displays simulated results in a table
     output$simulationTable <- renderDT({
-      if (nrow(rv$simulation) == 0) return(NULL)
-      datatable(rv$simulation, rownames = FALSE, options = list(pageLength = 10, dom = 'tip'))
+      if (nrow(rv$simulation) == 0) {
+        return(NULL)
+      }
+      datatable(rv$simulation, rownames = FALSE, options = list(pageLength = 10, dom = "tip"))
     })
 
     # --- Export/Download Handler ---
@@ -381,19 +397,23 @@ dist_counting_methods_server <- function(id) {
           digits <- input$round_digits
           result <- NULL
           if (method == "perm") {
-            n <- input$n; k <- input$k
+            n <- input$n
+            k <- input$k
             result <- choose(n, k) * factorial(k)
             write.csv(data.frame(Method = "Permutations", n = n, k = k, Result = round(result, digits)), file, row.names = FALSE)
           } else if (method == "comb") {
-            n <- input$n; k <- input$k
+            n <- input$n
+            k <- input$k
             result <- choose(n, k)
             write.csv(data.frame(Method = "Combinations", n = n, k = k, Result = round(result, digits)), file, row.names = FALSE)
           } else if (method == "arrange_rep") {
-            n <- input$n_rep; k <- input$k_rep
+            n <- input$n_rep
+            k <- input$k_rep
             result <- n^k
             write.csv(data.frame(Method = "Arrangements with Replacement", n = n, k = k, Result = round(result, digits)), file, row.names = FALSE)
           } else if (method == "multinomial") {
-            n <- input$n_multi; num_cat <- input$num_cat
+            n <- input$n_multi
+            num_cat <- input$num_cat
             counts <- sapply(seq_len(num_cat), function(i) input[[paste0("multi_count_", i)]])
             result <- factorial(n) / prod(sapply(counts, factorial))
             write.csv(data.frame(Method = "Multinomial", n = n, Counts = paste(counts, collapse = ","), Result = round(result, digits)), file, row.names = FALSE)

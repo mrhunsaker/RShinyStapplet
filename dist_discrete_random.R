@@ -31,10 +31,10 @@
 ######################################################################
 
 # --- Load required libraries ---
-library(shiny)    # For building interactive web applications
-library(ggplot2)  # For creating plots
-library(DT)       # For interactive tables
-library(shinyjs)  # For JavaScript integration in Shiny
+library(shiny) # For building interactive web applications
+library(ggplot2) # For creating plots
+library(DT) # For interactive tables
+library(shinyjs) # For JavaScript integration in Shiny
 
 # --- UI Definition for Discrete Random Variable Calculator & Simulator ---
 # This function builds the user interface for the module, allowing users to:
@@ -102,12 +102,16 @@ dist_discrete_random_ui <- function(id) {
         h4("Probability Calculation"),
         div(
           tags$label("Type of Probability:", `for` = ns("prob_type")),
-          selectInput(ns("prob_type"), label = NULL,
-            choices = c("P(X = x)" = "eq",
-                        "P(X < x)" = "lt",
-                        "P(X <= x)" = "le",
-                        "P(X > x)" = "gt",
-                        "P(X >= x)" = "ge")),
+          selectInput(ns("prob_type"),
+            label = NULL,
+            choices = c(
+              "P(X = x)" = "eq",
+              "P(X < x)" = "lt",
+              "P(X <= x)" = "le",
+              "P(X > x)" = "gt",
+              "P(X >= x)" = "ge"
+            )
+          ),
         ),
         div(
           tags$label("Value of x:", `for` = ns("prob_x_value")),
@@ -127,41 +131,51 @@ dist_discrete_random_ui <- function(id) {
         id = ns("mainPanel"),
         role = "main",
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Summary Statistics", id = ns("summaryStatsHeading")),
               uiOutput(ns("summary_stats"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "plot-container",
+          column(
+            12,
+            div(
+              class = "plot-container",
               h4("Probability Distribution", id = ns("distPlotHeading")),
-              plotOutput(ns("dist_plot"), height = "300px", inline = TRUE),
+              plotOutput(ns("dist_plot"), height = "400px", inline = TRUE),
               p(id = ns("dist_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("dist_plot_desc_text")))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Calculated Probability", id = ns("probResultHeading")),
-              textOutput(ns("calculated_prob"), placeholder = TRUE)
+              textOutput(ns("calculated_prob"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Simulation Results", id = ns("simulationHeading")),
               DTOutput(ns("simulationTable"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Error/Warning Messages", id = ns("errorHeading")),
               uiOutput(ns("errorMsg"))
             )
@@ -191,13 +205,15 @@ dist_discrete_random_server <- function(id) {
     # Renders input fields for each value and its probability
     output$value_prob_inputs <- renderUI({
       num <- as.integer(input$num_values)
-      if (is.na(num) || num < 2) {
+      if (is.null(input$num_values) || trimws(as.character(input$num_values)) == "") {
+        return(NULL)
+      } else if (is.na(num) || num < 2) {
         return(p("Please enter a valid number of values (at least 2).", style = "color: red;"))
       }
       input_tags <- lapply(1:num, function(i) {
         fluidRow(
-          column(6, numericInput(ns(paste0("x_val_", i)), label = paste("Value", i, "(x)"), value = i-1)),
-          column(6, numericInput(ns(paste0("p_val_", i)), label = paste("Prob.", i, "P(x)"), value = 1/num, min = 0, max = 1, step = 0.01))
+          column(6, numericInput(ns(paste0("x_val_", i)), label = paste("Value", i, "(x)"), value = i - 1)),
+          column(6, numericInput(ns(paste0("p_val_", i)), label = paste("Prob.", i, "P(x)"), value = 1 / num, min = 0, max = 1, step = 0.01))
         )
       })
       do.call(tagList, input_tags)
@@ -216,7 +232,9 @@ dist_discrete_random_server <- function(id) {
       items <- unlist(strsplit(raw, "[,\\s\\n]+"))
       items <- items[items != ""]
       vals <- suppressWarnings(as.numeric(items))
-      if (any(is.na(vals))) {
+      if (is.null(input$raw_data) || trimws(input$raw_data) == "") {
+        # Don't show error until user enters data
+      } else if (any(is.na(vals))) {
         rv$error <- "Raw data must be numeric."
         rv$raw_parsed <- NULL
         rv$distribution <- NULL
@@ -237,8 +255,12 @@ dist_discrete_random_server <- function(id) {
         num <- as.integer(input$num_values)
         values <- sapply(1:num, function(i) input[[paste0("x_val_", i)]])
         probs <- sapply(1:num, function(i) input[[paste0("p_val_", i)]])
-        if (any(sapply(values, is.null)) || any(sapply(probs, is.null))) return(NULL)
-        if (!is.numeric(values) || !is.numeric(probs)) return(NULL)
+        if (any(sapply(values, is.null)) || any(sapply(probs, is.null))) {
+          return(NULL)
+        }
+        if (!is.numeric(values) || !is.numeric(probs)) {
+          return(NULL)
+        }
         df <- data.frame(x = values, p = probs)
         rv$distribution <- df
         return(df)
@@ -293,9 +315,11 @@ dist_discrete_random_server <- function(id) {
       }
       ggplot(df, aes(x = factor(x), y = p)) +
         geom_col(fill = "#1d4ed8", alpha = 0.7) +
-        labs(title = "Probability Distribution",
-             x = "Value (x)",
-             y = "Probability P(x)") +
+        labs(
+          title = "Probability Distribution",
+          x = "Value (x)",
+          y = "Probability P(x)"
+        ) +
         theme_minimal(base_size = 14) +
         theme(
           plot.title = element_text(hjust = 0.5, face = "bold"),
@@ -316,13 +340,13 @@ dist_discrete_random_server <- function(id) {
       mean_val <- sum(df$x * df$p, na.rm = TRUE)
       variance <- sum((df$x - mean_val)^2 * df$p, na.rm = TRUE)
       sd_val <- sqrt(variance)
-      pairs <- paste(sprintf("P(X=%.2f) = %.3f", df$x, df$p), collapse=", ")
+      pairs <- paste(sprintf("P(X=%.2f) = %.3f", df$x, df$p), collapse = ", ")
       desc <- paste(
         "This is a bar chart representing a discrete probability distribution.",
         sprintf("The distribution has a calculated mean of %.4f and a standard deviation of %.4f.", round(mean_val, digits), round(sd_val, digits)),
         "The x-axis shows the distinct values (x) the random variable can take, and the y-axis shows the probability of each value.",
         "The specific probabilities are:", pairs, ".",
-        collapse=" "
+        collapse = " "
       )
       return(desc)
     })
@@ -346,9 +370,17 @@ dist_discrete_random_server <- function(id) {
         "ge" = sum(df$p[df$x >= x_val], na.rm = TRUE)
       )
       op_string <- switch(input$prob_type,
-        "eq" = "=", "lt" = "<", "le" = "\u2264", "gt" = ">", "ge" = "\u2265"
+        "eq" = "=",
+        "lt" = "<",
+        "le" = "\u2264",
+        "gt" = ">",
+        "ge" = "\u2265"
       )
-      paste0("P(X ", op_string, " ", x_val, ") = ", round(prob, digits))
+      if (is.null(prob)) {
+        "No result yet."
+      } else {
+        paste0("P(X ", op_string, " ", x_val, ") = ", round(prob, digits))
+      }
     })
 
     # --- Simulation ---
@@ -388,8 +420,10 @@ dist_discrete_random_server <- function(id) {
     # --- Simulation Table ---
     # Displays simulated samples in a table
     output$simulationTable <- renderDT({
-      if (nrow(rv$simulation) == 0) return(NULL)
-      datatable(rv$simulation, rownames = FALSE, options = list(pageLength = 10, dom = 'tip'))
+      if (nrow(rv$simulation) == 0) {
+        return(NULL)
+      }
+      datatable(rv$simulation, rownames = FALSE, options = list(pageLength = 10, dom = "tip"))
     })
 
     # --- Export/Download Handlers ---

@@ -47,6 +47,7 @@ library(shiny)
 library(ggplot2)
 library(dplyr)
 library(DT)
+library(shinyjs)
 
 # --- Candy type definitions ---
 candy_info <- list(
@@ -87,7 +88,7 @@ candy_info <- list(
   FL = list(
     name = "Froot Loops",
     categories = c("Red", "Orange", "Yellow", "Green", "Blue", "Purple"),
-    expected = rep(1/6, 6),
+    expected = rep(1 / 6, 6),
     desc = "The manufacturer of regular Froot Loops cereal claims that it contains equal percentages (approximately 16.67% each) of red, orange, yellow, green, blue, and purple loops."
   )
 )
@@ -107,7 +108,7 @@ default_prefs <- list(
 ht_chi_gof_ui <- function(id) {
   ns <- NS(id)
   fluidPage(
-    useShinyjs::useShinyjs(),
+    useShinyjs(),
     tags$head(
       tags$style(HTML("
         .error-msg { color: #b30000; font-weight: bold; }
@@ -134,9 +135,11 @@ ht_chi_gof_ui <- function(id) {
         hr(),
         h4("Expected Proportions (Null Hypothesis)"),
         radioButtons(ns("expected_type"), "Specify Expected Proportions:",
-          choices = c("Claimed distribution" = "claimed",
-                      "Equal proportions" = "equal",
-                      "Custom proportions" = "custom"),
+          choices = c(
+            "Claimed distribution" = "claimed",
+            "Equal proportions" = "equal",
+            "Custom proportions" = "custom"
+          ),
           selected = "claimed"
         ),
         conditionalPanel(
@@ -153,7 +156,8 @@ ht_chi_gof_ui <- function(id) {
         hr(),
         h4("Preferences"),
         selectInput(ns("color_palette"), "Color Palette",
-                    choices = c("viridis", "plasma", "magma", "inferno", "cividis")),
+          choices = c("viridis", "plasma", "magma", "inferno", "cividis")
+        ),
         numericInput(ns("rounding"), "Decimal Places", value = default_prefs$rounding, min = 0, max = 10, step = 1),
         checkboxInput(ns("percent_display"), "Display probabilities as percentages", value = default_prefs$percent_display),
         hr(),
@@ -164,32 +168,44 @@ ht_chi_gof_ui <- function(id) {
       mainPanel(
         id = ns("mainPanel"),
         role = "main",
-        div(class = "error-msg", textOutput(ns("error_msg"), `aria-live` = "assertive")),
+        tags$div(
+          class = "error-msg",
+          `aria-live` = "assertive",
+          textOutput(ns("error_msg"))
+        ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h3("Test Results", id = ns("results_summary_heading")),
               verbatimTextOutput(ns("results_summary"))
             )
           )
         ),
         fluidRow(
-          column(6,
-            div(class = "plot-container",
+          column(
+            6,
+            div(
+              class = "plot-container",
               h4("Contributions to Chi-Square Statistic", id = ns("contrib_heading"), style = "text-align: center;"),
               plotOutput(ns("contribution_plot"), height = "300px")
             )
           ),
-          column(6,
-            div(class = "plot-container",
+          column(
+            6,
+            div(
+              class = "plot-container",
               h4("Chi-Square Distribution", id = ns("chi_sq_dist_heading"), style = "text-align: center;"),
               plotOutput(ns("chi_square_dist_plot"), height = "300px")
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "plot-container",
+          column(
+            12,
+            div(
+              class = "plot-container",
               h4("Simulation Dotplot", id = ns("sim_dotplot_heading"), style = "text-align: center;"),
               plotOutput(ns("sim_dotplot"), height = "300px")
             )
@@ -223,9 +239,10 @@ ht_chi_gof_server <- function(id) {
     output$observed_counts_ui <- renderUI({
       cats <- candy_info[[input$candy_type]]$categories
       lapply(seq_along(cats), function(i) {
-        div(class = "form-group shiny-input-container",
-            tags$label(`for` = ns(paste0("obs_cat_", i)), paste(cats[i], "Count:")),
-            numericInput(ns(paste0("obs_cat_", i)), NULL, value = 10, min = 0)
+        div(
+          class = "form-group shiny-input-container",
+          tags$label(`for` = ns(paste0("obs_cat_", i)), paste(cats[i], "Count:")),
+          numericInput(ns(paste0("obs_cat_", i)), NULL, value = 10, min = 0)
         )
       })
     })
@@ -234,9 +251,10 @@ ht_chi_gof_server <- function(id) {
     output$expected_props_ui <- renderUI({
       cats <- candy_info[[input$candy_type]]$categories
       lapply(seq_along(cats), function(i) {
-        div(class = "form-group shiny-input-container",
-            tags$label(`for` = ns(paste0("prop_cat_", i)), paste(cats[i], "Proportion:")),
-            numericInput(ns(paste0("prop_cat_", i)), NULL, value = round(1/length(cats), 3), min = 0, max = 1, step = 0.01)
+        div(
+          class = "form-group shiny-input-container",
+          tags$label(`for` = ns(paste0("prop_cat_", i)), paste(cats[i], "Proportion:")),
+          numericInput(ns(paste0("prop_cat_", i)), NULL, value = round(1 / length(cats), 3), min = 0, max = 1, step = 0.01)
         )
       })
     })
@@ -259,7 +277,7 @@ ht_chi_gof_server <- function(id) {
       if (input$expected_type == "claimed") {
         candy_info[[input$candy_type]]$expected
       } else if (input$expected_type == "equal") {
-        rep(1/length(cats), length(cats))
+        rep(1 / length(cats), length(cats))
       } else {
         sapply(seq_along(cats), function(i) {
           val <- input[[paste0("prop_cat_", i)]]
@@ -286,12 +304,16 @@ ht_chi_gof_server <- function(id) {
       cats <- candy_info[[input$candy_type]]$categories
 
       # Validate observed counts
-      if (any(is.na(obs))) {
+      if (is.null(obs) || length(obs) == 0) {
+        # Don't show error until user enters data
+      } else if (any(is.na(obs))) {
         error_msg("Observed counts must be non-negative numbers.")
         return(NULL)
       }
       # Validate expected proportions
-      if (any(is.na(exp))) {
+      if (is.null(exp) || length(exp) == 0) {
+        # Don't show error until user enters data
+      } else if (any(is.na(exp))) {
         error_msg("Expected proportions must be non-negative numbers.")
         return(NULL)
       }
@@ -302,13 +324,18 @@ ht_chi_gof_server <- function(id) {
       error_msg("")
 
       # Run the chi-square test
-      res <- tryCatch({
-        chisq.test(x = obs, p = exp)
-      }, error = function(e) {
-        error_msg(e$message)
+      res <- tryCatch(
+        {
+          chisq.test(x = obs, p = exp)
+        },
+        error = function(e) {
+          error_msg(e$message)
+          return(NULL)
+        }
+      )
+      if (is.null(res)) {
         return(NULL)
-      })
-      if (is.null(res)) return(NULL)
+      }
 
       warning_msg <- NULL
       if (any(res$expected < 5)) {
@@ -399,8 +426,10 @@ ht_chi_gof_server <- function(id) {
       )
       ggplot(df_contrib, aes(x = Category, y = Contribution, fill = Category)) +
         geom_bar(stat = "identity", color = "black") +
-        labs(x = "Category", y = "Contribution to χ² Statistic",
-             title = "Each Bar Shows (O-E)²/E") +
+        labs(
+          x = "Category", y = "Contribution to χ² Statistic",
+          title = "Each Bar Shows (O-E)²/E"
+        ) +
         theme_minimal() +
         theme(legend.position = "none", plot.title = element_text(hjust = 0.5))
     })
@@ -420,9 +449,11 @@ ht_chi_gof_server <- function(id) {
         geom_line(color = "#1e40af", size = 1) +
         geom_area(data = shade_data, aes(x = x, y = y), fill = "#fbbf24", alpha = 0.6) +
         geom_vline(xintercept = stat, color = "#dc2626", linetype = "dashed", size = 1.2) +
-        labs(x = "Chi-Square Value", y = "Density",
-             title = sprintf("df = %d, p-value = %.4f", df, results$p.value)) +
-        annotate("text", x = stat, y = 0, label = sprintf("χ² = %.2f", stat), vjust = 1.5, hjust = if(stat > x_max/2) 1.1 else -0.1) +
+        labs(
+          x = "Chi-Square Value", y = "Density",
+          title = sprintf("df = %d, p-value = %.4f", df, results$p.value)
+        ) +
+        annotate("text", x = stat, y = 0, label = sprintf("χ² = %.2f", stat), vjust = 1.5, hjust = if (stat > x_max / 2) 1.1 else -0.1) +
         theme_minimal() +
         theme(plot.title = element_text(hjust = 0.5))
     })
@@ -438,8 +469,10 @@ ht_chi_gof_server <- function(id) {
       ggplot(plot_df, aes(x = ChiSq)) +
         geom_dotplot(binwidth = 0.5, dotsize = 0.7, fill = "#60a5fa") +
         geom_vline(xintercept = stat, color = "#dc2626", linetype = "dashed", size = 1.2) +
-        labs(x = "Simulated χ² Statistic", y = "Count",
-             title = "Distribution of Simulated χ² Statistics") +
+        labs(
+          x = "Simulated χ² Statistic", y = "Count",
+          title = "Distribution of Simulated χ² Statistics"
+        ) +
         theme_minimal() +
         theme(plot.title = element_text(hjust = 0.5))
     })
@@ -451,11 +484,15 @@ ht_chi_gof_server <- function(id) {
       },
       content = function(file) {
         results <- test_results()
-        p <- ggplot(data.frame(Category = results$cats, Contribution = results$residuals^2),
-                    aes(x = Category, y = Contribution, fill = Category)) +
+        p <- ggplot(
+          data.frame(Category = results$cats, Contribution = results$residuals^2),
+          aes(x = Category, y = Contribution, fill = Category)
+        ) +
           geom_bar(stat = "identity", color = "black") +
-          labs(x = "Category", y = "Contribution to χ² Statistic",
-               title = "Each Bar Shows (O-E)²/E") +
+          labs(
+            x = "Category", y = "Contribution to χ² Statistic",
+            title = "Each Bar Shows (O-E)²/E"
+          ) +
           theme_minimal() +
           theme(legend.position = "none", plot.title = element_text(hjust = 0.5))
         ggsave(file, plot = p, width = 7, height = 4.5, dpi = 300)

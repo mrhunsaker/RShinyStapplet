@@ -26,10 +26,10 @@
 # StappletSHiny/ci_diff_means.R
 
 # --- Load required libraries ---
-library(shiny)      # For building interactive web applications
-library(ggplot2)    # For creating plots
-library(dplyr)      # For data wrangling
-library(gridExtra)  # For arranging multiple plots
+library(shiny) # For building interactive web applications
+library(ggplot2) # For creating plots
+library(dplyr) # For data wrangling
+library(gridExtra) # For arranging multiple plots
 
 # --- UI function for the 'Confidence Interval for a Difference in Means' applet ---
 # This function builds the user interface for the module, allowing users to:
@@ -48,25 +48,26 @@ ci_diff_means_ui <- function(id) {
       sidebarPanel(
         id = "sidebarPanel",
         role = "form",
-
         h3("Data Input", id = "paramsHeading"),
         radioButtons(ns("input_method"), "Select Input Method:",
-                     choices = c("Enter Raw Data" = "raw", "Enter Summary Statistics" = "summary"),
-                     selected = "raw"),
-
+          choices = c("Enter Raw Data" = "raw", "Enter Summary Statistics" = "summary"),
+          selected = "raw"
+        ),
         hr(role = "separator"),
 
         # --- Raw data input for both groups ---
         conditionalPanel(
           condition = "input.input_method == 'raw'",
           ns = ns,
-          div(class = "form-group",
-              tags$label(id = ns("data1_label"), "Data for Group 1 (comma-separated):"),
-              textAreaInput(ns("data1"), NULL, "23, 25, 28, 22, 26, 29, 24", rows = 3)
+          div(
+            class = "form-group",
+            tags$label(id = ns("data1_label"), "Data for Group 1 (comma-separated):"),
+            textAreaInput(ns("data1"), NULL, "23, 25, 28, 22, 26, 29, 24", rows = 3)
           ),
-          div(class = "form-group",
-              tags$label(id = ns("data2_label"), "Data for Group 2 (comma-separated):"),
-              textAreaInput(ns("data2"), NULL, "18, 20, 22, 19, 21, 23, 17", rows = 3)
+          div(
+            class = "form-group",
+            tags$label(id = ns("data2_label"), "Data for Group 2 (comma-separated):"),
+            textAreaInput(ns("data2"), NULL, "18, 20, 22, 19, 21, 23, 17", rows = 3)
           )
         ),
 
@@ -84,15 +85,14 @@ ci_diff_means_ui <- function(id) {
           numericInput(ns("mean2"), "Sample Mean (x\u0304\u2082):", value = 100),
           numericInput(ns("sd2"), "Sample SD (s\u2082):", value = 8, min = 0)
         ),
-
         hr(role = "separator"),
         h3("Confidence Interval Parameters"),
-        div(class = "form-group",
-            tags$label(id = ns("conf_level_label"), "Confidence Level:"),
-            sliderInput(ns("conf_level"), NULL, min = 0.80, max = 0.99, value = 0.95, step = 0.01)
+        div(
+          class = "form-group",
+          tags$label(id = ns("conf_level_label"), "Confidence Level:"),
+          sliderInput(ns("conf_level"), NULL, min = 0.80, max = 0.99, value = 0.95, step = 0.01)
         ),
         checkboxInput(ns("pooled_var"), "Assume equal population variances (pooled t-interval)", value = FALSE),
-
         actionButton(ns("calculate"), "Calculate Interval", class = "btn-primary", style = "width: 100%;"),
         hr(),
         downloadButton(ns("download_results"), "Download Results")
@@ -102,16 +102,18 @@ ci_diff_means_ui <- function(id) {
         role = "main",
 
         # --- Plot of confidence interval and data distributions ---
-        div(class = "plot-container",
-            plotOutput(ns("ciPlot"), height = "400px"),
-            p(id = ns("ciPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("ciPlot_desc_text"))),
-            h4("Confidence Interval Plot", id = ns("ciPlot_label"), class = "sr-only")
+        div(
+          class = "plot-container",
+          plotOutput(ns("ciPlot"), height = "400px"),
+          p(id = ns("ciPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("ciPlot_desc_text"))),
+          h4("Confidence Interval Plot", id = ns("ciPlot_label"), class = "sr-only")
         ),
 
         # --- Results and summary statistics ---
-        div(class = "results-box",
-            h3("Results", id = ns("ciResults_label")),
-            verbatimTextOutput(ns("ciResults"))
+        div(
+          class = "results-box",
+          h3("Results", id = ns("ciResults_label")),
+          verbatimTextOutput(ns("ciResults"))
         ),
         uiOutput(ns("sim_stats_ui")),
         uiOutput(ns("plot_desc"))
@@ -124,7 +126,6 @@ ci_diff_means_ui <- function(id) {
 # This function contains all reactive logic, calculations, and output rendering for the module.
 ci_diff_means_server <- function(id) {
   moduleServer(id, function(input, output, session) {
-
     # --- Reactive value to store the results ---
     results <- eventReactive(input$calculate, {
       conf_level <- input$conf_level
@@ -136,10 +137,14 @@ ci_diff_means_server <- function(id) {
         data1_vec <- try(as.numeric(unlist(strsplit(input$data1, "[,\\s]+"))), silent = TRUE)
         data2_vec <- try(as.numeric(unlist(strsplit(input$data2, "[,\\s]+"))), silent = TRUE)
 
-        if (inherits(data1_vec, "try-error") || any(is.na(data1_vec)) || length(data1_vec) < 2) {
+        if ((is.null(input$data1) || trimws(input$data1) == "") || (is.null(data1_vec) || length(data1_vec) == 0)) {
+          # Don't show error until user enters data for Group 1
+        } else if (inherits(data1_vec, "try-error") || any(is.na(data1_vec)) || length(data1_vec) < 2) {
           return(list(error = "Invalid data for Group 1. Please enter at least two comma-separated numbers."))
         }
-        if (inherits(data2_vec, "try-error") || any(is.na(data2_vec)) || length(data2_vec) < 2) {
+        if ((is.null(input$data2) || trimws(input$data2) == "") || (is.null(data2_vec) || length(data2_vec) == 0)) {
+          # Don't show error until user enters data for Group 2
+        } else if (inherits(data2_vec, "try-error") || any(is.na(data2_vec)) || length(data2_vec) < 2) {
           return(list(error = "Invalid data for Group 2. Please enter at least two comma-separated numbers."))
         }
 
@@ -158,16 +163,23 @@ ci_diff_means_server <- function(id) {
             SD = c(sd(data1_vec), sd(data2_vec))
           )
         ))
-
       } else {
         # --- If user enters summary statistics, validate and calculate CI ---
         req(input$n1, input$mean1, input$sd1, input$n2, input$mean2, input$sd2)
+        if ((is.null(input$n1) || trimws(as.character(input$n1)) == "") ||
+          (is.null(input$n2) || trimws(as.character(input$n2)) == "")) {
+          return(list(error = NULL))
+        }
         if (input$n1 < 2 || input$n2 < 2 || input$sd1 < 0 || input$sd2 < 0) {
           return(list(error = "Sample sizes must be at least 2 and standard deviations must be non-negative."))
         }
 
-        n1 <- input$n1; m1 <- input$mean1; s1 <- input$sd1
-        n2 <- input$n2; m2 <- input$mean2; s2 <- input$sd2
+        n1 <- input$n1
+        m1 <- input$mean1
+        s1 <- input$sd1
+        n2 <- input$n2
+        m2 <- input$mean2
+        s2 <- input$sd2
 
         diff_mean <- m1 - m2
         alpha <- 1 - conf_level
@@ -175,12 +187,12 @@ ci_diff_means_server <- function(id) {
         if (pooled) {
           df <- n1 + n2 - 2
           sp_sq <- ((n1 - 1) * s1^2 + (n2 - 1) * s2^2) / df
-          se <- sqrt(sp_sq * (1/n1 + 1/n2))
+          se <- sqrt(sp_sq * (1 / n1 + 1 / n2))
         } else {
           se_sq1 <- s1^2 / n1
           se_sq2 <- s2^2 / n2
           se <- sqrt(se_sq1 + se_sq2)
-          df <- (se_sq1 + se_sq2)^2 / ( (se_sq1^2 / (n1 - 1)) + (se_sq2^2 / (n2 - 1)) )
+          df <- (se_sq1 + se_sq2)^2 / ((se_sq1^2 / (n1 - 1)) + (se_sq2^2 / (n2 - 1)))
         }
 
         t_star <- qt(1 - alpha / 2, df)
@@ -194,7 +206,7 @@ ci_diff_means_server <- function(id) {
             estimate = c("mean of x" = m1, "mean of y" = m2),
             conf.int = c(lower_bound, upper_bound),
             parameter = c("df" = df),
-            method = if(pooled) "Two Sample t-test (pooled)" else "Welch Two Sample t-test"
+            method = if (pooled) "Two Sample t-test (pooled)" else "Welch Two Sample t-test"
           ),
           data = NULL,
           stats = data.frame(
@@ -211,7 +223,9 @@ ci_diff_means_server <- function(id) {
     output$ciPlot <- renderPlot({
       res <- results()
       req(res)
-      if (!is.null(res$error)) return(NULL)
+      if (!is.null(res$error)) {
+        return(NULL)
+      }
 
       # --- Boxplot of raw data for both groups (if available) ---
       p1 <- if (!is.null(res$data)) {
@@ -222,7 +236,9 @@ ci_diff_means_server <- function(id) {
           theme_minimal() +
           theme(legend.position = "none")
       } else {
-        ggplot() + theme_void() + labs(title = "Data plot not available for summary statistics")
+        ggplot() +
+          theme_void() +
+          labs(title = "Data plot not available for summary statistics")
       }
 
       # --- Confidence interval plot for difference in means ---
@@ -291,7 +307,9 @@ ci_diff_means_server <- function(id) {
     # --- Output: Summary statistics table for both groups ---
     output$sim_stats_ui <- renderUI({
       res <- results()
-      if (is.null(res) || !is.null(res$error)) return(NULL)
+      if (is.null(res) || !is.null(res$error)) {
+        return(NULL)
+      }
       stats <- res$stats
       tagList(
         h4("Summary Statistics"),

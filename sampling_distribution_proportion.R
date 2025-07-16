@@ -91,30 +91,38 @@ sampling_dist_proportion_ui <- function(id) {
         id = ns("mainPanelProp"),
         role = "main",
         fluidRow(
-          column(6,
-            div(class = "plot-container",
+          column(
+            6,
+            div(
+              class = "plot-container",
               h4("Population Distribution", style = "text-align: center;", id = ns("popDistLabel")),
               plotOutput(ns("populationPlot"), height = "250px")
             )
           ),
-          column(6,
-            div(class = "plot-container",
+          column(
+            6,
+            div(
+              class = "plot-container",
               h4("Most Recent Sample", style = "text-align: center;", id = ns("lastSampleLabel")),
               plotOutput(ns("samplePlot"), height = "250px")
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "plot-container",
+          column(
+            12,
+            div(
+              class = "plot-container",
               h4("Distribution of Sample Proportions (p-hat)", style = "text-align: center;", id = ns("sampDistLabel")),
               plotOutput(ns("samplingDistPlot"), height = "300px")
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h3("Summary Statistics", id = ns("summaryStatsLabel")),
               verbatimTextOutput(ns("summaryStats"))
             )
@@ -139,8 +147,8 @@ sampling_dist_proportion_server <- function(id) {
     # Reactive values to store sample proportions and last sample
     # ---------------------------------------------------------------
     rv <- reactiveValues(
-      sample_props = numeric(),   # Stores all sample proportions drawn
-      last_sample = numeric()     # Stores the most recent sample
+      sample_props = numeric(), # Stores all sample proportions drawn
+      last_sample = numeric() # Stores the most recent sample
     )
 
     # ---------------------------------------------------------------
@@ -172,9 +180,15 @@ sampling_dist_proportion_server <- function(id) {
     # ---------------------------------------------------------------
     # Event handlers for sample drawing buttons and reset
     # ---------------------------------------------------------------
-    observeEvent(input$draw_one, { draw_samples(1) })
-    observeEvent(input$draw_100, { draw_samples(100) })
-    observeEvent(input$draw_1000, { draw_samples(1000) })
+    observeEvent(input$draw_one, {
+      draw_samples(1)
+    })
+    observeEvent(input$draw_100, {
+      draw_samples(100)
+    })
+    observeEvent(input$draw_1000, {
+      draw_samples(1000)
+    })
     observeEvent(input$reset, {
       rv$sample_props <- numeric()
       rv$last_sample <- numeric()
@@ -202,7 +216,9 @@ sampling_dist_proportion_server <- function(id) {
     # ---------------------------------------------------------------
     output$samplePlot <- renderPlot({
       if (length(rv$last_sample) == 0) {
-        return(ggplot2::ggplot() + ggplot2::labs(title = "No sample drawn yet") + ggplot2::theme_void())
+        return(ggplot2::ggplot() +
+          ggplot2::labs(title = "No sample drawn yet") +
+          ggplot2::theme_void())
       }
       df_sample <- data.frame(Outcome = factor(rv$last_sample, levels = c(0, 1), labels = c("Failure", "Success")))
       p_hat <- mean(rv$last_sample)
@@ -219,7 +235,12 @@ sampling_dist_proportion_server <- function(id) {
     # ---------------------------------------------------------------
     output$samplingDistPlot <- renderPlot({
       if (length(rv$sample_props) < 2) {
-        return(ggplot2::ggplot() + ggplot2::labs(title = "Draw at least 2 samples to see distribution") + ggplot2::theme_void())
+        if (is.null(input$num_samples) || trimws(as.character(input$num_samples)) == "" || input$num_samples < 2) {
+          return(NULL)
+        }
+        ggplot2::ggplot() +
+          ggplot2::labs(title = "Draw at least 2 samples to see distribution") +
+          ggplot2::theme_void()
       }
       df_props <- data.frame(x = rv$sample_props)
       mean_of_props <- mean(df_props$x)
@@ -228,8 +249,10 @@ sampling_dist_proportion_server <- function(id) {
         ggplot2::geom_histogram(aes(y = ..density..), bins = 20, fill = "#fbbf24", color = "white") +
         ggplot2::geom_vline(xintercept = mean_of_props, color = "#1e40af", linetype = "solid", size = 1.2) +
         ggplot2::geom_vline(xintercept = pop_p, color = "#dc2626", linetype = "dashed", size = 1.2) +
-        ggplot2::labs(x = "Sample Proportions (p-hat)", y = "Density",
-             title = paste("Mean of", length(rv$sample_props), "proportions =", round(mean_of_props, 3))) +
+        ggplot2::labs(
+          x = "Sample Proportions (p-hat)", y = "Density",
+          title = paste("Mean of", length(rv$sample_props), "proportions =", round(mean_of_props, 3))
+        ) +
         ggplot2::theme_minimal()
       # Overlay theoretical normal curve if CLT conditions are met
       theoretical_sd <- sqrt(pop_p * (1 - pop_p) / input$sample_size)
@@ -275,7 +298,9 @@ sampling_dist_proportion_server <- function(id) {
     # Download Handlers for Summary, Data, and Plot
     # ---------------------------------------------------------------
     output$download_summary <- downloadHandler(
-      filename = function() { "sampling_proportion_summary.txt" },
+      filename = function() {
+        "sampling_proportion_summary.txt"
+      },
       content = function(file) {
         sink(file)
         cat(capture.output(output$summaryStats()))
@@ -283,13 +308,17 @@ sampling_dist_proportion_server <- function(id) {
       }
     )
     output$download_data <- downloadHandler(
-      filename = function() { "sampling_proportion_data.csv" },
+      filename = function() {
+        "sampling_proportion_data.csv"
+      },
       content = function(file) {
         write.csv(data.frame(sample_prop = rv$sample_props), file, row.names = FALSE)
       }
     )
     output$download_plot <- downloadHandler(
-      filename = function() { "sampling_proportion_plot.png" },
+      filename = function() {
+        "sampling_proportion_plot.png"
+      },
       content = function(file) {
         png(file, width = 800, height = 600)
         print({
@@ -300,8 +329,10 @@ sampling_dist_proportion_server <- function(id) {
             ggplot2::geom_histogram(aes(y = ..density..), bins = 20, fill = "#fbbf24", color = "white") +
             ggplot2::geom_vline(xintercept = mean_of_props, color = "#1e40af", linetype = "solid", size = 1.2) +
             ggplot2::geom_vline(xintercept = pop_p, color = "#dc2626", linetype = "dashed", size = 1.2) +
-            ggplot2::labs(x = "Sample Proportions (p-hat)", y = "Density",
-                 title = paste("Mean of", length(rv$sample_props), "proportions =", round(mean_of_props, 3))) +
+            ggplot2::labs(
+              x = "Sample Proportions (p-hat)", y = "Density",
+              title = paste("Mean of", length(rv$sample_props), "proportions =", round(mean_of_props, 3))
+            ) +
             ggplot2::theme_minimal()
           theoretical_sd <- sqrt(pop_p * (1 - pop_p) / input$sample_size)
           if (input$sample_size * pop_p >= 10 && input$sample_size * (1 - pop_p) >= 10) {
@@ -317,25 +348,6 @@ sampling_dist_proportion_server <- function(id) {
       }
     )
 
-    # ---------------------------------------------------------------
-    # Accessibility Enhancements (ARIA roles, labels, alerts)
-    # ---------------------------------------------------------------
-    if (requireNamespace("shinyAccessibility", quietly = TRUE)) {
-      shinyAccessibility::add_accessibility(
-        inputId = ns("mainPanelProp"),
-        role = "main",
-        aria_label = "Sampling Distribution of the Sample Proportion Main Panel"
-      )
-      shinyAccessibility::add_accessibility(
-        inputId = ns("sidebarPanelProp"),
-        role = "form",
-        aria_label = "Population and Sampling Parameters"
-      )
-      shinyAccessibility::add_accessibility(
-        inputId = ns("error_msg"),
-        role = "alert",
-        aria_live = "assertive"
-      )
-    }
+    # Accessibility enhancements using standard HTML ARIA attributes are included in the UI definition.
   })
 }

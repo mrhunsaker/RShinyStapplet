@@ -45,20 +45,21 @@
 library(shiny)
 library(ggplot2)
 library(DT)
-
+library(shinyjs)
 # -------------------------------
 # Default Preferences
+library(shinyjs)
 # -------------------------------
 default_prefs <- list(
-  color_palette = "viridis",   # Color palette for plots
-  rounding = 4,                # Decimal places for output
-  percent_display = FALSE      # Display percentages (not used here)
+  color_palette = "viridis", # Color palette for plots
+  rounding = 4, # Decimal places for output
+  percent_display = FALSE # Display percentages (not used here)
 )
 
 ht_diff_means_ui <- function(id) {
   ns <- NS(id)
   fluidPage(
-    useShinyjs::useShinyjs(),
+    useShinyjs(),
     tags$head(
       tags$style(HTML("
         .error-msg { color: #b30000; font-weight: bold; }
@@ -74,9 +75,12 @@ ht_diff_means_ui <- function(id) {
         role = "form",
         h3("Data Input Method"),
         radioButtons(ns("input_type"), "Choose how to provide data:",
-                     choices = c("Enter Summary Statistics" = "summary",
-                                 "Paste Raw Data" = "raw"),
-                     selected = "summary"),
+          choices = c(
+            "Enter Summary Statistics" = "summary",
+            "Paste Raw Data" = "raw"
+          ),
+          selected = "summary"
+        ),
         hr(),
         conditionalPanel(
           condition = sprintf("input['%s'] == 'summary'", ns("input_type")),
@@ -94,19 +98,24 @@ ht_diff_means_ui <- function(id) {
           condition = sprintf("input['%s'] == 'raw'", ns("input_type")),
           h4("Group 1 Data"),
           textAreaInput(ns("raw1"), "Paste data (one value per line)",
-                        value = "25\n20\n23\n28\n19\n24\n26", rows = 5),
+            value = "25\n20\n23\n28\n19\n24\n26", rows = 5
+          ),
           hr(),
           h4("Group 2 Data"),
           textAreaInput(ns("raw2"), "Paste data (one value per line)",
-                        value = "18\n21\n22\n19\n17\n20\n23", rows = 5)
+            value = "18\n21\n22\n19\n17\n20\n23", rows = 5
+          )
         ),
         hr(),
         h3("Hypothesis Test Parameters"),
         numericInput(ns("h0_diff"), "Null Hypothesis (μ₁ - μ₂)", value = 0),
         selectInput(ns("alternative"), "Alternative Hypothesis",
-                    choices = c("Two-sided (μ₁ ≠ μ₂)" = "two.sided",
-                                "Greater than (μ₁ > μ₂)" = "greater",
-                                "Less than (μ₁ < μ₂)" = "less")),
+          choices = c(
+            "Two-sided (μ₁ ≠ μ₂)" = "two.sided",
+            "Greater than (μ₁ > μ₂)" = "greater",
+            "Less than (μ₁ < μ₂)" = "less"
+          )
+        ),
         sliderInput(ns("conf_level"), "Confidence Level for CI", min = 0.80, max = 0.99, value = 0.95, step = 0.01),
         checkboxInput(ns("pooled"), "Assume equal variances (use pooled SE)?", value = FALSE),
         hr(),
@@ -117,7 +126,8 @@ ht_diff_means_ui <- function(id) {
         hr(),
         h4("Preferences"),
         selectInput(ns("color_palette"), "Color Palette",
-                    choices = c("viridis", "plasma", "magma", "inferno", "cividis")),
+          choices = c("viridis", "plasma", "magma", "inferno", "cividis")
+        ),
         numericInput(ns("rounding"), "Decimal Places", value = default_prefs$rounding, min = 0, max = 10, step = 1),
         checkboxInput(ns("percent_display"), "Display probabilities as percentages", value = default_prefs$percent_display),
         hr(),
@@ -130,32 +140,44 @@ ht_diff_means_ui <- function(id) {
       mainPanel(
         id = "mainPanel",
         role = "main",
-        div(class = "error-msg", textOutput(ns("error_msg"), `aria-live` = "assertive")),
+        tags$div(
+          class = "error-msg",
+          `aria-live` = "assertive",
+          textOutput(ns("error_msg"))
+        ),
         fluidRow(
-          column(6,
-            div(class = "plot-container",
+          column(
+            6,
+            div(
+              class = "plot-container",
               h4("Data Visualization", style = "text-align: center;", id = ns("dataPlot_label")),
               plotOutput(ns("dataPlot"), height = "300px")
             )
           ),
-          column(6,
-            div(class = "plot-container",
+          column(
+            6,
+            div(
+              class = "plot-container",
               h4("Test Distribution", style = "text-align: center;", id = ns("testPlot_label")),
               plotOutput(ns("testPlot"), height = "300px")
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h3("Test Results", id = ns("testResult_label")),
               verbatimTextOutput(ns("testResult"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "plot-container",
+          column(
+            12,
+            div(
+              class = "plot-container",
               h4("Simulation Dotplot", id = ns("sim_dotplot_heading"), style = "text-align: center;"),
               plotOutput(ns("sim_dotplot"), height = "300px")
             )
@@ -168,7 +190,6 @@ ht_diff_means_ui <- function(id) {
 
 ht_diff_means_server <- function(id) {
   moduleServer(id, function(input, output, session) {
-
     prefs <- reactive({
       list(
         color_palette = input$color_palette %||% default_prefs$color_palette,
@@ -181,25 +202,34 @@ ht_diff_means_server <- function(id) {
 
     # Reactive expression to perform the t-test
     test_results <- eventReactive(
-      list(input$input_type, input$mean1, input$sd1, input$n1, input$mean2, input$sd2, input$n2,
-           input$raw1, input$raw2, input$h0_diff, input$alternative, input$conf_level, input$pooled),
+      list(
+        input$input_type, input$mean1, input$sd1, input$n1, input$mean2, input$sd2, input$n2,
+        input$raw1, input$raw2, input$h0_diff, input$alternative, input$conf_level, input$pooled
+      ),
       {
         if (input$input_type == "raw") {
           # --- Raw Data Input ---
           data1 <- as.numeric(na.omit(read.csv(text = input$raw1, header = FALSE)$V1))
           data2 <- as.numeric(na.omit(read.csv(text = input$raw2, header = FALSE)$V1))
 
+          if ((is.null(input$raw_data1) || trimws(input$raw_data1) == "") ||
+            (is.null(input$raw_data2) || trimws(input$raw_data2) == "")) {
+            # Don't show error until user enters data
+            return(NULL)
+          }
           if (length(data1) < 2 || length(data2) < 2) {
             error_msg("Please provide at least 2 numeric values for each group.")
             return(NULL)
           }
 
           # Use the built-in t.test function
-          res <- t.test(x = data1, y = data2,
-                        mu = input$h0_diff,
-                        alternative = input$alternative,
-                        conf.level = input$conf_level,
-                        var.equal = input$pooled)
+          res <- t.test(
+            x = data1, y = data2,
+            mu = input$h0_diff,
+            alternative = input$alternative,
+            conf.level = input$conf_level,
+            var.equal = input$pooled
+          )
 
           error_msg("")
           return(list(
@@ -212,11 +242,14 @@ ht_diff_means_server <- function(id) {
             n1 = length(data1), n2 = length(data2),
             raw_data = list(data1 = data1, data2 = data2)
           ))
-
         } else {
           # --- Summary Statistics Input ---
-          x_bar1 <- input$mean1; s1 <- input$sd1; n1 <- input$n1
-          x_bar2 <- input$mean2; s2 <- input$sd2; n2 <- input$n2
+          x_bar1 <- input$mean1
+          s1 <- input$sd1
+          n1 <- input$n1
+          x_bar2 <- input$mean2
+          s2 <- input$sd2
+          n2 <- input$n2
 
           if (is.na(n1) || is.na(n2) || n1 < 2 || n2 < 2 || is.na(s1) || is.na(s2) || s1 <= 0 || s2 <= 0) {
             error_msg("Sample sizes must be >= 2 and standard deviations must be > 0.")
@@ -229,13 +262,13 @@ ht_diff_means_server <- function(id) {
             # Pooled variance calculation
             df <- n1 + n2 - 2
             s_p_sq <- ((n1 - 1) * s1^2 + (n2 - 1) * s2^2) / df
-            se <- sqrt(s_p_sq * (1/n1 + 1/n2))
+            se <- sqrt(s_p_sq * (1 / n1 + 1 / n2))
           } else {
             # Welch-Satterthwaite (unpooled) calculation
             se_term1 <- s1^2 / n1
             se_term2 <- s2^2 / n2
             se <- sqrt(se_term1 + se_term2)
-            df <- (se_term1 + se_term2)^2 / ( (se_term1^2 / (n1 - 1)) + (se_term2^2 / (n2 - 1)) )
+            df <- (se_term1 + se_term2)^2 / ((se_term1^2 / (n1 - 1)) + (se_term2^2 / (n2 - 1)))
           }
 
           t_stat <- (diff_means - input$h0_diff) / se
@@ -264,10 +297,15 @@ ht_diff_means_server <- function(id) {
     sim_results <- reactiveVal(NULL)
     observeEvent(input$simulate, {
       res <- test_results()
-      if (is.null(res)) return()
-      n1 <- res$n1; n2 <- res$n2
-      s1 <- res$s1; s2 <- res$s2
-      mu1 <- res$x_bar1; mu2 <- res$x_bar2
+      if (is.null(res)) {
+        return()
+      }
+      n1 <- res$n1
+      n2 <- res$n2
+      s1 <- res$s1
+      s2 <- res$s2
+      mu1 <- res$x_bar1
+      mu2 <- res$x_bar2
       num_sim <- input$num_sim
       sim_stats <- numeric(num_sim)
       for (i in seq_len(num_sim)) {
@@ -289,7 +327,9 @@ ht_diff_means_server <- function(id) {
     # --- Render Plots ---
     output$dataPlot <- renderPlot({
       res <- test_results()
-      if (is.null(res)) return(NULL)
+      if (is.null(res)) {
+        return(NULL)
+      }
       if (input$input_type == "raw" && !is.null(res$raw_data)) {
         df <- data.frame(
           value = c(res$raw_data$data1, res$raw_data$data2),
@@ -299,7 +339,8 @@ ht_diff_means_server <- function(id) {
           geom_boxplot(alpha = 0.7) +
           labs(x = "Group", y = "Value", title = "Side-by-Side Boxplots") +
           scale_fill_viridis_d(option = "D", end = 0.85) +
-          theme_minimal() + theme(legend.position = "none")
+          theme_minimal() +
+          theme(legend.position = "none")
       } else {
         # For summary stats, plot means with CI
         df <- data.frame(
@@ -315,13 +356,16 @@ ht_diff_means_server <- function(id) {
           geom_errorbar(aes(ymin = ci_low, ymax = ci_high), width = 0.2, size = 1) +
           labs(x = "Group", y = "Mean +/- 1.96*SE", title = "Sample Means and Standard Errors") +
           scale_color_viridis_d(option = "D", end = 0.85) +
-          theme_minimal() + theme(legend.position = "none")
+          theme_minimal() +
+          theme(legend.position = "none")
       }
     })
 
     output$testPlot <- renderPlot({
       res <- test_results()
-      if (is.null(res) || is.infinite(res$df)) return(NULL)
+      if (is.null(res) || is.infinite(res$df)) {
+        return(NULL)
+      }
       t_stat <- res$t_stat
       df <- res$df
       x_lim <- max(4, abs(t_stat) + 1)
@@ -330,14 +374,16 @@ ht_diff_means_server <- function(id) {
       plot_data <- data.frame(x = x_vals, y = y_vals)
       p <- ggplot(plot_data, aes(x, y)) +
         geom_line(color = "#1e40af", size = 1) +
-        labs(title = paste0("t-Distribution with df = ", round(df, 2)),
-             x = "t-statistic", y = "Density") +
+        labs(
+          title = paste0("t-Distribution with df = ", round(df, 2)),
+          x = "t-statistic", y = "Density"
+        ) +
         geom_vline(xintercept = t_stat, color = "#dc2626", linetype = "dashed", size = 1.2) +
         theme_minimal()
       # Shading for p-value
       if (input$alternative == "two.sided") {
         p <- p + geom_area(data = subset(plot_data, x >= abs(t_stat)), aes(y = y), fill = "#ef4444", alpha = 0.5) +
-                 geom_area(data = subset(plot_data, x <= -abs(t_stat)), aes(y = y), fill = "#ef4444", alpha = 0.5)
+          geom_area(data = subset(plot_data, x <= -abs(t_stat)), aes(y = y), fill = "#ef4444", alpha = 0.5)
       } else if (input$alternative == "greater") {
         p <- p + geom_area(data = subset(plot_data, x >= t_stat), aes(y = y), fill = "#ef4444", alpha = 0.5)
       } else {
@@ -349,7 +395,10 @@ ht_diff_means_server <- function(id) {
     # --- Render Results ---
     output$testResult <- renderPrint({
       res <- test_results()
-      if (is.null(res)) { cat("Enter data and parameters to see results."); return() }
+      if (is.null(res)) {
+        cat("Enter data and parameters to see results.")
+        return()
+      }
       t_stat <- as.numeric(res$t_stat)
       df <- as.numeric(res$df)
       p_value <- as.numeric(res$p_value)
@@ -363,7 +412,11 @@ ht_diff_means_server <- function(id) {
       n2 <- as.integer(res$n2)
       cat("--- Test Summary ---\n")
       cat("Null Hypothesis (H₀): μ₁ - μ₂ =", input$h0_diff, "\n")
-      alt_symbol <- switch(input$alternative, "two.sided" = "≠", "greater" = ">", "less" = "<")
+      alt_symbol <- switch(input$alternative,
+        "two.sided" = "≠",
+        "greater" = ">",
+        "less" = "<"
+      )
       cat("Alternative (Hₐ):   μ₁ - μ₂", alt_symbol, input$h0_diff, "\n")
       cat("Test Type: Two-sample t-test", ifelse(input$pooled, "(pooled)", "(Welch)"), "\n\n")
       cat("--- Results ---\n")
@@ -388,8 +441,10 @@ ht_diff_means_server <- function(id) {
       ggplot(plot_df, aes(x = Diff)) +
         geom_dotplot(binwidth = 0.5, dotsize = 0.7, fill = "#60a5fa") +
         geom_vline(xintercept = obs_diff, color = "#dc2626", linetype = "dashed", size = 1.2) +
-        labs(x = "Simulated Difference in Means", y = "Count",
-             title = "Distribution of Simulated Differences in Means") +
+        labs(
+          x = "Simulated Difference in Means", y = "Count",
+          title = "Distribution of Simulated Differences in Means"
+        ) +
         theme_minimal() +
         theme(plot.title = element_text(hjust = 0.5))
     })
@@ -401,14 +456,21 @@ ht_diff_means_server <- function(id) {
       },
       content = function(file) {
         res <- test_results()
-        p <- ggplot(data.frame(Group = c("Group 1", "Group 2"),
-                               Mean = c(res$x_bar1, res$x_bar2)),
-                    aes(x = Group, y = Mean, fill = Group)) +
+        p <- ggplot(
+          data.frame(
+            Group = c("Group 1", "Group 2"),
+            Mean = c(res$x_bar1, res$x_bar2)
+          ),
+          aes(x = Group, y = Mean, fill = Group)
+        ) +
           geom_bar(stat = "identity", alpha = 0.7) +
-          labs(x = "Group", y = "Mean",
-               title = "Sample Means") +
+          labs(
+            x = "Group", y = "Mean",
+            title = "Sample Means"
+          ) +
           scale_fill_viridis_d(option = "D", end = 0.85) +
-          theme_minimal() + theme(legend.position = "none")
+          theme_minimal() +
+          theme(legend.position = "none")
         ggsave(file, plot = p, width = 7, height = 4.5, dpi = 300)
       }
     )

@@ -34,19 +34,19 @@
 # Feature parity with STAPLET HTML/JS applet
 
 # --- Load required libraries ---
-library(shiny)    # For building interactive web applications
-library(ggplot2)  # For creating plots
+library(shiny) # For building interactive web applications
+library(ggplot2) # For creating plots
 library(BrailleR) # For accessibility (BrailleR descriptions)
-library(dplyr)    # For data wrangling
-library(shinyjs)  # For JavaScript integration in Shiny
-library(DT)       # For interactive tables
+library(dplyr) # For data wrangling
+library(shinyjs) # For JavaScript integration in Shiny
+library(DT) # For interactive tables
 
 # ---- Preferences ----
 # --- Default preferences for UI ---
 default_prefs <- list(
-  color_palette = "viridis",   # Default color palette for plots
-  rounding = 4,                # Default number of decimal places
-  percent_display = FALSE      # Display probabilities as percentages by default
+  color_palette = "viridis", # Default color palette for plots
+  rounding = 4, # Default number of decimal places
+  percent_display = FALSE # Display probabilities as percentages by default
 )
 
 # ---- UI Definition for Poisson Distribution Applet ----
@@ -72,47 +72,58 @@ dist_poisson_ui <- function(id) {
     sidebarLayout(
       sidebarPanel(
         # --- Mean input ---
-        div(class = "form-group",
-            tags$label("Mean (\u03bb):", `for` = ns("lambda")),
-            numericInput(ns("lambda"), label = NULL, value = 5, min = 0.01, step = 0.01),
-            tags$p(id = ns("lambda_desc"), class = "sr-only", "Enter the average number of events (lambda) for the Poisson distribution. Must be greater than 0."),
-            tags$script(paste0("document.getElementById('", ns("lambda"), "').setAttribute('aria-describedby', '", ns("lambda_desc"), "')"))
+        div(
+          class = "form-group",
+          tags$label("Mean (\u03bb):", `for` = ns("lambda")),
+          numericInput(ns("lambda"), label = NULL, value = 5, min = 0.01, step = 0.01),
+          tags$p(id = ns("lambda_desc"), class = "sr-only", "Enter the average number of events (lambda) for the Poisson distribution. Must be greater than 0."),
+          tags$script(paste0("document.getElementById('", ns("lambda"), "').setAttribute('aria-describedby', '", ns("lambda_desc"), "')"))
         ),
         hr(),
         # --- Probability calculation tabs ---
         h3("Calculate Probability"),
         tabsetPanel(
           id = ns("prob_mode"),
-          tabPanel("Single Value",
+          tabPanel(
+            "Single Value",
             p("Find the probability for a given value of X."),
-            div(class = "form-group",
-                tags$label("Type of Probability:", `for` = ns("prob_type")),
-                selectInput(ns("prob_type"), label = NULL,
-                  choices = c("P(X = x)" = "eq",
-                              "P(X < x)" = "lt",
-                              "P(X \u2264 x)" = "le",
-                              "P(X > x)" = "gt",
-                              "P(X \u2265 x)" = "ge")),
-                tags$p(id = ns("prob_type_desc"), class = "sr-only", "Select the inequality for the probability calculation."),
-                tags$script(paste0("document.getElementById('", ns("prob_type"), "').setAttribute('aria-describedby', '", ns("prob_type_desc"), "')"))
+            div(
+              class = "form-group",
+              tags$label("Type of Probability:", `for` = ns("prob_type")),
+              selectInput(ns("prob_type"),
+                label = NULL,
+                choices = c(
+                  "P(X = x)" = "eq",
+                  "P(X < x)" = "lt",
+                  "P(X \u2264 x)" = "le",
+                  "P(X > x)" = "gt",
+                  "P(X \u2265 x)" = "ge"
+                )
+              ),
+              tags$p(id = ns("prob_type_desc"), class = "sr-only", "Select the inequality for the probability calculation."),
+              tags$script(paste0("document.getElementById('", ns("prob_type"), "').setAttribute('aria-describedby', '", ns("prob_type_desc"), "')"))
             ),
-            div(class = "form-group",
-                tags$label("Value of x:", `for` = ns("prob_x_value")),
-                numericInput(ns("prob_x_value"), label = NULL, value = 0, min = 0, step = 1),
-                tags$p(id = ns("prob_x_desc"), class = "sr-only", "Enter the specific value of x to use in the probability calculation."),
-                tags$script(paste0("document.getElementById('", ns("prob_x_value"), "').setAttribute('aria-describedby', '", ns("prob_x_desc"), "')"))
+            div(
+              class = "form-group",
+              tags$label("Value of x:", `for` = ns("prob_x_value")),
+              numericInput(ns("prob_x_value"), label = NULL, value = 0, min = 0, step = 1),
+              tags$p(id = ns("prob_x_desc"), class = "sr-only", "Enter the specific value of x to use in the probability calculation."),
+              tags$script(paste0("document.getElementById('", ns("prob_x_value"), "').setAttribute('aria-describedby', '", ns("prob_x_desc"), "')"))
             ),
             actionButton(ns("calc_single"), "Go!", class = "btn-primary", `aria-label` = "Calculate single value probability")
           ),
-          tabPanel("Interval",
+          tabPanel(
+            "Interval",
             p("Calculate the probability of X being between two values (inclusive)."),
-            div(class = "form-group",
-                tags$label("Left bound (x\u2081):", `for` = ns("prob_left")),
-                numericInput(ns("prob_left"), label = NULL, value = 0, min = 0, step = 1)
+            div(
+              class = "form-group",
+              tags$label("Left bound (x\u2081):", `for` = ns("prob_left")),
+              numericInput(ns("prob_left"), label = NULL, value = 0, min = 0, step = 1)
             ),
-            div(class = "form-group",
-                tags$label("Right bound (x\u2082):", `for` = ns("prob_right")),
-                numericInput(ns("prob_right"), label = NULL, value = 1, min = 0, step = 1)
+            div(
+              class = "form-group",
+              tags$label("Right bound (x\u2082):", `for` = ns("prob_right")),
+              numericInput(ns("prob_right"), label = NULL, value = 1, min = 0, step = 1)
             ),
             actionButton(ns("calc_interval"), "Go!", class = "btn-primary", `aria-label` = "Calculate interval probability")
           )
@@ -120,9 +131,11 @@ dist_poisson_ui <- function(id) {
         hr(),
         # --- Preferences for display ---
         h3("Preferences"),
-        div(class = "prefs-box",
+        div(
+          class = "prefs-box",
           selectInput(ns("color_palette"), "Color Palette",
-                      choices = c("viridis", "plasma", "magma", "inferno", "cividis")),
+            choices = c("viridis", "plasma", "magma", "inferno", "cividis")
+          ),
           numericInput(ns("rounding"), "Decimal Places", value = default_prefs$rounding, min = 0, max = 10, step = 1),
           checkboxInput(ns("percent_display"), "Display probabilities as percentages", value = default_prefs$percent_display)
         ),
@@ -134,18 +147,24 @@ dist_poisson_ui <- function(id) {
       ),
       mainPanel(
         # --- Error message output ---
-        div(class = "error-msg", textOutput(ns("error_msg"), `aria-live` = "assertive")),
+        tags$div(
+          class = "error-msg",
+          `aria-live` = "assertive",
+          textOutput(ns("error_msg"))
+        ),
         # --- Distribution plot ---
-        div(class = "plot-container",
-            plotOutput(ns("dist_plot"), height = "350px"),
-            tags$script(paste0("document.getElementById('", ns("dist_plot"), "').setAttribute('aria-label', 'A bar chart showing the Poisson probability distribution. The area for the calculated probability is highlighted.')")),
-            p(id = ns("dist_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("dist_plot_desc_text")))
+        div(
+          class = "plot-container",
+          plotOutput(ns("dist_plot"), height = "350px"),
+          tags$script(paste0("document.getElementById('", ns("dist_plot"), "').setAttribute('aria-label', 'A bar chart showing the Poisson probability distribution. The area for the calculated probability is highlighted.')")),
+          p(id = ns("dist_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("dist_plot_desc_text")))
         ),
         # --- Calculated probability and table ---
-        div(class = "results-box", role = "status", `aria-live` = "polite",
-            h3("Calculated Probability"),
-            textOutput(ns("calculated_prob")),
-            DTOutput(ns("prob_table"))
+        div(
+          class = "results-box", role = "status", `aria-live` = "polite",
+          h3("Calculated Probability"),
+          textOutput(ns("calculated_prob")),
+          DTOutput(ns("prob_table"))
         )
       )
     )
@@ -215,7 +234,11 @@ dist_poisson_server <- function(id) {
           "ge" = ppois(x_val - 1, lambda, lower.tail = FALSE)
         )
         op_string <- switch(prob_type,
-          "eq" = "=", "lt" = "<", "le" = "\u2264", "gt" = ">", "ge" = "\u2265"
+          "eq" = "=",
+          "lt" = "<",
+          "le" = "\u2264",
+          "gt" = ">",
+          "ge" = "\u2265"
         )
         prob_disp <- if (percent) paste0(round(prob * 100, rounding), "%") else round(prob, rounding)
         list(
@@ -237,7 +260,7 @@ dist_poisson_server <- function(id) {
         left <- input$prob_left
         right <- input$prob_right
         if (is.null(left) || is.na(left) || left < 0 || left > 1000 ||
-            is.null(right) || is.na(right) || right < 0 || right > 1000) {
+          is.null(right) || is.na(right) || right < 0 || right > 1000) {
           error_msg("Bounds must be non-negative integers between 0 and 1000.")
           return(NULL)
         }
@@ -274,9 +297,11 @@ dist_poisson_server <- function(id) {
       ggplot(df, aes(x = x, y = p, fill = highlight)) +
         geom_col(alpha = 0.8) +
         scale_fill_manual(values = c("yes" = scales::viridis_pal(option = palette)(8)[7], "no" = scales::viridis_pal(option = palette)(8)[3]), guide = "none") +
-        labs(title = paste("Poisson Distribution with \u03bb =", input$lambda),
-             x = "Number of Events (x)",
-             y = "Probability P(x)") +
+        labs(
+          title = paste("Poisson Distribution with \u03bb =", input$lambda),
+          x = "Number of Events (x)",
+          y = "Probability P(x)"
+        ) +
         theme_minimal(base_size = 14) +
         theme(plot.title = element_text(hjust = 0.5, face = "bold"))
     })
@@ -291,9 +316,11 @@ dist_poisson_server <- function(id) {
       p <- ggplot(df, aes(x = x, y = p, fill = highlight)) +
         geom_col(alpha = 0.8) +
         scale_fill_manual(values = c("yes" = "#d73027", "no" = "#4575b4"), guide = "none") +
-        labs(title = paste("Poisson Distribution with \u03bb =", input$lambda),
-             x = "Number of Events (x)",
-             y = "Probability P(x)") +
+        labs(
+          title = paste("Poisson Distribution with \u03bb =", input$lambda),
+          x = "Number of Events (x)",
+          y = "Probability P(x)"
+        ) +
         theme_minimal(base_size = 14) +
         theme(plot.title = element_text(hjust = 0.5, face = "bold"))
       VI(p)
@@ -313,7 +340,7 @@ dist_poisson_server <- function(id) {
     # --- Probability Table Output ---
     output$prob_table <- renderDT({
       prob <- calc_prob()
-      if (!is.null(prob)) datatable(prob$table, rownames = FALSE, options = list(dom = 't')) else datatable(data.frame())
+      if (!is.null(prob)) datatable(prob$table, rownames = FALSE, options = list(dom = "t")) else datatable(data.frame())
     })
 
     # --- Download Plot Handler ---
@@ -331,9 +358,11 @@ dist_poisson_server <- function(id) {
         p <- ggplot(df, aes(x = x, y = p, fill = highlight)) +
           geom_col(alpha = 0.8) +
           scale_fill_manual(values = c("yes" = scales::viridis_pal(option = palette)(8)[7], "no" = scales::viridis_pal(option = palette)(8)[3]), guide = "none") +
-          labs(title = paste("Poisson Distribution with \u03bb =", input$lambda),
-               x = "Number of Events (x)",
-               y = "Probability P(x)") +
+          labs(
+            title = paste("Poisson Distribution with \u03bb =", input$lambda),
+            x = "Number of Events (x)",
+            y = "Probability P(x)"
+          ) +
           theme_minimal(base_size = 14) +
           theme(plot.title = element_text(hjust = 0.5, face = "bold"))
         ggsave(file, plot = p, width = 7, height = 4.5, dpi = 300)

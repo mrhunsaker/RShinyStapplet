@@ -1,0 +1,3 @@
+{
+    "positron.r.interpreters.default": "distrobox enter Ubuntu  -- /usr/bin/R"
+}

@@ -31,10 +31,10 @@
 ######################################################################
 
 # --- Load required libraries ---
-library(shiny)    # For building interactive web applications
-library(ggplot2)  # For creating plots
-library(DT)       # For interactive tables
-library(shinyjs)  # For JavaScript integration in Shiny
+library(shiny) # For building interactive web applications
+library(ggplot2) # For creating plots
+library(DT) # For interactive tables
+library(shinyjs) # For JavaScript integration in Shiny
 
 # --- UI Definition for F-Distribution Calculator & Simulator ---
 # This function builds the user interface for the F-distribution module, allowing users to:
@@ -107,33 +107,41 @@ dist_f_ui <- function(id) {
         id = ns("mainPanel"),
         role = "main",
         fluidRow(
-          column(12,
-            div(class = "plot-container",
+          column(
+            12,
+            div(
+              class = "plot-container",
               h4("F-Distribution", id = ns("fPlotHeading")),
-              plotOutput(ns("fPlot"), height = "300px", inline = TRUE),
+              plotOutput(ns("fPlot"), height = "400px", inline = TRUE),
               p(id = ns("fPlot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("fPlot_desc_text")))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Calculated Probability:", id = ns("probResultHeading")),
-              textOutput(ns("probabilityResult"), placeholder = TRUE)
+              textOutput(ns("probabilityResult"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Simulation Results", id = ns("simulationHeading")),
               DTOutput(ns("simulationTable"))
             )
           )
         ),
         fluidRow(
-          column(12,
-            div(class = "results-box",
+          column(
+            12,
+            div(
+              class = "results-box",
               h4("Error/Warning Messages", id = ns("errorHeading")),
               uiOutput(ns("errorMsg"))
             )
@@ -182,7 +190,9 @@ dist_f_server <- function(id) {
     # Calculates probability for F-values based on user input
     calculated_probability <- reactive({
       req(input$df1, input$df2, input$prob_type, input$x_val)
-      if (input$x_val < 0) return("Error: F-value cannot be negative.")
+      if (input$x_val < 0) {
+        return("Error: F-value cannot be negative.")
+      }
       prob <- switch(input$prob_type,
         "lt" = pf(input$x_val, df1 = input$df1, df2 = input$df2),
         "gt" = pf(input$x_val, df1 = input$df1, df2 = input$df2, lower.tail = FALSE)
@@ -201,12 +211,16 @@ dist_f_server <- function(id) {
 
       p <- ggplot(df, aes(x = x, y = y)) +
         geom_line(color = "#1e40af", linewidth = 1) +
-        labs(title = paste("F-Distribution (df1 =", plot_df1, ", df2 =", plot_df2, ")"),
-             x = "F-value", y = "Density") +
+        labs(
+          title = paste("F-Distribution (df1 =", plot_df1, ", df2 =", plot_df2, ")"),
+          x = "F-value", y = "Density"
+        ) +
         theme_minimal() +
-        theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
-              axis.title = element_text(size = 12),
-              axis.text = element_text(size = 10))
+        theme(
+          plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+          axis.title = element_text(size = 12),
+          axis.text = element_text(size = 10)
+        )
 
       # --- Shade area for calculated probability ---
       if (x_val >= 0) {
@@ -218,8 +232,10 @@ dist_f_server <- function(id) {
           fill_color <- "#fbbf24"
         }
         y_shade <- stats::df(x_shade, df1 = plot_df1, df2 = plot_df2)
-        p <- p + geom_area(data = data.frame(x = x_shade, y = y_shade), aes(x = x, y = y),
-                           fill = fill_color, alpha = 0.6)
+        p <- p + geom_area(
+          data = data.frame(x = x_shade, y = y_shade), aes(x = x, y = y),
+          fill = fill_color, alpha = 0.6
+        )
         p <- p + geom_vline(xintercept = x_val, linetype = "solid", color = "#ef4444", linewidth = 1)
       }
       p
@@ -259,7 +275,9 @@ dist_f_server <- function(id) {
     output$probabilityResult <- renderText({
       prob <- calculated_probability()
       digits <- input$round_digits
-      if (is.numeric(prob)) {
+      if (is.null(prob)) {
+        "No result yet."
+      } else if (is.numeric(prob)) {
         prob_text_part <- if (input$prob_type == "lt") {
           paste("X <", input$x_val)
         } else {
@@ -300,8 +318,10 @@ dist_f_server <- function(id) {
 
     # --- Simulation Table ---
     output$simulationTable <- renderDT({
-      if (nrow(rv$simulation) == 0) return(NULL)
-      datatable(rv$simulation, rownames = FALSE, options = list(pageLength = 10, dom = 'tip'))
+      if (nrow(rv$simulation) == 0) {
+        return(NULL)
+      }
+      datatable(rv$simulation, rownames = FALSE, options = list(pageLength = 10, dom = "tip"))
     })
 
     # --- Export/Download Handlers ---

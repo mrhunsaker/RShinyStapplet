@@ -45,13 +45,13 @@
 ######################################################################
 # SECTION: Load Required Libraries
 ######################################################################
-library(shiny)        # Shiny web application framework
-library(ggplot2)      # For plotting
-library(DT)           # For interactive tables
-library(shinyjs)      # For UI enhancements
+library(shiny) # Shiny web application framework
+library(ggplot2) # For plotting
+library(DT) # For interactive tables
+library(shinyjs) # For UI enhancements
 library(shinyWidgets) # For advanced widgets
-library(htmltools)    # For HTML UI elements
-library(readr)        # For reading/writing data
+library(htmltools) # For HTML UI elements
+library(readr) # For reading/writing data
 
 ######################################################################
 # SECTION: UI Definition
@@ -74,8 +74,9 @@ ht_proportion_ui <- function(id) {
         # --- Data Input Mode ---
         h3("Data Input Mode"),
         radioButtons(ns("input_mode"), "Choose input type:",
-                     choices = c("Counts Table" = "counts", "Raw Data" = "raw"),
-                     selected = "counts"),
+          choices = c("Counts Table" = "counts", "Raw Data" = "raw"),
+          selected = "counts"
+        ),
         conditionalPanel(
           sprintf("input['%s'] == 'counts'", ns("input_mode")),
           h4("Enter Category Counts"),
@@ -97,11 +98,14 @@ ht_proportion_ui <- function(id) {
         # --- Inference Type Selection ---
         h3("Inference Type"),
         radioButtons(ns("inference_type"), "Choose inference:",
-                     choices = c("Confidence Interval" = "interval",
-                                 "Hypothesis Test" = "test",
-                                 "Goodness-of-Fit" = "gof",
-                                 "Simulation" = "simulation"),
-                     selected = "test"),
+          choices = c(
+            "Confidence Interval" = "interval",
+            "Hypothesis Test" = "test",
+            "Goodness-of-Fit" = "gof",
+            "Simulation" = "simulation"
+          ),
+          selected = "test"
+        ),
         conditionalPanel(
           sprintf("input['%s'] == 'interval'", ns("inference_type")),
           sliderInput(ns("conf_level"), "Confidence Level", min = 0.80, max = 0.99, value = 0.95, step = 0.01)
@@ -118,10 +122,13 @@ ht_proportion_ui <- function(id) {
             class = "form-group",
             tags$label(id = ns("alternative_label"), "Alternative Hypothesis:"),
             selectInput(ns("alternative"), NULL,
-                        choices = c("Not equal to p\u2080 (Two-sided)" = "two.sided",
-                                    "Less than p\u2080 (Left-sided)" = "less",
-                                    "Greater than p\u2080 (Right-sided)" = "greater"),
-                        selected = "two.sided")
+              choices = c(
+                "Not equal to p\u2080 (Two-sided)" = "two.sided",
+                "Less than p\u2080 (Left-sided)" = "less",
+                "Greater than p\u2080 (Right-sided)" = "greater"
+              ),
+              selected = "two.sided"
+            )
           ),
           sliderInput(ns("alpha"), "Significance Level (\u03B1):", min = 0.01, max = 0.20, value = 0.05, step = 0.01)
         ),
@@ -140,8 +147,9 @@ ht_proportion_ui <- function(id) {
         # --- Preferences Section ---
         h3("Preferences"),
         pickerInput(ns("color_palette"), "Color palette:",
-                    choices = c("Default", "Colorblind", "Viridis", "Pastel"),
-                    selected = "Default"),
+          choices = c("Default", "Colorblind", "Viridis", "Pastel"),
+          selected = "Default"
+        ),
         sliderInput(ns("round_digits"), "Rounding digits:", min = 0, max = 4, value = 2),
         switchInput(ns("aria_enable"), "Enable ARIA roles/labels", value = TRUE),
         hr(),
@@ -170,7 +178,6 @@ ht_proportion_ui <- function(id) {
 ######################################################################
 ht_proportion_server <- function(id) {
   moduleServer(id, function(input, output, session) {
-
     ##################################################################
     # SECTION: Data Input Handling
     # Handles counts table and raw data input, including validation.
@@ -180,34 +187,44 @@ ht_proportion_server <- function(id) {
 
     observeEvent(input$add_row, {
       df <- counts_data()
-      counts_data(rbind(df, data.frame(Category = paste0("Cat", nrow(df)+1), Count = 0)))
+      counts_data(rbind(df, data.frame(Category = paste0("Cat", nrow(df) + 1), Count = 0)))
     })
     observeEvent(input$remove_row, {
       df <- counts_data()
-      if (nrow(df) > 2) counts_data(df[-nrow(df),])
+      if (nrow(df) > 2) counts_data(df[-nrow(df), ])
     })
 
-    output$counts_table <- renderDT({
-      datatable(counts_data(), editable = TRUE, rownames = FALSE,
-                options = list(dom = 't', ordering = FALSE, paging = FALSE))
-    }, server = FALSE)
+    output$counts_table <- renderDT(
+      {
+        datatable(counts_data(),
+          editable = TRUE, rownames = FALSE,
+          options = list(dom = "t", ordering = FALSE, paging = FALSE)
+        )
+      },
+      server = FALSE
+    )
 
     observeEvent(input$counts_table_cell_edit, {
       info <- input$counts_table_cell_edit
       df <- counts_data()
-      df[info$row, info$col+1] <- as.numeric(info$value)
+      df[info$row, info$col + 1] <- as.numeric(info$value)
       counts_data(df)
     })
 
-    output$expected_table <- renderDT({
-      datatable(expected_data(), editable = TRUE, rownames = FALSE,
-                options = list(dom = 't', ordering = FALSE, paging = FALSE))
-    }, server = FALSE)
+    output$expected_table <- renderDT(
+      {
+        datatable(expected_data(),
+          editable = TRUE, rownames = FALSE,
+          options = list(dom = "t", ordering = FALSE, paging = FALSE)
+        )
+      },
+      server = FALSE
+    )
 
     observeEvent(input$expected_table_cell_edit, {
       info <- input$expected_table_cell_edit
       df <- expected_data()
-      df[info$row, info$col+1] <- as.numeric(info$value)
+      df[info$row, info$col + 1] <- as.numeric(info$value)
       expected_data(df)
     })
 
@@ -223,18 +240,32 @@ ht_proportion_server <- function(id) {
     ##################################################################
     output$counts_error <- renderText({
       df <- counts_data()
-      if (any(is.na(df$Count)) || any(df$Count < 0)) return("Counts must be non-negative numbers.")
-      if (length(unique(df$Category)) < 2) return("At least two categories required.")
+      if (is.null(df$Count) || length(df$Count) == 0) {
+        return("")
+      }
+      if (any(is.na(df$Count)) || any(df$Count < 0)) {
+        return("Counts must be non-negative numbers.")
+      }
+      if (length(unique(df$Category)) < 2) {
+        return("At least two categories required.")
+      }
       ""
     })
     output$raw_error <- renderText({
       cats <- names(raw_categories())
-      if (length(cats) < 2) return("At least two categories required.")
+      if (length(cats) < 2) {
+        return("At least two categories required.")
+      }
       ""
     })
     output$gof_error <- renderText({
       df <- expected_data()
-      if (any(is.na(df$Expected)) || any(df$Expected < 0)) return("Expected counts must be non-negative numbers.")
+      if (is.null(df$Expected) || length(df$Expected) == 0) {
+        return("")
+      }
+      if (any(is.na(df$Expected)) || any(df$Expected < 0)) {
+        return("Expected counts must be non-negative numbers.")
+      }
       ""
     })
 
@@ -277,7 +308,7 @@ ht_proportion_server <- function(id) {
       conf <- input$conf_level
       p_hat <- x / n
       se <- sqrt(p_hat * (1 - p_hat) / n)
-      z <- qnorm(1 - (1 - conf)/2)
+      z <- qnorm(1 - (1 - conf) / 2)
       lower <- p_hat - z * se
       upper <- p_hat + z * se
       list(lower = lower, upper = upper, p_hat = p_hat, n = n)
@@ -302,8 +333,8 @@ ht_proportion_server <- function(id) {
         "greater" = 1 - pnorm(z_stat)
       )
       conclusion <- ifelse(p_value < alpha,
-                           paste0("Reject the null hypothesis (p-value = ", sprintf("%.4f", p_value), " < \u03B1 = ", alpha, ")."),
-                           paste0("Fail to reject the null hypothesis (p-value = ", sprintf("%.4f", p_value), " \u2265 \u03B1 = ", alpha, ").")
+        paste0("Reject the null hypothesis (p-value = ", sprintf("%.4f", p_value), " < \u03B1 = ", alpha, ")."),
+        paste0("Fail to reject the null hypothesis (p-value = ", sprintf("%.4f", p_value), " \u2265 \u03B1 = ", alpha, ").")
       )
       list(
         p0 = p0,
@@ -356,8 +387,9 @@ ht_proportion_server <- function(id) {
             tags$tr(tags$th("Lower Bound"), tags$th("Upper Bound")),
             tags$tr(tags$td(sprintf("%.4f", res$lower)), tags$td(sprintf("%.4f", res$upper)))
           ),
-          if (min(res$n - res$p_hat * res$n, res$p_hat * res$n) < 10)
+          if (min(res$n - res$p_hat * res$n, res$p_hat * res$n) < 10) {
             tags$p("WARNING: Fewer than 10 successes/failures.", style = "color: red;")
+          }
         )
       } else if (inf_type == "test") {
         res <- test_results()
@@ -376,7 +408,7 @@ ht_proportion_server <- function(id) {
           tags$p(strong("Hypotheses:")),
           tags$ul(tags$li(h0), tags$li(ha)),
           tags$p(strong("Conditions:")),
-          tags$p(condition_text, style = if(!res$conditions_met) "color: red;" else ""),
+          tags$p(condition_text, style = if (!res$conditions_met) "color: red;" else ""),
           tags$p(strong("Sample Statistics:")),
           tags$ul(
             tags$li(paste0("Sample Proportion (\u0175): ", round(res$p_hat, 4))),
@@ -398,8 +430,9 @@ ht_proportion_server <- function(id) {
             tags$tr(tags$th("\u03C7\u00B2"), tags$th("P-value"), tags$th("df")),
             tags$tr(tags$td(sprintf("%.4f", res$x2)), tags$td(sprintf("%.4f", res$p_value)), tags$td(res$df))
           ),
-          if (res$warning)
+          if (res$warning) {
             tags$p("WARNING: At least one expected count is less than 5.", style = "color: red;")
+          }
         )
       } else if (inf_type == "simulation") {
         NULL
@@ -425,8 +458,10 @@ ht_proportion_server <- function(id) {
         curve_data$y <- dnorm(curve_data$x)
         p <- ggplot(curve_data, aes(x = x, y = y)) +
           geom_line(color = "#1e40af", size = 1) +
-          labs(title = "Normal Distribution of z-statistic under H\u2080",
-               x = "z-statistic", y = "Density") +
+          labs(
+            title = "Normal Distribution of z-statistic under H\u2080",
+            x = "z-statistic", y = "Density"
+          ) +
           theme_minimal() +
           theme(plot.title = element_text(hjust = 0.5, size = 16, face = "bold"))
         shade_data <- switch(res$alternative,
@@ -442,8 +477,10 @@ ht_proportion_server <- function(id) {
         df <- data.frame(Proportion = sim$sim)
         ggplot(df, aes(x = Proportion)) +
           geom_dotplot(binwidth = 0.01, dotsize = 0.5, fill = "#1e40af") +
-          labs(title = "Simulation Dotplot of Sample Proportions",
-               x = "Sample Proportion", y = "Count") +
+          labs(
+            title = "Simulation Dotplot of Sample Proportions",
+            x = "Sample Proportion", y = "Count"
+          ) +
           theme_minimal()
       } else if (inf_type == "gof") {
         obs <- counts_data()
@@ -509,7 +546,7 @@ ht_proportion_server <- function(id) {
     # Adds ARIA roles and live region for screen readers.
     ##################################################################
     observe({
-      if (input$aria_enable) {
+      if (!is.null(input$aria_enable) && input$aria_enable) {
         shinyjs::runjs("document.body.setAttribute('aria-live', 'polite');")
       } else {
         shinyjs::runjs("document.body.removeAttribute('aria-live');")
@@ -522,6 +559,9 @@ ht_proportion_server <- function(id) {
     ##################################################################
     observe({
       df <- counts_data()
+      if (is.null(df$Count) || length(df$Count) == 0) {
+        return()
+      }
       if (any(is.na(df$Count)) || any(df$Count < 0)) {
         showNotification("Counts must be non-negative numbers.", type = "error", duration = 7)
       }
@@ -529,7 +569,6 @@ ht_proportion_server <- function(id) {
         showNotification("At least two categories required.", type = "error", duration = 7)
       }
     })
-
   })
 }
 

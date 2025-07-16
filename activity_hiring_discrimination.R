@@ -25,15 +25,15 @@
 ######################################################################
 
 # Load required libraries for UI, plotting, and data manipulation
-library(shiny)    # For building interactive web applications
-library(ggplot2)  # For creating plots
-library(dplyr)    # For data wrangling
+library(shiny) # For building interactive web applications
+library(ggplot2) # For creating plots
+library(dplyr) # For data wrangling
 
 # UI function for the Hiring Discrimination Activity
 # This function builds the user interface for the module, allowing users to input data,
 # run simulations, and view results.
 activity_hiring_discrimination_ui <- function(id) {
-  ns <- NS(id)  # Namespace for module inputs/outputs
+  ns <- NS(id) # Namespace for module inputs/outputs
   fluidPage(
     h2("Activity: Hiring Discrimination"),
     # Instructions panel: step-by-step guide for users
@@ -58,22 +58,27 @@ activity_hiring_discrimination_ui <- function(id) {
         h4("Data Input Mode"),
         # User selects input mode: structured table or raw data
         radioButtons(ns("input_mode"), "Choose input type:",
-                     choices = c("Counts Table" = "table", "Raw Data" = "raw"),
-                     selected = "table"),
+          choices = c("Counts Table" = "table", "Raw Data" = "raw"),
+          selected = "table"
+        ),
         # Table input: user specifies counts for each group/outcome
         conditionalPanel(
           sprintf("input['%s'] == 'table'", ns("input_mode")),
           p("Based on a study where 48 identical resumes were sent out."),
           fluidRow(
-            column(6,
-              div(class = "form-group",
+            column(
+              6,
+              div(
+                class = "form-group",
                 tags$label("Male Name: Hired", `for` = ns("male_hired")),
                 numericInput(ns("male_hired"), label = NULL, value = 35, min = 0),
                 tags$p(id = ns("male_hired_desc"), class = "sr-only", "Enter the number of resumes with male names that received a callback.")
               )
             ),
-            column(6,
-              div(class = "form-group",
+            column(
+              6,
+              div(
+                class = "form-group",
                 tags$label("Male Name: Not Hired", `for` = ns("male_not_hired")),
                 numericInput(ns("male_not_hired"), label = NULL, value = 13, min = 0),
                 tags$p(id = ns("male_not_hired_desc"), class = "sr-only", "Enter the number of resumes with male names that did not receive a callback.")
@@ -81,15 +86,19 @@ activity_hiring_discrimination_ui <- function(id) {
             )
           ),
           fluidRow(
-            column(6,
-              div(class = "form-group",
+            column(
+              6,
+              div(
+                class = "form-group",
                 tags$label("Female Name: Hired", `for` = ns("female_hired")),
                 numericInput(ns("female_hired"), label = NULL, value = 14, min = 0),
                 tags$p(id = ns("female_hired_desc"), class = "sr-only", "Enter the number of resumes with female names that received a callback.")
               )
             ),
-            column(6,
-              div(class = "form-group",
+            column(
+              6,
+              div(
+                class = "form-group",
                 tags$label("Female Name: Not Hired", `for` = ns("female_not_hired")),
                 numericInput(ns("female_not_hired"), label = NULL, value = 34, min = 0),
                 tags$p(id = ns("female_not_hired_desc"), class = "sr-only", "Enter the number of resumes with female names that did not receive a callback.")
@@ -110,24 +119,27 @@ activity_hiring_discrimination_ui <- function(id) {
         downloadButton(ns("download_results"), "Download Results"),
         hr(),
         # Display observed difference in proportions
-        div(class = "results-box", role = "status", `aria-live` = "polite",
-            h4("Observed Result"),
-            uiOutput(ns("observed_result"))
+        div(
+          class = "results-box", role = "status", `aria-live` = "polite",
+          h4("Observed Result"),
+          uiOutput(ns("observed_result"))
         ),
         br(),
         # Display simulation p-value
-        div(class = "results-box", role = "status", `aria-live` = "polite",
-            h4("Simulation p-value"),
-            uiOutput(ns("p_value_result"))
+        div(
+          class = "results-box", role = "status", `aria-live` = "polite",
+          h4("Simulation p-value"),
+          uiOutput(ns("p_value_result"))
         )
       ),
       mainPanel(
         # Main panel: plot and simulation summary
-        div(class = "plot-container",
-            plotOutput(ns("sim_plot")),
-            uiOutput(ns("plot_desc")),
-            uiOutput(ns("sim_stats_ui")),
-            p(id = ns("sim_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("sim_plot_desc_text")))
+        div(
+          class = "plot-container",
+          plotOutput(ns("sim_plot")),
+          uiOutput(ns("plot_desc")),
+          uiOutput(ns("sim_stats_ui")),
+          p(id = ns("sim_plot_desc"), class = "sr-only", `aria-live` = "polite", textOutput(ns("sim_plot_desc_text")))
         )
       )
     )
@@ -138,7 +150,7 @@ activity_hiring_discrimination_ui <- function(id) {
 # This function contains all reactive logic, calculations, and output rendering for the module.
 activity_hiring_discrimination_server <- function(id) {
   moduleServer(id, function(input, output, session) {
-    ns <- session$ns  # Namespace for module inputs/outputs
+    ns <- session$ns # Namespace for module inputs/outputs
 
     # --- Raw Data Parsing ---
     # Parses raw group/outcome data pasted by user and counts occurrences
@@ -146,7 +158,9 @@ activity_hiring_discrimination_server <- function(id) {
       req(input$raw_data)
       entries <- unlist(strsplit(input$raw_data, "[,\\s]+"))
       # Expect pairs: Group,Outcome
-      if (length(entries) %% 2 != 0) return(data.frame())
+      if (length(entries) %% 2 != 0) {
+        return(data.frame())
+      }
       df <- data.frame(
         group = entries[seq(1, length(entries), 2)],
         outcome = entries[seq(2, length(entries), 2)],
@@ -158,24 +172,29 @@ activity_hiring_discrimination_server <- function(id) {
     # Displays error if not enough groups/outcomes in raw data
     output$raw_error <- renderText({
       df <- raw_counts()
-      if (nrow(df) < 2 || ncol(df) < 2) return("At least two groups and two outcomes required.")
+      if (nrow(df) < 2 || ncol(df) < 2) {
+        return("At least two groups and two outcomes required.")
+      }
       ""
     })
 
     # --- Data Extraction ---
     # Combines user input into a list of counts for analysis
     get_counts <- reactive({
+      if (is.null(input$input_mode)) {
+        return(NULL)
+      }
       if (input$input_mode == "table") {
         list(
-          male_hired = input$male_hired,
-          male_not_hired = input$male_not_hired,
-          female_hired = input$female_hired,
-          female_not_hired = input$female_not_hired
+          male_hired = if (is.null(input$male_hired)) 0 else input$male_hired,
+          male_not_hired = if (is.null(input$male_not_hired)) 0 else input$male_not_hired,
+          female_hired = if (is.null(input$female_hired)) 0 else input$female_hired,
+          female_not_hired = if (is.null(input$female_not_hired)) 0 else input$female_not_hired
         )
       } else {
         df <- raw_counts()
         # Try to extract counts for Male/Female and Hired/Not Hired
-        male_hired <- if ("Male" %in% rownames(df) && "Hired" %in% colnames(df)) df["Male", "Hired"] else 0
+        male_hired <- if (!is.null(df) && "Male" %in% rownames(df) && "Hired" %in% colnames(df)) df["Male", "Hired"] else 0
         male_not_hired <- if ("Male" %in% rownames(df) && "NotHired" %in% colnames(df)) df["Male", "NotHired"] else 0
         female_hired <- if ("Female" %in% rownames(df) && "Hired" %in% colnames(df)) df["Female", "Hired"] else 0
         female_not_hired <- if ("Female" %in% rownames(df) && "NotHired" %in% colnames(df)) df["Female", "NotHired"] else 0
@@ -189,8 +208,8 @@ activity_hiring_discrimination_server <- function(id) {
     })
 
     # --- Simulation Results and Observed Difference ---
-    sim_results <- reactiveVal(NULL)   # Stores simulation results
-    observed_diff <- reactiveVal(0)    # Stores observed difference in proportions
+    sim_results <- reactiveVal(NULL) # Stores simulation results
+    observed_diff <- reactiveVal(0) # Stores observed difference in proportions
 
     # Calculate observed difference and proportions whenever input changes
     observe({
@@ -198,7 +217,9 @@ activity_hiring_discrimination_server <- function(id) {
       male_total <- counts$male_hired + counts$male_not_hired
       female_total <- counts$female_hired + counts$female_not_hired
 
-      if (male_total == 0 || female_total == 0) return()
+      if (is.null(counts) || is.na(male_total) || is.na(female_total) || male_total == 0 || female_total == 0) {
+        return()
+      }
 
       prop_male <- counts$male_hired / male_total
       prop_female <- counts$female_hired / female_total
@@ -215,7 +236,9 @@ activity_hiring_discrimination_server <- function(id) {
       })
       # Reset simulation on data change
       sim_results(NULL)
-      output$p_value_result <- renderUI({ p("Run simulation to get p-value.") })
+      output$p_value_result <- renderUI({
+        p("Run simulation to get p-value.")
+      })
     })
 
     # --- Run Simulation ---
@@ -250,9 +273,11 @@ activity_hiring_discrimination_server <- function(id) {
       if (is.null(df)) {
         return(
           ggplot() +
-            labs(title = "Distribution of Simulated Differences",
-                 subtitle = "Click 'Run Simulation' to generate this plot",
-                 x = "Simulated Difference in Proportions", y = "Count") +
+            labs(
+              title = "Distribution of Simulated Differences",
+              subtitle = "Click 'Run Simulation' to generate this plot",
+              x = "Simulated Difference in Proportions", y = "Count"
+            ) +
             theme_minimal(base_size = 14) +
             theme(plot.title = element_text(hjust = 0.5), plot.subtitle = element_text(hjust = 0.5))
         )
@@ -285,7 +310,9 @@ activity_hiring_discrimination_server <- function(id) {
     # Output: Simulation summary statistics (mean, SD)
     output$sim_stats_ui <- renderUI({
       df <- sim_results()
-      if (is.null(df)) return(NULL)
+      if (is.null(df)) {
+        return(NULL)
+      }
       mean_sim <- mean(df$diff)
       sd_sim <- sd(df$diff)
       tagList(
@@ -325,7 +352,9 @@ activity_hiring_discrimination_server <- function(id) {
     # Output: Display simulation p-value and explanation
     output$p_value_result <- renderUI({
       df <- sim_results()
-      if (is.null(df)) return(p("Run simulation to get p-value."))
+      if (is.null(df)) {
+        return(p("Run simulation to get p-value."))
+      }
 
       obs_diff <- observed_diff()
       p_value <- sum(abs(df$diff) >= abs(obs_diff)) / nrow(df)
@@ -340,8 +369,10 @@ activity_hiring_discrimination_server <- function(id) {
     output$plot_desc <- renderUI({
       df <- sim_results()
       if (is.null(df)) {
-        return(p(class = "sr-only", `aria-live` = "polite",
-                 "The plot is empty. Run the simulation to generate results."))
+        return(p(
+          class = "sr-only", `aria-live` = "polite",
+          "The plot is empty. Run the simulation to generate results."
+        ))
       }
       obs_diff <- observed_diff()
       req(is.numeric(obs_diff))

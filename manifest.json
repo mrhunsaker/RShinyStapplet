@@ -38,7 +38,34 @@
         "Author": "A. Jonathan R. Godfrey [aut, cre]\n    (<https://orcid.org/0000-0002-8129-8835>),\n  Debra Warren [aut],\n  Donal Fitzpatrick [ctb] (<https://orcid.org/0000-0001-9699-5484>),\n  Duncan Murdoch [ctb],\n  Greg Snow [ctb] (<https://orcid.org/0000-0001-8530-1037>),\n  Henrik Bengtsson [ctb] (<https://orcid.org/0000-0002-9280-4430>),\n  James Curtis [ctb],\n  James Thompson [aut] (<https://orcid.org/0000-0002-4768-795X>),\n  JooYoung Seo [ctb],\n  Marshall Flax [ctb],\n  Paul Murrell [aut] (<https://orcid.org/0000-0002-3224-8858>),\n  Sophie Banks [ctb],\n  Timothy Bilton [aut] (<https://orcid.org/0000-0001-5945-3766>),\n  Tony Hirst [ctb],\n  Tsan-Kuang Lee [ctb],\n  Volker Sorge [aut],\n  Yihui Xie [ctb] (<https://orcid.org/0000-0003-0645-5666>)",
         "Repository": "CRAN",
         "Date/Publication": "2023-07-10 19:10:12 UTC",
-        "Built": "R 4.5.1; ; 2025-06-27 16:13:27 UTC; unix"
+        "Built": "R 4.5.1; ; 2025-07-14 22:42:03 UTC; unix"
+      }
+    },
+    "DT": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "DT",
+        "Type": "Package",
+        "Title": "A Wrapper of the JavaScript Library 'DataTables'",
+        "Version": "0.33",
+        "Authors@R": "c(\n    person(\"Yihui\", \"Xie\", role = \"aut\"),\n    person(\"Joe\", \"Cheng\", email = \"joe@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Xianying\", \"Tan\", role = \"aut\"),\n    person(\"JJ\", \"Allaire\", role = \"ctb\"),\n    person(\"Maximilian\", \"Girlich\", role = \"ctb\"),\n    person(\"Greg\", \"Freedman Ellis\", role = \"ctb\"),\n    person(\"Johannes\", \"Rauh\", role = \"ctb\"),\n    person(\"SpryMedia Limited\", role = c(\"ctb\", \"cph\"), comment = \"DataTables in htmlwidgets/lib\"),\n    person(\"Brian\", \"Reavis\", role = c(\"ctb\", \"cph\"), comment = \"selectize.js in htmlwidgets/lib\"),\n    person(\"Leon\", \"Gersen\", role = c(\"ctb\", \"cph\"), comment = \"noUiSlider in htmlwidgets/lib\"),\n    person(\"Bartek\", \"Szopka\", role = c(\"ctb\", \"cph\"), comment = \"jquery.highlight.js in htmlwidgets/lib\"),\n    person(\"Alex\", \"Pickering\", role = c(\"ctb\")),\n    person(\"William\", \"Holmes\", role = c(\"ctb\")),\n    person(\"Mikko\", \"Marttila\", role = c(\"ctb\")),\n    person(\"Andres\", \"Quintero\", role = c(\"ctb\")),\n    person(\"Stéphane\", \"Laurent\", role = c(\"ctb\")),\n    person(given = \"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n    )",
+        "Description": "Data objects in R can be rendered as HTML tables using the\n    JavaScript library 'DataTables' (typically via R Markdown or Shiny). The\n    'DataTables' library has been included in this R package. The package name\n    'DT' is an abbreviation of 'DataTables'.",
+        "URL": "https://github.com/rstudio/DT",
+        "BugReports": "https://github.com/rstudio/DT/issues",
+        "License": "GPL-3 | file LICENSE",
+        "Imports": "htmltools (>= 0.3.6), htmlwidgets (>= 1.3), httpuv, jsonlite\n(>= 0.9.16), magrittr, crosstalk, jquerylib, promises",
+        "Suggests": "knitr (>= 1.8), rmarkdown, shiny (>= 1.6), bslib, future,\ntestit, tibble",
+        "VignetteBuilder": "knitr",
+        "RoxygenNote": "7.3.1",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2024-04-03 14:36:50 UTC; yihui",
+        "Author": "Yihui Xie [aut],\n  Joe Cheng [aut, cre],\n  Xianying Tan [aut],\n  JJ Allaire [ctb],\n  Maximilian Girlich [ctb],\n  Greg Freedman Ellis [ctb],\n  Johannes Rauh [ctb],\n  SpryMedia Limited [ctb, cph] (DataTables in htmlwidgets/lib),\n  Brian Reavis [ctb, cph] (selectize.js in htmlwidgets/lib),\n  Leon Gersen [ctb, cph] (noUiSlider in htmlwidgets/lib),\n  Bartek Szopka [ctb, cph] (jquery.highlight.js in htmlwidgets/lib),\n  Alex Pickering [ctb],\n  William Holmes [ctb],\n  Mikko Marttila [ctb],\n  Andres Quintero [ctb],\n  Stéphane Laurent [ctb],\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Joe Cheng <joe@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-04-04 05:03:17 UTC",
+        "Built": "R 4.5.1; ; 2025-07-14 22:41:41 UTC; unix"
       }
     },
     "GGally": {
@@ -100,7 +127,7 @@
         "Maintainer": "Brian Ripley <Brian.Ripley@R-project.org>",
         "Repository": "CRAN",
         "Date/Publication": "2025-02-28 17:44:52 UTC",
-        "Built": "R 4.4.3; x86_64-pc-linux-gnu; 'Wed, 12 Mar 2025 13:46:16 +0000'; unix"
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-14 22:41:43 UTC; unix"
       }
     },
     "Matrix": {
@@ -190,8 +217,8 @@
       "description": {
         "Package": "Rcpp",
         "Title": "Seamless R and C++ Integration",
-        "Version": "1.0.14",
-        "Date": "2025-01-11",
+        "Version": "1.1.0",
+        "Date": "2025-07-01",
         "Authors@R": "c(person(\"Dirk\", \"Eddelbuettel\", role = c(\"aut\", \"cre\"), email = \"edd@debian.org\",\n                    comment = c(ORCID = \"0000-0001-6419-907X\")),\n             person(\"Romain\", \"Francois\", role = \"aut\",\n                    comment = c(ORCID = \"0000-0002-2444-4226\")),\n             person(\"JJ\", \"Allaire\", role = \"aut\",\n                    comment = c(ORCID = \"0000-0003-0174-9868\")),\n             person(\"Kevin\", \"Ushey\", role = \"aut\",\n                    comment = c(ORCID = \"0000-0003-2880-7407\")),\n             person(\"Qiang\", \"Kou\", role = \"aut\",\n                    comment = c(ORCID = \"0000-0001-6786-5453\")),\n             person(\"Nathan\", \"Russell\", role = \"aut\"),\n             person(\"Iñaki\", \"Ucar\", role = \"aut\",\n                    comment = c(ORCID = \"0000-0001-6403-5550\")),\n             person(\"Doug\", \"Bates\", role = \"aut\",\n                    comment = c(ORCID = \"0000-0001-8316-9503\")),\n             person(\"John\", \"Chambers\", role = \"aut\"))",
         "Description": "The 'Rcpp' package provides R functions as well as C++ classes which\n offer a seamless integration of R and C++. Many R data types and objects can be\n mapped back and forth to C++ equivalents which facilitates both writing of new\n code as well as easier integration of third-party libraries. Documentation\n about 'Rcpp' is provided by several vignettes included in this package, via the\n 'Rcpp Gallery' site at <https://gallery.rcpp.org>, the paper by Eddelbuettel and\n Francois (2011, <doi:10.18637/jss.v040.i08>), the book by Eddelbuettel (2013,\n <doi:10.1007/978-1-4614-6868-4>) and the paper by Eddelbuettel and Balamuta (2018,\n <doi:10.1080/00031305.2017.1375990>); see 'citation(\"Rcpp\")' for details.",
         "Imports": "methods, utils",
@@ -203,12 +230,12 @@
         "RoxygenNote": "6.1.1",
         "Encoding": "UTF-8",
         "NeedsCompilation": "yes",
-        "Packaged": "2025-01-11 20:21:25 UTC; edd",
-        "Author": "Dirk Eddelbuettel [aut, cre] (<https://orcid.org/0000-0001-6419-907X>),\n  Romain Francois [aut] (<https://orcid.org/0000-0002-2444-4226>),\n  JJ Allaire [aut] (<https://orcid.org/0000-0003-0174-9868>),\n  Kevin Ushey [aut] (<https://orcid.org/0000-0003-2880-7407>),\n  Qiang Kou [aut] (<https://orcid.org/0000-0001-6786-5453>),\n  Nathan Russell [aut],\n  Iñaki Ucar [aut] (<https://orcid.org/0000-0001-6403-5550>),\n  Doug Bates [aut] (<https://orcid.org/0000-0001-8316-9503>),\n  John Chambers [aut]",
+        "Packaged": "2025-07-01 12:58:41 UTC; edd",
+        "Author": "Dirk Eddelbuettel [aut, cre] (ORCID:\n    <https://orcid.org/0000-0001-6419-907X>),\n  Romain Francois [aut] (ORCID: <https://orcid.org/0000-0002-2444-4226>),\n  JJ Allaire [aut] (ORCID: <https://orcid.org/0000-0003-0174-9868>),\n  Kevin Ushey [aut] (ORCID: <https://orcid.org/0000-0003-2880-7407>),\n  Qiang Kou [aut] (ORCID: <https://orcid.org/0000-0001-6786-5453>),\n  Nathan Russell [aut],\n  Iñaki Ucar [aut] (ORCID: <https://orcid.org/0000-0001-6403-5550>),\n  Doug Bates [aut] (ORCID: <https://orcid.org/0000-0001-8316-9503>),\n  John Chambers [aut]",
         "Maintainer": "Dirk Eddelbuettel <edd@debian.org>",
         "Repository": "CRAN",
-        "Date/Publication": "2025-01-12 16:10:02 UTC",
-        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-06-27 13:06:30 UTC; unix"
+        "Date/Publication": "2025-07-02 16:40:02 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-15 18:07:53 UTC; unix"
       }
     },
     "Rdpack": {
@@ -259,6 +286,30 @@
         "Repository": "CRAN",
         "Date/Publication": "2023-01-22 21:40:13 UTC",
         "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-06-27 13:07:18 UTC; unix"
+      }
+    },
+    "TH.data": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "TH.data",
+        "Title": "TH's Data Archive",
+        "Date": "2025-01-17",
+        "Version": "1.1-3",
+        "Authors@R": "c(person(\"Torsten\", \"Hothorn\", role = c(\"aut\", \"cre\"),\n                    email = \"Torsten.Hothorn@R-project.org\"))",
+        "Description": "Contains data sets used in other packages Torsten Hothorn\n  maintains.",
+        "Depends": "R (>= 3.5.0), survival, MASS",
+        "Suggests": "trtf, tram, rms, coin, ATR, multcomp, gridExtra, vcd,\ncolorspace, lattice, knitr",
+        "LazyData": "yes",
+        "VignetteBuilder": "knitr",
+        "License": "GPL-3",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-01-17 14:47:14 UTC; hothorn",
+        "Author": "Torsten Hothorn [aut, cre]",
+        "Maintainer": "Torsten Hothorn <Torsten.Hothorn@R-project.org>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-01-17 18:20:02 UTC",
+        "Built": "R 4.5.1; ; 2025-07-14 21:29:46 UTC; unix"
       }
     },
     "XML": {
@@ -331,6 +382,63 @@
         "Repository": "CRAN",
         "Date/Publication": "2015-07-28 08:03:37",
         "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-06-27 13:06:41 UTC; unix"
+      }
+    },
+    "bit": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "bit",
+        "Title": "Classes and Methods for Fast Memory-Efficient Boolean Selections",
+        "Version": "4.6.0",
+        "Authors@R": "c(\n    person(\"Michael\", \"Chirico\", email = \"MichaelChirico4@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Jens\", \"Oehlschlägel\", role = \"aut\"),\n    person(\"Brian\", \"Ripley\", role = \"ctb\")\n  )",
+        "Depends": "R (>= 3.4.0)",
+        "Suggests": "testthat (>= 3.0.0), roxygen2, knitr, markdown, rmarkdown,\nmicrobenchmark, bit64 (>= 4.0.0), ff (>= 4.0.0)",
+        "Description": "Provided are classes for boolean and skewed boolean vectors,\n    fast boolean methods, fast unique and non-unique integer sorting,\n    fast set operations on sorted and unsorted sets of integers, and\n    foundations for ff (range index, compression, chunked processing).",
+        "License": "GPL-2 | GPL-3",
+        "LazyLoad": "yes",
+        "ByteCompile": "yes",
+        "Encoding": "UTF-8",
+        "URL": "https://github.com/r-lib/bit",
+        "VignetteBuilder": "knitr, rmarkdown",
+        "RoxygenNote": "7.3.2",
+        "Config/testthat/edition": "3",
+        "NeedsCompilation": "yes",
+        "Packaged": "2025-03-05 07:18:45 UTC; michael",
+        "Author": "Michael Chirico [aut, cre],\n  Jens Oehlschlägel [aut],\n  Brian Ripley [ctb]",
+        "Maintainer": "Michael Chirico <MichaelChirico4@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-03-06 10:50:01 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-14 20:13:42 UTC; unix"
+      }
+    },
+    "bit64": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "bit64",
+        "Title": "A S3 Class for Vectors of 64bit Integers",
+        "Version": "4.6.0-1",
+        "Authors@R": "c(\n    person(\"Michael\", \"Chirico\", email = \"michaelchirico4@gmail.com\", role = c(\"aut\", \"cre\")),\n    person(\"Jens\", \"Oehlschlägel\", role = \"aut\"),\n    person(\"Leonardo\", \"Silvestri\", role = \"ctb\"),\n    person(\"Ofek\", \"Shilon\", role = \"ctb\")\n  )",
+        "Depends": "R (>= 3.4.0), bit (>= 4.0.0)",
+        "Description": "\n  Package 'bit64' provides serializable S3 atomic 64bit (signed) integers.\n  These are useful for handling database keys and exact counting in +-2^63.\n  WARNING: do not use them as replacement for 32bit integers, integer64 are not\n  supported for subscripting by R-core and they have different semantics when\n  combined with double, e.g. integer64 + double => integer64.\n  Class integer64 can be used in vectors, matrices, arrays and data.frames.\n  Methods are available for coercion from and to logicals, integers, doubles,\n  characters and factors as well as many elementwise and summary functions.\n  Many fast algorithmic operations such as 'match' and 'order' support inter-\n  active data exploration and manipulation and optionally leverage caching.",
+        "License": "GPL-2 | GPL-3",
+        "LazyLoad": "yes",
+        "ByteCompile": "yes",
+        "URL": "https://github.com/r-lib/bit64",
+        "Encoding": "UTF-8",
+        "Imports": "graphics, methods, stats, utils",
+        "Suggests": "testthat (>= 3.0.3), withr",
+        "Config/testthat/edition": "3",
+        "Config/needs/development": "testthat",
+        "RoxygenNote": "7.3.2",
+        "NeedsCompilation": "yes",
+        "Packaged": "2025-01-16 14:04:20 UTC; michael",
+        "Author": "Michael Chirico [aut, cre],\n  Jens Oehlschlägel [aut],\n  Leonardo Silvestri [ctb],\n  Ofek Shilon [ctb]",
+        "Maintainer": "Michael Chirico <michaelchirico4@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-01-16 16:00:07 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-14 20:13:53 UTC; unix"
       }
     },
     "brew": {
@@ -531,6 +639,55 @@
         "Built": "R 4.5.1; ; 2025-06-27 13:02:25 UTC; unix"
       }
     },
+    "codetools": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "codetools",
+        "Version": "0.2-20",
+        "Priority": "recommended",
+        "Author": "Luke Tierney <luke-tierney@uiowa.edu>",
+        "Description": "Code analysis tools for R.",
+        "Title": "Code Analysis Tools for R",
+        "Depends": "R (>= 2.1)",
+        "Maintainer": "Luke Tierney <luke-tierney@uiowa.edu>",
+        "URL": "https://gitlab.com/luke-tierney/codetools",
+        "License": "GPL",
+        "NeedsCompilation": "no",
+        "Packaged": "2024-03-31 18:18:09 UTC; luke",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-03-31 20:10:06 UTC",
+        "Built": "R 4.4.0; ; 'Sat, 27 Apr 2024 18:01:06 +0000'; unix"
+      }
+    },
+    "coin": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "coin",
+        "Version": "1.4-3",
+        "Date": "2023-09-26",
+        "Title": "Conditional Inference Procedures in a Permutation Test Framework",
+        "Authors@R": "c(person(\"Torsten\", \"Hothorn\", role = c(\"aut\", \"cre\"),\n                    email = \"Torsten.Hothorn@R-project.org\",\n                    comment = c(ORCID = \"0000-0001-8301-0471\")),\n             person(\"Henric\", \"Winell\", role = \"aut\",\n                    comment = c(ORCID = \"0000-0001-7995-3047\")),\n             person(\"Kurt\", \"Hornik\", role = \"aut\",\n                    comment = c(ORCID = \"0000-0003-4198-9911\")),\n             person(c(\"Mark\", \"A.\"), \"van de Wiel\", role = \"aut\",\n                    comment = c(ORCID = \"0000-0003-4780-8472\")),\n             person(\"Achim\", \"Zeileis\", role = \"aut\",\n                    comment = c(ORCID = \"0000-0003-0918-3766\")))",
+        "Description": "Conditional inference procedures for the general independence\n             problem including two-sample, K-sample (non-parametric ANOVA),\n             correlation, censored, ordered and multivariate problems described\n             in <doi:10.18637/jss.v028.i08>.",
+        "Depends": "R (>= 3.6.0), survival",
+        "Imports": "methods, parallel, stats, stats4, utils, libcoin (>= 1.0-9),\nmatrixStats (>= 0.54.0), modeltools (>= 0.2-9), mvtnorm (>=\n1.0-5), multcomp",
+        "Suggests": "xtable, e1071, vcd, TH.data (>= 1.0-7)",
+        "LinkingTo": "libcoin (>= 1.0-9)",
+        "LazyData": "yes",
+        "NeedsCompilation": "yes",
+        "ByteCompile": "yes",
+        "Encoding": "UTF-8",
+        "License": "GPL-2",
+        "URL": "http://coin.r-forge.r-project.org",
+        "Packaged": "2023-09-27 09:53:17 UTC; hothorn",
+        "Author": "Torsten Hothorn [aut, cre] (<https://orcid.org/0000-0001-8301-0471>),\n  Henric Winell [aut] (<https://orcid.org/0000-0001-7995-3047>),\n  Kurt Hornik [aut] (<https://orcid.org/0000-0003-4198-9911>),\n  Mark A. van de Wiel [aut] (<https://orcid.org/0000-0003-4780-8472>),\n  Achim Zeileis [aut] (<https://orcid.org/0000-0003-0918-3766>)",
+        "Maintainer": "Torsten Hothorn <Torsten.Hothorn@R-project.org>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-09-27 16:10:02 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-14 21:47:17 UTC; unix"
+      }
+    },
     "colorspace": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -560,6 +717,32 @@
         "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-06-27 13:07:34 UTC; unix"
       }
     },
+    "colourpicker": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "colourpicker",
+        "Title": "A Colour Picker Tool for Shiny and for Selecting Colours in\nPlots",
+        "Version": "1.3.0",
+        "Authors@R": "c(\n    person(\"Dean\", \"Attali\", \n        email = \"daattali@gmail.com\",\n        role = c(\"aut\", \"cre\"),\n        comment= c(ORCID=\"0000-0002-5645-3493\")),\n    person(\"David\", \"Griswold\", email=\"novachild@gmail.com\",\n    role = \"ctb\")\n  )",
+        "Description": "A colour picker that can be used as an input in 'Shiny' apps\n    or Rmarkdown documents. The colour picker supports alpha opacity, custom\n    colour palettes, and many more options. A Plot Colour Helper tool is\n    available as an 'RStudio' Addin, which helps you pick colours to use in your\n    plots. A more generic Colour Picker 'RStudio' Addin is also provided to let \n    you select colours to use in your R code.",
+        "URL": "https://github.com/daattali/colourpicker,\nhttps://daattali.com/shiny/colourInput/",
+        "BugReports": "https://github.com/daattali/colourpicker/issues",
+        "Depends": "R (>= 3.1.0)",
+        "Imports": "ggplot2, htmltools, htmlwidgets (>= 0.7), jsonlite, miniUI (>=\n0.1.1), shiny (>= 0.11.1), shinyjs (>= 2.0.0), utils",
+        "Suggests": "knitr (>= 1.7), rmarkdown, rstudioapi (>= 0.5),\nshinydisconnect",
+        "License": "MIT + file LICENSE",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.2.3",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-08-20 00:23:47 UTC; Dean-X1C",
+        "Author": "Dean Attali [aut, cre] (<https://orcid.org/0000-0002-5645-3493>),\n  David Griswold [ctb]",
+        "Maintainer": "Dean Attali <daattali@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-08-21 08:12:46 UTC",
+        "Built": "R 4.5.1; ; 2025-07-14 23:00:23 UTC; unix"
+      }
+    },
     "commonmark": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -567,7 +750,7 @@
         "Package": "commonmark",
         "Type": "Package",
         "Title": "High Performance CommonMark and Github Markdown Rendering in R",
-        "Version": "1.9.5",
+        "Version": "2.0.0",
         "Authors@R": "c(\n    person(\"Jeroen\", \"Ooms\", ,\"jeroenooms@gmail.com\", role = c(\"aut\", \"cre\"),\n        comment = c(ORCID = \"0000-0002-4035-0289\")),\n    person(\"John MacFarlane\", role = \"cph\", comment = \"Author of cmark\"))",
         "Description": "The CommonMark specification <https://github.github.com/gfm/> defines\n    a rationalized version of markdown syntax. This package uses the 'cmark' \n    reference implementation for converting markdown text into various formats\n    including html, latex and groff man. In addition it exposes the markdown\n    parse tree in xml format. Also includes opt-in support for GFM extensions\n    including tables, autolinks, and strikethrough text.",
         "License": "BSD_2_clause + file LICENSE",
@@ -578,12 +761,12 @@
         "Language": "en-US",
         "Encoding": "UTF-8",
         "NeedsCompilation": "yes",
-        "Packaged": "2025-03-17 15:28:44 UTC; jeroen",
-        "Author": "Jeroen Ooms [aut, cre] (<https://orcid.org/0000-0002-4035-0289>),\n  John MacFarlane [cph] (Author of cmark)",
+        "Packaged": "2025-07-07 13:20:39 UTC; jeroen",
+        "Author": "Jeroen Ooms [aut, cre] (ORCID: <https://orcid.org/0000-0002-4035-0289>),\n  John MacFarlane [cph] (Author of cmark)",
         "Maintainer": "Jeroen Ooms <jeroenooms@gmail.com>",
         "Repository": "CRAN",
-        "Date/Publication": "2025-03-17 16:30:02 UTC",
-        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-06-27 13:07:56 UTC; unix"
+        "Date/Publication": "2025-07-07 13:40:02 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-15 18:07:39 UTC; unix"
       }
     },
     "cpp11": {
@@ -669,6 +852,32 @@
         "Repository": "CRAN",
         "Date/Publication": "2024-10-04 12:40:03 UTC",
         "Built": "R 4.5.1; ; 2025-06-27 16:10:46 UTC; unix"
+      }
+    },
+    "crosstalk": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "crosstalk",
+        "Type": "Package",
+        "Title": "Inter-Widget Interactivity for HTML Widgets",
+        "Version": "1.2.1",
+        "Authors@R": "c(\n    person(\"Joe\", \"Cheng\", role = \"aut\", email = \"joe@posit.co\"),\n    person(\"Carson\", \"Sievert\", role = c(\"aut\", \"cre\"),\n    email = \"carson@posit.co\", comment = c(ORCID = \"0000-0002-4958-2844\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")),\n    person(family = \"jQuery Foundation\", role = \"cph\",\n    comment = \"jQuery library and jQuery UI library\"),\n    person(family = \"jQuery contributors\", role = c(\"ctb\", \"cph\"),\n    comment = \"jQuery library; authors listed in inst/www/shared/jquery-AUTHORS.txt\"),\n    person(\"Mark\", \"Otto\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(\"Jacob\", \"Thornton\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(family = \"Bootstrap contributors\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(family = \"Twitter, Inc\", role = \"cph\",\n    comment = \"Bootstrap library\"),\n    person(\"Brian\", \"Reavis\", role = c(\"ctb\", \"cph\"),\n    comment = \"selectize.js library\"),\n    person(\"Kristopher Michael\", \"Kowal\", role = c(\"ctb\", \"cph\"),\n    comment = \"es5-shim library\"),\n    person(family = \"es5-shim contributors\", role = c(\"ctb\", \"cph\"),\n    comment = \"es5-shim library\"),\n    person(\"Denis\", \"Ineshin\", role = c(\"ctb\", \"cph\"),\n    comment = \"ion.rangeSlider library\"),\n    person(\"Sami\", \"Samhuri\", role = c(\"ctb\", \"cph\"),\n    comment = \"Javascript strftime library\")\n    )",
+        "Description": "Provides building blocks for allowing HTML widgets to communicate\n    with each other, with Shiny or without (i.e. static .html files). Currently\n    supports linked brushing and filtering.",
+        "License": "MIT + file LICENSE",
+        "Imports": "htmltools (>= 0.3.6), jsonlite, lazyeval, R6",
+        "Suggests": "shiny, ggplot2, testthat (>= 2.1.0), sass, bslib",
+        "URL": "https://rstudio.github.io/crosstalk/,\nhttps://github.com/rstudio/crosstalk",
+        "BugReports": "https://github.com/rstudio/crosstalk/issues",
+        "RoxygenNote": "7.2.3",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2023-11-22 16:29:50 UTC; cpsievert",
+        "Author": "Joe Cheng [aut],\n  Carson Sievert [aut, cre] (<https://orcid.org/0000-0002-4958-2844>),\n  Posit Software, PBC [cph, fnd],\n  jQuery Foundation [cph] (jQuery library and jQuery UI library),\n  jQuery contributors [ctb, cph] (jQuery library; authors listed in\n    inst/www/shared/jquery-AUTHORS.txt),\n  Mark Otto [ctb] (Bootstrap library),\n  Jacob Thornton [ctb] (Bootstrap library),\n  Bootstrap contributors [ctb] (Bootstrap library),\n  Twitter, Inc [cph] (Bootstrap library),\n  Brian Reavis [ctb, cph] (selectize.js library),\n  Kristopher Michael Kowal [ctb, cph] (es5-shim library),\n  es5-shim contributors [ctb, cph] (es5-shim library),\n  Denis Ineshin [ctb, cph] (ion.rangeSlider library),\n  Sami Samhuri [ctb, cph] (Javascript strftime library)",
+        "Maintainer": "Carson Sievert <carson@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-11-23 08:50:07 UTC",
+        "Built": "R 4.5.1; ; 2025-07-13 17:19:49 UTC; unix"
       }
     },
     "curl": {
@@ -757,7 +966,7 @@
         "Maintainer": "Jennifer Bryan <jenny@rstudio.com>",
         "Repository": "CRAN",
         "Date/Publication": "2022-10-11 17:12:36 UTC",
-        "Built": "R 4.5.1; ; 2025-06-27 16:12:58 UTC; unix"
+        "Built": "R 4.5.1; ; 2025-07-14 19:44:22 UTC; unix"
       }
     },
     "diffobj": {
@@ -872,7 +1081,7 @@
         "Maintainer": "Hadley Wickham <hadley@posit.co>",
         "Repository": "CRAN",
         "Date/Publication": "2023-11-17 16:50:02 UTC",
-        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-06-27 16:13:12 UTC; unix"
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-14 22:41:33 UTC; unix"
       }
     },
     "ellipsis": {
@@ -1228,7 +1437,7 @@
         "Maintainer": "Thomas Lin Pedersen <thomas.pedersen@posit.co>",
         "Repository": "CRAN",
         "Date/Publication": "2025-04-09 09:40:10 UTC",
-        "Built": "R 4.5.1; ; 2025-06-27 16:13:19 UTC; unix"
+        "Built": "R 4.5.1; ; 2025-07-14 22:41:50 UTC; unix"
       }
     },
     "ggstats": {
@@ -1238,7 +1447,7 @@
         "Package": "ggstats",
         "Type": "Package",
         "Title": "Extension to 'ggplot2' for Plotting Stats",
-        "Version": "0.9.0",
+        "Version": "0.10.0",
         "Authors@R": "c(\n    person(\n      \"Joseph\", \"Larmarange\", ,\n      \"joseph@larmarange.net\",\n      role = c(\"aut\", \"cre\"),\n      comment = c(ORCID = \"0000-0001-7097-700X\")\n    )\n  )",
         "Description": "Provides new statistics, new geometries and new positions for \n    'ggplot2' and a suite of functions to facilitate the creation of \n    statistical plots.",
         "License": "GPL (>= 3)",
@@ -1253,12 +1462,12 @@
         "Language": "en-US",
         "VignetteBuilder": "knitr",
         "NeedsCompilation": "no",
-        "Packaged": "2025-03-10 10:35:16 UTC; josep",
-        "Author": "Joseph Larmarange [aut, cre] (<https://orcid.org/0000-0001-7097-700X>)",
+        "Packaged": "2025-07-02 15:59:33 UTC; josep",
+        "Author": "Joseph Larmarange [aut, cre] (ORCID:\n    <https://orcid.org/0000-0001-7097-700X>)",
         "Maintainer": "Joseph Larmarange <joseph@larmarange.net>",
         "Repository": "CRAN",
-        "Date/Publication": "2025-03-10 11:20:02 UTC",
-        "Built": "R 4.5.1; ; 2025-06-28 19:26:15 UTC; unix"
+        "Date/Publication": "2025-07-02 22:40:05 UTC",
+        "Built": "R 4.5.1; ; 2025-07-15 18:08:08 UTC; unix"
       }
     },
     "gh": {
@@ -1372,7 +1581,7 @@
         "Maintainer": "Baptiste Auguie <baptiste.auguie@gmail.com>",
         "Repository": "CRAN",
         "Date/Publication": "2017-09-09 14:12:08 UTC",
-        "Built": "R 4.5.1; ; 2025-06-27 16:13:18 UTC; unix"
+        "Built": "R 4.5.1; ; 2025-07-14 22:41:48 UTC; unix"
       }
     },
     "gridGraphics": {
@@ -1602,29 +1811,29 @@
       "description": {
         "Package": "httr2",
         "Title": "Perform HTTP Requests and Process the Responses",
-        "Version": "1.1.2",
+        "Version": "1.2.0",
         "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")),\n    person(\"Maximilian\", \"Girlich\", role = \"ctb\")\n  )",
         "Description": "Tools for creating and modifying HTTP requests, then\n    performing them and processing the results. 'httr2' is a modern\n    re-imagining of 'httr' that uses a pipe-based interface and solves\n    more of the problems that API wrapping packages face.",
         "License": "MIT + file LICENSE",
         "URL": "https://httr2.r-lib.org, https://github.com/r-lib/httr2",
         "BugReports": "https://github.com/r-lib/httr2/issues",
-        "Depends": "R (>= 4.0)",
-        "Imports": "cli (>= 3.0.0), curl (>= 6.2.1), glue, lifecycle, magrittr,\nopenssl, R6, rappdirs, rlang (>= 1.1.0), vctrs (>= 0.6.3),\nwithr",
-        "Suggests": "askpass, bench, clipr, covr, docopt, httpuv, jose, jsonlite,\nknitr, later (>= 1.4.0), nanonext, paws.common, promises,\nrmarkdown, testthat (>= 3.1.8), tibble, webfakes, xml2",
+        "Depends": "R (>= 4.1)",
+        "Imports": "cli (>= 3.0.0), curl (>= 6.4.0), glue, lifecycle, magrittr,\nopenssl, R6, rappdirs, rlang (>= 1.1.0), vctrs (>= 0.6.3),\nwithr",
+        "Suggests": "askpass, bench, clipr, covr, docopt, httpuv, jose, jsonlite,\nknitr, later (>= 1.4.0), nanonext, paws.common, promises,\nrmarkdown, testthat (>= 3.1.8), tibble, webfakes (>= 1.4.0),\nxml2",
         "VignetteBuilder": "knitr",
         "Config/Needs/website": "tidyverse/tidytemplate",
         "Config/testthat/edition": "3",
         "Config/testthat/parallel": "true",
-        "Config/testthat/start-first": "multi-req, resp-stream, req-perform",
+        "Config/testthat/start-first": "resp-stream, req-perform",
         "Encoding": "UTF-8",
         "RoxygenNote": "7.3.2",
         "NeedsCompilation": "no",
-        "Packaged": "2025-03-25 18:33:11 UTC; hadleywickham",
+        "Packaged": "2025-07-11 20:14:52 UTC; hadleywickham",
         "Author": "Hadley Wickham [aut, cre],\n  Posit Software, PBC [cph, fnd],\n  Maximilian Girlich [ctb]",
         "Maintainer": "Hadley Wickham <hadley@posit.co>",
         "Repository": "CRAN",
-        "Date/Publication": "2025-03-26 06:20:02 UTC",
-        "Built": "R 4.5.1; ; 2025-06-27 16:10:47 UTC; unix"
+        "Date/Publication": "2025-07-13 06:50:01 UTC",
+        "Built": "R 4.5.1; ; 2025-07-15 18:07:45 UTC; unix"
       }
     },
     "hunspell": {
@@ -1846,8 +2055,8 @@
       "Repository": "https://cran.rstudio.com",
       "description": {
         "Package": "lattice",
-        "Version": "0.22-5",
-        "Date": "2023-10-23",
+        "Version": "0.22-7",
+        "Date": "2025-03-31",
         "Priority": "recommended",
         "Title": "Trellis Graphics for R",
         "Authors@R": "c(person(\"Deepayan\", \"Sarkar\", role = c(\"aut\", \"cre\"),\n\t            email = \"deepayan.sarkar@r-project.org\",\n\t\t    comment = c(ORCID = \"0000-0003-4107-1553\")),\n              person(\"Felix\", \"Andrews\", role = \"ctb\"),\n\t      person(\"Kevin\", \"Wright\", role = \"ctb\", comment = \"documentation\"),\n\t      person(\"Neil\", \"Klepeis\", role = \"ctb\"),\n\t      person(\"Johan\", \"Larsson\", role = \"ctb\", comment = \"miscellaneous improvements\"),\n              person(\"Zhijian (Jason)\", \"Wen\", role = \"cph\", comment = \"filled contour code\"),\n              person(\"Paul\", \"Murrell\", role = \"ctb\", email = \"paul@stat.auckland.ac.nz\"),\n\t      person(\"Stefan\", \"Eng\", role = \"ctb\", comment = \"violin plot improvements\"),\n\t      person(\"Achim\", \"Zeileis\", role = \"ctb\", comment = \"modern colors\"),\n              person(\"Alexandre\", \"Courtiol\", role = \"ctb\", comment = \"generics for larrows, lpolygon, lrect and lsegments\")\n\t      )",
@@ -1862,12 +2071,60 @@
         "URL": "https://lattice.r-forge.r-project.org/",
         "BugReports": "https://github.com/deepayan/lattice/issues",
         "NeedsCompilation": "yes",
-        "Packaged": "2023-10-23 20:44:42 UTC; deepayan",
+        "Packaged": "2025-04-02 04:55:57 UTC; deepayan",
         "Author": "Deepayan Sarkar [aut, cre] (<https://orcid.org/0000-0003-4107-1553>),\n  Felix Andrews [ctb],\n  Kevin Wright [ctb] (documentation),\n  Neil Klepeis [ctb],\n  Johan Larsson [ctb] (miscellaneous improvements),\n  Zhijian (Jason) Wen [cph] (filled contour code),\n  Paul Murrell [ctb],\n  Stefan Eng [ctb] (violin plot improvements),\n  Achim Zeileis [ctb] (modern colors),\n  Alexandre Courtiol [ctb] (generics for larrows, lpolygon, lrect and\n    lsegments)",
         "Maintainer": "Deepayan Sarkar <deepayan.sarkar@r-project.org>",
         "Repository": "CRAN",
-        "Date/Publication": "2023-10-24 07:00:02 UTC",
-        "Built": "R 4.3.3; x86_64-pc-linux-gnu; 'Mon, 22 Apr 2024 13:10:32 +0200'; unix"
+        "Date/Publication": "2025-04-02 15:40:02 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-15 19:38:14 UTC; unix"
+      }
+    },
+    "lazyeval": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "lazyeval",
+        "Version": "0.2.2",
+        "Title": "Lazy (Non-Standard) Evaluation",
+        "Description": "An alternative approach to non-standard evaluation using\n    formulas. Provides a full implementation of LISP style 'quasiquotation',\n    making it easier to generate code with other code.",
+        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", ,\"hadley@rstudio.com\", c(\"aut\", \"cre\")),\n    person(\"RStudio\", role = \"cph\")\n    )",
+        "License": "GPL-3",
+        "LazyData": "true",
+        "Depends": "R (>= 3.1.0)",
+        "Suggests": "knitr, rmarkdown (>= 0.2.65), testthat, covr",
+        "VignetteBuilder": "knitr",
+        "RoxygenNote": "6.1.1",
+        "NeedsCompilation": "yes",
+        "Packaged": "2019-03-15 14:18:01 UTC; lionel",
+        "Author": "Hadley Wickham [aut, cre],\n  RStudio [cph]",
+        "Maintainer": "Hadley Wickham <hadley@rstudio.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2019-03-15 17:50:07 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-12 23:19:18 UTC; unix"
+      }
+    },
+    "libcoin": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "libcoin",
+        "Title": "Linear Test Statistics for Permutation Inference",
+        "Date": "2023-09-26",
+        "Version": "1.0-10",
+        "Authors@R": "c(person(\"Torsten\", \"Hothorn\", role = c(\"aut\", \"cre\"),\n                    email = \"Torsten.Hothorn@R-project.org\",\n                    comment = c(ORCID = \"0000-0001-8301-0471\")),\n             person(\"Henric\", \"Winell\", role = \"aut\",\n                    comment = c(ORCID = \"0000-0001-7995-3047\")))",
+        "Description": "Basic infrastructure for linear test statistics and permutation\n  inference in the framework of Strasser and Weber (1999) <https://epub.wu.ac.at/102/>.\n  This package must not be used by end-users. CRAN package 'coin' implements all\n  user interfaces and is ready to be used by anyone.",
+        "Depends": "R (>= 3.4.0)",
+        "Suggests": "coin",
+        "Imports": "stats, mvtnorm",
+        "LinkingTo": "mvtnorm",
+        "NeedsCompilation": "yes",
+        "License": "GPL-2",
+        "Packaged": "2023-09-27 09:57:53 UTC; hothorn",
+        "Author": "Torsten Hothorn [aut, cre] (<https://orcid.org/0000-0001-8301-0471>),\n  Henric Winell [aut] (<https://orcid.org/0000-0001-7995-3047>)",
+        "Maintainer": "Torsten Hothorn <Torsten.Hothorn@R-project.org>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-09-27 10:30:07 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-14 21:47:12 UTC; unix"
       }
     },
     "lifecycle": {
@@ -1899,6 +2156,58 @@
         "Built": "R 4.5.1; ; 2025-06-27 13:08:41 UTC; unix"
       }
     },
+    "litedown": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "litedown",
+        "Type": "Package",
+        "Title": "A Lightweight Version of R Markdown",
+        "Version": "0.7",
+        "Authors@R": "c(\n    person(\"Yihui\", \"Xie\", role = c(\"aut\", \"cre\"), email = \"xie@yihui.name\", comment = c(ORCID = \"0000-0003-0645-5666\", URL = \"https://yihui.org\")),\n    person(\"Tim\", \"Taylor\", role = \"ctb\", comment = c(ORCID = \"0000-0002-8587-7113\")),\n    person()\n    )",
+        "Description": "Render R Markdown to Markdown (without using 'knitr'), and Markdown\n    to lightweight HTML or 'LaTeX' documents with the 'commonmark' package (instead\n    of 'Pandoc'). Some missing Markdown features in 'commonmark' are also\n    supported, such as raw HTML or 'LaTeX' blocks, 'LaTeX' math, superscripts,\n    subscripts, footnotes, element attributes, and appendices,\n    but not all 'Pandoc' Markdown features are (or will be) supported. With\n    additional JavaScript and CSS, you can also create HTML slides and articles.\n    This package can be viewed as a trimmed-down version of R Markdown and\n    'knitr'. It does not aim at rich Markdown features or a large variety of\n    output formats (the primary formats are HTML and 'LaTeX'). Book and website\n    projects of multiple input documents are also supported.",
+        "Depends": "R (>= 3.2.0)",
+        "Imports": "utils, commonmark (>= 1.9.5), xfun (>= 0.52)",
+        "Suggests": "rbibutils, rstudioapi, tinytex",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/yihui/litedown",
+        "BugReports": "https://github.com/yihui/litedown/issues",
+        "VignetteBuilder": "litedown",
+        "RoxygenNote": "7.3.2",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-04-08 05:16:55 UTC; runner",
+        "Author": "Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>,\n    https://yihui.org),\n  Tim Taylor [ctb] (<https://orcid.org/0000-0002-8587-7113>)",
+        "Maintainer": "Yihui Xie <xie@yihui.name>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-04-08 05:40:02 UTC",
+        "Built": "R 4.5.1; ; 2025-07-16 13:05:21 UTC; unix"
+      }
+    },
+    "lmtest": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "lmtest",
+        "Title": "Testing Linear Regression Models",
+        "Version": "0.9-40",
+        "Date": "2022-03-21",
+        "Authors@R": "c(person(given = \"Torsten\", family = \"Hothorn\", role = \"aut\", email = \"Torsten.Hothorn@R-project.org\",\n                    comment = c(ORCID = \"0000-0001-8301-0471\")),\n             person(given = \"Achim\", family = \"Zeileis\", role = c(\"aut\", \"cre\"), email = \"Achim.Zeileis@R-project.org\",\n                    comment = c(ORCID = \"0000-0003-0918-3766\")),\n             person(given = c(\"Richard\", \"W.\"), family = \"Farebrother\", role = \"aut\", comment = \"pan.f\"),\n             person(given = \"Clint\", family = \"Cummins\", role = \"aut\", comment = \"pan.f\"),\n             person(given = \"Giovanni\", family = \"Millo\", role = \"ctb\"),\n             person(given = \"David\", family = \"Mitchell\", role = \"ctb\"))",
+        "Description": "A collection of tests, data sets, and examples\n for diagnostic checking in linear regression models. Furthermore,\n some generic tools for inference in parametric models are provided.",
+        "LazyData": "yes",
+        "Depends": "R (>= 3.0.0), stats, zoo",
+        "Suggests": "car, strucchange, sandwich, dynlm, stats4, survival, AER",
+        "Imports": "graphics",
+        "License": "GPL-2 | GPL-3",
+        "NeedsCompilation": "yes",
+        "Packaged": "2022-03-21 20:25:17 UTC; zeileis",
+        "Author": "Torsten Hothorn [aut] (<https://orcid.org/0000-0001-8301-0471>),\n  Achim Zeileis [aut, cre] (<https://orcid.org/0000-0003-0918-3766>),\n  Richard W. Farebrother [aut] (pan.f),\n  Clint Cummins [aut] (pan.f),\n  Giovanni Millo [ctb],\n  David Mitchell [ctb]",
+        "Maintainer": "Achim Zeileis <Achim.Zeileis@R-project.org>",
+        "Repository": "CRAN",
+        "Date/Publication": "2022-03-21 23:00:02 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-16 18:01:11 UTC; unix"
+      }
+    },
     "magrittr": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -1928,6 +2237,33 @@
         "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-06-27 13:08:05 UTC; unix"
       }
     },
+    "markdown": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "markdown",
+        "Type": "Package",
+        "Title": "Render Markdown with 'commonmark'",
+        "Version": "2.0",
+        "Authors@R": "c(\n   person(\"Yihui\", \"Xie\", role = c(\"aut\", \"cre\"), email = \"xie@yihui.name\", comment = c(ORCID = \"0000-0003-0645-5666\")),\n   person(\"JJ\", \"Allaire\", role = \"aut\"),\n   person(\"Jeffrey\", \"Horner\", role = \"aut\"),\n   person(\"Henrik\", \"Bengtsson\", role = \"ctb\"),\n   person(\"Jim\", \"Hester\", role = \"ctb\"),\n   person(\"Yixuan\", \"Qiu\", role = \"ctb\"),\n   person(\"Kohske\", \"Takahashi\", role = \"ctb\"),\n   person(\"Adam\", \"November\", role = \"ctb\"),\n   person(\"Nacho\", \"Caballero\", role = \"ctb\"),\n   person(\"Jeroen\", \"Ooms\", role = \"ctb\"),\n   person(\"Thomas\", \"Leeper\", role = \"ctb\"),\n   person(\"Joe\", \"Cheng\", role = \"ctb\"),\n   person(\"Andrzej\", \"Oles\", role = \"ctb\"),\n   person(given = \"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n   )",
+        "Description": "Render Markdown to full and lightweight HTML/LaTeX documents with\n    the 'commonmark' package. This package has been superseded by 'litedown'.",
+        "Depends": "R (>= 2.11.1)",
+        "Imports": "utils, xfun, litedown (>= 0.6)",
+        "Suggests": "knitr, rmarkdown (>= 2.18), yaml, RCurl",
+        "License": "MIT + file LICENSE",
+        "URL": "https://github.com/rstudio/markdown",
+        "BugReports": "https://github.com/rstudio/markdown/issues",
+        "RoxygenNote": "7.3.2",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-03-23 17:06:26 UTC; runner",
+        "Author": "Yihui Xie [aut, cre] (<https://orcid.org/0000-0003-0645-5666>),\n  JJ Allaire [aut],\n  Jeffrey Horner [aut],\n  Henrik Bengtsson [ctb],\n  Jim Hester [ctb],\n  Yixuan Qiu [ctb],\n  Kohske Takahashi [ctb],\n  Adam November [ctb],\n  Nacho Caballero [ctb],\n  Jeroen Ooms [ctb],\n  Thomas Leeper [ctb],\n  Joe Cheng [ctb],\n  Andrzej Oles [ctb],\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Yihui Xie <xie@yihui.name>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-03-23 19:30:03 UTC",
+        "Built": "R 4.5.1; ; 2025-07-16 13:05:23 UTC; unix"
+      }
+    },
     "mathjaxr": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -1951,6 +2287,33 @@
         "Repository": "CRAN",
         "Date/Publication": "2025-04-30 10:10:02 UTC",
         "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-06-27 13:08:06 UTC; unix"
+      }
+    },
+    "matrixStats": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "matrixStats",
+        "Version": "1.5.0",
+        "Depends": "R (>= 3.4.0)",
+        "Suggests": "utils, base64enc, ggplot2, knitr, markdown, microbenchmark,\nR.devices, R.rsp",
+        "VignetteBuilder": "R.rsp",
+        "Title": "Functions that Apply to Rows and Columns of Matrices (and to\nVectors)",
+        "Authors@R": "c(\n  person(\"Henrik\", \"Bengtsson\", role=c(\"aut\", \"cre\", \"cph\"),\n                                 email=\"henrikb@braju.com\"),\n  person(\"Constantin\", \"Ahlmann-Eltze\", role = \"ctb\"),\n  person(\"Hector\", \"Corrada Bravo\", role=\"ctb\"),\n  person(\"Robert\", \"Gentleman\", role=\"ctb\"),\n  person(\"Jan\", \"Gleixner\", role=\"ctb\"),\n  person(\"Peter\", \"Hickey\", role=\"ctb\"),\n  person(\"Ola\", \"Hossjer\", role=\"ctb\"),\n  person(\"Harris\", \"Jaffee\", role=\"ctb\"),\n  person(\"Dongcan\", \"Jiang\", role=\"ctb\"),\n  person(\"Peter\", \"Langfelder\", role=\"ctb\"),\n  person(\"Brian\", \"Montgomery\", role=\"ctb\"),\n  person(\"Angelina\", \"Panagopoulou\", role=\"ctb\"),\n  person(\"Hugh\", \"Parsonage\", role=\"ctb\"),\n  person(\"Jakob Peder\", \"Pettersen\", role=\"ctb\"))",
+        "Author": "Henrik Bengtsson [aut, cre, cph],\n  Constantin Ahlmann-Eltze [ctb],\n  Hector Corrada Bravo [ctb],\n  Robert Gentleman [ctb],\n  Jan Gleixner [ctb],\n  Peter Hickey [ctb],\n  Ola Hossjer [ctb],\n  Harris Jaffee [ctb],\n  Dongcan Jiang [ctb],\n  Peter Langfelder [ctb],\n  Brian Montgomery [ctb],\n  Angelina Panagopoulou [ctb],\n  Hugh Parsonage [ctb],\n  Jakob Peder Pettersen [ctb]",
+        "Maintainer": "Henrik Bengtsson <henrikb@braju.com>",
+        "Description": "High-performing functions operating on rows and columns of matrices, e.g. col / rowMedians(), col / rowRanks(), and col / rowSds().  Functions optimized per data type and for subsetted calculations such that both memory usage and processing time is minimized.  There are also optimized vector-based methods, e.g. binMeans(), madDiff() and weightedMedian().",
+        "License": "Artistic-2.0",
+        "LazyLoad": "TRUE",
+        "NeedsCompilation": "yes",
+        "ByteCompile": "TRUE",
+        "URL": "https://github.com/HenrikBengtsson/matrixStats",
+        "BugReports": "https://github.com/HenrikBengtsson/matrixStats/issues",
+        "RoxygenNote": "7.3.2",
+        "Packaged": "2025-01-07 17:25:20 UTC; henrik",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-01-07 19:50:02 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-14 21:29:48 UTC; unix"
       }
     },
     "memoise": {
@@ -1983,9 +2346,8 @@
       "Repository": "https://cran.rstudio.com",
       "description": {
         "Package": "mgcv",
-        "Version": "1.9-1",
-        "Author": "Simon Wood <simon.wood@r-project.org>",
-        "Maintainer": "Simon Wood <simon.wood@r-project.org>",
+        "Version": "1.9-3",
+        "Authors@R": "person(given = \"Simon\",\n                    family = \"Wood\",\n                    role = c(\"aut\", \"cre\"),\n                    email = \"simon.wood@r-project.org\")",
         "Title": "Mixed GAM Computation Vehicle with Automatic Smoothness\nEstimation",
         "Description": "Generalized additive (mixed) models, some of their extensions and \n             other generalized ridge regression with multiple smoothing \n             parameter estimation by (Restricted) Marginal Likelihood, \n             Generalized Cross Validation and similar, or using iterated \n             nested Laplace approximation for fully Bayesian inference. See \n             Wood (2017) <doi:10.1201/9781315370279> for an overview. \n             Includes a gam() function, a wide variety of smoothers, 'JAGS' \n             support and distributions beyond the exponential family. ",
         "Priority": "recommended",
@@ -1996,10 +2358,12 @@
         "ByteCompile": "yes",
         "License": "GPL (>= 2)",
         "NeedsCompilation": "yes",
-        "Packaged": "2023-12-20 10:39:06 UTC; sw283",
+        "Packaged": "2025-04-03 13:22:13 UTC; sw283",
+        "Author": "Simon Wood [aut, cre]",
+        "Maintainer": "Simon Wood <simon.wood@r-project.org>",
         "Repository": "CRAN",
-        "Date/Publication": "2023-12-21 00:30:02 UTC",
-        "Built": "R 4.3.2; x86_64-pc-linux-gnu; 'Thu, 21 Dec 2023 07:15:57 -0600'; unix"
+        "Date/Publication": "2025-04-04 05:40:02 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-15 19:38:19 UTC; unix"
       }
     },
     "mime": {
@@ -2052,6 +2416,29 @@
         "Built": "R 4.5.1; ; 2025-06-27 16:04:52 UTC; unix"
       }
     },
+    "modeltools": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "modeltools",
+        "Title": "Tools and Classes for Statistical Models",
+        "Date": "2025-05-02",
+        "Version": "0.2-24",
+        "Authors@R": "c(person(given = \"Torsten\",\n                        family = \"Hothorn\",\n                        role = c(\"aut\", \"cre\"),\n                        email = \"Torsten.Hothorn@R-project.org\", \n                        comment = c(ORCID = \"0000-0001-8301-0471\")),\n                 person(given = \"Friedrich\",\n                        family = \"Leisch\",\n                        role = \"aut\",\n                        comment = c(ORCID = \"0000-0001-7278-1983\")),\n                 person(given = \"Achim\",\n                        family = \"Zeileis\",\n                        role = \"aut\",\n                        comment = c(ORCID = \"0000-0003-0918-3766\")))",
+        "Description": "A collection of tools to deal with statistical models. \n  The functionality is experimental and the user interface is likely to\n  change in the future. The documentation is rather terse, but packages `coin'\n  and `party' have some working examples. However, if you find the\n  implemented ideas interesting we would be very interested in a discussion\n  of this proposal. Contributions are more than welcome!",
+        "Depends": "stats, stats4",
+        "Imports": "methods",
+        "LazyLoad": "yes",
+        "License": "GPL-2",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-05-02 09:58:16 UTC; hothorn",
+        "Author": "Torsten Hothorn [aut, cre] (ORCID:\n    <https://orcid.org/0000-0001-8301-0471>),\n  Friedrich Leisch [aut] (ORCID: <https://orcid.org/0000-0001-7278-1983>),\n  Achim Zeileis [aut] (ORCID: <https://orcid.org/0000-0003-0918-3766>)",
+        "Maintainer": "Torsten Hothorn <Torsten.Hothorn@R-project.org>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-05-02 14:30:07 UTC",
+        "Built": "R 4.5.1; ; 2025-07-14 21:29:55 UTC; unix"
+      }
+    },
     "moments": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -2071,6 +2458,55 @@
         "Repository": "CRAN",
         "Date/Publication": "2022-05-02 13:01:55 UTC",
         "Built": "R 4.5.1; ; 2025-06-27 13:02:49 UTC; unix"
+      }
+    },
+    "multcomp": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "multcomp",
+        "Title": "Simultaneous Inference in General Parametric Models",
+        "Version": "1.4-28",
+        "Date": "2025-01-29",
+        "Authors@R": "c(person(\"Torsten\", \"Hothorn\", role = c(\"aut\", \"cre\"), \n                    email = \"Torsten.Hothorn@R-project.org\", comment = c(ORCID = \"0000-0001-8301-0471\")), \n        person(\"Frank\", \"Bretz\", role = \"aut\"), \n        person(\"Peter\", \"Westfall\", role = \"aut\"),\n        person(\"Richard M.\", \"Heiberger\", role = \"ctb\"),\n        person(\"Andre\", \"Schuetzenmeister\", role = \"ctb\"),\n        person(\"Susan\", \"Scheibe\", role = \"ctb\"))",
+        "Description": "Simultaneous tests and confidence intervals\n  for general linear hypotheses in parametric models, including \n  linear, generalized linear, linear mixed effects, and survival models.\n  The package includes demos reproducing analyzes presented\n  in the book \"Multiple Comparisons Using R\" (Bretz, Hothorn, \n  Westfall, 2010, CRC Press).",
+        "Depends": "stats, graphics, mvtnorm (>= 1.0-10), survival (>= 2.39-4),\nTH.data (>= 1.0-2)",
+        "Imports": "sandwich (>= 2.3-0), codetools",
+        "Suggests": "lme4 (>= 0.999375-16), nlme, robustbase, coin, MASS, foreign,\nxtable, lmtest, coxme (>= 2.2-1), SimComp, ISwR, tram (>=\n0.2-5), fixest (>= 0.10), glmmTMB, DoseFinding, HH, asd,\ngsDesign, lattice",
+        "URL": "http://multcomp.R-forge.R-project.org,\nhttps://www.routledge.com/Multiple-Comparisons-Using-R/Bretz-Hothorn-Westfall/p/book/9781584885740",
+        "LazyData": "yes",
+        "License": "GPL-2",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-01-29 14:42:08 UTC; hothorn",
+        "Author": "Torsten Hothorn [aut, cre] (<https://orcid.org/0000-0001-8301-0471>),\n  Frank Bretz [aut],\n  Peter Westfall [aut],\n  Richard M. Heiberger [ctb],\n  Andre Schuetzenmeister [ctb],\n  Susan Scheibe [ctb]",
+        "Maintainer": "Torsten Hothorn <Torsten.Hothorn@R-project.org>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-01-29 15:50:01 UTC",
+        "Built": "R 4.5.1; ; 2025-07-14 21:47:14 UTC; unix"
+      }
+    },
+    "mvtnorm": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "mvtnorm",
+        "Title": "Multivariate Normal and t Distributions",
+        "Version": "1.3-3",
+        "Date": "2025-01-09",
+        "Authors@R": "c(person(\"Alan\", \"Genz\", role = \"aut\"),\n             person(\"Frank\", \"Bretz\", role = \"aut\"),\n             person(\"Tetsuhisa\", \"Miwa\", role = \"aut\"),\n             person(\"Xuefei\", \"Mi\", role = \"aut\"),\n             person(\"Friedrich\", \"Leisch\", role = \"ctb\"),\n             person(\"Fabian\", \"Scheipl\", role = \"ctb\"),\n             person(\"Bjoern\", \"Bornkamp\", role = \"ctb\", comment = c(ORCID = \"0000-0002-6294-8185\")),\n             person(\"Martin\", \"Maechler\", role = \"ctb\", comment = c(ORCID = \"0000-0002-8685-9910\")),\n             person(\"Torsten\", \"Hothorn\", role = c(\"aut\", \"cre\"),\n                    email = \"Torsten.Hothorn@R-project.org\", comment = c(ORCID = \"0000-0001-8301-0471\")))",
+        "Description": "Computes multivariate normal and t probabilities, quantiles, random deviates, \n  and densities. Log-likelihoods for multivariate Gaussian models and Gaussian copulae \n  parameterised by Cholesky factors of covariance or precision matrices are implemented \n  for interval-censored and exact data, or a mix thereof. Score functions for these \n  log-likelihoods are available. A class representing multiple lower triangular matrices \n  and corresponding methods are part of this package.",
+        "Imports": "stats",
+        "Depends": "R(>= 3.5.0)",
+        "Suggests": "qrng, numDeriv",
+        "License": "GPL-2",
+        "URL": "http://mvtnorm.R-forge.R-project.org",
+        "NeedsCompilation": "yes",
+        "Packaged": "2025-01-09 13:02:57 UTC; hothorn",
+        "Author": "Alan Genz [aut],\n  Frank Bretz [aut],\n  Tetsuhisa Miwa [aut],\n  Xuefei Mi [aut],\n  Friedrich Leisch [ctb],\n  Fabian Scheipl [ctb],\n  Bjoern Bornkamp [ctb] (<https://orcid.org/0000-0002-6294-8185>),\n  Martin Maechler [ctb] (<https://orcid.org/0000-0002-8685-9910>),\n  Torsten Hothorn [aut, cre] (<https://orcid.org/0000-0001-8301-0471>)",
+        "Maintainer": "Torsten Hothorn <Torsten.Hothorn@R-project.org>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-01-10 16:20:10 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-14 21:47:09 UTC; unix"
       }
     },
     "nlme": {
@@ -2101,6 +2537,27 @@
         "Repository": "CRAN",
         "Date/Publication": "2025-03-31 11:21:01 UTC",
         "Built": "R 4.4.3; x86_64-pc-linux-gnu; 'Wed, 02 Apr 2025 00:10:30 +0000'; unix"
+      }
+    },
+    "nortest": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "nortest",
+        "Title": "Tests for Normality",
+        "Version": "1.0-4",
+        "Date": "2015-07-29",
+        "Description": "Five omnibus tests for testing the composite hypothesis of\n        normality.",
+        "License": "GPL (>= 2)",
+        "Authors@R": "c(person(\"Juergen\", \"Gross\", role = \"aut\", email = \"gross@statistik.tu-dortmund.de\"),\n\tperson(\"Uwe\", \"Ligges\", role = c(\"aut\", \"cre\"), email = \"ligges@statistik.tu-dortmund.de\"))",
+        "Imports": "stats",
+        "Packaged": "2015-07-29 21:51:34 UTC; ligges",
+        "Author": "Juergen Gross [aut],\n  Uwe Ligges [aut, cre]",
+        "Maintainer": "Uwe Ligges <ligges@statistik.tu-dortmund.de>",
+        "NeedsCompilation": "no",
+        "Repository": "CRAN",
+        "Date/Publication": "2015-07-30 00:14:57",
+        "Built": "R 4.5.1; ; 2025-07-14 21:48:45 UTC; unix"
       }
     },
     "openssl": {
@@ -2165,7 +2622,7 @@
       "description": {
         "Package": "pillar",
         "Title": "Coloured Formatting for Columns",
-        "Version": "1.10.2",
+        "Version": "1.11.0",
         "Authors@R": "\n    c(person(given = \"Kirill\",\n             family = \"M\\u00fcller\",\n             role = c(\"aut\", \"cre\"),\n             email = \"kirill@cynkra.com\",\n             comment = c(ORCID = \"0000-0002-1416-3412\")),\n      person(given = \"Hadley\",\n             family = \"Wickham\",\n             role = \"aut\"),\n      person(given = \"RStudio\",\n             role = \"cph\"))",
         "Description": "Provides 'pillar' and 'colonnade' generics designed\n    for formatting columns of data using the full range of colours\n    provided by modern terminals.",
         "License": "MIT + file LICENSE",
@@ -2184,12 +2641,12 @@
         "Config/gha/extra-packages": "units=?ignore-before-r=4.3.0",
         "Config/Needs/website": "tidyverse/tidytemplate",
         "NeedsCompilation": "no",
-        "Packaged": "2025-04-05 12:40:18 UTC; kirill",
-        "Author": "Kirill Müller [aut, cre] (<https://orcid.org/0000-0002-1416-3412>),\n  Hadley Wickham [aut],\n  RStudio [cph]",
+        "Packaged": "2025-07-04 18:25:31 UTC; kirill",
+        "Author": "Kirill Müller [aut, cre] (ORCID:\n    <https://orcid.org/0000-0002-1416-3412>),\n  Hadley Wickham [aut],\n  RStudio [cph]",
         "Maintainer": "Kirill Müller <kirill@cynkra.com>",
         "Repository": "CRAN",
-        "Date/Publication": "2025-04-05 13:40:02 UTC",
-        "Built": "R 4.5.1; ; 2025-06-27 13:10:53 UTC; unix"
+        "Date/Publication": "2025-07-04 19:20:02 UTC",
+        "Built": "R 4.5.1; ; 2025-07-15 18:07:48 UTC; unix"
       }
     },
     "pkgbuild": {
@@ -2536,15 +2993,15 @@
       "description": {
         "Package": "purrr",
         "Title": "Functional Programming Tools",
-        "Version": "1.0.4",
-        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0003-4757-117X\")),\n    person(\"Lionel\", \"Henry\", , \"lionel@posit.co\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"),\n           comment = c(ROR = \"03wc8by49\"))\n  )",
+        "Version": "1.1.0",
+        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0003-4757-117X\")),\n    person(\"Lionel\", \"Henry\", , \"lionel@posit.co\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"),\n           comment = c(ROR = \"https://ror.org/03wc8by49\"))\n  )",
         "Description": "A complete and consistent functional programming toolkit for\n    R.",
         "License": "MIT + file LICENSE",
         "URL": "https://purrr.tidyverse.org/, https://github.com/tidyverse/purrr",
         "BugReports": "https://github.com/tidyverse/purrr/issues",
-        "Depends": "R (>= 4.0)",
+        "Depends": "R (>= 4.1)",
         "Imports": "cli (>= 3.6.1), lifecycle (>= 1.0.3), magrittr (>= 1.5.0),\nrlang (>= 1.1.1), vctrs (>= 0.6.3)",
-        "Suggests": "covr, dplyr (>= 0.7.8), httr, knitr, lubridate, rmarkdown,\ntestthat (>= 3.0.0), tibble, tidyselect",
+        "Suggests": "carrier (>= 0.2.0), covr, dplyr (>= 0.7.8), httr, knitr,\nlubridate, mirai (>= 2.4.0), rmarkdown, testthat (>= 3.0.0),\ntibble, tidyselect",
         "LinkingTo": "cli",
         "VignetteBuilder": "knitr",
         "Biarch": "true",
@@ -2555,12 +3012,12 @@
         "Encoding": "UTF-8",
         "RoxygenNote": "7.3.2",
         "NeedsCompilation": "yes",
-        "Packaged": "2025-01-29 21:33:56 UTC; hadleywickham",
-        "Author": "Hadley Wickham [aut, cre] (<https://orcid.org/0000-0003-4757-117X>),\n  Lionel Henry [aut],\n  Posit Software, PBC [cph, fnd] (03wc8by49)",
+        "Packaged": "2025-07-10 12:22:53 UTC; hadleywickham",
+        "Author": "Hadley Wickham [aut, cre] (ORCID:\n    <https://orcid.org/0000-0003-4757-117X>),\n  Lionel Henry [aut],\n  Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
         "Maintainer": "Hadley Wickham <hadley@posit.co>",
         "Repository": "CRAN",
-        "Date/Publication": "2025-02-05 18:00:01 UTC",
-        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-06-27 13:10:43 UTC; unix"
+        "Date/Publication": "2025-07-10 17:50:02 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-15 18:07:50 UTC; unix"
       }
     },
     "quarto": {
@@ -2702,6 +3159,38 @@
         "Repository": "CRAN",
         "Date/Publication": "2021-09-27 15:10:02 UTC",
         "Built": "R 4.5.1; ; 2025-06-27 16:10:50 UTC; unix"
+      }
+    },
+    "readr": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "readr",
+        "Title": "Read Rectangular Text Data",
+        "Version": "2.1.5",
+        "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = \"aut\"),\n    person(\"Jim\", \"Hester\", role = \"aut\"),\n    person(\"Romain\", \"Francois\", role = \"ctb\"),\n    person(\"Jennifer\", \"Bryan\", , \"jenny@posit.co\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0002-6983-2759\")),\n    person(\"Shelby\", \"Bearrows\", role = \"ctb\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")),\n    person(\"https://github.com/mandreyel/\", role = \"cph\",\n           comment = \"mio library\"),\n    person(\"Jukka\", \"Jylänki\", role = c(\"ctb\", \"cph\"),\n           comment = \"grisu3 implementation\"),\n    person(\"Mikkel\", \"Jørgensen\", role = c(\"ctb\", \"cph\"),\n           comment = \"grisu3 implementation\")\n  )",
+        "Description": "The goal of 'readr' is to provide a fast and friendly way to\n    read rectangular data (like 'csv', 'tsv', and 'fwf').  It is designed\n    to flexibly parse many types of data found in the wild, while still\n    cleanly failing when data unexpectedly changes.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://readr.tidyverse.org, https://github.com/tidyverse/readr",
+        "BugReports": "https://github.com/tidyverse/readr/issues",
+        "Depends": "R (>= 3.6)",
+        "Imports": "cli (>= 3.2.0), clipr, crayon, hms (>= 0.4.1), lifecycle (>=\n0.2.0), methods, R6, rlang, tibble, utils, vroom (>= 1.6.0)",
+        "Suggests": "covr, curl, datasets, knitr, rmarkdown, spelling, stringi,\ntestthat (>= 3.2.0), tzdb (>= 0.1.1), waldo, withr, xml2",
+        "LinkingTo": "cpp11, tzdb (>= 0.1.1)",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "tidyverse, tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Config/testthat/parallel": "false",
+        "Encoding": "UTF-8",
+        "Language": "en-US",
+        "RoxygenNote": "7.2.3",
+        "NeedsCompilation": "yes",
+        "Packaged": "2024-01-10 21:03:49 UTC; jenny",
+        "Author": "Hadley Wickham [aut],\n  Jim Hester [aut],\n  Romain Francois [ctb],\n  Jennifer Bryan [aut, cre] (<https://orcid.org/0000-0002-6983-2759>),\n  Shelby Bearrows [ctb],\n  Posit Software, PBC [cph, fnd],\n  https://github.com/mandreyel/ [cph] (mio library),\n  Jukka Jylänki [ctb, cph] (grisu3 implementation),\n  Mikkel Jørgensen [ctb, cph] (grisu3 implementation)",
+        "Maintainer": "Jennifer Bryan <jenny@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-01-10 23:20:02 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-14 20:14:36 UTC; unix"
       }
     },
     "remotes": {
@@ -2878,25 +3367,28 @@
       "description": {
         "Package": "rprojroot",
         "Title": "Finding Files in Project Subdirectories",
-        "Version": "2.0.4",
+        "Version": "2.1.0",
         "Authors@R": "\n    person(given = \"Kirill\",\n           family = \"M\\u00fcller\",\n           role = c(\"aut\", \"cre\"),\n           email = \"kirill@cynkra.com\",\n           comment = c(ORCID = \"0000-0002-1416-3412\"))",
         "Description": "Robust, reliable and flexible paths to files below\n    a project root. The 'root' of a project is defined as a directory that\n    matches a certain criterion, e.g., it contains a certain regular file.",
         "License": "MIT + file LICENSE",
         "URL": "https://rprojroot.r-lib.org/, https://github.com/r-lib/rprojroot",
         "BugReports": "https://github.com/r-lib/rprojroot/issues",
         "Depends": "R (>= 3.0.0)",
-        "Suggests": "covr, knitr, lifecycle, mockr, rlang, rmarkdown, testthat (>=\n3.0.0), withr",
+        "Suggests": "covr, knitr, lifecycle, rlang, rmarkdown, testthat (>=\n3.2.0), withr",
         "VignetteBuilder": "knitr",
         "Config/testthat/edition": "3",
         "Encoding": "UTF-8",
-        "RoxygenNote": "7.2.3",
+        "RoxygenNote": "7.3.2.9000",
+        "Config/autostyle/scope": "line_breaks",
+        "Config/autostyle/strict": "true",
+        "Config/Needs/website": "tidyverse/tidytemplate",
         "NeedsCompilation": "no",
-        "Packaged": "2023-11-05 06:47:23 UTC; kirill",
-        "Author": "Kirill Müller [aut, cre] (<https://orcid.org/0000-0002-1416-3412>)",
+        "Packaged": "2025-07-12 07:59:07 UTC; kirill",
+        "Author": "Kirill Müller [aut, cre] (ORCID:\n    <https://orcid.org/0000-0002-1416-3412>)",
         "Maintainer": "Kirill Müller <kirill@cynkra.com>",
         "Repository": "CRAN",
-        "Date/Publication": "2023-11-05 10:20:02 UTC",
-        "Built": "R 4.5.1; ; 2025-06-27 13:02:27 UTC; unix"
+        "Date/Publication": "2025-07-12 09:00:02 UTC",
+        "Built": "R 4.5.1; ; 2025-07-15 18:08:05 UTC; unix"
       }
     },
     "rstudioapi": {
@@ -2947,6 +3439,31 @@
         "Repository": "CRAN",
         "Date/Publication": "2022-08-31 10:30:02 UTC",
         "Built": "R 4.5.1; ; 2025-06-27 16:10:51 UTC; unix"
+      }
+    },
+    "sandwich": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "sandwich",
+        "Version": "3.1-1",
+        "Date": "2024-09-16",
+        "Title": "Robust Covariance Matrix Estimators",
+        "Authors@R": "c(person(given = \"Achim\", family = \"Zeileis\", role = c(\"aut\", \"cre\"), email = \"Achim.Zeileis@R-project.org\", comment = c(ORCID = \"0000-0003-0918-3766\")),\n             person(given = \"Thomas\", family = \"Lumley\", role = \"aut\", email = \"t.lumley@auckland.ac.nz\", comment = c(ORCID = \"0000-0003-4255-5437\")),\n\t     person(given = \"Nathaniel\", family = \"Graham\", role = \"ctb\", email = \"npgraham1@gmail.com\", comment = c(ORCID = \"0009-0002-1215-5256\")),\n\t     person(given = \"Susanne\", family = \"Koell\", role = \"ctb\"))",
+        "Description": "Object-oriented software for model-robust covariance matrix estimators. Starting out from the basic \n             robust Eicker-Huber-White sandwich covariance methods include: heteroscedasticity-consistent (HC)\n\t     covariances for cross-section data; heteroscedasticity- and autocorrelation-consistent (HAC)\n\t     covariances for time series data (such as Andrews' kernel HAC, Newey-West, and WEAVE estimators);\n\t     clustered covariances (one-way and multi-way); panel and panel-corrected covariances;\n\t     outer-product-of-gradients covariances; and (clustered) bootstrap covariances. All methods are\n\t     applicable to (generalized) linear model objects fitted by lm() and glm() but can also be adapted\n\t     to other classes through S3 methods. Details can be found in Zeileis et al. (2020) <doi:10.18637/jss.v095.i01>,\n\t     Zeileis (2004) <doi:10.18637/jss.v011.i10> and Zeileis (2006) <doi:10.18637/jss.v016.i09>.",
+        "Depends": "R (>= 3.0.0)",
+        "Imports": "stats, utils, zoo",
+        "Suggests": "AER, car, geepack, lattice, lme4, lmtest, MASS, multiwayvcov,\nparallel, pcse, plm, pscl, scatterplot3d, stats4, strucchange,\nsurvival",
+        "License": "GPL-2 | GPL-3",
+        "URL": "https://sandwich.R-Forge.R-project.org/",
+        "BugReports": "https://sandwich.R-Forge.R-project.org/contact.html",
+        "NeedsCompilation": "no",
+        "Packaged": "2024-09-15 20:36:02 UTC; zeileis",
+        "Author": "Achim Zeileis [aut, cre] (<https://orcid.org/0000-0003-0918-3766>),\n  Thomas Lumley [aut] (<https://orcid.org/0000-0003-4255-5437>),\n  Nathaniel Graham [ctb] (<https://orcid.org/0009-0002-1215-5256>),\n  Susanne Koell [ctb]",
+        "Maintainer": "Achim Zeileis <Achim.Zeileis@R-project.org>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-09-15 21:50:01 UTC",
+        "Built": "R 4.5.1; ; 2025-07-14 21:29:58 UTC; unix"
       }
     },
     "sass": {
@@ -3044,7 +3561,7 @@
         "Package": "shiny",
         "Type": "Package",
         "Title": "Web Application Framework for R",
-        "Version": "1.11.0",
+        "Version": "1.11.1",
         "Authors@R": "c(\n    person(\"Winston\", \"Chang\", role = c(\"aut\", \"cre\"), email = \"winston@posit.co\", comment = c(ORCID = \"0000-0002-1576-2126\")),\n    person(\"Joe\", \"Cheng\", role = \"aut\", email = \"joe@posit.co\"),\n    person(\"JJ\", \"Allaire\", role = \"aut\", email = \"jj@posit.co\"),\n    person(\"Carson\", \"Sievert\", role = \"aut\", email = \"carson@posit.co\", comment = c(ORCID = \"0000-0002-4958-2844\")),\n    person(\"Barret\", \"Schloerke\", role = \"aut\", email = \"barret@posit.co\", comment = c(ORCID = \"0000-0001-9986-114X\")),\n    person(\"Yihui\", \"Xie\", role = \"aut\", email = \"yihui@posit.co\"),\n    person(\"Jeff\", \"Allen\", role = \"aut\"),\n    person(\"Jonathan\", \"McPherson\", role = \"aut\", email = \"jonathan@posit.co\"),\n    person(\"Alan\", \"Dipert\", role = \"aut\"),\n    person(\"Barbara\", \"Borges\", role = \"aut\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\")),\n    person(family = \"jQuery Foundation\", role = \"cph\",\n    comment = \"jQuery library and jQuery UI library\"),\n    person(family = \"jQuery contributors\", role = c(\"ctb\", \"cph\"),\n    comment = \"jQuery library; authors listed in inst/www/shared/jquery-AUTHORS.txt\"),\n    person(family = \"jQuery UI contributors\", role = c(\"ctb\", \"cph\"),\n    comment = \"jQuery UI library; authors listed in inst/www/shared/jqueryui/AUTHORS.txt\"),\n    person(\"Mark\", \"Otto\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(\"Jacob\", \"Thornton\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(family = \"Bootstrap contributors\", role = \"ctb\",\n    comment = \"Bootstrap library\"),\n    person(family = \"Twitter, Inc\", role = \"cph\",\n    comment = \"Bootstrap library\"),\n    person(\"Prem Nawaz\", \"Khan\", role = \"ctb\",\n    comment = \"Bootstrap accessibility plugin\"),\n    person(\"Victor\", \"Tsaran\", role = \"ctb\",\n    comment = \"Bootstrap accessibility plugin\"),\n    person(\"Dennis\", \"Lembree\", role = \"ctb\",\n    comment = \"Bootstrap accessibility plugin\"),\n    person(\"Srinivasu\", \"Chakravarthula\", role = \"ctb\",\n    comment = \"Bootstrap accessibility plugin\"),\n    person(\"Cathy\", \"O'Connor\", role = \"ctb\",\n    comment = \"Bootstrap accessibility plugin\"),\n    person(family = \"PayPal, Inc\", role = \"cph\",\n    comment = \"Bootstrap accessibility plugin\"),\n    person(\"Stefan\", \"Petre\", role = c(\"ctb\", \"cph\"),\n    comment = \"Bootstrap-datepicker library\"),\n    person(\"Andrew\", \"Rowls\", role = c(\"ctb\", \"cph\"),\n    comment = \"Bootstrap-datepicker library\"),\n    person(\"Brian\", \"Reavis\", role = c(\"ctb\", \"cph\"),\n    comment = \"selectize.js library\"),\n    person(\"Salmen\", \"Bejaoui\", role = c(\"ctb\", \"cph\"),\n    comment = \"selectize-plugin-a11y library\"),\n    person(\"Denis\", \"Ineshin\", role = c(\"ctb\", \"cph\"),\n    comment = \"ion.rangeSlider library\"),\n    person(\"Sami\", \"Samhuri\", role = c(\"ctb\", \"cph\"),\n    comment = \"Javascript strftime library\"),\n    person(family = \"SpryMedia Limited\", role = c(\"ctb\", \"cph\"),\n    comment = \"DataTables library\"),\n    person(\"John\", \"Fraser\", role = c(\"ctb\", \"cph\"),\n    comment = \"showdown.js library\"),\n    person(\"John\", \"Gruber\", role = c(\"ctb\", \"cph\"),\n    comment = \"showdown.js library\"),\n    person(\"Ivan\", \"Sagalaev\", role = c(\"ctb\", \"cph\"),\n    comment = \"highlight.js library\"),\n    person(given = \"R Core Team\", role = c(\"ctb\", \"cph\"),\n    comment = \"tar implementation from R\")\n    )",
         "Description": "Makes it incredibly easy to build interactive web\n    applications with R. Automatic \"reactive\" binding between inputs and\n    outputs and extensive prebuilt widgets make it possible to build\n    beautiful, responsive, and powerful applications with minimal effort.",
         "License": "GPL-3 | file LICENSE",
@@ -3059,12 +3576,93 @@
         "Config/testthat/edition": "3",
         "Config/Needs/check": "shinytest2",
         "NeedsCompilation": "no",
-        "Packaged": "2025-06-23 21:24:37 UTC; cpsievert",
+        "Packaged": "2025-07-03 01:15:18 UTC; cpsievert",
         "Author": "Winston Chang [aut, cre] (ORCID:\n    <https://orcid.org/0000-0002-1576-2126>),\n  Joe Cheng [aut],\n  JJ Allaire [aut],\n  Carson Sievert [aut] (ORCID: <https://orcid.org/0000-0002-4958-2844>),\n  Barret Schloerke [aut] (ORCID: <https://orcid.org/0000-0001-9986-114X>),\n  Yihui Xie [aut],\n  Jeff Allen [aut],\n  Jonathan McPherson [aut],\n  Alan Dipert [aut],\n  Barbara Borges [aut],\n  Posit Software, PBC [cph, fnd],\n  jQuery Foundation [cph] (jQuery library and jQuery UI library),\n  jQuery contributors [ctb, cph] (jQuery library; authors listed in\n    inst/www/shared/jquery-AUTHORS.txt),\n  jQuery UI contributors [ctb, cph] (jQuery UI library; authors listed in\n    inst/www/shared/jqueryui/AUTHORS.txt),\n  Mark Otto [ctb] (Bootstrap library),\n  Jacob Thornton [ctb] (Bootstrap library),\n  Bootstrap contributors [ctb] (Bootstrap library),\n  Twitter, Inc [cph] (Bootstrap library),\n  Prem Nawaz Khan [ctb] (Bootstrap accessibility plugin),\n  Victor Tsaran [ctb] (Bootstrap accessibility plugin),\n  Dennis Lembree [ctb] (Bootstrap accessibility plugin),\n  Srinivasu Chakravarthula [ctb] (Bootstrap accessibility plugin),\n  Cathy O'Connor [ctb] (Bootstrap accessibility plugin),\n  PayPal, Inc [cph] (Bootstrap accessibility plugin),\n  Stefan Petre [ctb, cph] (Bootstrap-datepicker library),\n  Andrew Rowls [ctb, cph] (Bootstrap-datepicker library),\n  Brian Reavis [ctb, cph] (selectize.js library),\n  Salmen Bejaoui [ctb, cph] (selectize-plugin-a11y library),\n  Denis Ineshin [ctb, cph] (ion.rangeSlider library),\n  Sami Samhuri [ctb, cph] (Javascript strftime library),\n  SpryMedia Limited [ctb, cph] (DataTables library),\n  John Fraser [ctb, cph] (showdown.js library),\n  John Gruber [ctb, cph] (showdown.js library),\n  Ivan Sagalaev [ctb, cph] (highlight.js library),\n  R Core Team [ctb, cph] (tar implementation from R)",
         "Maintainer": "Winston Chang <winston@posit.co>",
         "Repository": "CRAN",
-        "Date/Publication": "2025-06-24 17:00:02 UTC",
-        "Built": "R 4.5.1; ; 2025-06-27 16:13:03 UTC; unix"
+        "Date/Publication": "2025-07-03 06:20:02 UTC",
+        "Built": "R 4.5.1; ; 2025-07-14 22:41:19 UTC; unix"
+      }
+    },
+    "shinyFiles": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "shinyFiles",
+        "Type": "Package",
+        "Title": "A Server-Side File System Viewer for Shiny",
+        "Version": "0.9.3",
+        "Authors@R": "\n    c(person(given = \"Thomas Lin\",\n             family = \"Pedersen\",\n             role = c(\"cre\", \"aut\"),\n             email = \"thomasp85@gmail.com\",\n             comment = c(ORCID = \"0000-0002-5147-4711\")),\n      person(given = \"Vincent\",\n             family = \"Nijs\",\n             role = \"aut\"),\n      person(given = \"Thomas\",\n             family = \"Schaffner\",\n             role = \"aut\"),\n      person(given = \"Eric\",\n             family = \"Nantz\",\n             role = \"aut\"))",
+        "Maintainer": "Thomas Lin Pedersen <thomasp85@gmail.com>",
+        "Description": "Provides functionality for client-side navigation of\n    the server side file system in shiny apps. In case the app is running\n    locally this gives the user direct access to the file system without the\n    need to \"download\" files to a temporary location. Both file and folder\n    selection as well as file saving is available.",
+        "License": "GPL (>= 2)",
+        "Encoding": "UTF-8",
+        "Imports": "htmltools, jsonlite, tools, shiny (>= 1.1.0), fs (>= 1.2.6),\ntibble (>= 1.4.2)",
+        "Collate": "'aaa.R' 'filechoose.R' 'dirchoose.R' 'filesave.R'\n'shinyFiles-package.R'",
+        "RoxygenNote": "7.2.1",
+        "URL": "https://github.com/thomasp85/shinyFiles",
+        "BugReports": "https://github.com/thomasp85/shinyFiles/issues",
+        "Suggests": "covr",
+        "NeedsCompilation": "no",
+        "Packaged": "2022-08-19 13:37:35 UTC; thomas",
+        "Author": "Thomas Lin Pedersen [cre, aut]\n    (<https://orcid.org/0000-0002-5147-4711>),\n  Vincent Nijs [aut],\n  Thomas Schaffner [aut],\n  Eric Nantz [aut]",
+        "Repository": "CRAN",
+        "Date/Publication": "2022-08-19 14:00:02 UTC",
+        "Built": "R 4.5.1; ; 2025-07-14 22:40:25 UTC; unix"
+      }
+    },
+    "shinyWidgets": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "shinyWidgets",
+        "Title": "Custom Inputs Widgets for Shiny",
+        "Version": "0.9.0",
+        "Authors@R": "c(\n  person(\"Victor\", \"Perrier\", email = \"victor.perrier@dreamrs.fr\", role = c(\"aut\", \"cre\", \"cph\")),\n  person(\"Fanny\", \"Meyer\", role = \"aut\"),\n  person(\"David\", \"Granjon\", role = \"aut\"),\n  person(\"Ian\", \"Fellows\", role = \"ctb\", comment = \"Methods for mutating vertical tabs & updateMultiInput\"),\n  person(\"Wil\", \"Davis\", role = \"ctb\", comment = \"numericRangeInput function\"),\n  person(\"Spencer\", \"Matthews\", role = \"ctb\", comment = \"autoNumeric methods\"),\n  person(family = \"JavaScript and CSS libraries authors\", role = c(\"ctb\", \"cph\"), comment = \"All authors are listed in LICENSE.md\")\n  )",
+        "Description": "Collection of custom input controls and user interface components for 'Shiny' applications. \n  Give your applications a unique and colorful style !",
+        "URL": "https://github.com/dreamRs/shinyWidgets,\nhttps://dreamrs.github.io/shinyWidgets/",
+        "BugReports": "https://github.com/dreamRs/shinyWidgets/issues",
+        "License": "GPL-3",
+        "Encoding": "UTF-8",
+        "LazyData": "true",
+        "RoxygenNote": "7.3.2",
+        "Depends": "R (>= 3.1.0)",
+        "Imports": "bslib, sass, shiny (>= 1.6.0), htmltools (>= 0.5.1), jsonlite,\ngrDevices, rlang",
+        "Suggests": "testthat, covr, ggplot2, DT, scales, shinydashboard,\nshinydashboardPlus",
+        "NeedsCompilation": "no",
+        "Packaged": "2025-02-21 09:09:48 UTC; perri",
+        "Author": "Victor Perrier [aut, cre, cph],\n  Fanny Meyer [aut],\n  David Granjon [aut],\n  Ian Fellows [ctb] (Methods for mutating vertical tabs &\n    updateMultiInput),\n  Wil Davis [ctb] (numericRangeInput function),\n  Spencer Matthews [ctb] (autoNumeric methods),\n  JavaScript and CSS libraries authors [ctb, cph] (All authors are listed\n    in LICENSE.md)",
+        "Maintainer": "Victor Perrier <victor.perrier@dreamrs.fr>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-02-21 12:30:02 UTC",
+        "Built": "R 4.5.1; ; 2025-07-13 17:19:24 UTC; unix"
+      }
+    },
+    "shinyjs": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "shinyjs",
+        "Title": "Easily Improve the User Experience of Your Shiny Apps in Seconds",
+        "Version": "2.1.0",
+        "Authors@R": "person(\"Dean\", \"Attali\", \n    email = \"daattali@gmail.com\",\n    role = c(\"aut\", \"cre\"),\n    comment= c(ORCID=\"0000-0002-5645-3493\"))",
+        "Description": "Perform common useful JavaScript operations in Shiny apps that will\n    greatly improve your apps without having to know any JavaScript. Examples\n    include: hiding an element, disabling an input, resetting an input back to\n    its original value, delaying code execution by a few seconds, and many more\n    useful functions for both the end user and the developer. 'shinyjs' can also\n    be used to easily call your own custom JavaScript functions from R.",
+        "URL": "https://deanattali.com/shinyjs/",
+        "BugReports": "https://github.com/daattali/shinyjs/issues",
+        "Depends": "R (>= 3.1.0)",
+        "Imports": "digest (>= 0.6.8), jsonlite, shiny (>= 1.0.0)",
+        "Suggests": "htmltools (>= 0.2.9), knitr (>= 1.7), rmarkdown, shinyAce,\nshinydisconnect, testthat (>= 0.9.1)",
+        "License": "MIT + file LICENSE",
+        "VignetteBuilder": "knitr",
+        "RoxygenNote": "7.1.1",
+        "Encoding": "UTF-8",
+        "NeedsCompilation": "no",
+        "Packaged": "2021-12-21 11:32:22 UTC; Dean-X1C",
+        "Author": "Dean Attali [aut, cre] (<https://orcid.org/0000-0002-5645-3493>)",
+        "Maintainer": "Dean Attali <daattali@gmail.com>",
+        "Repository": "CRAN",
+        "Date/Publication": "2021-12-23 10:10:02 UTC",
+        "Built": "R 4.5.1; ; 2025-07-14 22:42:02 UTC; unix"
       }
     },
     "sourcetools": {
@@ -3149,6 +3747,33 @@
         "Repository": "CRAN",
         "Date/Publication": "2023-11-14 23:10:02 UTC",
         "Built": "R 4.5.1; ; 2025-06-27 13:10:45 UTC; unix"
+      }
+    },
+    "survival": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Title": "Survival Analysis",
+        "Priority": "recommended",
+        "Package": "survival",
+        "Version": "3.8-3",
+        "Date": "2024-12-17",
+        "Depends": "R (>= 3.5.0)",
+        "Imports": "graphics, Matrix, methods, splines, stats, utils",
+        "LazyData": "Yes",
+        "LazyDataCompression": "xz",
+        "ByteCompile": "Yes",
+        "Authors@R": "c(person(c(\"Terry\", \"M\"), \"Therneau\",\n                    email=\"therneau.terry@mayo.edu\",\n\t            role=c(\"aut\", \"cre\")),\n               person(\"Thomas\", \"Lumley\", role=c(\"ctb\", \"trl\"),\n\t       comment=\"original S->R port and R maintainer until 2009\"),\n\t       person(\"Atkinson\", \"Elizabeth\", role=\"ctb\"),\n\t       person(\"Crowson\", \"Cynthia\", role=\"ctb\"))",
+        "Description": "Contains the core survival analysis routines, including\n\t     definition of Surv objects, \n\t     Kaplan-Meier and Aalen-Johansen (multi-state) curves, Cox models,\n\t     and parametric accelerated failure time models.",
+        "License": "LGPL (>= 2)",
+        "URL": "https://github.com/therneau/survival",
+        "NeedsCompilation": "yes",
+        "Packaged": "2024-12-17 16:37:18 UTC; therneau",
+        "Author": "Terry M Therneau [aut, cre],\n  Thomas Lumley [ctb, trl] (original S->R port and R maintainer until\n    2009),\n  Atkinson Elizabeth [ctb],\n  Crowson Cynthia [ctb]",
+        "Maintainer": "Terry M Therneau <therneau.terry@mayo.edu>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-12-17 20:20:02 UTC",
+        "Built": "R 4.4.2; x86_64-pc-linux-gnu; 'Tue, 07 Jan 2025 00:08:51 +0000'; unix"
       }
     },
     "sys": {
@@ -3394,6 +4019,35 @@
         "Built": "R 4.5.1; ; 2025-06-27 13:08:28 UTC; unix"
       }
     },
+    "tzdb": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "tzdb",
+        "Title": "Time Zone Database Information",
+        "Version": "0.5.0",
+        "Authors@R": "c(\n    person(\"Davis\", \"Vaughan\", , \"davis@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Howard\", \"Hinnant\", role = \"cph\",\n           comment = \"Author of the included date library\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "Provides an up-to-date copy of the Internet Assigned Numbers\n    Authority (IANA) Time Zone Database. It is updated periodically to\n    reflect changes made by political bodies to time zone boundaries, UTC\n    offsets, and daylight saving time rules. Additionally, this package\n    provides a C++ interface for working with the 'date' library. 'date'\n    provides comprehensive support for working with dates and date-times,\n    which this package exposes to make it easier for other R packages to\n    utilize. Headers are provided for calendar specific calculations,\n    along with a limited interface for time zone manipulations.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://tzdb.r-lib.org, https://github.com/r-lib/tzdb",
+        "BugReports": "https://github.com/r-lib/tzdb/issues",
+        "Depends": "R (>= 4.0.0)",
+        "Suggests": "covr, testthat (>= 3.0.0)",
+        "LinkingTo": "cpp11 (>= 0.5.2)",
+        "Biarch": "yes",
+        "Config/Needs/website": "tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Encoding": "UTF-8",
+        "RoxygenNote": "7.3.2",
+        "NeedsCompilation": "yes",
+        "Packaged": "2025-03-14 18:41:13 UTC; davis",
+        "Author": "Davis Vaughan [aut, cre],\n  Howard Hinnant [cph] (Author of the included date library),\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Davis Vaughan <davis@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-03-15 22:50:02 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-14 20:13:45 UTC; unix"
+      }
+    },
     "urlchecker": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -3478,6 +4132,30 @@
         "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-06-27 13:06:59 UTC; unix"
       }
     },
+    "vcd": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "vcd",
+        "Version": "1.4-13",
+        "Title": "Visualizing Categorical Data",
+        "Authors@R": "c(person(given = \"David\", family = \"Meyer\", role = c(\"aut\", \"cre\"),\n                    email = \"David.Meyer@R-project.org\",\n\t\t    comment = c(ORCID = \"0000-0002-5196-3048\")),\t    \n             person(given = \"Achim\", family = \"Zeileis\", role = \"aut\",\n\t            email = \"Achim.Zeileis@R-project.org\",\n                    comment = c(ORCID = \"0000-0003-0918-3766\")),\n             person(given = \"Kurt\", family = \"Hornik\", role = \"aut\",\n\t            email = \"Kurt.Hornik@R-project.org\",\n                    comment = c(ORCID = \"0000-0003-4198-9911\")),\n             person(given = \"Florian\", family = \"Gerber\", role = \"ctb\"),\n             person(given = \"Michael\", family = \"Friendly\", role = \"aut\",\n\t            email = \"friendly@yorku.ca\",\n\t\t    comment = c(ORCID = \"0000-0002-3237-0941\")))",
+        "Description": "Visualization techniques, data sets, summary and inference\n        procedures aimed particularly at categorical data. Special\n        emphasis is given to highly extensible grid graphics. The\n        package was package was originally inspired by the book \n\t\"Visualizing Categorical Data\" by Michael Friendly and is \n\tnow the main support package for a new book, \n\t\"Discrete Data Analysis with R\" by Michael Friendly and \n\tDavid Meyer (2015).",
+        "LazyLoad": "yes",
+        "LazyData": "yes",
+        "Depends": "R (>= 2.4.0), grid",
+        "Suggests": "KernSmooth, mvtnorm, kernlab, HSAUR3, coin",
+        "Imports": "stats, utils, MASS, grDevices, colorspace, lmtest",
+        "License": "GPL-2",
+        "NeedsCompilation": "no",
+        "Packaged": "2024-09-16 09:01:34 UTC; meyer",
+        "Author": "David Meyer [aut, cre] (<https://orcid.org/0000-0002-5196-3048>),\n  Achim Zeileis [aut] (<https://orcid.org/0000-0003-0918-3766>),\n  Kurt Hornik [aut] (<https://orcid.org/0000-0003-4198-9911>),\n  Florian Gerber [ctb],\n  Michael Friendly [aut] (<https://orcid.org/0000-0002-3237-0941>)",
+        "Maintainer": "David Meyer <David.Meyer@R-project.org>",
+        "Repository": "CRAN",
+        "Date/Publication": "2024-09-16 10:13:35 UTC",
+        "Built": "R 4.5.1; ; 2025-07-16 18:01:12 UTC; unix"
+      }
+    },
     "vctrs": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
@@ -3535,13 +4213,46 @@
         "Built": "R 4.5.1; ; 2025-06-27 13:02:34 UTC; unix"
       }
     },
+    "vroom": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "vroom",
+        "Title": "Read and Write Rectangular Text Data Quickly",
+        "Version": "1.6.5",
+        "Authors@R": "c(\n    person(\"Jim\", \"Hester\", role = \"aut\",\n           comment = c(ORCID = \"0000-0002-2739-7082\")),\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = \"aut\",\n           comment = c(ORCID = \"0000-0003-4757-117X\")),\n    person(\"Jennifer\", \"Bryan\", , \"jenny@posit.co\", role = c(\"aut\", \"cre\"),\n           comment = c(ORCID = \"0000-0002-6983-2759\")),\n    person(\"Shelby\", \"Bearrows\", role = \"ctb\"),\n    person(\"https://github.com/mandreyel/\", role = \"cph\",\n           comment = \"mio library\"),\n    person(\"Jukka\", \"Jylänki\", role = \"cph\",\n           comment = \"grisu3 implementation\"),\n    person(\"Mikkel\", \"Jørgensen\", role = \"cph\",\n           comment = \"grisu3 implementation\"),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
+        "Description": "The goal of 'vroom' is to read and write data (like 'csv',\n    'tsv' and 'fwf') quickly. When reading it uses a quick initial\n    indexing step, then reads the values lazily , so only the data you\n    actually use needs to be read.  The writer formats the data in\n    parallel and writes to disk asynchronously from formatting.",
+        "License": "MIT + file LICENSE",
+        "URL": "https://vroom.r-lib.org, https://github.com/tidyverse/vroom",
+        "BugReports": "https://github.com/tidyverse/vroom/issues",
+        "Depends": "R (>= 3.6)",
+        "Imports": "bit64, cli (>= 3.2.0), crayon, glue, hms, lifecycle (>=\n1.0.3), methods, rlang (>= 0.4.2), stats, tibble (>= 2.0.0),\ntidyselect, tzdb (>= 0.1.1), vctrs (>= 0.2.0), withr",
+        "Suggests": "archive, bench (>= 1.1.0), covr, curl, dplyr, forcats, fs,\nggplot2, knitr, patchwork, prettyunits, purrr, rmarkdown,\nrstudioapi, scales, spelling, testthat (>= 2.1.0), tidyr,\nutils, waldo, xml2",
+        "LinkingTo": "cpp11 (>= 0.2.0), progress (>= 1.2.1), tzdb (>= 0.1.1)",
+        "VignetteBuilder": "knitr",
+        "Config/Needs/website": "nycflights13, tidyverse/tidytemplate",
+        "Config/testthat/edition": "3",
+        "Config/testthat/parallel": "false",
+        "Copyright": "file COPYRIGHTS",
+        "Encoding": "UTF-8",
+        "Language": "en-US",
+        "RoxygenNote": "7.2.3.9000",
+        "NeedsCompilation": "yes",
+        "Packaged": "2023-12-05 16:46:59 UTC; jenny",
+        "Author": "Jim Hester [aut] (<https://orcid.org/0000-0002-2739-7082>),\n  Hadley Wickham [aut] (<https://orcid.org/0000-0003-4757-117X>),\n  Jennifer Bryan [aut, cre] (<https://orcid.org/0000-0002-6983-2759>),\n  Shelby Bearrows [ctb],\n  https://github.com/mandreyel/ [cph] (mio library),\n  Jukka Jylänki [cph] (grisu3 implementation),\n  Mikkel Jørgensen [cph] (grisu3 implementation),\n  Posit Software, PBC [cph, fnd]",
+        "Maintainer": "Jennifer Bryan <jenny@posit.co>",
+        "Repository": "CRAN",
+        "Date/Publication": "2023-12-05 23:50:02 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-14 20:13:56 UTC; unix"
+      }
+    },
     "waldo": {
       "Source": "CRAN",
       "Repository": "https://cran.rstudio.com",
       "description": {
         "Package": "waldo",
         "Title": "Find Differences Between R Objects",
-        "Version": "0.6.1",
+        "Version": "0.6.2",
         "Authors@R": "c(\n    person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\")),\n    person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"))\n  )",
         "Description": "Compare complex R objects and reveal the key differences.\n    Designed particularly for use in testing packages where being able to\n    quickly isolate key differences makes understanding test failures much\n    easier.",
         "License": "MIT + file LICENSE",
@@ -3555,12 +4266,12 @@
         "Encoding": "UTF-8",
         "RoxygenNote": "7.3.2",
         "NeedsCompilation": "no",
-        "Packaged": "2024-11-07 15:32:32 UTC; hadleywickham",
+        "Packaged": "2025-07-11 13:27:03 UTC; hadleywickham",
         "Author": "Hadley Wickham [aut, cre],\n  Posit Software, PBC [cph, fnd]",
         "Maintainer": "Hadley Wickham <hadley@posit.co>",
         "Repository": "CRAN",
-        "Date/Publication": "2024-11-07 20:50:01 UTC",
-        "Built": "R 4.5.1; ; 2025-06-27 13:08:20 UTC; unix"
+        "Date/Publication": "2025-07-11 15:20:02 UTC",
+        "Built": "R 4.5.1; ; 2025-07-15 18:08:06 UTC; unix"
       }
     },
     "whisker": {
@@ -3777,92 +4488,125 @@
         "Date/Publication": "2025-05-13 14:10:02 UTC",
         "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-06-27 13:05:32 UTC; unix"
       }
+    },
+    "zoo": {
+      "Source": "CRAN",
+      "Repository": "https://cran.rstudio.com",
+      "description": {
+        "Package": "zoo",
+        "Version": "1.8-14",
+        "Date": "2025-04-09",
+        "Title": "S3 Infrastructure for Regular and Irregular Time Series (Z's\nOrdered Observations)",
+        "Authors@R": "c(person(given = \"Achim\", family = \"Zeileis\", role = c(\"aut\", \"cre\"), email = \"Achim.Zeileis@R-project.org\",\n                    comment = c(ORCID = \"0000-0003-0918-3766\")),\n             person(given = \"Gabor\", family = \"Grothendieck\", role = \"aut\", email = \"ggrothendieck@gmail.com\"),\n             person(given = c(\"Jeffrey\", \"A.\"), family = \"Ryan\", role = \"aut\", email = \"jeff.a.ryan@gmail.com\"),\n             person(given = c(\"Joshua\", \"M.\"), family = \"Ulrich\", role = \"ctb\", email = \"josh.m.ulrich@gmail.com\"),\n             person(given = \"Felix\", family = \"Andrews\", role = \"ctb\", email = \"felix@nfrac.org\"))",
+        "Description": "An S3 class with methods for totally ordered indexed\n             observations. It is particularly aimed at irregular time series\n             of numeric vectors/matrices and factors. zoo's key design goals\n             are independence of a particular index/date/time class and\n             consistency with ts and base R by providing methods to extend\n             standard generics.",
+        "Depends": "R (>= 3.1.0), stats",
+        "Suggests": "AER, coda, chron, ggplot2 (>= 3.5.0), mondate, scales,\nstinepack, strucchange, timeDate, timeSeries, tinyplot, tis,\ntseries, xts",
+        "Imports": "utils, graphics, grDevices, lattice (>= 0.20-27)",
+        "License": "GPL-2 | GPL-3",
+        "URL": "https://zoo.R-Forge.R-project.org/",
+        "NeedsCompilation": "yes",
+        "Packaged": "2025-04-09 16:51:51 UTC; zeileis",
+        "Author": "Achim Zeileis [aut, cre] (<https://orcid.org/0000-0003-0918-3766>),\n  Gabor Grothendieck [aut],\n  Jeffrey A. Ryan [aut],\n  Joshua M. Ulrich [ctb],\n  Felix Andrews [ctb]",
+        "Maintainer": "Achim Zeileis <Achim.Zeileis@R-project.org>",
+        "Repository": "CRAN",
+        "Date/Publication": "2025-04-10 06:40:02 UTC",
+        "Built": "R 4.5.1; x86_64-pc-linux-gnu; 2025-07-14 21:29:44 UTC; unix"
+      }
     }
   },
   "files": {
     ".RData": {
-      "checksum": "b5e84c40889c6bb4061b319947c957f3"
+      "checksum": "f79f325316f6cc529514405ef13a7551"
+    },
+    ".vscode/settings.json": {
+      "checksum": "e50251870dd4d5ec0440e820e1fe9287"
+    },
+    "Accessibility_Features.md": {
+      "checksum": "494e3698489d980fcbfe9cd65bc123ee"
     },
     "activity_candy_chi_square.R": {
-      "checksum": "67d60d456e2d2984959ea9f96eb60300"
+      "checksum": "069240af1deca59f53dca6d9747bc044"
     },
     "activity_guess_correlation.R": {
-      "checksum": "383a7cd4b71caae2596f63ee9e01cf4c"
+      "checksum": "60307c3a0090b09537bd055c23c277d2"
     },
     "activity_hiring_discrimination.R": {
-      "checksum": "b6a5243f6c57efc837bb22db39d43222"
+      "checksum": "9644f17db7dd0c542dc7335375ae903b"
     },
     "activity_mrs_gallas.R": {
-      "checksum": "419695064c9244f68157480025a6d6d4"
+      "checksum": "a75600c5474e9ed9ce54215c3cdf33ab"
     },
     "activity_sampling_sunflowers.R": {
-      "checksum": "8474c77df9f63af3dd8ce01ff5fce279"
+      "checksum": "c457b5bb6d5952ed66d933edd2e96e53"
     },
     "activity_smell_parkinsons.R": {
-      "checksum": "76e413c59e28f5fe1477bd271b8d138f"
+      "checksum": "766eca99759f5486cff6705fbcc90dd7"
     },
     "anova_one_way.R": {
-      "checksum": "14b341f2e88ec9b2078e73da9729b33a"
+      "checksum": "0a3b131a130e2ea0bf9382069ba5c542"
     },
     "app.R": {
-      "checksum": "770d293965d1336afb6da656e46a22f7"
+      "checksum": "5512eec98fdbd3c59fbdd9ebb3d7b4e3"
     },
     "ci_diff_means.R": {
-      "checksum": "22c8c7cdbf5dcbba0654efcd4866976b"
+      "checksum": "0ff194502005b3e0a97da68489f3025b"
     },
     "ci_diff_proportions.R": {
-      "checksum": "65fdaee28be7a9fd931a39907d7ce6fe"
+      "checksum": "e53520ebadb432a4b8b2026c81cdcfb7"
     },
     "ci_mean.R": {
-      "checksum": "5639f51b16b8f27415046ca6e7d588b6"
+      "checksum": "cb6970dcc599a34b7baddf86aad696e3"
     },
     "ci_proportion.R": {
-      "checksum": "8ba34f1598af8abc3e04deb906ca8df4"
+      "checksum": "90d7471fb1a2ae19e7f3112b3487ee25"
     },
     "dist_binomial.R": {
-      "checksum": "27b6812d0cc8948830de1b49ffba0175"
+      "checksum": "9050ec5ab5e5c785257d679bae6a5284"
     },
     "dist_chi_square.R": {
-      "checksum": "518c287c8df67a4e38be50e62a9161c0"
+      "checksum": "04f1db3ef4745517db543d057529dff8"
     },
     "dist_counting_methods.R": {
-      "checksum": "fea1883779e75222223eb9aefd0a066c"
+      "checksum": "be11ddc321d33204690f5eca52887574"
     },
     "dist_discrete_random.R": {
-      "checksum": "74364b8774399267b9c33e1eb9f60a23"
+      "checksum": "2d5edac44930ec6fa0398a5b688d4746"
     },
     "dist_f.R": {
-      "checksum": "31517ceae86a8dfa0c5008e3ef7ffa9f"
+      "checksum": "92a4eaea31729573e93568ce889981dc"
     },
     "dist_normal.R": {
-      "checksum": "b59f64c6f5e0d5fb02c2253ac4bd2456"
+      "checksum": "5174de7a90753a98a96676966d5de77c"
     },
     "dist_poisson.R": {
-      "checksum": "093f99921459dfe8360d9199752cda99"
+      "checksum": "bb7074e852d340ec2e009da8453a3c9c"
     },
     "dist_power.R": {
-      "checksum": "247d2307bb9ba3aabcade04f6c474d5b"
+      "checksum": "d536fdf994c0c03dfe97f2ae8223332c"
     },
     "dist_t.R": {
-      "checksum": "07bcbb2c9f7f424fa09237e75c636b45"
+      "checksum": "4402e20f5bd21d67cf799b63e8fcb63f"
+    },
+    "help.md": {
+      "checksum": "2ba7aef7298417b666ba60191b2f9d62"
     },
     "ht_chi_gof.R": {
-      "checksum": "dd6f88b480fccf0171128e82a6d05174"
+      "checksum": "64e8e2830833b2311e117b8172a80be0"
     },
     "ht_chi_ind.R": {
-      "checksum": "17a9f1163e261198dfb77afab0953b8a"
+      "checksum": "235d5f3e02c009dd079a3a155b3d8a18"
     },
     "ht_diff_means.R": {
-      "checksum": "dc5409f6f14095b8e2770452f2bbe3a2"
+      "checksum": "b5f72db9aed0208c26307806af37b56b"
     },
     "ht_diff_proportions.R": {
-      "checksum": "2e5458ab0cf1a14346361c6fb8da7a4e"
+      "checksum": "8d5f812f9de38ff4443920e9fbf889b4"
     },
     "ht_mean.R": {
-      "checksum": "50cf5f7e6a8aac68faa1a00f4227400f"
+      "checksum": "edc909e18de767601e746f5c58107499"
     },
     "ht_proportion.R": {
-      "checksum": "60a4be147d2be4305fe98305b8eefa55"
+      "checksum": "b2ce1a9fd43f559bdc86979c847a56aa"
     },
     "launch_Scripts/launch_shiny_app.cmd": {
       "checksum": "aa5dfc3774197d7c6e81de9350abce47"
@@ -3880,31 +4624,31 @@
       "checksum": "86d3f3a95c324c9479bd8986968f4327"
     },
     "README.md": {
-      "checksum": "6e3d56cc8067763aeb6c24443f78e12d"
+      "checksum": "b0e0527a401bfff9bc90e1453a7267cd"
     },
     "regression_mlr.R": {
-      "checksum": "cafff5c8b0744a592563e6c504ba41ab"
+      "checksum": "0e92c09983e42ef948fcb0d2268e859d"
     },
     "regression_slr.R": {
-      "checksum": "b2784e626df6178e0601e5f30d1364d9"
+      "checksum": "85eb9e2076faf78b03f9b4ca40d4e131"
     },
     "sampling_distribution_mean.R": {
-      "checksum": "35e84a46bd47d5be176932efcb372d9a"
+      "checksum": "b2098bb800ec1ce99d55b652717271bf"
     },
     "sampling_distribution_proportion.R": {
-      "checksum": "14fdcd8c5de6b44e6470e3b667ef3894"
+      "checksum": "dc73fd7c66b3c592b35a727f8309ab7d"
     },
     "stapplet_topics.md": {
       "checksum": "b85c35f758195a71adf35e572c5d3467"
     },
     "tools_descriptive.R": {
-      "checksum": "778d2a6bfdfca21852c7640fbdc072c6"
+      "checksum": "ad2591bb0951cdd2433e95a6e6f19f32"
     },
     "tools_simulations.R": {
-      "checksum": "4726f80ac2200d688452f1f55c36ee05"
+      "checksum": "27954c75aed70997908351820b850c18"
     },
     "ui.R": {
-      "checksum": "b99ee6126958dd0a5bf3d4d87eabe25e"
+      "checksum": "0911f8f4f3b0f80b5ff49d8f034e937d"
     }
   },
   "users": null
