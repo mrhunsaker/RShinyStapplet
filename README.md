@@ -11,6 +11,7 @@ Stapplet Shiny Suite provides a collection of self-contained statistical applets
 All modules include:
 - Clear UI and server logic with inline documentation
 - Accessibility features (ARIA labels, screen reader support, keyboard navigation)
+- All plots are displayed with a minimum height of 400px for improved readability and accessibility
 - Download/export options for results, plots, and data
 - Comprehensive help file (`help.md`) with instructions for every module
 
@@ -21,22 +22,13 @@ A key focus of this project is to ensure that all tools are usable by as many pe
 ### Features
 
 - **Universal Accessibility:**
-  All modules now follow a unified accessibility standard, including ARIA roles, alt text, BrailleR integration, screen-reader descriptions, keyboard shortcuts, and accessible error/status messaging.
+  All modules follow a unified accessibility standard, including ARIA roles, alt text, BrailleR integration, screen-reader descriptions, keyboard shortcuts, and accessible error/status messaging.
 - **Screen Reader Support:**
   Every output, especially plots and results, includes hidden descriptions (`.sr-only` class) and live regions for screen readers.
 - **Keyboard Navigation:**
   All UI elements are accessible via keyboard, with shortcuts for rapid navigation and actions.
-- **Color Contrast & Visual Accessibility:**
-  High-contrast, colorblind-safe palettes are used throughout. All foreground/background pairs meet WCAG AA/AAA standards.
-- **Accessible Export/Download:**
-  All modules provide accessible download buttons for CSV, PNG, and TXT formats, with alt text and screen-reader summaries.
-
-- **Universal Accessibility:**
-  All modules now follow a unified accessibility standard, including ARIA roles, alt text, BrailleR integration, screen-reader descriptions, keyboard shortcuts, and accessible error/status messaging.
-- **Screen Reader Support:**
-  Every output, especially plots and results, includes hidden descriptions (`.sr-only` class) and live regions for screen readers.
-- **Keyboard Navigation:**
-  All UI elements are accessible via keyboard, with shortcuts for rapid navigation and actions.
+- **Consistent Plot Sizing:**
+  All plots are rendered with a minimum height of 400px for improved visibility and accessibility.
 - **Color Contrast & Visual Accessibility:**
   High-contrast, colorblind-safe palettes are used throughout. All foreground/background pairs meet WCAG AA/AAA standards.
 - **Accessible Export/Download:**
@@ -48,7 +40,7 @@ A key focus of this project is to ensure that all tools are usable by as many pe
 - **Regression:** Simple and multiple linear regression
 - **Sampling & Simulations:** Sampling distributions, probability simulations, descriptive tools
 - **Classroom Activities:** Interactive modules for correlation guessing, discrimination testing, sampling, and more
-- **Accessibility:** ARIA roles, screen reader descriptions, keyboard navigation
+- **Accessibility:** ARIA roles, screen reader descriptions, keyboard navigation, and consistent plot sizing for visual clarity
 - **Exporting:** Download results, plots, and data in CSV, PNG, and TXT formats
 - **Comprehensive Documentation:** See `help.md` for detailed instructions and module overviews
 

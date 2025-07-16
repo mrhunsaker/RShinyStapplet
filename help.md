@@ -26,7 +26,7 @@ Welcome to the Stapplet R Shiny App! This guide provides an overview of the app'
 
 - **Navigation:** Use the sidebar or tabs to select modules. Each module is self-contained and provides instructions at the top.
 - **Inputs:** Enter data, adjust parameters, and use sliders or numeric fields as needed.
-- **Outputs:** View plots, tables, and results in the main panel. Many modules include screen-reader-friendly descriptions.
+- **Outputs:** View plots, tables, and results in the main panel. All plots are displayed with a minimum height of 400px for improved visibility. Many modules include screen-reader-friendly descriptions.
 - **Download:** Most modules allow you to export results, plots, or data for further analysis.
 
 ---
@@ -264,6 +264,7 @@ Stapplet Shiny Suite now implements universal accessibility standards across all
   - All outputs, especially plots and results, include hidden descriptions (`.sr-only` class) and ARIA live regions for dynamic updates.
   - BrailleR integration provides detailed plot summaries for ggplot2 visualizations.
   - Error/status messages are announced via ARIA live regions.
+  - All plots and tables are reliably rendered and easy to interpret due to increased height and consistent output activation.
 
 - **ARIA Roles & Labels:**
   - All UI containers and controls use ARIA roles (`main`, `form`, `status`, `complementary`, `dialog`, etc.) and programmatic labels for navigation and context.
@@ -284,6 +285,11 @@ Stapplet Shiny Suite now implements universal accessibility standards across all
 - **Color Contrast:**
   - All foreground/background color pairs meet WCAG AA/AAA standards.
   - Colorblind-safe palettes are used throughout the suite.
+
+- **Consistent Output Activation:**
+  - All modules are always active, so outputs (plots, tables, results) are reliably displayed when you interact with the UI.
+  - Plot areas are standardized to a minimum height of 400px for improved accessibility and readability.
+
 
 
 ---
